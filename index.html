@@ -13,7 +13,19 @@
 <meta property="og:title" content="編織日和小遊戲">
 <meta property="og:description" content="日文五十音、花語、打字練習⋯⋯打開瀏覽器就能玩的學習小遊戲。">
 <!-- <meta property="og:image" content="https://games.knittinghiyori.com/assets/og-hub.jpg"> -->
-<meta name="theme-color" content="#d94873">
+<meta name="theme-color" content="#ffffff">
+<!-- GA4（與部落格、工具共用資源 G-ZQZHTYTRMQ）｜規範：遊戲 GA4 統一追蹤 v1.0 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', { content_group: 'game', game_id: 'hub', page_lang: 'zh-Hant' });
+  gtag('config', 'G-ZQZHTYTRMQ');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"編織日和小遊戲","url":"https://games.knittinghiyori.com/","inLanguage":"zh-Hant","publisher":{"@type":"Organization","name":"編織日和 Knitting Hiyori","url":"https://knittinghiyori.com/"},
 "mainEntity":{"@type":"ItemList","itemListElement":[
@@ -21,56 +33,342 @@
 ]}}
 </script>
 <style>
-:root{--pink:#d94873;--pink-soft:#fdeef3;--ink:#1c1c1e;--mute:#6b6b70;--line:#e7e7ea}
+:root{
+  --ink:#2b2b2e; --mute:#7a7a80; --line:#ececef;
+  --sakura:#e8829f; --sakura-deep:#d94873; --sakura-soft:#fdf1f5;
+  --matcha:#7fae8a; --matcha-soft:#eef6f0;
+  --sora:#7fb3d5;   --sora-soft:#edf5fb;
+  --yuzu:#f2b33d;
+  --jp:"Zen Maru Gothic","Noto Sans TC",sans-serif;
+}
 *{box-sizing:border-box}
 html,body{background:#fff;margin:0;color:var(--ink)}
-body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.7;padding:0 16px 40px}
-.wrap{max-width:920px;margin:0 auto}
-header{padding:36px 0 8px}
-.brand{font-size:13px;color:var(--mute);letter-spacing:.08em}
-h1{font-size:28px;line-height:1.35;margin:4px 0 8px}
-.lead{color:var(--mute);margin:0;font-size:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:28px}
-.card{display:flex;flex-direction:column;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:.15s;background:#fff}
-.card:hover{border-color:var(--pink);transform:translateY(-2px);box-shadow:0 8px 22px rgba(217,72,115,.12)}
-.thumb{height:130px;display:grid;place-items:center;background:var(--pink-soft)}
-.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
-.body h2{font-size:18px;margin:0;line-height:1.4}
+body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.8;padding:0 16px 48px;overflow-x:hidden;letter-spacing:.02em}
+a{color:inherit}
+.wrap{max-width:960px;margin:0 auto;position:relative}
+
+/* ── Hero ── */
+header{position:relative;padding:56px 0 36px;text-align:center}
+.petals{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.petals span{position:absolute;top:-20px;width:12px;height:12px;background:var(--sakura);opacity:.55;border-radius:12px 0 12px 0;animation:fall linear infinite}
+.petals span:nth-child(1){left:8%;animation-duration:11s;animation-delay:-2s}
+.petals span:nth-child(2){left:22%;animation-duration:14s;animation-delay:-7s;background:#f5b6c8}
+.petals span:nth-child(3){left:47%;animation-duration:12s;animation-delay:-4s;width:9px;height:9px}
+.petals span:nth-child(4){left:68%;animation-duration:15s;animation-delay:-9s;background:#f5b6c8}
+.petals span:nth-child(5){left:86%;animation-duration:13s;animation-delay:-1s;width:10px;height:10px}
+@keyframes fall{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(24px,160px) rotate(160deg)}100%{transform:translate(-10px,340px) rotate(320deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.petals{display:none}}
+
+.stamp{display:inline-block;font-family:var(--jp);font-size:13px;color:var(--sakura-deep);letter-spacing:.3em;padding:2px 14px;border:1px solid var(--sakura);border-radius:999px;background:#fff}
+h1{font-family:var(--jp);font-size:clamp(28px,6vw,40px);font-weight:700;line-height:1.35;margin:18px 0 6px;letter-spacing:.08em}
+h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
+.kana{font-family:var(--jp);font-size:14px;color:var(--mute);letter-spacing:.35em;margin:0}
+.lead{color:var(--mute);margin:16px auto 0;max-width:520px;font-size:16px}
+
+.cta-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px}
+.btn{font:inherit;font-size:15px;font-weight:500;border-radius:999px;padding:11px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:.18s;border:1.5px solid transparent}
+.btn-primary{background:var(--sakura-deep);color:#fff;box-shadow:0 6px 16px rgba(217,72,115,.22)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(217,72,115,.28)}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--sakura)}
+.btn svg{width:18px;height:18px}
+
+/* ── 分隔 ── */
+.divider{display:flex;align-items:center;gap:14px;margin:28px 0 22px}
+.divider::before,.divider::after{content:"";flex:1;border-top:1px dashed #e3d6db}
+.divider h2{font-family:var(--jp);font-size:17px;margin:0;font-weight:700;letter-spacing:.15em;display:flex;align-items:center;gap:8px}
+.divider h2 small{font-size:12px;color:var(--mute);font-weight:500;letter-spacing:.2em}
+
+/* ── 卡片 ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#f3c3d2;box-shadow:0 14px 30px rgba(217,72,115,.10)}
+.thumb{height:140px;display:grid;place-items:center;background:var(--sakura-soft);position:relative}
+.thumb .no{position:absolute;top:12px;left:14px;font-family:var(--jp);font-size:12px;color:var(--sakura-deep);letter-spacing:.2em}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.body h3{font-family:var(--jp);font-size:18px;margin:0;line-height:1.5}
 .body p{margin:0;font-size:14px;color:var(--mute)}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
-.tags span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--mute)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:10px}
+.tags span{font-size:12px;border-radius:999px;padding:2px 10px}
+.t-sakura{background:var(--sakura-soft);color:var(--sakura-deep)}
+.t-matcha{background:var(--matcha-soft);color:#4f8560}
+.t-sora{background:var(--sora-soft);color:#3f7ea6}
+.play{margin-top:12px;font-size:14px;font-weight:500;color:var(--sakura-deep)}
+.card:hover .play{text-decoration:underline;text-underline-offset:4px}
 .card.soon{pointer-events:none;border-style:dashed}
-.card.soon .thumb{background:#f6f6f7;color:var(--mute);font-size:14px}
-footer{margin-top:40px;border-top:1px solid var(--line);padding-top:14px;font-size:13px;color:var(--mute)}
-footer a{color:var(--pink)}
+.card.soon .thumb{background:repeating-linear-gradient(45deg,#fafafa 0 10px,#f4f4f6 10px 20px);color:var(--mute);font-family:var(--jp);font-size:14px;letter-spacing:.15em}
+
+/* ── 分享區 ── */
+.share{margin-top:48px;border:1px solid var(--line);border-radius:24px;padding:30px 20px;text-align:center;background:#fff;position:relative}
+.share::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);width:92px;height:18px;background:rgba(127,174,138,.35);border-radius:2px}
+.share h2{font-family:var(--jp);font-size:20px;margin:4px 0 4px;letter-spacing:.08em}
+.share p{margin:0 0 18px;color:var(--mute);font-size:14px}
+.share-list{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.sbtn{font:inherit;font-size:14px;font-weight:500;border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:9px 18px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.18s}
+.sbtn i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.sbtn:hover{transform:translateY(-2px)}
+.s-line:hover{border-color:#06c755}.s-line i{background:#06c755}
+.s-fb:hover{border-color:#1877f2}.s-fb i{background:#1877f2}
+.s-th:hover{border-color:#2b2b2e}.s-th i{background:#2b2b2e}
+.s-x:hover{border-color:#2b2b2e}.s-x i{background:#8a8a90}
+.s-copy:hover{border-color:var(--sakura)}.s-copy i{background:var(--sakura)}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;font-size:14px;padding:9px 18px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;z-index:10}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+footer{margin-top:44px;padding-top:16px;border-top:1px dashed #e3d6db;font-size:13px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+footer a{color:var(--sakura-deep);text-decoration:none}
+footer a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <div class="brand">KNITTING HIYORI GAMES</div>
-  <h1>編織日和小遊戲</h1>
-  <p class="lead">邊玩邊學：日文五十音、花卉日文、打字練習。免下載、免註冊，打開就能玩。</p>
+  <div class="petals" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <span class="stamp">あそびながら まなぶ</span>
+  <h1><span class="mark">編織日和</span>小遊戲</h1>
+  <p class="kana">KNITTING HIYORI GAMES</p>
+  <p class="lead">邊玩邊學：日文五十音、花卉日文、打字練習。<br>免下載、免註冊，打開就能玩。</p>
+  <div class="cta-row">
+    <a class="btn btn-ghost" href="#games">開始玩 ↓</a>
+    <button class="btn btn-primary js-share" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+      分享給朋友
+    </button>
+  </div>
 </header>
 
+<div class="divider" id="games"><h2>遊戲一覽 <small>ゲーム</small></h2></div>
+
 <main class="grid">
-  <!-- ▼ 新遊戲：複製一整個 <a class="card"> 區塊貼在最上面，新的排前面 -->
-  <a class="card" href="/hiyori-flower-shop/">
+  <!-- ▼ 新遊戲：複製一整個 <a class="card"> 區塊貼在最上面，新的排前面
+         要改：href、.no 編號、data-game（＝該遊戲在 GA4 遊戲規範登記的 game_id）、JSON-LD 清單 -->
+  <a class="card" href="/hiyori-flower-shop/" data-cta="game_card" data-cta-type="game" data-game="flower_shop">
     <div class="thumb" aria-hidden="true">
+      <span class="no">No.01</span>
       <svg viewBox="0 0 200 60" width="200" height="60"><g transform="translate(20 10)"><g fill="#f28bb0"><ellipse cx="20" cy="10.5" rx="6" ry="9.5"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(60 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(120 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(240 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(300 20 20)"/></g><circle cx="20" cy="20" r="5.5" fill="#f2b33d"/></g><g transform="translate(80 10)"><g fill="#d94873"><ellipse cx="20" cy="10.5" rx="6" ry="9.5"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(60 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(120 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(240 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(300 20 20)"/></g><circle cx="20" cy="20" r="5.5" fill="#f2b33d"/></g><g transform="translate(140 10)"><g fill="#9b7fd6"><ellipse cx="20" cy="10.5" rx="6" ry="9.5"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(60 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(120 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(240 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(300 20 20)"/></g><circle cx="20" cy="20" r="5.5" fill="#f2b33d"/></g></svg>
     </div>
     <div class="body">
-      <h2>ひより花店：日文五十音小遊戲</h2>
+      <h3>ひより花店：日文五十音小遊戲</h3>
       <p>平假名・片假名四選一、109 種花的中日英名稱與花語，再用羅馬拼音練日文打字。</p>
-      <div class="tags"><span>日文</span><span>五十音</span><span>打字練習</span></div>
+      <div class="tags"><span class="t-sakura">日文</span><span class="t-matcha">五十音</span><span class="t-sora">打字練習</span></div>
+      <span class="play">開始遊戲 →</span>
     </div>
   </a>
   <!-- ▲ 遊戲卡片結束 -->
 
-  <div class="card soon"><div class="thumb">下一款準備中…</div><div class="body"><h2>敬請期待</h2><p>更多學習小遊戲陸續推出。</p></div></div>
+  <div class="card soon"><div class="thumb">じゅんびちゅう…</div><div class="body"><h3>敬請期待</h3><p>更多學習小遊戲陸續推出。</p></div></div>
 </main>
 
-<footer>© 編織日和 Knitting Hiyori｜<a href="https://knittinghiyori.com/">回到部落格</a></footer>
+<section class="share" aria-labelledby="share-title">
+  <h2 id="share-title">喜歡的話，分享給朋友吧 🌸</h2>
+  <p>一起邊玩邊學日文，比一個人練更有動力！</p>
+  <div class="share-list">
+    <a class="sbtn s-line" data-net="line" target="_blank" rel="noopener"><i></i>LINE</a>
+    <a class="sbtn s-fb" data-net="facebook" target="_blank" rel="noopener"><i></i>Facebook</a>
+    <a class="sbtn s-th" data-net="threads" target="_blank" rel="noopener"><i></i>Threads</a>
+    <a class="sbtn s-x" data-net="x" target="_blank" rel="noopener"><i></i>X</a>
+    <button class="sbtn s-copy" type="button" data-net="copy"><i></i>複製連結</button>
+  </div>
+</section>
+
+<footer>
+  <span>© 編織日和 Knitting Hiyori</span>
+  <a href="https://knittinghiyori.com/" data-cta="footer" data-cta-type="mainsite">← 回到部落格</a>
+</footer>
 </div>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
+   各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
+   注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
+var HY_GAME_ID = 'hub';  /* 遊戲登記表的 game_id */
+var HY_GAME_ROOT = '#hy-hub-none';  /* 主頁沒有「玩」，指向不存在的元素 → 不送 game_start／game_exit */
+var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目前語言變數 */
+
+(function(){
+  var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
+  var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
+  var sent = {};
+  var playMs = 0, visibleAt = 0;        /* 實際遊玩時間：只算分頁在前景的時間 */
+  var rounds = 0, roundAt = 0, roundOpen = null;
+
+  function lang(){ try { return LANG_MAP[HY_GAME_LANG()] || 'zh-Hant'; } catch(e){ return 'zh-Hant'; } }
+  function now(){ return Date.now(); }
+  function secs(ms){ return Math.round(ms / 1000); }
+
+  function send(name, params, beacon){
+    try {
+      var p = {}, k, v;
+      params = params || {};
+      for (k in params) {
+        v = params[k];
+        if (v === undefined || v === null || v === '') continue;
+        if (typeof v === 'boolean') v = v ? 'yes' : 'no';
+        if (typeof v === 'string') v = v.slice(0, 100);   /* GA4 參數值上限 100 字元 */
+        p[k] = v;
+      }
+      p.game_id = HY_GAME_ID;
+      p.page_lang = lang();
+      p.content_group = 'game';
+      if (beacon) p.transport_type = 'beacon';
+      if (DEBUG) { p.debug_mode = true; if (window.console) console.log('[hy-game]', name, p); }
+      if (typeof window.gtag === 'function') { window.gtag('event', name, p); return; }
+      window.dataLayer = window.dataLayer || [];
+      (function(){ window.dataLayer.push(arguments); })('event', name, p);
+    } catch(e) {}
+  }
+
+  function playedMs(){ return playMs + (visibleAt ? now() - visibleAt : 0); }
+
+  var api = window.hyGame = {
+    /* 任何事件 */
+    event: send,
+    /* 每次載入頁面只送一次 */
+    once: function(name, params){ if (sent[name]) return; sent[name] = 1; send(name, params); },
+    /* 開始玩：entry = direct／shared／saved */
+    start: function(entry){
+      if (sent.game_start) return;
+      if (!document.hidden) visibleAt = now();
+      api.once('game_start', { entry_point: entry || 'direct' });
+    },
+    /* 一局開始：option＝模式、level＝難度 */
+    roundStart: function(params){
+      api.start('direct');
+      if (roundOpen) api.roundEnd({ result: 'quit' });   /* 上一局沒結束就開新局 → 記為放棄 */
+      params = params || {};
+      roundAt = playedMs();   /* 局的秒數同樣只算前景 */
+      roundOpen = { option: params.option, level: params.level };
+      send('round_start', params);
+    },
+    /* 一局結束：result＝complete／fail／quit／timeout，另帶 score、item_count、correct_count */
+    roundEnd: function(params, beacon){
+      if (!roundOpen) return;
+      var p = {}, k;
+      params = params || {};
+      for (k in roundOpen) p[k] = roundOpen[k];
+      for (k in params) p[k] = params[k];
+      p.duration_sec = secs(playedMs() - roundAt);
+      p.result = p.result || 'complete';
+      if (p.result !== 'quit') rounds = rounds + 1;
+      p.round_count = rounds;
+      roundOpen = null;
+      send('round_end', p, beacon);
+    },
+    /* 分享：method 見值域表，type = result／game */
+    share: function(method, type, extra){
+      var p = {}, k; extra = extra || {};
+      for (k in extra) p[k] = extra[k];
+      p.method = method; p.content_type = type;
+      send('share', p);
+    },
+    /* 選填：遊戲可覆寫，替 cta_click 補參數 */
+    ctaExtra: null
+  };
+
+  function inRoot(t){ if (!t || !t.closest) return null; return t.closest(HY_GAME_ROOT); }
+
+  /* 第一次在遊戲區點擊、輸入或按鍵 → 自動 game_start（點 CTA 不算；只捲動不算） */
+  function autoStart(e){
+    if (sent.game_start) return;
+    var t = e.target;
+    if (!inRoot(t)) return;
+    if (t.closest('[data-cta]')) return;
+    api.start('direct');
+  }
+  document.addEventListener('click', autoStart, true);
+  document.addEventListener('input', autoStart, true);
+  document.addEventListener('keydown', autoStart, true);
+
+  /* 點任何 [data-cta] → cta_click（與故事、工具同一個事件） */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('[data-cta]');
+    if (!a) return;
+    var p = {}, ex = {}, k;
+    try { if (typeof api.ctaExtra === 'function') ex = api.ctaExtra(a) || {}; } catch(err) {}
+    for (k in ex) p[k] = ex[k];
+    p.cta_id = a.getAttribute('data-cta');
+    p.cta_type = a.getAttribute('data-cta-type') || 'other';
+    p.link_url = a.href || '';
+    send('cta_click', p);
+  }, true);
+
+  /* 遊玩計時：切到背景暫停，回來繼續 */
+  document.addEventListener('visibilitychange', function(){
+    if (!sent.game_start) return;
+    if (document.hidden) {
+      if (visibleAt) { playMs = playMs + now() - visibleAt; visibleAt = 0; }
+    } else if (!sent.game_exit) {
+      visibleAt = now();
+    }
+  });
+
+  /* 離開頁面 → game_exit（每次載入只送一次；沒開始玩就不送） */
+  function exit(){
+    if (!sent.game_start || sent.game_exit) return;
+    if (roundOpen) api.roundEnd({ result: 'quit' }, true);
+    sent.game_exit = 1;
+    send('game_exit', { duration_sec: secs(playedMs()), round_count: rounds }, true);
+  }
+  window.addEventListener('pagehide', exit);
+})();
+/* ===== /GA4 統一追蹤 ===== */
+
+/* ===== 主頁專屬：點了哪個遊戲、分享 ===== */
+(function(){
+  /* 遊戲卡片的 cta_click 補 option ＝ 目標遊戲的 game_id（卡片上的 data-game） */
+  hyGame.ctaExtra = function(a){ return { option: a.getAttribute('data-game') }; };
+
+  var url  = document.querySelector('link[rel=canonical]').href;
+  var text = '編織日和小遊戲｜日文五十音、花語、打字練習，打開瀏覽器就能玩 🌸';
+  var u = encodeURIComponent(url), t = encodeURIComponent(text);
+  var links = {
+    line:     'https://social-plugins.line.me/lineit/share?url=' + u,
+    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + u,
+    threads:  'https://www.threads.net/intent/post?text=' + t + '%20' + u,
+    x:        'https://twitter.com/intent/tweet?text=' + t + '\x26url=' + u
+  };
+  var toastEl = document.querySelector('.toast'), timer;
+  function toast(msg){ toastEl.textContent = msg; toastEl.classList.add('show'); clearTimeout(timer); timer = setTimeout(function(){ toastEl.classList.remove('show'); }, 1800); }
+
+  document.querySelectorAll('.sbtn[data-net]').forEach(function(el){
+    var net = el.getAttribute('data-net');
+    if (!links[net]) return;
+    el.href = links[net];
+    el.addEventListener('click', function(){ hyGame.share(net, 'game'); });
+  });
+
+  document.querySelector('.s-copy').addEventListener('click', function(){
+    function ok(){ toast('已複製連結 ✓'); hyGame.share('copy_link', 'game'); }
+    function fallback(){
+      var ta = document.createElement('textarea'); ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); ok(); } catch(e) { toast('請手動複製：' + url); }
+      ta.remove();
+    }
+    if (navigator.clipboard) {
+      if (window.isSecureContext) { navigator.clipboard.writeText(url).then(ok, fallback); return; }
+    }
+    fallback();
+  });
+
+  /* 主要 CTA：手機叫系統分享面板（完成才記 share、取消記 share_cancel）；桌機捲到分享區 */
+  document.querySelector('.js-share').addEventListener('click', function(){
+    if (navigator.share) {
+      navigator.share({ title: document.title, text: text, url: url })
+        .then(function(){ hyGame.share('native', 'game'); })
+        .catch(function(e){
+          if (e) { if (e.name === 'AbortError') hyGame.event('share_cancel', { method: 'native', content_type: 'game' }); }
+        });
+    } else {
+      document.querySelector('.share').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+})();
+</script>
 </body>
 </html>
