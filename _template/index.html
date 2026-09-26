@@ -19,6 +19,16 @@
 <!-- <meta property="og:image" content="https://games.knittinghiyori.com/assets/og-SLUG.jpg"> -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#d94873">
+<!-- ★7 GA4：把 GAME_ID 換成遊戲登記表的 game_id（本段與頁尾追蹤各一處） -->
+<!-- GA4（與部落格、工具共用資源 G-ZQZHTYTRMQ）｜規範：遊戲 GA4 統一追蹤 v1.0 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', { content_group: 'game', game_id: 'GAME_ID', page_lang: 'zh-Hant' });
+  gtag('config', 'G-ZQZHTYTRMQ');
+</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"遊戲名稱","url":"https://games.knittinghiyori.com/SLUG/","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"zh-Hant","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"description":"一句話說明","publisher":{"@type":"Organization","name":"編織日和 Knitting Hiyori","url":"https://knittinghiyori.com/"}}
 </script>
@@ -45,8 +55,147 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
   <h2>適合誰？</h2>
   <ul><li>對象一</li><li>對象二</li></ul>
   <!-- ★6 連到部落格的介紹文章 -->
-  <p>延伸閱讀：<a href="https://knittinghiyori.com/">問句型的文章標題？</a></p>
+  <p>延伸閱讀：<a href="https://knittinghiyori.com/" data-cta="article_link" data-cta-type="article">問句型的文章標題？</a></p>
 </section>
-<footer class="page-foot"><a href="/" style="color:inherit">← 更多小遊戲</a>｜© 編織日和 Knitting Hiyori｜<a href="https://knittinghiyori.com/" style="color:inherit">回到部落格</a></footer>
+<footer class="page-foot"><a href="/" style="color:inherit" data-cta="more_games" data-cta-type="hub">← 更多小遊戲</a>｜© 編織日和 Knitting Hiyori｜<a href="https://knittinghiyori.com/" style="color:inherit" data-cta="footer" data-cta-type="mainsite">回到部落格</a></footer>
+<script>
+/* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
+   各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
+   注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
+var HY_GAME_ID = 'GAME_ID';  /* 遊戲登記表的 game_id */
+var HY_GAME_ROOT = '#GAME_ROOT_ID';  /* 遊戲本體的容器 */
+var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目前語言變數 */
+
+(function(){
+  var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
+  var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
+  var sent = {};
+  var playMs = 0, visibleAt = 0;        /* 實際遊玩時間：只算分頁在前景的時間 */
+  var rounds = 0, roundAt = 0, roundOpen = null;
+
+  function lang(){ try { return LANG_MAP[HY_GAME_LANG()] || 'zh-Hant'; } catch(e){ return 'zh-Hant'; } }
+  function now(){ return Date.now(); }
+  function secs(ms){ return Math.round(ms / 1000); }
+
+  function send(name, params, beacon){
+    try {
+      var p = {}, k, v;
+      params = params || {};
+      for (k in params) {
+        v = params[k];
+        if (v === undefined || v === null || v === '') continue;
+        if (typeof v === 'boolean') v = v ? 'yes' : 'no';
+        if (typeof v === 'string') v = v.slice(0, 100);   /* GA4 參數值上限 100 字元 */
+        p[k] = v;
+      }
+      p.game_id = HY_GAME_ID;
+      p.page_lang = lang();
+      p.content_group = 'game';
+      if (beacon) p.transport_type = 'beacon';
+      if (DEBUG) { p.debug_mode = true; if (window.console) console.log('[hy-game]', name, p); }
+      if (typeof window.gtag === 'function') { window.gtag('event', name, p); return; }
+      window.dataLayer = window.dataLayer || [];
+      (function(){ window.dataLayer.push(arguments); })('event', name, p);
+    } catch(e) {}
+  }
+
+  function playedMs(){ return playMs + (visibleAt ? now() - visibleAt : 0); }
+
+  var api = window.hyGame = {
+    /* 任何事件 */
+    event: send,
+    /* 每次載入頁面只送一次 */
+    once: function(name, params){ if (sent[name]) return; sent[name] = 1; send(name, params); },
+    /* 開始玩：entry = direct／shared／saved */
+    start: function(entry){
+      if (sent.game_start) return;
+      if (!document.hidden) visibleAt = now();
+      api.once('game_start', { entry_point: entry || 'direct' });
+    },
+    /* 一局開始：option＝模式、level＝難度 */
+    roundStart: function(params){
+      api.start('direct');
+      if (roundOpen) api.roundEnd({ result: 'quit' });   /* 上一局沒結束就開新局 → 記為放棄 */
+      params = params || {};
+      roundAt = playedMs();   /* 局的秒數同樣只算前景 */
+      roundOpen = { option: params.option, level: params.level };
+      send('round_start', params);
+    },
+    /* 一局結束：result＝complete／fail／quit／timeout，另帶 score、item_count、correct_count */
+    roundEnd: function(params, beacon){
+      if (!roundOpen) return;
+      var p = {}, k;
+      params = params || {};
+      for (k in roundOpen) p[k] = roundOpen[k];
+      for (k in params) p[k] = params[k];
+      p.duration_sec = secs(playedMs() - roundAt);
+      p.result = p.result || 'complete';
+      if (p.result !== 'quit') rounds = rounds + 1;
+      p.round_count = rounds;
+      roundOpen = null;
+      send('round_end', p, beacon);
+    },
+    /* 分享：method 見值域表，type = result／game */
+    share: function(method, type, extra){
+      var p = {}, k; extra = extra || {};
+      for (k in extra) p[k] = extra[k];
+      p.method = method; p.content_type = type;
+      send('share', p);
+    },
+    /* 選填：遊戲可覆寫，替 cta_click 補參數 */
+    ctaExtra: null
+  };
+
+  function inRoot(t){ if (!t || !t.closest) return null; return t.closest(HY_GAME_ROOT); }
+
+  /* 第一次在遊戲區點擊、輸入或按鍵 → 自動 game_start（點 CTA 不算；只捲動不算） */
+  function autoStart(e){
+    if (sent.game_start) return;
+    var t = e.target;
+    if (!inRoot(t)) return;
+    if (t.closest('[data-cta]')) return;
+    api.start('direct');
+  }
+  document.addEventListener('click', autoStart, true);
+  document.addEventListener('input', autoStart, true);
+  document.addEventListener('keydown', autoStart, true);
+
+  /* 點任何 [data-cta] → cta_click（與故事、工具同一個事件） */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('[data-cta]');
+    if (!a) return;
+    var p = {}, ex = {}, k;
+    try { if (typeof api.ctaExtra === 'function') ex = api.ctaExtra(a) || {}; } catch(err) {}
+    for (k in ex) p[k] = ex[k];
+    p.cta_id = a.getAttribute('data-cta');
+    p.cta_type = a.getAttribute('data-cta-type') || 'other';
+    p.link_url = a.href || '';
+    send('cta_click', p);
+  }, true);
+
+  /* 遊玩計時：切到背景暫停，回來繼續 */
+  document.addEventListener('visibilitychange', function(){
+    if (!sent.game_start) return;
+    if (document.hidden) {
+      if (visibleAt) { playMs = playMs + now() - visibleAt; visibleAt = 0; }
+    } else if (!sent.game_exit) {
+      visibleAt = now();
+    }
+  });
+
+  /* 離開頁面 → game_exit（每次載入只送一次；沒開始玩就不送） */
+  function exit(){
+    if (!sent.game_start || sent.game_exit) return;
+    if (roundOpen) api.roundEnd({ result: 'quit' }, true);
+    sent.game_exit = 1;
+    send('game_exit', { duration_sec: secs(playedMs()), round_count: rounds }, true);
+  }
+  window.addEventListener('pagehide', exit);
+})();
+/* ===== /GA4 統一追蹤 ===== */
+</script>
+<!-- ★8 把 #GAME_ROOT_ID 換成遊戲本體最外層容器的 id；遊戲內呼叫 hyGame.roundStart／roundEnd／share -->
 </body>
 </html>
