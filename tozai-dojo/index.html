@@ -140,6 +140,47 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
 .rules li{display:flex;gap:10px;align-items:flex-start;font-size:14px}
 .rules b.k{flex:none;font-family:var(--mono);background:var(--gold);border:1.5px solid var(--ink);border-radius:6px;padding:0 6px;font-size:12px}
 
+/* ---------- share ---------- */
+const SHARE_URL='https://games.knittinghiyori.com/tozai-dojo/';
+function shareBar(type,text,label){
+  const u=SHARE_URL+'?via=share';
+  const e=encodeURIComponent, tu=e(u), tt=e(text);
+  const links=[
+    ['line','LINE','https://social-plugins.line.me/lineit/share?url='+tu+'&text='+tt],
+    ['facebook','Facebook','https://www.facebook.com/sharer/sharer.php?u='+tu],
+    ['threads','Threads','https://www.threads.net/intent/post?text='+e(text+' '+u)],
+    ['x','X','https://x.com/intent/post?text='+tt+'&url='+tu]
+  ];
+  const cls={line:'line',facebook:'fb',threads:'threads',x:'x'};
+  return `<div class="share"><span class="lbl">${esc(label)}</span><div class="row">`+
+    (navigator.share?`<button type="button" class="sb native" data-share="native" data-type="${type}" data-text="${esc(text)}" data-url="${esc(u)}">分享…</button>`:'')+
+    links.map(([m,n,h])=>`<a class="sb ${cls[m]}" href="${esc(h)}" target="_blank" rel="noopener" data-share="${m}" data-type="${type}">${n}</a>`).join('')+
+    `<button type="button" class="sb" data-share="copy_link" data-type="${type}" data-text="${esc(text)}" data-url="${esc(u)}">複製連結</button></div></div>`;
+}
+function track(fn){try{if(window.hyGame)fn(window.hyGame)}catch(e){}}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-share]');if(!b)return;
+  const m=b.dataset.share,type=b.dataset.type;
+  if(m==='native'){
+    e.preventDefault();
+    navigator.share({title:'東西腔道場',text:b.dataset.text,url:b.dataset.url})
+      .then(()=>track(h=>h.share('native',type)))
+      .catch(err=>{if(err&&err.name==='AbortError')track(h=>h.event('share_cancel',{method:'native',content_type:type}));else toast('這裡無法開啟分享面板，請改用下面的按鈕')});
+    return;
+  }
+  if(m==='copy_link'){
+    e.preventDefault();
+    const txt=b.dataset.text+' '+b.dataset.url;
+    const done=()=>{toast('已複製，貼到任何地方分享吧');track(h=>h.share('copy_link',type))};
+    try{navigator.clipboard.writeText(txt).then(done).catch(()=>fallbackCopy(txt,done))}catch(err){fallbackCopy(txt,done)}
+    return;
+  }
+  track(h=>h.share(m,type));
+});
+function fallbackCopy(t,done){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();if(ok)done();else toast('無法自動複製，請手動複製網址：'+SHARE_URL)}
+/* 從分享連結進來 → entry_point=shared（要在互動前呼叫） */
+if(/[?]via=share/.test(location.search))track(h=>h.start('shared'));
+
 /* glossary */
 .gl{width:100%;border-collapse:collapse;font-size:15px}
 .gl th{font-size:12px;letter-spacing:.08em;color:var(--muted);text-align:left;font-weight:700;padding:8px;border-bottom:2px solid var(--ink)}
@@ -155,6 +196,16 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
 .trip a{display:inline-block;background:var(--west);color:#fff;font-weight:900;text-decoration:none;border:2px solid var(--ink);border-radius:999px;padding:10px 22px;box-shadow:3px 3px 0 var(--ink)}
 .trip a:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
 .trip small{font-size:11px;color:var(--muted)}
+.share{width:100%;display:flex;flex-direction:column;gap:8px;align-items:center}
+.share .lbl{font-size:13px;font-weight:700;color:var(--ink)}
+.share .row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.sb{display:inline-flex;align-items:center;justify-content:center;min-width:72px;font-size:13px;font-weight:700;padding:8px 14px;border-radius:999px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);text-decoration:none;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.sb:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.sb.line{background:#06c755;color:#fff}
+.sb.fb{background:#1877f2;color:#fff}
+.sb.x,.sb.threads{background:#111;color:#fff}
+.sb.native{background:var(--gold)}
+.share-foot{border-top:1px solid var(--line);padding-top:16px}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:9;width:100%;height:100%}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -185,6 +236,7 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
     <div class="gl-wrap"><table class="gl"><thead><tr><th>関東・標準語</th><th>関西・大阪腔</th><th>中文</th></tr></thead><tbody id="gl-body"></tbody></table></div>
   </section>
 
+  <div class="share-foot" id="share-game"></div>
   <p class="foot"><a class="hub" href="/" data-cta="footer" data-cta-type="game">← 回到編織日和・遊戲主頁</a></p>
   <p class="foot">發音是預先合成、內建在頁面裡的音檔，以標準語的語調朗讀，所以關西腔的「用詞」聽得到，但關西特有的語調無法完整重現。iPhone 若開著靜音鍵會聽不到，請先關掉靜音。東京話與標準語很接近，這裡以「關東」代稱標準語；關西腔以大阪腔為主。</p>
 </div>
@@ -328,6 +380,11 @@ function startScreen(){
       ${CAN?'<li><b class="k">聽力</b>有些題目只有聲音，聽完再選</li>':''}
     </ul>
     <button class="next" id="go" style="align-self:center;font-size:18px;padding:13px 36px">開始！</button>
+    <div class="trip">
+      <p>正在計畫大阪行？機票、住宿、景點一次比價</p>
+      <a href="https://trip.tpk.ro/8p6Svq9z" target="_blank" rel="sponsored noopener" data-cta="start_card" data-cta-type="affiliate">看大阪機票・住宿・景點・玩樂 →</a>
+      <small>Trip.com 聯盟連結，透過連結訂購本站會獲得少量分潤，不影響你的價格。</small>
+    </div>
   </div>`;
   $('#go').addEventListener('click',start);
 }
@@ -395,6 +452,7 @@ function result(){
       <div class="stat"><small>剩餘生命</small><b class="lives">${'♥'.repeat(Math.max(0,lives))||'—'}</b></div>
     </div>
     <button class="next" id="again" style="align-self:center;font-size:17px;padding:12px 32px">再玩一回</button>
+    ${shareBar('result',`我在「東西腔道場」拿到 ${score} 分，答對 ${correct} 題！關東腔、關西腔你分得出來嗎？`,'分享你的成績')}
     <div class="trip">
       <p>學會關西腔了，下一步去大阪實際講講看</p>
       <a href="https://trip.tpk.ro/8p6Svq9z" target="_blank" rel="sponsored noopener" data-cta="result_card" data-cta-type="affiliate">看大阪機票・住宿・景點・玩樂 →</a>
@@ -411,6 +469,7 @@ function tab(w){const g=w==='game';$('#tab-game').setAttribute('aria-selected',g
 $('#tab-game').addEventListener('click',()=>tab('game'));
 $('#tab-list').addEventListener('click',()=>tab('list'));
 initAudio();
+$('#share-game').innerHTML=shareBar('game','聽發音分辨日文關東腔和關西腔的小遊戲「東西腔道場」，一起來挑戰！','把這個遊戲分享給朋友');
 startScreen();
 </script>
 <script>
