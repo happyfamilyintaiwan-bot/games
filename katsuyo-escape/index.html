@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- GA4：編織日和遊戲規範 v1.0 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', { content_group: 'game', game_id: 'katsuyo_escape', page_lang: 'zh-Hant' });
+  gtag('config', 'G-ZQZHTYTRMQ');
+</script>
+<meta name="description" content="免費日文動詞變化遊戲！五間密室依序考動詞分類、ない形、ます形、て形音便、ば形、命令形與可能形，先熱身再破案，答錯即時解析。免註冊，手機電腦都能玩。">
+<link rel="canonical" href="https://games.knittinghiyori.com/katsuyo-escape/">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="編織日和・小遊戲">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="活用館脫出｜你能逃出日文動詞變化的五間密室嗎？">
+<meta property="og:description" content="五段、一段、變格、て形音便、可能形。答對轉動密碼鎖，三根蠟燭熄滅就重來。免費、手機可玩。">
+<meta property="og:url" content="https://games.knittinghiyori.com/katsuyo-escape/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Game", "LearningResource"], "name": "活用館脫出：日文動詞變化密室逃脫", "alternateName": "活用館からの脱出", "url": "https://games.knittinghiyori.com/katsuyo-escape/", "description": "免費日文動詞變化遊戲！五間密室依序考動詞分類、ない形、ます形、て形音便、ば形、命令形與可能形，先熱身再破案，答錯即時解析。免註冊，手機電腦都能玩。", "inLanguage": "zh-Hant", "isAccessibleForFree": true, "educationalLevel": "JLPT N5–N4", "learningResourceType": "Game", "teaches": ["日文動詞分類（五段・上一段・下一段・サ変・カ変）", "六大活用形", "て形・た形音便", "ない形・ます形・ば形・命令形・可能形"], "genre": "Educational", "audience": {"@type": "EducationalAudience", "educationalRole": "student"}, "publisher": {"@type": "Organization", "name": "編織日和", "url": "https://knittinghiyori.com/"}}</script>
+<style>
+*{box-sizing:border-box}
+html{color-scheme:light;-webkit-text-size-adjust:100%}
+body{margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+</style>
+<title>日文動詞變化遊戲｜活用館脫出：密室逃脫練五段・一段・て形音便</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --ink:#111413; --muted:#5B6661; --line:#DCE4DF; --soft:#F3F7F5;
+  --exit:#00925A; --exit-dark:#006B42; --exit-ink:#FFFFFF;
+  --amber:#E8A317; --amber-soft:#FFF6E0; --wrong:#C62828; --wrong-soft:#FDECEC;
+  --ok-soft:#E6F5EE;
+  --jp:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --tc:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --disp:"Dela Gothic One","Noto Sans JP",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--tc);font-size:16px;line-height:1.6;padding-inline:16px;padding-block:20px 40px}
+.wrap{max-width:580px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
+.jp{font-family:var(--jp)}
+
+/* exit sign */
+.sign{display:inline-flex;align-items:center;gap:12px;background:var(--exit);color:var(--exit-ink);border-radius:6px;padding:8px 14px 8px 12px;box-shadow:inset 0 0 0 3px var(--exit-dark)}
+.sign .run{font-family:var(--disp);font-size:13px;letter-spacing:.14em}
+.sign .kj{font-family:var(--disp);font-size:22px;letter-spacing:.08em;line-height:1}
+.sign .arrow{width:0;height:0;border-left:12px solid var(--exit-ink);border-top:8px solid transparent;border-bottom:8px solid transparent}
+
+/* intro */
+.hero{display:flex;flex-direction:column;gap:14px;padding-block:8px}
+.hero h1{font-family:var(--disp);font-weight:400;font-size:clamp(34px,9vw,48px);line-height:1.1;margin:0;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--exit)}
+.hero p{margin:0;color:var(--muted);max-width:34em}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rule{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.rule b{font-size:14px}
+.rule span{font-size:13px;color:var(--muted);line-height:1.5}
+@media (max-width:460px){.rules{grid-template-columns:1fr}}
+
+/* floor plan */
+.plan-label{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700}
+.plan{display:flex;flex-direction:column;border:2px solid var(--ink);border-radius:4px}
+.roomrow{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:14px;padding:14px 14px;border:0;border-bottom:2px solid var(--ink);background:var(--bg);text-align:left;width:100%}
+.roomrow:last-child{border-bottom:0}
+.roomrow .no{font-family:var(--disp);font-size:22px;line-height:1}
+.roomrow .nm{display:flex;flex-direction:column}
+.roomrow .nm b{font-size:16px}
+.roomrow .nm span{font-size:13px;color:var(--muted)}
+.roomrow:disabled{cursor:not-allowed;color:#9AA6A0;background:var(--soft)}
+.roomrow:disabled .nm span{color:#9AA6A0}
+.roomrow:not(:disabled):hover{background:var(--ok-soft)}
+.chip{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.chip.done{background:var(--exit);color:var(--exit-ink)}
+.chip.now{background:var(--amber);color:var(--ink)}
+.chip.lock{background:var(--line);color:var(--muted)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:2px solid var(--ink);background:var(--ink);color:#fff;border-radius:6px;padding:10px 18px;font-weight:700}
+.btn.ghost{background:var(--bg);color:var(--ink)}
+.btn.go{background:var(--exit);border-color:var(--exit-dark);color:var(--exit-ink)}
+.best{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* room */
+.hud{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding-block:8px;z-index:2;border-bottom:1px solid var(--line)}
+.hud .back{border:0;background:none;padding:4px 0;font-size:14px;color:var(--muted)}
+.candles{display:flex;gap:8px;align-items:flex-end}
+.candle{width:12px;height:26px;position:relative}
+.candle::before{content:"";position:absolute;bottom:0;left:1px;width:10px;height:16px;background:#F4EBDD;border:1.5px solid var(--ink);border-radius:2px}
+.candle::after{content:"";position:absolute;top:0;left:2px;width:8px;height:10px;background:var(--amber);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;transition:opacity .3s}
+.candle.out::after{opacity:0}
+.candle.out::before{background:var(--line)}
+.timer{font-family:var(--mono);font-weight:700;font-size:18px;font-variant-numeric:tabular-nums}
+.roomhead{display:flex;flex-direction:column;gap:6px}
+.roomhead .jpn{font-family:var(--disp);font-size:14px;color:var(--exit);letter-spacing:.1em}
+.roomhead h2{margin:0;font-size:26px;font-weight:900;line-height:1.25}
+.roomhead p{margin:0;color:var(--muted);font-size:15px}
+
+.lock{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--soft);border-radius:8px}
+.shackle{width:30px;height:38px;position:relative;flex:none}
+.shackle::before{content:"";position:absolute;top:0;left:5px;width:20px;height:22px;border:4px solid var(--ink);border-bottom:0;border-radius:12px 12px 0 0;transition:transform .5s}
+.shackle::after{content:"";position:absolute;bottom:0;left:0;width:30px;height:20px;background:var(--ink);border-radius:3px}
+.lock.open .shackle::before{transform:translateY(-8px) translateX(8px)}
+.dials{display:flex;gap:6px}
+.dial{width:34px;height:42px;border:2px solid var(--ink);border-radius:4px;background:var(--bg);display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:20px;color:#B5C1BB}
+.dial.set{color:var(--ink);background:var(--amber-soft);animation:flip .35s ease}
+.lock.open .dial{background:var(--ok-soft);border-color:var(--exit)}
+@keyframes flip{0%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+
+.qcard{border:2px solid var(--ink);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.tag{display:flex;gap:8px;flex-wrap:wrap}
+.tag span{font-size:12px;font-weight:700;padding:3px 9px;border-radius:4px;background:var(--soft);border:1px solid var(--line)}
+.tag span.base{background:var(--ink);color:#fff;border-color:var(--ink)}
+.prompt{font-size:17px}
+.verb{font-family:var(--jp);font-weight:700;font-size:40px;line-height:1.2;letter-spacing:.02em}
+.verb small{font-size:16px;font-weight:500;color:var(--muted);margin-left:8px}
+.verb .hl{background:linear-gradient(transparent 62%,var(--amber) 62%)}
+.verb .tail{color:var(--muted)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:2px solid var(--line);background:var(--bg);border-radius:8px;padding:12px 10px;font-family:var(--jp);font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px;text-align:left;min-height:56px}
+.opt .k{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:0 5px;flex:none}
+.opt.tc{font-family:var(--tc);font-size:17px}
+.opt:not(:disabled):hover{border-color:var(--ink)}
+.opt.right{border-color:var(--exit);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-soft);text-decoration:line-through}
+.opt:disabled{cursor:default}
+.feedback{border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.feedback.good{background:var(--ok-soft)}
+.feedback.bad{background:var(--wrong-soft)}
+.feedback b{font-size:16px}
+.feedback .ex{font-family:var(--jp),var(--tc)}
+.hint{background:var(--amber-soft);border-radius:8px;padding:12px 14px;font-size:15px}
+.actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.linkbtn{border:0;background:none;color:var(--muted);text-decoration:underline;padding:6px 0;font-size:14px}
+
+/* overlays */
+.banner{border:2px solid var(--ink);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.banner.win{border-color:var(--exit);background:var(--ok-soft)}
+.banner.fail{border-color:var(--wrong);background:var(--wrong-soft)}
+.banner h3{margin:0;font-size:22px;font-weight:900}
+.banner p{margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px;display:flex;flex-direction:column}
+.stat span{font-size:12px;color:var(--muted)}
+.stat b{font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums}
+.escape-h{font-family:var(--disp);font-weight:400;font-size:clamp(30px,8vw,42px);line-height:1.15;margin:0}
+.src{font-size:13px;color:var(--muted)}
+.src a{color:var(--exit-dark)}
+
+/* tutorial */
+.tut-steps{display:flex;gap:6px}
+.tut-steps span{flex:1;height:5px;border-radius:3px;background:var(--line)}
+.tut-steps span.on{background:var(--exit)}
+.tcard{border:2px solid var(--ink);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.tcard h3{margin:0;font-size:21px;font-weight:900;line-height:1.3}
+.tcard p{margin:0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--exit)}
+.chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.chain .box{border:1.5px solid var(--ink);border-radius:6px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;min-width:72px}
+.chain .box small{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.06em}
+.chain .box b{font-family:var(--jp);font-size:19px}
+.chain .box.hl{background:var(--amber-soft)}
+.chain .op{font-weight:900;color:var(--muted)}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;font-size:14px;min-width:360px}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+.tbl th{font-size:12px;color:var(--muted);letter-spacing:.06em;font-weight:700;border-bottom:2px solid var(--ink)}
+.tbl td.jp{font-family:var(--jp);font-weight:700}
+.steps3{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.xlist{font-family:var(--jp);font-weight:700;background:var(--soft);border-radius:6px;padding:8px 12px;line-height:1.9}
+.try{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.try .q{font-weight:700}
+/* share */
+.share{border-top:2px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:12px}
+.share h3{margin:0;font-size:20px;font-weight:900}
+.share p{margin:0;color:var(--muted);font-size:15px}
+.shbtns{display:flex;flex-wrap:wrap;gap:8px}
+.shbtn{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;background:var(--bg)}
+.shbtn:hover{background:var(--ink);color:#fff}
+.shbtn:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
+.shbtn .dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--exit))}
+.shbtn.copy{border-style:dashed}
+.copied{font-size:13px;color:var(--exit-dark);font-weight:700}
+.copyfield{width:100%;font:inherit;font-size:13px;padding:8px;border:1px solid var(--line);border-radius:6px}
+.sharetext{background:var(--soft);border-radius:6px;padding:10px 12px;font-size:14px}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice button{border:2px solid var(--ink);border-radius:8px;padding:14px;background:var(--bg);text-align:left;display:flex;flex-direction:column;gap:4px}
+.choice button b{font-size:16px}
+.choice button span{font-size:13px;color:var(--muted)}
+.choice button.primary{background:var(--exit);border-color:var(--exit-dark);color:var(--exit-ink)}
+.choice button.primary span{color:#DDF3E8}
+@media (max-width:460px){.choice{grid-template-columns:1fr}}
+.roomrow.warm .no{color:var(--exit)}
+
+/* page extras */
+.extras{margin-top:28px}
+.aff{border:2px solid var(--ink);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.aff .eyebrow{color:var(--muted)}
+.aff h3{margin:0;font-size:20px;font-weight:900}
+.aff p{margin:0;font-size:15px}
+.affbtn{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:var(--ink);border:2px solid var(--ink);border-radius:6px;padding:10px 18px;font-weight:700;text-decoration:none}
+.affbtn:hover{background:#F5B83A}
+.affbtn:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
+.disc{font-size:12px;color:var(--muted)}
+.inlineaff{font-size:14px;color:var(--muted);border-top:1px dashed var(--exit);padding-top:10px;width:100%}
+.inlineaff a{color:var(--exit-dark);font-weight:700}
+.about{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:18px}
+.about h2{margin:0;font-size:18px;font-weight:900}
+.about p{margin:0;font-size:14px;color:var(--muted)}
+.about a{color:var(--exit-dark)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<div class="wrap extras">
+  <aside class="aff" aria-label="密室逃脫推薦">
+    <span class="eyebrow">解完文法密室，換一間真的</span>
+    <h3>找一間實體密室逃脫，約朋友一起解謎</h3>
+    <p>台灣各地的主題密室與實境解謎都整理在這裡，看評價、選場次、線上預訂。</p>
+    <a class="affbtn" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="below_game" data-cta-type="affiliate">看密室逃脫・實境解謎推薦 →</a>
+    <span class="disc">本區含 Klook 聯盟行銷連結。透過連結預訂，本站會獲得分潤，你支付的價格不變。</span>
+  </aside>
+  <section id="shareSec"></section>
+  <section class="about">
+    <h2>活用館脫出是什麼？</h2>
+    <p>活用館脫出是一款免費的日文動詞變化練習遊戲。五間密室依序考動詞分類（五段、上一段、下一段、サ變、カ變）、未然形、連用形與て形音便、假定形與命令形，以及可能形。第一次玩可以先看 5 張熱身卡，已經熟悉的人可直接跳過。</p>
+    <p>完整玩法與常見錯誤整理：<a href="https://knittinghiyori.com/japanese-verb-conjugation-game/" data-cta="about_article" data-cta-type="article">日文動詞變化怎麼練最快？活用館脫出玩法介紹</a>　·　<a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">更多學習小遊戲</a></p>
+  </section>
+</div>
+
+<script>
+/* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
+   各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
+   注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
+var HY_GAME_ID = 'katsuyo_escape';  /* 遊戲登記表的 game_id */
+var HY_GAME_ROOT = '#app';  /* 遊戲最外層的選擇器 */
+var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目前語言變數 */
+
+(function(){
+  var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
+  var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
+  var sent = {};
+  var playMs = 0, visibleAt = 0;        /* 實際遊玩時間：只算分頁在前景的時間 */
+  var rounds = 0, roundAt = 0, roundOpen = null;
+
+  function lang(){ try { return LANG_MAP[HY_GAME_LANG()] || 'zh-Hant'; } catch(e){ return 'zh-Hant'; } }
+  function now(){ return Date.now(); }
+  function secs(ms){ return Math.round(ms / 1000); }
+
+  function send(name, params, beacon){
+    try {
+      var p = {}, k, v;
+      params = params || {};
+      for (k in params) {
+        v = params[k];
+        if (v === undefined || v === null || v === '') continue;
+        if (typeof v === 'boolean') v = v ? 'yes' : 'no';
+        if (typeof v === 'string') v = v.slice(0, 100);   /* GA4 參數值上限 100 字元 */
+        p[k] = v;
+      }
+      p.game_id = HY_GAME_ID;
+      p.page_lang = lang();
+      p.content_group = 'game';
+      if (beacon) p.transport_type = 'beacon';
+      if (DEBUG) { p.debug_mode = true; if (window.console) console.log('[hy-game]', name, p); }
+      if (typeof window.gtag === 'function') { window.gtag('event', name, p); return; }
+      window.dataLayer = window.dataLayer || [];
+      (function(){ window.dataLayer.push(arguments); })('event', name, p);
+    } catch(e) {}
+  }
+
+  function playedMs(){ return playMs + (visibleAt ? now() - visibleAt : 0); }
+
+  var api = window.hyGame = {
+    /* 任何事件 */
+    event: send,
+    /* 每次載入頁面只送一次 */
+    once: function(name, params){ if (sent[name]) return; sent[name] = 1; send(name, params); },
+    /* 開始玩：entry = direct／shared／saved */
+    start: function(entry){
+      if (sent.game_start) return;
+      if (!document.hidden) visibleAt = now();
+      api.once('game_start', { entry_point: entry || 'direct' });
+    },
+    /* 一局開始：option＝模式、level＝難度 */
+    roundStart: function(params){
+      api.start('direct');
+      if (roundOpen) api.roundEnd({ result: 'quit' });   /* 上一局沒結束就開新局 → 記為放棄 */
+      params = params || {};
+      roundAt = playedMs();   /* 局的秒數同樣只算前景 */
+      roundOpen = { option: params.option, level: params.level };
+      send('round_start', params);
+    },
+    /* 一局結束：result＝complete／fail／quit／timeout，另帶 score、item_count、correct_count */
+    roundEnd: function(params, beacon){
+      if (!roundOpen) return;
+      var p = {}, k;
+      params = params || {};
+      for (k in roundOpen) p[k] = roundOpen[k];
+      for (k in params) p[k] = params[k];
+      p.duration_sec = secs(playedMs() - roundAt);
+      p.result = p.result || 'complete';
+      if (p.result !== 'quit') rounds = rounds + 1;
+      p.round_count = rounds;
+      roundOpen = null;
+      send('round_end', p, beacon);
+    },
+    /* 分享：method 見值域表，type = result／game */
+    share: function(method, type, extra){
+      var p = {}, k; extra = extra || {};
+      for (k in extra) p[k] = extra[k];
+      p.method = method; p.content_type = type;
+      send('share', p);
+    },
+    /* 選填：遊戲可覆寫，替 cta_click 補參數 */
+    ctaExtra: null
+  };
+
+  function inRoot(t){ if (!t || !t.closest) return null; return t.closest(HY_GAME_ROOT); }
+
+  /* 第一次在遊戲區點擊、輸入或按鍵 → 自動 game_start（點 CTA 不算；只捲動不算） */
+  function autoStart(e){
+    if (sent.game_start) return;
+    var t = e.target;
+    if (!inRoot(t)) return;
+    if (t.closest('[data-cta]')) return;
+    api.start('direct');
+  }
+  document.addEventListener('click', autoStart, true);
+  document.addEventListener('input', autoStart, true);
+  document.addEventListener('keydown', autoStart, true);
+
+  /* 點任何 [data-cta] → cta_click（與故事、工具同一個事件） */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('[data-cta]');
+    if (!a) return;
+    var p = {}, ex = {}, k;
+    try { if (typeof api.ctaExtra === 'function') ex = api.ctaExtra(a) || {}; } catch(err) {}
+    for (k in ex) p[k] = ex[k];
+    p.cta_id = a.getAttribute('data-cta');
+    p.cta_type = a.getAttribute('data-cta-type') || 'other';
+    p.link_url = a.href || '';
+    send('cta_click', p);
+  }, true);
+
+  /* 遊玩計時：切到背景暫停，回來繼續 */
+  document.addEventListener('visibilitychange', function(){
+    if (!sent.game_start) return;
+    if (document.hidden) {
+      if (visibleAt) { playMs = playMs + now() - visibleAt; visibleAt = 0; }
+    } else if (!sent.game_exit) {
+      visibleAt = now();
+    }
+  });
+
+  /* 離開頁面 → game_exit（每次載入只送一次；沒開始玩就不送） */
+  function exit(){
+    if (!sent.game_start || sent.game_exit) return;
+    if (roundOpen) api.roundEnd({ result: 'quit' }, true);
+    sent.game_exit = 1;
+    send('game_exit', { duration_sec: secs(playedMs()), round_count: rounds }, true);
+  }
+  window.addEventListener('pagehide', exit);
+})();
+/* ===== /GA4 統一追蹤 ===== */
+</script>
+<script>
+(function(){
+/* ---------- verb data ---------- */
+// type: g 五段, gx 例外五段, i1 上一段, e1 下一段, s サ變, k カ變
+const V=[
+["書く","かく","g"],["行く","いく","g"],["話す","はなす","g"],["読む","よむ","g"],["待つ","まつ","g"],["泳ぐ","およぐ","g"],["遊ぶ","あそぶ","g"],["買う","かう","g"],["死ぬ","しぬ","g"],["飲む","のむ","g"],["会う","あう","g"],["作る","つくる","g"],["乗る","のる","g"],["分かる","わかる","g"],["洗う","あらう","g"],["呼ぶ","よぶ","g"],["急ぐ","いそぐ","g"],["立つ","たつ","g"],["持つ","もつ","g"],["押す","おす","g"],["休む","やすむ","g"],["歩く","あるく","g"],["聞く","きく","g"],["脱ぐ","ぬぐ","g"],["使う","つかう","g"],["取る","とる","g"],["住む","すむ","g"],["終わる","おわる","g"],["貸す","かす","g"],["笑う","わらう","g"],["運ぶ","はこぶ","g"],
+["帰る","かえる","gx"],["入る","はいる","gx"],["走る","はしる","gx"],["知る","しる","gx"],["切る","きる","gx"],["要る","いる","gx"],["滑る","すべる","gx"],["減る","へる","gx"],["喋る","しゃべる","gx"],["限る","かぎる","gx"],
+["見る","みる","i1"],["起きる","おきる","i1"],["着る","きる","i1"],["借りる","かりる","i1"],["浴びる","あびる","i1"],["落ちる","おちる","i1"],["生きる","いきる","i1"],["降りる","おりる","i1"],["信じる","しんじる","i1"],["足りる","たりる","i1"],
+["食べる","たべる","e1"],["教える","おしえる","e1"],["寝る","ねる","e1"],["開ける","あける","e1"],["忘れる","わすれる","e1"],["始める","はじめる","e1"],["答える","こたえる","e1"],["出る","でる","e1"],["見せる","みせる","e1"],["閉める","しめる","e1"],["覚える","おぼえる","e1"],["考える","かんがえる","e1"],["捨てる","すてる","e1"],["調べる","しらべる","e1"],["集める","あつめる","e1"],["入れる","いれる","e1"],["決める","きめる","e1"],
+["する","する","s"],["勉強する","べんきょうする","s"],["運動する","うんどうする","s"],["電話する","でんわする","s"],["散歩する","さんぽする","s"],["掃除する","そうじする","s"],["練習する","れんしゅうする","s"],["旅行する","りょこうする","s"],
+["来る","くる","k"]
+].map(([w,r,t])=>({w,r,t}));
+
+const TYPE_NAME={g:"五段動詞",gx:"五段動詞",i1:"上一段動詞",e1:"下一段動詞",s:"サ行変格",k:"カ行変格"};
+const U="うくぐすつぬぶむる",A="わかがさたなばまら",I="いきぎしちにびみり",E="えけげせてねべめれ",O="おこごそとのぼもろ";
+const ROW_I="いきしちにひみりぎじぢびぴ", ROW_E="えけせてねへめれげぜでべぺ";
+
+const FORMS={
+ nai:{name:"ない形",base:"未然形",att:"＋ない",mean:"否定"},
+ vol:{name:"意志形",base:"未然形",att:"＋う／よう",mean:"意志・邀約"},
+ pass:{name:"被動形",base:"未然形",att:"＋れる／られる",mean:"被動"},
+ caus:{name:"使役形",base:"未然形",att:"＋せる／させる",mean:"讓某人做"},
+ masu:{name:"ます形",base:"連用形",att:"＋ます",mean:"禮貌體"},
+ te:{name:"て形",base:"連用形",att:"＋て",mean:"連接・請求"},
+ ta:{name:"た形",base:"連用形",att:"＋た",mean:"過去"},
+ ba:{name:"ば形",base:"仮定形",att:"＋ば",mean:"假設條件"},
+ imp:{name:"命令形",base:"命令形",att:"單獨結句",mean:"命令"},
+ proh:{name:"禁止形",base:"終止形",att:"＋な",mean:"禁止"},
+ pot:{name:"可能形",base:"獨立成下一段",att:"",mean:"能夠"}
+};
+
+/* ---------- conjugation engine ---------- */
+function teOf(s,isIku){
+  const b=s.slice(0,-1),l=s.slice(-1);
+  if(isIku) return b+"って";
+  if("うつる".includes(l)) return b+"って";
+  if("むぶぬ".includes(l)) return b+"んで";
+  if(l==="く") return b+"いて";
+  if(l==="ぐ") return b+"いで";
+  return b+"して";
+}
+function godan(s,f,isIku){
+  const b=s.slice(0,-1),x=U.indexOf(s.slice(-1));
+  switch(f){
+    case"nai":return b+A[x]+"ない";case"vol":return b+O[x]+"う";
+    case"pass":return b+A[x]+"れる";case"caus":return b+A[x]+"せる";
+    case"masu":return b+I[x]+"ます";case"te":return teOf(s,isIku);
+    case"ta":{const t=teOf(s,isIku);return t.slice(0,-1)+(t.endsWith("で")?"だ":"た");}
+    case"ba":return b+E[x]+"ば";case"imp":return b+E[x];
+    case"proh":return s+"な";case"pot":return b+E[x]+"る";
+  }
+}
+function ichidan(s,f){
+  const b=s.slice(0,-1);
+  return {nai:b+"ない",vol:b+"よう",pass:b+"られる",caus:b+"させる",masu:b+"ます",te:b+"て",ta:b+"た",ba:b+"れば",imp:b+"ろ",proh:s+"な",pot:b+"られる"}[f];
+}
+const SURU={nai:"しない",vol:"しよう",pass:"される",caus:"させる",masu:"します",te:"して",ta:"した",ba:"すれば",imp:"しろ",proh:"するな",pot:"できる"};
+const KURU={nai:"こない",vol:"こよう",pass:"こられる",caus:"こさせる",masu:"きます",te:"きて",ta:"きた",ba:"くれば",imp:"こい",proh:"くるな",pot:"こられる"};
+function conj(v,f){
+  if(v.t==="s") return v.w.slice(0,-2)+SURU[f];
+  if(v.t==="k") return KURU[f];
+  if(v.t==="g"||v.t==="gx") return godan(v.w,f,v.w==="行く");
+  return ichidan(v.w,f);
+}
+const SURU_BAD={nai:["すない","さない","せない"],vol:["すろう","しろう","さよう"],pass:["しられる","すられる","できる"],caus:["しさせる","すさせる","される"],masu:["すります","さます","せます"],te:["すって","さて","すて"],ta:["すった","さた","すた"],ba:["しれば","せれば","すりば"],imp:["すれ","しれ","せろ"],proh:["しな","すんな","せな"],pot:["すられる","しられる","される"]};
+const KURU_BAD={nai:["きない","くない","くらない"],vol:["きよう","くろう","くよう"],pass:["きられる","くられる","こさせる"],caus:["きさせる","くさせる","こられる"],masu:["こます","くります","くます"],te:["こて","くって","けて"],ta:["こた","くった","けた"],ba:["これば","きれば","くるば"],imp:["これ","きろ","くれ"],proh:["こな","きな","くれな"],pot:["きられる","くれる","くられる"]};
+const CONFUSE={nai:["pass","caus"],vol:["imp","ba"],pass:["pot","caus"],caus:["pass","nai"],masu:["te","nai"],te:["ta","masu"],ta:["te"],ba:["imp","pot"],imp:["ba","vol"],proh:["imp","nai"],pot:["pass","ba"]};
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+
+function distractors(v,f,ans){
+  let c=[];
+  if(v.t==="s"){const p=v.w.slice(0,-2);c=SURU_BAD[f].map(x=>p+x);}
+  else if(v.t==="k"){c=KURU_BAD[f].slice();}
+  else{
+    const b=v.w.slice(0,-1);
+    if(v.t==="g"||v.t==="gx"){
+      if(v.w.endsWith("る")) c.push(ichidan(v.w,f));
+      const x=U.indexOf(v.w.slice(-1));
+      const wrongRow={nai:b+I[x]+"ない",vol:b+O[x]+"よう",pass:b+A[x]+"られる",caus:b+A[x]+"させる",masu:b+A[x]+"ます",ba:b+U[x]+"ば",imp:b+I[x],pot:b+A[x]+"れる",proh:b+I[x]+"な"}[f];
+      if(wrongRow) c.push(wrongRow);
+      if(f==="te"||f==="ta"){
+        const tt=f==="te"?["って","んで","いて","して","いで"]:["った","んだ","いた","した","いだ"];
+        tt.forEach(t=>c.push(b+t));
+        if(v.w==="行く") c.unshift(f==="te"?"行いて":"行いた");
+      }
+    } else {
+      c.push(godan(v.w,f,false));
+      const gw={nai:b+"らない",masu:b+"ります",te:b+"って",ta:b+"った",vol:b+"ろう",ba:b+"れ",imp:b+"れ",pot:b+"れる",pass:b+"れる",caus:b+"せる",proh:b+"ろな"}[f];
+      if(gw) c.push(gw);
+    }
+    (CONFUSE[f]||[]).forEach(g=>c.push(conj(v,g)));
+  }
+  c=[...new Set(c)].filter(x=>x&&x!==ans&&x!==v.w);
+  if(c.length<3){Object.keys(FORMS).forEach(g=>{const y=conj(v,g);if(y!==ans&&!c.includes(y))c.push(y);});}
+  return shuffle(c.slice(0,Math.max(3,c.length))).slice(0,3);
+}
+
+function rule(v,f){
+  if(v.t==="s") return "サ變不規則，直接記：する → "+SURU[f];
+  if(v.t==="k") return "カ變不規則，連漢字讀音都會變：くる → "+KURU[f];
+  if(v.t==="g"||v.t==="gx"){
+    const tail=v.w.slice(-1);
+    let r={nai:"五段：語尾移到あ段＋ない（う→わ）",vol:"五段：語尾移到お段＋う",pass:"五段：語尾移到あ段＋れる",caus:"五段：語尾移到あ段＋せる",masu:"五段：語尾移到い段＋ます",ba:"五段：語尾移到え段＋ば",imp:"五段：語尾移到え段，單獨結句",proh:"辭書形（終止形）＋な",pot:"五段：語尾移到え段＋る，變成新的下一段動詞"}[f];
+    if(f==="te"||f==="ta"){
+      const on=v.w==="行く"?"行く是唯一例外 → 行って／行った":
+        "うつる".includes(tail)?"う・つ・る → って／った（促音便）":
+        "むぶぬ".includes(tail)?"む・ぶ・ぬ → んで／んだ（撥音便）":
+        tail==="く"?"く → いて／いた（い音便）":tail==="ぐ"?"ぐ → いで／いだ":"す → して／した（不音變）";
+      r="五段音便："+on;
+    }
+    if(v.t==="gx") r+="。⚠ "+v.w+" 外形像一段，其實是例外五段";
+    return r;
+  }
+  return "一段：去掉る＋"+{nai:"ない",vol:"よう",pass:"られる",caus:"させる",masu:"ます",te:"て",ta:"た",ba:"れば",imp:"ろ",proh:"（辭書形＋な）",pot:"られる"}[f];
+}
+
+/* ---------- question builders ---------- */
+function weightedVerb(used){
+  for(let n=0;n<50;n++){
+    const r=Math.random(); let t;
+    if(r<.42)t="g";else if(r<.57)t="gx";else if(r<.72)t="e1";else if(r<.84)t="i1";else if(r<.95)t="s";else t="k";
+    const v=pick(V.filter(x=>x.t===t));
+    if(!used.has(v.w)){used.add(v.w);return v;}
+  }
+  return pick(V);
+}
+function showWord(v,s){return v.t==="k"?s:s;}
+function conjQ(v,f){
+  const ans=conj(v,f);
+  const opts=shuffle([ans,...distractors(v,f,ans)]);
+  const F=FORMS[f];
+  return {kind:"conj",tags:[F.name+"・"+F.mean,F.base+(F.att?" "+F.att:"")],
+    prompt:"「"+v.w+"」的 "+F.name+" 是？",verbHTML:esc(v.w)+(v.t==="k"||v.w!==v.r?"<small>"+esc(v.r)+"</small>":""),
+    opts,ans,jp:true,ex:v.w+"｜"+TYPE_NAME[v.t]+" → "+ans,why:rule(v,f),hint:hintFor(v,f)};
+}
+function hintFor(v,f){
+  const F=FORMS[f];
+  const steps=[
+    "先分類："+(v.t==="s"||v.t==="k"?"這是變格動詞，直接背":v.w.endsWith("る")&&(v.t==="gx"||v.t==="g")?"る結尾，看る前面的音；小心例外五段":v.w.endsWith("る")?"る前是 "+v.r.slice(-2,-1)+"（"+(v.t==="i1"?"い段":"え段")+"）→ 一段":"不是る結尾 → 一定是五段"),
+    F.name+" 從 "+F.base+" 出發"+(F.att?"，後接 "+F.att.replace("＋",""):"")
+  ];
+  return steps.join("　／　");
+}
+function classifyQ(v){
+  const opts=["五段動詞","上一段動詞","下一段動詞","サ行変格","カ行変格"];
+  const ans=TYPE_NAME[v.t];
+  let why;
+  if(v.t==="s") why="STEP 1：名詞＋する → サ行変格";
+  else if(v.t==="k") why="STEP 1：来る（くる）→ カ行変格，只有這一個";
+  else if(!v.w.endsWith("る")) why="STEP 2：字尾是「"+v.w.slice(-1)+"」不是る → 五段";
+  else{
+    const pre=v.r.slice(-2,-1);
+    const row=ROW_I.includes(pre)?"i 段":ROW_E.includes(pre)?"e 段":"a・u・o 段";
+    if(v.t==="gx") why="る前是「"+pre+"」（"+row+"），外形像一段，但屬例外五段：帰る・入る・走る・知る・切る・要る…要整組背";
+    else if(v.t==="g") why="STEP 3：る前是「"+pre+"」（"+row+"）→ 五段";
+    else why="STEP 3：る前是「"+pre+"」（"+row+"）→ "+ans;
+  }
+  return {kind:"cls",tags:["動詞分類","五種之一"],prompt:"「"+v.w+"」屬於哪一類？",
+    verbHTML:esc(v.w)+"<small>"+esc(v.r)+"</small>",opts,ans,jp:false,ex:v.w+" → "+ans,why,
+    hint:"判斷三步驟：①是する／来る嗎？ ②字尾是る嗎？ ③る前面是 i 段還是 e 段？"};
+}
+const IDF=["未然形","連用形","終止形","連体形","仮定形","命令形"];
+function identifyQ(v){
+  const b=v.w.slice(0,-1),x=U.indexOf(v.w.slice(-1));
+  const te=teOf(v.w,v.w==="行く");
+  const items=[
+    [b+A[x],"ない","未然形","接ない（否定）"],
+    [b+O[x],"う","未然形","接う（意志）"],
+    [b+A[x],"せる","未然形","接せる（使役）"],
+    [b+I[x],"ます","連用形","接ます"],
+    [te.slice(0,-1),te.endsWith("で")?"だ":"た","連用形","接た（音便後仍是連用形）"],
+    [v.w,"だろう","終止形","接だろう（推量）"],
+    [v.w,"な","終止形","終止形＋な＝禁止"],
+    [v.w,"時","連体形","後面接名詞"],
+    [v.w,"こと","連体形","後面接こと（名詞化）"],
+    [b+E[x],"ば","仮定形","接ば（假設）"],
+    [b+E[x],"。","命令形","不接任何詞，單獨結句"]
+  ];
+  const [part,tail,ans,why]=pick(items);
+  return {kind:"id",tags:["活用形辨識","看後接詞"],prompt:"畫線的部分是哪一個活用形？",
+    verbHTML:'<span class="hl">'+esc(part)+'</span><span class="tail">'+esc(tail==="。"?"。":"＋"+tail)+"</span><small>"+esc(v.w)+"</small>",
+    opts:IDF.slice(),ans,jp:false,ex:part+(tail==="。"?"。":tail)+" → "+ans,why:"判斷依據是後接詞："+why,
+    hint:"口訣：未然形＝ない・う・よう／連用形＝ます・た・て／連体形＝時・こと・ので／仮定形＝ば"};
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+
+/* ---------- rooms ---------- */
+const ROOMS=[
+ {jp:"玄関",zh:"玄關",title:"分類之門",story:"門上刻著五種動詞的符號。每判斷對一個動詞，鎖上的轉盤就轉到一格。",
+  build(){const used=new Set(),qs=[];const pool=shuffle(V.filter(v=>v.t!=="k"&&v.t!=="s"));
+    const gx=pool.filter(v=>v.t==="gx").slice(0,2),rest=pool.filter(v=>v.t!=="gx");
+    const picks=[...gx,rest.find(v=>v.t==="g"),rest.find(v=>v.t==="i1"),rest.find(v=>v.t==="e1")];
+    if(Math.random()<.5)picks[1]=V.find(v=>v.t==="k");else picks[1]=pick(V.filter(v=>v.t==="s"));
+    return shuffle(picks).map(classifyQ);}},
+ {jp:"書庫",zh:"書庫",title:"未然形的書架",story:"這裡每本書都寫著還沒發生的事。否定、意志、被動、使役，都從未然形出發。",
+  build(){const u=new Set();return shuffle(["nai","nai","vol","pass","caus"]).map(f=>conjQ(weightedVerb(u),f));}},
+ {jp:"廊下",zh:"走廊",title:"連用形的長廊",story:"長廊盡頭有ます、た、て三扇門。五段動詞接た・て時會音變，腳下到處是陷阱。",
+  build(){const u=new Set();const g=()=>{let v;do{v=weightedVerb(u);}while(Math.random()<.4&&!(v.t==="g"||v.t==="gx"));return v;};
+    return shuffle(["masu","te","te","ta","ta"]).map(f=>conjQ(f==="masu"?weightedVerb(u):g(),f));}},
+ {jp:"地下室",zh:"地下室",title:"假定與命令",story:"牆上用粉筆寫著「行け」。它是假定形還是命令形？答案藏在後面有沒有「ば」。",
+  build(){const u=new Set();return shuffle(["ba","ba","imp","imp","proh"]).map(f=>conjQ(weightedVerb(u),f));}},
+ {jp:"金庫室",zh:"金庫室",title:"最後的保險箱",story:"保險箱要你把變化拆回活用形，再加上獨立出來的可能形。打開它，就能看到綠色的出口燈。",
+  build(){const u=new Set();const gs=shuffle(V.filter(v=>v.t==="g"||v.t==="gx"));
+    return shuffle([identifyQ(gs[0]),identifyQ(gs[1]),identifyQ(gs[2]),conjQ(weightedVerb(u),"pot"),conjQ(weightedVerb(u),"pot")]);}}
+];
+
+/* ---------- state ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+let S={tutored:store.get("ke_tutored",false),cleared:store.get("ke_cleared",0),best:store.get("ke_best",null),elapsed:0,penalty:0,mistakes:0,hints:0,running:false};
+let R=null; // room run
+let tick=null,lastT=0;
+const app=document.getElementById("app");
+
+function fmt(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");}
+function total(){return S.elapsed+S.penalty;}
+function startClock(){if(tick)return;lastT=performance.now();tick=setInterval(()=>{const n=performance.now();S.elapsed+=(n-lastT)/1000;lastT=n;const t=document.getElementById("timer");if(t)t.textContent=fmt(total());},250);}
+function stopClock(){clearInterval(tick);tick=null;}
+
+function signHTML(){return '<div class="sign" aria-label="非常口 EXIT"><div><div class="kj">非常口</div><div class="run">EMERGENCY EXIT</div></div><div class="arrow"></div></div>';}
+
+/* ---------- screens ---------- */
+function intro(){
+  endRound("quit");
+  stopClock();
+  const rows=ROOMS.map((r,i)=>{
+    const st=i<S.cleared?"done":i===S.cleared?"now":"lock";
+    const lbl={done:"已解鎖",now:"下一間",lock:"上鎖中"}[st];
+    return `<button class="roomrow" data-room="${i}" ${i>S.cleared||i>=ROOMS.length?"disabled":""}>
+      <span class="no jp">${r.jp}</span><span class="nm"><b>${r.title}</b><span>${r.zh}・5 道鎖</span></span><span class="chip ${st}">${lbl}</span></button>`;}).join("");
+  app.innerHTML=`
+  <section class="hero">${signHTML()}
+    <h1 class="jp">活用館からの<em>脱出</em></h1>
+    <p>你被關在一棟日文文法館裡。五間密室，每一扇門都用動詞變化上鎖。答對一題，鎖上的轉盤就轉一格；三根蠟燭熄滅，房間會重新洗牌。</p>
+  </section>
+  <div class="rules">
+    <div class="rule"><b>分類 → 活用形 → 後接詞</b><span>每題都能拆成這三層，錯了會告訴你卡在哪一層。</span></div>
+    <div class="rule"><b>三根蠟燭</b><span>答錯熄一根。全熄就重來這間，計時不停。</span></div>
+    <div class="rule"><b>提示 +20 秒</b><span>看分類步驟與接續規則，代價是時間。數字鍵 1–6 可作答。</span></div>
+  </div>
+  <div class="plan-label">館內平面圖</div>
+  <div class="plan"><button class="roomrow warm" id="warmrow"><span class="no jp">控室</span><span class="nm"><b>熱身：管理員的筆記</b><span>5 張教學卡・不計時・不扣蠟燭</span></span><span class="chip ${S.tutored?"done":"now"}">${S.tutored?"已讀過":"建議先看"}</span></button>${rows}</div>
+  ${S.cleared===0&&!S.tutored?`<div class="choice">
+    <button class="primary" id="tut"><b>先熱身再破案</b><span>5 張卡帶你過一次分類、活用形、音便，約 2 分鐘</span></button>
+    <button id="skip"><b>跳過教學，直接破案</b><span>已經熟悉五段／一段／變格的人</span></button>
+  </div>`:`<div class="btnrow">
+    <button class="btn go" id="go">${S.cleared===0?"開始脫出":S.cleared>=ROOMS.length?"再逃一次":"繼續：進入"+ROOMS[S.cleared].zh}</button>
+    ${S.cleared>0&&S.cleared<ROOMS.length?'<button class="btn ghost" id="reset">從頭開始</button>':""}
+  </div>`}
+  ${S.best!=null?`<div class="best">最佳脫出時間 ${fmt(S.best)}</div>`:""}
+  <p class="src">規則依據：<a href="https://knittinghiyori.com/japanese-verb-conjugation-six-forms-five-types/" target="_blank" rel="noopener" data-cta="source_article" data-cta-type="article">編織日和｜五種動詞分類 × 六大活用形</a>。動詞取自 JLPT N5–N4。</p>
+`;
+  renderShare(SHARE_INVITE,false);
+  app.querySelectorAll(".roomrow").forEach(b=>b.onclick=()=>enter(+b.dataset.room));
+  const go=document.getElementById("go");if(go)go.onclick=()=>{if(S.cleared>=ROOMS.length){resetRun();}enter(S.cleared);};
+  const tb=document.getElementById("tut");if(tb)tb.onclick=()=>tutorial(0);
+  const sk=document.getElementById("skip");if(sk)sk.onclick=()=>{track("katsuyo_tutorial_skip",{source:"intro"});S.tutored=true;store.set("ke_tutored",true);enter(0);};
+  document.getElementById("warmrow").onclick=()=>tutorial(0);
+  const rs=document.getElementById("reset");if(rs)rs.onclick=()=>{resetRun();intro();};
+}
+
+/* ---------- share ---------- */
+const SHARE_URL="https://games.knittinghiyori.com/katsuyo-escape/?ref=share";
+const SHARE_TAGS="#日文動詞變化 #JLPT #日文學習";
+const SHARE_INVITE="五間密室，每扇門都用日文動詞變化上鎖。五段、一段、變格、音便，你能逃出「活用館」嗎？";
+let shareState={text:SHARE_INVITE,type:"game"};
+function HG(){return window.hyGame||null;}
+function track(name,params){const h=HG();if(h)h.event(name,params);}
+function shareLinks(text){
+  const u=encodeURIComponent(SHARE_URL),full=text+" "+SHARE_TAGS;
+  return [
+    ["facebook","Facebook","#1877F2","https://www.facebook.com/sharer/sharer.php?u="+u],
+    ["line","LINE","#06C755","https://social-plugins.line.me/lineit/share?url="+u+"&text="+encodeURIComponent(full)],
+    ["threads","Threads","#111413","https://www.threads.net/intent/post?text="+encodeURIComponent(full+"\n"+SHARE_URL)],
+    ["x","X","#111413","https://twitter.com/intent/tweet?text="+encodeURIComponent(full)+"&url="+u],
+    ["telegram","Telegram","#229ED9","https://t.me/share/url?url="+u+"&text="+encodeURIComponent(full)]
+  ];
+}
+function renderShare(text,isResult){
+  shareState={text,type:isResult?"result":"game"};
+  const box=document.getElementById("shareSec");
+  box.className="share";
+  box.setAttribute("aria-label","分享");
+  box.innerHTML=`<h3>${isResult?"把你的成績丟給朋友挑戰":"邀一個正在學日文的朋友一起逃"}</h3>
+    <p>${isResult?"分享你的脫出時間，看誰最快找到出口。":"分享到你常用的平台，讓卡在動詞變化的人也來試試。"}</p>
+    <div class="sharetext">${esc(text)} ${esc(SHARE_TAGS)}</div>
+    <div class="shbtns">${shareLinks(text).map(([m,n,c,h])=>`<a class="shbtn" style="--c:${c}" href="${h}" target="_blank" rel="noopener" data-share="${m}"><span class="dot"></span>分享到 ${n}</a>`).join("")}
+      <button class="shbtn copy" id="copylink"><span class="dot"></span>複製連結＋文字</button></div>
+    <div id="copyout" aria-live="polite"></div>`;
+  box.querySelectorAll("[data-share]").forEach(a=>a.addEventListener("click",()=>{const h=HG();if(h)h.share(a.dataset.share,shareState.type);}));
+  document.getElementById("copylink").onclick=()=>{
+    const h=HG();if(h)h.share("copy_link",shareState.type);
+    const all=text+" "+SHARE_TAGS+"\n"+SHARE_URL,out=document.getElementById("copyout");
+    const fallback=()=>{out.innerHTML='<input class="copyfield" id="copyfield" readonly aria-label="分享文字">';const f=document.getElementById("copyfield");f.value=all;f.focus();f.select();out.insertAdjacentHTML("beforeend",'<div class="copied">已選取，按 Ctrl／⌘＋C 複製</div>');};
+    try{navigator.clipboard.writeText(all).then(()=>{out.innerHTML='<span class="copied">已複製，可以貼到 IG 限動或任何地方</span>';},fallback);}catch(e){fallback();}
+  };
+}
+
+/* ---------- round tracking（依 GA4 遊戲規範 v1.0） ---------- */
+let answeredTotal=0;
+const MILESTONES=[1,10,50,100];
+function lvl(i){return "l"+String(i+1).padStart(2,"0");}
+function endRound(result){
+  if(!R||R.ended)return;R.ended=true;
+  const h=HG();if(h)h.roundEnd({result,item_count:R.items,correct_count:R.correct});
+}
+
+/* ---------- tutorial ---------- */
+const TUT=[
+ {eye:"熱身 1／5",title:"每個變化都拆成三層",
+  body:`<p>動詞變化不用背 15 張表。任何一個變化，都是這三步的結果：</p>
+  <div class="chain"><div class="box"><small>① 分類</small><b>行く</b><small>五段動詞</small></div><span class="op">→</span><div class="box hl"><small>② 活用形</small><b>行か</b><small>未然形</small></div><span class="op">＋</span><div class="box"><small>③ 後接詞</small><b>ない</b><small>否定</small></div><span class="op">＝</span><div class="box"><small>結果</small><b>行かない</b><small>ない形</small></div></div>
+  <p>密室裡每一題答錯時，解析都會告訴你卡在哪一層。</p>`,
+  q:"「行きます」裡的「行き」是哪一個活用形？",opts:["未然形","連用形","仮定形","命令形"],ans:"連用形",why:"後接詞是ます → 連用形。口訣：連用形接 ます・た・て。"},
+ {eye:"熱身 2／5",title:"五種分類，三步判斷",
+  body:`<ol class="steps3"><li><b>是する／来る嗎？</b> 是 → サ行変格／カ行変格（變格，直接背）</li><li><b>字尾是る嗎？</b> 不是 → 一定是<b>五段</b>（書く、読む、話す）</li><li><b>る前面是哪一段？</b> i 段 → <b>上一段</b>（見る、起きる）；e 段 → <b>下一段</b>（食べる、寝る）；其他 → 五段（分かる、作る）</li></ol>
+  <p>陷阱：這些長得像一段，其實是<b>例外五段</b>，要整組背：</p>
+  <div class="xlist">帰る　入る　走る　知る　要る　切る　滑る　減る　喋る　限る</div>`,
+  q:"「帰る」屬於哪一類？",opts:["五段動詞","上一段動詞","下一段動詞","サ行変格"],ans:"五段動詞",why:"え段＋る，外形像下一段，但它是例外五段：帰ります、帰って、帰らない。"},
+ {eye:"熱身 3／5",title:"六大活用形，看後接詞認出來",
+  body:`<div class="tbl"><table><thead><tr><th>活用形</th><th>五段 書く</th><th>一段 食べる</th><th>常接</th></tr></thead><tbody>
+  <tr><td>未然形</td><td class="jp">書か</td><td class="jp">食べ</td><td>ない・う／よう・れる・せる</td></tr>
+  <tr><td>連用形</td><td class="jp">書き</td><td class="jp">食べ</td><td>ます・た・て</td></tr>
+  <tr><td>終止形</td><td class="jp">書く</td><td class="jp">食べる</td><td>。・だろう・な（禁止）</td></tr>
+  <tr><td>連体形</td><td class="jp">書く</td><td class="jp">食べる</td><td>時・こと・ので（接名詞）</td></tr>
+  <tr><td>仮定形</td><td class="jp">書け</td><td class="jp">食べれ</td><td>ば</td></tr>
+  <tr><td>命令形</td><td class="jp">書け</td><td class="jp">食べろ</td><td>單獨結句</td></tr></tbody></table></div>
+  <p>五段的仮定形和命令形長一樣（書け）。有接ば是仮定形，單獨結句是命令形。</p>`,
+  q:"「食べれば」裡的「食べれ」是哪一個活用形？",opts:["連用形","連体形","仮定形","命令形"],ans:"仮定形",why:"後接ば → 仮定形。一段動詞：去る＋れば。"},
+ {eye:"熱身 4／5",title:"五段接て・た會音變",
+  body:`<p>只有五段動詞會音變，看辭書形最後一個假名：</p>
+  <div class="tbl"><table><thead><tr><th>語尾</th><th>て形</th><th>例</th></tr></thead><tbody>
+  <tr><td class="jp">う・つ・る</td><td class="jp">って</td><td class="jp">買って・待って・帰って</td></tr>
+  <tr><td class="jp">む・ぶ・ぬ</td><td class="jp">んで</td><td class="jp">読んで・遊んで・死んで</td></tr>
+  <tr><td class="jp">く</td><td class="jp">いて</td><td class="jp">書いて（例外：行って）</td></tr>
+  <tr><td class="jp">ぐ</td><td class="jp">いで</td><td class="jp">泳いで</td></tr>
+  <tr><td class="jp">す</td><td class="jp">して</td><td class="jp">話して</td></tr></tbody></table></div>
+  <p>た形規則相同，把て換成た、で換成だ。一段動詞直接去る＋て（食べて）。</p>`,
+  q:"「読む」的て形是？",opts:["読みて","読んで","読って","読いて"],ans:"読んで",why:"む・ぶ・ぬ → んで。"},
+ {eye:"熱身 5／5",title:"兩個變格，連讀音都會變",
+  body:`<div class="tbl"><table><thead><tr><th>形</th><th>する</th><th>来る</th></tr></thead><tbody>
+  <tr><td>ない形</td><td class="jp">しない</td><td class="jp">こない</td></tr>
+  <tr><td>ます形</td><td class="jp">します</td><td class="jp">きます</td></tr>
+  <tr><td>て形</td><td class="jp">して</td><td class="jp">きて</td></tr>
+  <tr><td>ば形</td><td class="jp">すれば</td><td class="jp">くれば</td></tr>
+  <tr><td>命令形</td><td class="jp">しろ</td><td class="jp">こい</td></tr>
+  <tr><td>可能形</td><td class="jp">できる</td><td class="jp">こられる</td></tr></tbody></table></div>
+  <p>勉強する、運動する這類「名詞＋する」都照する變。可能形是獨立的新動詞：五段改え段＋る（書ける），一段去る＋られる（食べられる）。</p>`,
+  q:"「来る」的ない形是？",opts:["きない","くない","こない","くらない"],ans:"こない",why:"カ變：未然形讀こ → こない。"}
+];
+function tutorial(i){
+  endRound("quit");
+  stopClock();R=null;
+  if(i===0){const h=HG();if(h)h.once("tutorial_begin");}
+  if(i>=TUT.length){
+    S.tutored=true;store.set("ke_tutored",true);
+    {const h=HG();if(h)h.once("tutorial_complete");}
+    app.innerHTML=`<div class="tut-steps">${TUT.map(()=>'<span class="on"></span>').join("")}</div>
+    <div class="banner win"><span class="eyebrow">熱身完成</span><h3>管理員把玄關的鑰匙孔指給你看</h3>
+    <p>接下來開始計時。答錯熄蠟燭，卡住就按提示（+20 秒）。</p>
+    <div class="btnrow"><button class="btn go" id="start">開始破案：進入玄關</button><button class="btn ghost" id="again">重看熱身</button></div></div>`;
+    document.getElementById("start").onclick=()=>{resetRun();S.tutored=true;store.set("ke_tutored",true);enter(0);};
+    document.getElementById("again").onclick=()=>tutorial(0);
+    return;
+  }
+  const t=TUT[i];
+  app.innerHTML=`
+  <div class="hud"><button class="back" id="map2">← 平面圖</button><button class="linkbtn" id="skipt">跳過教學，直接破案 →</button></div>
+  <div class="tut-steps">${TUT.map((_,k)=>`<span class="${k<=i?"on":""}"></span>`).join("")}</div>
+  <div class="tcard"><span class="eyebrow">${t.eye}</span><h3>${t.title}</h3>${t.body}
+    <div class="try"><span class="q">小試身手：${esc(t.q)}</span>
+      <div class="opts">${t.opts.map((o,k)=>`<button class="opt ${/形|動詞|変格/.test(o)?"tc":""}" data-v="${esc(o)}"><span class="k">${k+1}</span><span>${esc(o)}</span></button>`).join("")}</div>
+      <div id="tfb"></div></div>
+  </div>
+  <div class="actions"><button class="btn ghost" id="prev" ${i===0?"disabled":""}>上一張</button><button class="btn go" id="nextt">${i===TUT.length-1?"完成熱身":"下一張"}</button></div>`;
+  document.getElementById("map2").onclick=intro;
+  document.getElementById("skipt").onclick=()=>{track("katsuyo_tutorial_skip",{source:"tutorial"});S.tutored=true;store.set("ke_tutored",true);resetRun();enter(0);};
+  document.getElementById("prev").onclick=()=>tutorial(i-1);
+  document.getElementById("nextt").onclick=()=>tutorial(i+1);
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.v===t.ans;
+    app.querySelectorAll(".opt").forEach(x=>x.classList.remove("wrong"));
+    if(ok){app.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.dataset.v===t.ans)x.classList.add("right");});}
+    else b.classList.add("wrong");
+    document.getElementById("tfb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"答對了":"再試一次，熱身不扣蠟燭"}</b>${ok?"<span>"+esc(t.why)+"</span>":""}</div>`;
+  });
+  window.scrollTo(0,0);
+}
+
+function resetRun(){S.cleared=0;S.elapsed=0;S.penalty=0;S.mistakes=0;S.hints=0;store.set("ke_cleared",0);}
+
+function enter(i){
+  const room=ROOMS[i];
+  endRound("quit");
+  R={i,room,qs:room.build(),q:0,lives:3,code:Array.from({length:5},()=>Math.floor(Math.random()*10)),solved:0,answered:false,hintOpen:false,items:0,correct:0,ended:false};
+  const h=HG();if(h)h.roundStart({option:"escape",level:lvl(i)});
+  startClock();renderRoom();window.scrollTo(0,0);
+}
+function renderRoom(msg){
+  const {room,lives,code,solved}=R;
+  const q=R.qs[R.q];
+  const candles=[0,1,2].map(k=>`<span class="candle ${k>=lives?"out":""}" aria-hidden="true"></span>`).join("");
+  const dials=code.map((d,k)=>`<span class="dial ${k<solved?"set":""}">${k<solved?d:"?"}</span>`).join("");
+  let body="";
+  if(msg==="win"){
+    body=`<div class="banner win"><h3>喀嚓，鎖開了</h3><p>密碼 <b style="font-family:var(--mono)">${code.join("")}</b>。${R.i<ROOMS.length-1?"下一間是「"+ROOMS[R.i+1].title+"」。":"門後透出綠色的光。"}</p>
+      <div class="btnrow"><button class="btn go" id="next">${R.i<ROOMS.length-1?"進入"+ROOMS[R.i+1].zh:"走向出口"}</button><button class="btn ghost" id="map">看平面圖</button></div>
+      <p class="inlineaff">休息一下：想挑戰真的密室？<a href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="room_clear" data-cta-type="affiliate">看密室逃脫・實境解謎推薦</a>（聯盟連結）</p></div>`;
+  }else if(msg==="fail"){
+    body=`<div class="banner fail"><h3>三根蠟燭都熄了</h3><p>房間一片漆黑。題目會重新洗牌，計時繼續。</p>
+      <div class="btnrow"><button class="btn" id="retry">點燈重來</button><button class="btn ghost" id="map">看平面圖</button></div></div>`;
+  }else{
+    const opts=q.opts.map((o,k)=>`<button class="opt ${q.jp?"":"tc"}" data-v="${esc(o)}"><span class="k">${k+1}</span><span>${esc(o)}</span></button>`).join("");
+    body=`<div class="qcard">
+      <div class="tag">${q.tags.map((t,k)=>`<span class="${k===1?"base":""}">${esc(t)}</span>`).join("")}</div>
+      <div class="prompt">${esc(q.prompt)}</div>
+      <div class="verb">${q.verbHTML}</div>
+      <div class="opts" id="opts">${opts}</div>
+      <div id="fb"></div>
+      <div class="actions"><button class="linkbtn" id="hintb">看提示（+20 秒）</button><span class="best">第 ${R.q+1} / ${R.qs.length} 道鎖</span></div>
+      <div id="hintbox"></div>
+    </div>`;
+  }
+  app.innerHTML=`
+  <div class="hud"><button class="back" id="map2">← 平面圖</button><div class="candles" aria-label="剩下 ${lives} 根蠟燭">${candles}</div><div class="timer" id="timer">${fmt(total())}</div></div>
+  <div class="roomhead"><span class="jpn">ROOM ${R.i+1}　${room.jp}</span><h2>${room.title}</h2><p>${room.story}</p></div>
+  <div class="lock ${msg==="win"?"open":""}"><span class="shackle" aria-hidden="true"></span><div class="dials" aria-label="已轉好 ${solved} 格">${dials}</div></div>
+  ${body}`;
+  document.getElementById("map2").onclick=intro;
+  const m=document.getElementById("map");if(m)m.onclick=intro;
+  const nx=document.getElementById("next");if(nx)nx.onclick=()=>{R.i<ROOMS.length-1?enter(R.i+1):escaped();};
+  const rt=document.getElementById("retry");if(rt)rt.onclick=()=>enter(R.i);
+  if(!msg){
+    app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(b));
+    document.getElementById("hintb").onclick=showHint;
+    R.answered=false;
+  }
+}
+function showHint(){
+  if(R.hintOpen)return;R.hintOpen=true;S.penalty+=20;S.hints++;
+  track("katsuyo_hint_open",{option:"escape",level:lvl(R.i)});
+  document.getElementById("hintbox").innerHTML=`<div class="hint">${esc(R.qs[R.q].hint)}</div>`;
+  document.getElementById("hintb").disabled=true;
+}
+function answer(btn){
+  if(R.answered)return;R.answered=true;
+  const q=R.qs[R.q],v=btn.dataset.v,ok=v===q.ans;
+  app.querySelectorAll(".opt").forEach(b=>{b.disabled=true;if(b.dataset.v===q.ans)b.classList.add("right");});
+  if(!ok){btn.classList.add("wrong");R.lives--;S.mistakes++;}
+  else{R.solved++;R.correct++;}
+  R.items++;answeredTotal++;
+  if(MILESTONES.includes(answeredTotal))track("game_milestone",{item_count:answeredTotal});
+  const last=R.q===R.qs.length-1;
+  document.getElementById("fb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"轉盤轉到了":"答錯，蠟燭熄了一根"}</b>
+    <span class="ex">${esc(q.ex)}</span><span>${esc(q.why)}</span>
+    <div class="btnrow" style="margin-top:6px"><button class="btn ${ok?"go":""}" id="cont">${R.lives<=0?"……":ok&&R.solved===5?"打開鎖":"下一道鎖"}</button></div></div>`;
+  // update hud
+  app.querySelectorAll(".candle").forEach((c,k)=>c.classList.toggle("out",k>=R.lives));
+  app.querySelectorAll(".dial").forEach((d,k)=>{if(k<R.solved&&!d.classList.contains("set")){d.classList.add("set");d.textContent=R.code[k];}});
+  const c=document.getElementById("cont");c.focus({preventScroll:true});
+  c.onclick=()=>{
+    if(R.lives<=0){endRound("fail");renderRoom("fail");return;}
+    if(!ok){R.qs.push(regen(q));}
+    if(R.solved===5){win();return;}
+    R.q++;R.hintOpen=false;renderRoom();
+  };
+}
+// a wrong answer adds one more lock of the same type (so 5 correct are always needed)
+function regen(q){
+  const u=new Set(R.qs.map(x=>x.ex.split(/[｜ ]/)[0]));
+  if(q.kind==="cls")return classifyQ(pick(V.filter(v=>v.t!=="k")));
+  if(q.kind==="id")return identifyQ(pick(V.filter(v=>v.t==="g"||v.t==="gx")));
+  const f=Object.keys(FORMS).find(k=>q.tags[0].startsWith(FORMS[k].name));
+  return conjQ(weightedVerb(u),f);
+}
+function win(){
+  endRound("complete");
+  track("game_unlock",{option:"escape_"+lvl(R.i)});
+  if(R.i+1>S.cleared){S.cleared=R.i+1;store.set("ke_cleared",S.cleared);}
+  renderRoom("win");
+}
+function escaped(){
+  R=null;
+  stopClock();
+  const t=total();
+  const isBest=S.best==null||t<S.best;
+  if(isBest){S.best=t;store.set("ke_best",t);}
+  const resultText=`我用 ${fmt(t)} 逃出了「活用館」日文動詞變化密室，答錯 ${S.mistakes} 次、用了 ${S.hints} 次提示。你能比我快嗎？`;
+  app.innerHTML=`
+  <section class="hero">${signHTML()}
+    <h2 class="escape-h jp">脱出成功</h2>
+    <p>五間密室全部解鎖。你用過的其實只有兩件事：五種分類，和六大活用形。</p>
+  </section>
+  <div class="banner win">
+    <div class="stats">
+      <div class="stat"><span>脫出時間</span><b>${fmt(t)}</b></div>
+      <div class="stat"><span>答錯</span><b>${S.mistakes}</b></div>
+      <div class="stat"><span>提示</span><b>${S.hints}</b></div>
+    </div>
+    <p>${isBest?"這是你的最佳紀錄。":"最佳紀錄 "+fmt(S.best)+"。"}${S.hints?"其中 "+S.hints*20+" 秒是提示的代價。":""}</p>
+    <div class="btnrow"><button class="btn go" id="again">再逃一次（題目重新洗牌）</button><button class="btn ghost" id="map">回平面圖</button></div>
+  </div>`;
+  renderShare(resultText,true);
+  track("game_unlock",{option:"escape_all"});
+  document.getElementById("again").onclick=()=>{resetRun();enter(0);};
+  document.getElementById("map").onclick=intro;
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.target&&e.target.closest&&e.target.closest("input,textarea,a"))return;
+  if(/^[1-6]$/.test(e.key)){const b=app.querySelectorAll(".opt")[+e.key-1];if(b&&!b.disabled)b.click();}
+  else if(e.key==="Enter"&&R){const c=document.getElementById("cont");if(c&&document.activeElement!==c){e.preventDefault();c.click();}}
+});
+
+if(/[?]ref=share/.test(location.search)){const h=HG();if(h)h.start("shared");}
+intro();
+})();
+</script>
+
+</body>
+</html>
