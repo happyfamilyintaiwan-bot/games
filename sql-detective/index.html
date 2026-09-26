@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="零基礎也能玩的 SQL 入門遊戲：在瀏覽器裡寫查詢、追線索，找出偷走水墨畫的犯人。第 0 關只要改一個字，免安裝、手機也能玩。">
+<link rel="canonical" href="https://games.knittinghiyori.com/sql-detective/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="編織日和 小遊戲">
+<meta property="og:title" content="SQL 偵探：霞光畫廊失竊案">
+<meta property="og:description" content="不會寫程式也能玩。寫 SQL 查詢、追線索，找出偷畫的犯人。">
+<meta property="og:url" content="https://games.knittinghiyori.com/sql-detective/">
+<meta name="twitter:card" content="summary">
+<!-- GA4：放在 <head>，game_id 與 page_lang 依遊戲修改 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', { content_group: 'game', game_id: 'sql_detective', page_lang: 'zh-Hant' });
+  gtag('config', 'G-ZQZHTYTRMQ');
+</script>
+<title>SQL 偵探：霞光畫廊失竊案｜零基礎 SQL 入門遊戲</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Special+Elite&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface-2:#F3F4F6; --ink:#111111; --muted:#555B63; --line:#D9DCE1;
+  --tape:#F2C12E; --tape-ink:#111111; --stamp:#C62F24; --ok:#1F7A45;
+  --code-bg:#FAFAFA; --code-ink:#111111; --code-muted:#6B7078; --code-line:#D9DCE1;
+  --serif:"Noto Serif TC","Songti TC",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --type:"Special Elite","Courier New",monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:1180px;margin:0 auto}
+header.case{padding-block:28px 18px;display:grid;gap:14px}
+.tape{display:inline-block;background:var(--tape);color:var(--tape-ink);font-family:var(--type);letter-spacing:.14em;font-size:12px;padding:3px 12px;transform:rotate(-1.2deg);width:max-content}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0;text-wrap:balance}
+.lede{color:var(--muted);max-width:62ch;margin:0}
+.evidence{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.ev{font-family:var(--type);font-size:12px;border:1px dashed var(--line);background:transparent;color:var(--muted);padding:4px 10px;cursor:pointer;border-radius:2px}
+.ev.done{border-style:solid;border-color:var(--ok);color:var(--ok)}
+.ev.cur{border-style:solid;border-color:var(--ink);color:var(--ink);background:var(--surface)}
+.ev:disabled{cursor:not-allowed;opacity:.5}
+.ev:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
+
+.grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+
+.file{background:var(--surface);border:1px solid var(--line);padding:22px;position:relative;display:grid;gap:14px}
+.file .no{font-family:var(--type);font-size:12px;color:var(--muted);letter-spacing:.1em}
+.file h2{font-family:var(--serif);font-size:24px;margin:0;line-height:1.3}
+.story{margin:0;border-left:3px solid var(--tape);padding-left:12px}
+.skill{background:var(--surface-2);padding:12px 14px;font-size:14px;display:grid;gap:6px}
+.skill b{font-size:12px;letter-spacing:.08em;color:var(--muted)}
+.skill code,.story code,.task code{font-family:var(--mono);font-size:13px;background:var(--surface-2);padding:1px 5px;border-radius:3px}
+.skill pre{font-family:var(--mono);font-size:13px;margin:0;white-space:pre-wrap;color:var(--ink)}
+.task{font-weight:700;margin:0}
+.mini{overflow-x:auto;margin:6px 0;background:#FFFFFF;border:1px solid var(--line)}
+.mini table{font-size:12px}
+.mini th,.mini td{padding:5px 10px}
+.affbar{margin-top:24px}
+.aff{border:1px solid var(--ink);padding:16px 18px;display:grid;gap:8px;background:#FFFFFF}
+.aff h3{font-family:var(--serif);font-size:19px;margin:0}
+.aff p{margin:0}
+.aff .note{font-size:12px;color:var(--muted)}
+.aff a.go{justify-self:start;background:var(--tape);color:var(--tape-ink);font-weight:700;text-decoration:none;padding:10px 18px;border-radius:3px}
+.aff a.go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+details{border-top:1px solid var(--line);padding-top:10px}
+details summary{cursor:pointer;color:var(--muted);font-size:14px}
+details pre{font-family:var(--mono);font-size:13px;background:var(--code-bg);color:var(--code-ink);border:1px solid var(--code-line);padding:10px 12px;white-space:pre-wrap;margin:8px 0 0}
+.answer{display:flex;gap:8px;flex-wrap:wrap}
+.answer input{flex:1 1 180px;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:3px}
+.msg{min-height:1.4em;font-size:14px;margin:0}
+.msg.bad{color:var(--stamp)} .msg.good{color:var(--ok)}
+button{font:inherit;cursor:pointer;border-radius:3px}
+.btn{background:var(--ink);color:#FFFFFF;border:0;padding:9px 16px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+.stamp{position:absolute;top:18px;right:18px;font-family:var(--type);color:var(--stamp);border:3px solid var(--stamp);padding:2px 10px;font-size:18px;letter-spacing:.12em;transform:rotate(8deg);opacity:.85}
+@media (prefers-reduced-motion:no-preference){.stamp.pop{animation:pop .35s ease-out}}
+@keyframes pop{from{transform:rotate(8deg) scale(1.8);opacity:0}to{transform:rotate(8deg) scale(1);opacity:.85}}
+
+.console{background:var(--code-bg);color:var(--code-ink);border:1px solid var(--code-line);display:grid}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--code-line);font-family:var(--mono);font-size:12px;color:var(--code-muted);flex-wrap:wrap}
+.bar .acts{display:flex;gap:8px}
+.bar button{background:#FFFFFF;border:1px solid var(--code-line);color:var(--code-ink);padding:5px 12px;font-size:13px}
+.bar button.run{background:var(--tape);color:var(--tape-ink);border-color:var(--tape);font-weight:700}
+textarea#sql{font-family:var(--mono);font-size:14px;line-height:1.6;background:transparent;color:var(--code-ink);border:0;padding:14px;min-height:170px;resize:vertical;width:100%;tab-size:2}
+.out{border-top:1px solid var(--code-line);background:var(--surface);color:var(--ink)}
+.out .meta{font-family:var(--mono);font-size:12px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--line)}
+.out .meta.err{color:var(--stamp)}
+.tbl{overflow-x:auto;max-height:360px;overflow-y:auto}
+table{border-collapse:collapse;font-size:13px;width:100%}
+th,td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--surface-2);position:sticky;top:0;font-weight:600;white-space:nowrap}
+td{font-variant-numeric:tabular-nums}
+td.num{font-family:var(--mono)}
+
+.schema{margin-top:20px;display:grid;gap:10px}
+.schema h3{font-family:var(--serif);font-size:18px;margin:0}
+.tables{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.tcard{background:var(--surface);border:1px solid var(--line);padding:12px 14px;font-size:13px}
+.tcard button{background:none;border:0;padding:0;color:var(--ink);font-family:var(--mono);font-weight:600;font-size:14px;text-decoration:underline;text-decoration-color:var(--tape);text-underline-offset:3px}
+.tcard ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:2px}
+.tcard li{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.tcard li span{color:var(--ink)}
+.tcard p{margin:6px 0 0;color:var(--muted);font-size:12px}
+
+.closed{background:var(--surface);border:2px solid var(--stamp);padding:22px;display:grid;gap:10px;margin-top:20px}
+.closed h2{font-family:var(--serif);margin:0;font-size:26px;color:var(--stamp)}
+.closed ul{margin:0;padding-left:1.2em}
+.share{margin-top:28px;border-top:2px solid var(--ink);padding-block:22px 4px;display:grid;gap:12px}
+.share h2{font-family:var(--serif);font-size:22px;margin:0}
+.share p{margin:0;color:var(--muted)}
+.plats{display:flex;flex-wrap:wrap;gap:10px}
+.plats a,.plats button{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--ink);background:#FFFFFF;color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;border-radius:3px}
+.plats a:hover,.plats button:hover{background:var(--tape)}
+.plats a:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
+.plats .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+#copyUrl{font-family:var(--mono);font-size:12px;color:var(--muted);word-break:break-all;user-select:all}
+footer{margin-top:20px;color:var(--muted);font-size:13px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="case">
+    <span class="tape">CASE No. 0912 · 機密</span>
+    <h1>霞光畫廊失竊案</h1>
+    <p class="lede">一幅水墨畫在閉館後消失了。你手上只有警局資料庫。不用任何基礎：第 0 關只要改一個字。之後每一關學一個 SQL 觀念，找到線索，最後指認犯人。</p>
+    <div class="evidence" id="evidence" aria-label="關卡進度"></div>
+  </header>
+
+  <div class="grid" id="play">
+    <section class="file" id="file" aria-live="polite"></section>
+
+    <section>
+      <div class="console">
+        <div class="bar">
+          <span>query.sql · Ctrl/⌘ + Enter 執行</span>
+          <div class="acts">
+            <button type="button" id="resetBtn">還原範例</button>
+            <button type="button" class="run" id="runBtn">▶ 執行</button>
+          </div>
+        </div>
+        <label for="sql" class="sr" hidden>SQL 查詢</label>
+        <textarea id="sql" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+        <div class="out">
+          <div class="meta" id="meta">按「執行」看結果</div>
+          <div class="tbl" id="result"></div>
+        </div>
+      </div>
+
+      <div class="schema">
+        <h3>資料庫檔案櫃</h3>
+        <div class="tables" id="tables"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="closed" id="closed" hidden>
+    <h2>結案</h2>
+    <p>你從「只改一個字」開始，用這些 SQL 寫法破了案：</p>
+    <ul>
+      <li><code>SELECT *</code>、<code>SELECT 欄位</code>：看資料</li>
+      <li><code>WHERE</code> + <code>AND</code>：篩選條件</li>
+      <li><code>ORDER BY … DESC</code> + <code>LIMIT</code>：排序、取前幾筆</li>
+      <li><code>LIKE '%字%'</code>：模糊比對</li>
+      <li><code>JOIN … ON</code>：用共同欄位把兩張表接起來</li>
+      <li>多個 <code>JOIN</code>：一次串三、四張表</li>
+    </ul>
+    <p>下一步可以試試 <code>COUNT(*)</code> 和 <code>GROUP BY</code>：例如算出每條街住了幾個人。</p>
+    <div><button type="button" class="btn ghost" id="restart">重新開始</button></div>
+  </section>
+
+  <aside class="aff affbar" aria-label="推薦">
+    <h3>喜歡推理解謎？換你走進真正的密室</h3>
+    <p>找線索、串證據、推理出答案，跟寫 SQL 查案是同一種腦力。約朋友去玩一場實體密室逃脫，看誰先解開最後一道鎖。</p>
+    <a class="go" id="affLink" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="below_game" data-cta-type="affiliate">看密室逃脫場次 →</a>
+    <p class="note">此連結為 Klook 聯盟行銷連結。透過連結預訂，本站會獲得分潤，你支付的價格不變。</p>
+  </aside>
+
+  <section class="share" aria-labelledby="shareH">
+    <h2 id="shareH">找朋友一起破案</h2>
+    <p>把這個案件丟給還沒學過 SQL 的朋友，看誰先找出犯人。</p>
+    <div class="plats">
+      <a id="shFb" target="_blank" rel="noopener" data-method="facebook"><span class="dot" style="background:#1877F2"></span>Facebook</a>
+      <a id="shLine" target="_blank" rel="noopener" data-method="line"><span class="dot" style="background:#06C755"></span>LINE</a>
+      <a id="shThreads" target="_blank" rel="noopener" data-method="threads"><span class="dot" style="background:#111111"></span>Threads</a>
+      <a id="shX" target="_blank" rel="noopener" data-method="x"><span class="dot" style="background:#555B63"></span>X</a>
+      <button type="button" id="shCopy"><span class="dot" style="background:var(--tape)"></span>複製連結</button>
+    </div>
+    <p class="msg" id="copyMsg"></p>
+    <div id="copyUrl"></div>
+  </section>
+
+  <footer>資料皆為虛構。SQL 在你的瀏覽器裡執行，引擎是真正的 SQLite（sql.js），學到的語法可以直接用在其他資料庫。</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-asm.js"></script>
+<script>
+/* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
+   各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
+   注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
+var HY_GAME_ID = 'sql_detective';  /* 遊戲登記表的 game_id */
+var HY_GAME_ROOT = '#play';  /* 遊戲最外層的選擇器 */
+var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目前語言變數 */
+
+(function(){
+  var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
+  var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
+  var sent = {};
+  var playMs = 0, visibleAt = 0;        /* 實際遊玩時間：只算分頁在前景的時間 */
+  var rounds = 0, roundAt = 0, roundOpen = null;
+
+  function lang(){ try { return LANG_MAP[HY_GAME_LANG()] || 'zh-Hant'; } catch(e){ return 'zh-Hant'; } }
+  function now(){ return Date.now(); }
+  function secs(ms){ return Math.round(ms / 1000); }
+
+  function send(name, params, beacon){
+    try {
+      var p = {}, k, v;
+      params = params || {};
+      for (k in params) {
+        v = params[k];
+        if (v === undefined || v === null || v === '') continue;
+        if (typeof v === 'boolean') v = v ? 'yes' : 'no';
+        if (typeof v === 'string') v = v.slice(0, 100);   /* GA4 參數值上限 100 字元 */
+        p[k] = v;
+      }
+      p.game_id = HY_GAME_ID;
+      p.page_lang = lang();
+      p.content_group = 'game';
+      if (beacon) p.transport_type = 'beacon';
+      if (DEBUG) { p.debug_mode = true; if (window.console) console.log('[hy-game]', name, p); }
+      if (typeof window.gtag === 'function') { window.gtag('event', name, p); return; }
+      window.dataLayer = window.dataLayer || [];
+      (function(){ window.dataLayer.push(arguments); })('event', name, p);
+    } catch(e) {}
+  }
+
+  function playedMs(){ return playMs + (visibleAt ? now() - visibleAt : 0); }
+
+  var api = window.hyGame = {
+    /* 任何事件 */
+    event: send,
+    /* 每次載入頁面只送一次 */
+    once: function(name, params){ if (sent[name]) return; sent[name] = 1; send(name, params); },
+    /* 開始玩：entry = direct／shared／saved */
+    start: function(entry){
+      if (sent.game_start) return;
+      if (!document.hidden) visibleAt = now();
+      api.once('game_start', { entry_point: entry || 'direct' });
+    },
+    /* 一局開始：option＝模式、level＝難度 */
+    roundStart: function(params){
+      api.start('direct');
+      if (roundOpen) api.roundEnd({ result: 'quit' });   /* 上一局沒結束就開新局 → 記為放棄 */
+      params = params || {};
+      roundAt = playedMs();   /* 局的秒數同樣只算前景 */
+      roundOpen = { option: params.option, level: params.level };
+      send('round_start', params);
+    },
+    /* 一局結束：result＝complete／fail／quit／timeout，另帶 score、item_count、correct_count */
+    roundEnd: function(params, beacon){
+      if (!roundOpen) return;
+      var p = {}, k;
+      params = params || {};
+      for (k in roundOpen) p[k] = roundOpen[k];
+      for (k in params) p[k] = params[k];
+      p.duration_sec = secs(playedMs() - roundAt);
+      p.result = p.result || 'complete';
+      if (p.result !== 'quit') rounds = rounds + 1;
+      p.round_count = rounds;
+      roundOpen = null;
+      send('round_end', p, beacon);
+    },
+    /* 分享：method 見值域表，type = result／game */
+    share: function(method, type, extra){
+      var p = {}, k; extra = extra || {};
+      for (k in extra) p[k] = extra[k];
+      p.method = method; p.content_type = type;
+      send('share', p);
+    },
+    /* 選填：遊戲可覆寫，替 cta_click 補參數 */
+    ctaExtra: null
+  };
+
+  function inRoot(t){ if (!t || !t.closest) return null; return t.closest(HY_GAME_ROOT); }
+
+  /* 第一次在遊戲區點擊、輸入或按鍵 → 自動 game_start（點 CTA 不算；只捲動不算） */
+  function autoStart(e){
+    if (sent.game_start) return;
+    var t = e.target;
+    if (!inRoot(t)) return;
+    if (t.closest('[data-cta]')) return;
+    api.start('direct');
+  }
+  document.addEventListener('click', autoStart, true);
+  document.addEventListener('input', autoStart, true);
+  document.addEventListener('keydown', autoStart, true);
+
+  /* 點任何 [data-cta] → cta_click（與故事、工具同一個事件） */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('[data-cta]');
+    if (!a) return;
+    var p = {}, ex = {}, k;
+    try { if (typeof api.ctaExtra === 'function') ex = api.ctaExtra(a) || {}; } catch(err) {}
+    for (k in ex) p[k] = ex[k];
+    p.cta_id = a.getAttribute('data-cta');
+    p.cta_type = a.getAttribute('data-cta-type') || 'other';
+    p.link_url = a.href || '';
+    send('cta_click', p);
+  }, true);
+
+  /* 遊玩計時：切到背景暫停，回來繼續 */
+  document.addEventListener('visibilitychange', function(){
+    if (!sent.game_start) return;
+    if (document.hidden) {
+      if (visibleAt) { playMs = playMs + now() - visibleAt; visibleAt = 0; }
+    } else if (!sent.game_exit) {
+      visibleAt = now();
+    }
+  });
+
+  /* 離開頁面 → game_exit（每次載入只送一次；沒開始玩就不送） */
+  function exit(){
+    if (!sent.game_start || sent.game_exit) return;
+    if (roundOpen) api.roundEnd({ result: 'quit' }, true);
+    sent.game_exit = 1;
+    send('game_exit', { duration_sec: secs(playedMs()), round_count: rounds }, true);
+  }
+  window.addEventListener('pagehide', exit);
+})();
+/* ===== /GA4 統一追蹤 ===== */
+</script>
+<script>
+const DATA = {
+  badges: {
+    desc: "偵探證（第 0 關用）",
+    cols: {badge_no:"證號", holder:"持有人", password:"通關密語"},
+    rows: [
+      ["0001","局長","請先去領你的證"],
+      ["0912","新人","霞光"]
+    ]
+  },
+  crime_reports: {
+    desc: "報案紀錄",
+    cols: {report_date:"日期（數字 YYYYMMDD）", crime_type:"案件類型", city:"城市", description:"案情描述"},
+    rows: [
+      [20260901,"詐騙","台北","網路賣家收款後失聯。"],
+      [20260903,"竊盜","新北","板橋一間便利商店的收銀機被撬開。"],
+      [20260905,"毀損","台北","松山區一台機車的後照鏡被打破。"],
+      [20260908,"竊盜","台中","逢甲夜市攤位遺失一台行動電源。"],
+      [20260910,"詐騙","台北","假冒客服要求長者操作 ATM。"],
+      [20260912,"毀損","台北","萬華區公園長椅被噴漆。"],
+      [20260912,"竊盜","台北","大稻埕「霞光畫廊」一幅水墨畫在閉館後被偷。監視器拍到兩名目擊者：第一位住在迪化街，門牌號碼是整條街最大的；第二位名字裡有「小雨」，住在延平北路。"],
+      [20260912,"竊盜","高雄","駁二藝術特區的一幅海報被撕走。"],
+      [20260914,"竊盜","台北","信義區一輛腳踏車被剪鎖。"],
+      [20260915,"詐騙","新竹","假投資群組騙走存款。"]
+    ]
+  },
+  people: {
+    desc: "市民資料",
+    cols: {id:"編號", name:"姓名", license_id:"駕照編號", address_number:"門牌號碼", address_street:"街道"},
+    rows: [
+      [1001,"黃美玲","L201",12,"迪化街"],
+      [1004,"吳志豪","L202",97,"迪化街"],
+      [1007,"蔡淑芬","L203",215,"迪化街"],
+      [1012,"陳阿福","L204",388,"迪化街"],
+      [1015,"李佳穎","L205",302,"迪化街"],
+      [1018,"郭俊傑","L206",5,"延平北路"],
+      [1021,"林小雨","L207",143,"延平北路"],
+      [1024,"張雨晴","L208",88,"延平北路"],
+      [1027,"王小雨","L209",61,"民生西路"],
+      [1030,"劉家豪","L210",210,"民生西路"],
+      [1033,"楊雅婷","L211",33,"南京西路"],
+      [1036,"謝宗翰","L212",150,"南京西路"],
+      [1040,"鄭怡君","L213",72,"重慶北路"],
+      [1045,"洪俊宏","L214",19,"重慶北路"],
+      [1051,"周建宏","L215",240,"承德路"],
+      [1062,"許志明","L216",66,"承德路"],
+      [1070,"曾子軒","L217",8,"華陰街"],
+      [1078,"賴怡萱","L218",121,"華陰街"],
+      [1083,"蕭文彬","L219",47,"太原路"],
+      [1090,"彭淑惠","L220",190,"太原路"]
+    ]
+  },
+  interviews: {
+    desc: "證人筆錄",
+    cols: {person_id:"證人的市民編號", transcript:"筆錄內容"},
+    rows: [
+      [1007,"那天晚上我在家看電視，什麼都沒聽到。"],
+      [1012,"我看到一個男人抱著長長的畫筒從畫廊衝出來。他背著「鐵人健身」的包包，上面的會員編號開頭是 48Z，那種包只有金卡（gold）會員才拿得到。他跳上一台車，車牌裡有 H42。"],
+      [1021,"我認得那個人！9 月 9 日早上我在鐵人健身看過他。"],
+      [1024,"我那天在公司加班到很晚，今天才聽說。"],
+      [1027,"我住民生西路，那晚根本不在大稻埕。"],
+      [1030,"畫廊老闆最近好像跟人吵過架？我不確定。"]
+    ]
+  },
+  gym_members: {
+    desc: "鐵人健身會員",
+    cols: {id:"會員編號", person_id:"市民編號", name:"姓名", status:"等級（gold / silver）"},
+    rows: [
+      ["12QA1",1033,"楊雅婷","gold"],
+      ["30KX2",1040,"鄭怡君","silver"],
+      ["48Z3B",1070,"曾子軒","silver"],
+      ["48Z55",1062,"許志明","gold"],
+      ["48Z7A",1051,"周建宏","gold"],
+      ["48Z9C",1083,"蕭文彬","gold"],
+      ["51PL0",1004,"吳志豪","gold"],
+      ["77MR4",1021,"林小雨","silver"]
+    ]
+  },
+  gym_checkins: {
+    desc: "健身房打卡紀錄",
+    cols: {member_id:"會員編號", check_in_date:"日期（YYYYMMDD）", check_in_hour:"進場時間", check_out_hour:"離場時間"},
+    rows: [
+      ["48Z7A",20260909,7,9],
+      ["48Z55",20260909,8,10],
+      ["48Z3B",20260909,7,8],
+      ["77MR4",20260909,8,9],
+      ["12QA1",20260909,18,20],
+      ["48Z9C",20260908,19,21],
+      ["51PL0",20260910,6,7],
+      ["30KX2",20260911,12,13]
+    ]
+  },
+  drivers_license: {
+    desc: "駕照與車牌",
+    cols: {id:"駕照編號", age:"年齡", height_cm:"身高", car_make:"車廠", plate_number:"車牌"},
+    rows: [
+      ["L202",41,172,"Toyota","KH42-117"],
+      ["L204",67,165,"Yamaha","MXB-107"],
+      ["L207",29,158,"Honda","RAE-3390"],
+      ["L211",35,162,"Mazda","BCD-8841"],
+      ["L213",44,160,"Nissan","AKT-5520"],
+      ["L215",38,181,"Ford","BH42-061"],
+      ["L216",36,176,"Toyota","RBL-1294"],
+      ["L217",27,170,"Kymco","EWA-2261"],
+      ["L219",52,168,"Honda","H42-7715"]
+    ]
+  }
+};
+
+const LEVELS = [
+  {
+    title:"領取偵探證", skill:"只改一個字",
+    story:"歡迎來到警局。你還不用會任何程式，這一關只要改一個字、按一次「執行」。",
+    lesson:`<div>資料庫就是一疊「表格」，跟 Excel 的工作表很像：</div>
+      <div class="mini"><table><thead><tr><th>badge_no</th><th>holder</th><th>password</th></tr></thead>
+      <tbody><tr><td>0001</td><td>局長</td><td>請先去領你的證</td></tr><tr><td>0912</td><td>新人</td><td>霞光</td></tr></tbody></table></div>
+      <div>・每一<b>橫列</b>是一筆資料（一張偵探證）<br>・每一<b>直欄</b>是一種資訊（證號、持有人、密語）<br>・<b>SQL</b> 是用來跟資料庫「問問題」的語言，你寫一句，它回你一張表</div>`,
+    example:"SELECT * FROM badges WHERE holder = '局長';",
+    task:"右邊的查詢現在查的是局長的證。把「局長」改成「新人」，按 ▶ 執行。你的通關密語是什麼？",
+    answers:["霞光"],
+    hint:"只改單引號裡面的兩個字，單引號本身要留著：'新人'。改完按黃色的「▶ 執行」。",
+    solution:"SELECT * FROM badges WHERE holder = '新人';"
+  },
+  {
+    title:"翻開卷宗", skill:"SELECT *",
+    story:"局長把一台筆電推到你面前：「所有報案紀錄都在 <code>crime_reports</code> 表裡。先看看裡面有什麼。」",
+    lesson:"一句 SQL 可以照字面讀：<code>SELECT *</code>＝「給我看全部欄位」，<code>FROM crime_reports</code>＝「從 crime_reports 這張表」。結尾的分號 <code>;</code> 代表這句話說完了。",
+    example:"SELECT * FROM crime_reports;",
+    task:"按 ▶ 執行，這張表裡一共有幾筆報案紀錄？（輸入數字）",
+    answers:["10"],
+    hint:"執行範例查詢，數一數結果有幾列；結果上方也會顯示列數。",
+    solution:"SELECT * FROM crime_reports;"
+  },
+  {
+    title:"鎖定案件", skill:"WHERE + AND",
+    story:"畫廊是 9 月 12 日在台北被偷的。十筆資料太多了，只留下符合條件的那幾筆。",
+    lesson:"<code>WHERE</code> 放篩選條件。文字要加單引號，數字不用。兩個條件都要成立就用 <code>AND</code> 串起來。",
+    example:"SELECT * FROM crime_reports\nWHERE city = '台北';",
+    task:"找出 20260912、台北、竊盜的那一筆。第一位目擊者住在哪條街？",
+    answers:["迪化街"],
+    hint:"加上 report_date = 20260912 AND crime_type = '竊盜'。",
+    solution:"SELECT * FROM crime_reports\nWHERE report_date = 20260912\n  AND city = '台北'\n  AND crime_type = '竊盜';"
+  },
+  {
+    title:"門牌最大的那戶", skill:"ORDER BY … DESC + LIMIT",
+    story:"第一位目擊者住在迪化街，門牌號碼是整條街最大的。市民資料在 <code>people</code> 表。",
+    lesson:"<code>ORDER BY 欄位</code> 預設由小到大，加 <code>DESC</code> 變成由大到小。<code>LIMIT 1</code> 只留第一筆。",
+    example:"SELECT * FROM people\nWHERE address_street = '迪化街'\nORDER BY address_number;",
+    task:"第一位目擊者叫什麼名字？",
+    answers:["陳阿福"],
+    hint:"把 ORDER BY address_number 改成由大到小，再加 LIMIT 1。",
+    solution:"SELECT * FROM people\nWHERE address_street = '迪化街'\nORDER BY address_number DESC\nLIMIT 1;"
+  },
+  {
+    title:"名字裡有小雨", skill:"LIKE '%…%'",
+    story:"第二位目擊者只留下半個名字：「小雨」，住延平北路。",
+    lesson:"<code>LIKE</code> 做模糊比對，<code>%</code> 代表「任意長度的任何字」。<code>'%小雨%'</code> 就是「名字裡某處有小雨」。",
+    example:"SELECT * FROM people\nWHERE name LIKE '%雨%';",
+    task:"第二位目擊者叫什麼名字？",
+    answers:["林小雨"],
+    hint:"'%雨%' 範圍太大。改成 '%小雨%'，再用 AND 限制街道。",
+    solution:"SELECT * FROM people\nWHERE name LIKE '%小雨%'\n  AND address_street = '延平北路';"
+  },
+  {
+    title:"調閱筆錄", skill:"JOIN … ON",
+    story:"筆錄在 <code>interviews</code> 表，但它只記了 <code>person_id</code>，沒有姓名。要把它和 <code>people</code> 接起來。",
+    lesson:"<code>JOIN 另一張表 ON 兩邊相等的欄位</code>，就能把兩張表的資料並排。欄位名前面加表名（<code>people.name</code>）可避免混淆。",
+    example:"SELECT people.name, interviews.transcript\nFROM interviews\nJOIN people ON interviews.person_id = people.id;",
+    task:"只看兩位目擊者的筆錄。犯人的健身房會員編號開頭是什麼？",
+    answers:["48Z"],
+    hint:"在最後加 WHERE people.name IN ('陳阿福', '林小雨')，IN 可以一次比對多個值。",
+    solution:"SELECT people.name, interviews.transcript\nFROM interviews\nJOIN people ON interviews.person_id = people.id\nWHERE people.name IN ('陳阿福', '林小雨');"
+  },
+  {
+    title:"健身房打卡", skill:"JOIN + 多重條件",
+    story:"條件有三個：會員編號開頭 48Z、金卡（gold）、9 月 9 日有來打卡。會員資料在 <code>gym_members</code>，打卡在 <code>gym_checkins</code>。",
+    lesson:"JOIN 之後，<code>WHERE</code> 可以同時用到兩張表的欄位。<code>LIKE '48Z%'</code> 表示「以 48Z 開頭」。",
+    example:"SELECT gym_members.name, gym_members.status, gym_checkins.check_in_date\nFROM gym_members\nJOIN gym_checkins ON gym_members.id = gym_checkins.member_id\nWHERE gym_members.id LIKE '48Z%';",
+    task:"三個條件都符合的嫌疑人有幾位？（輸入數字）",
+    answers:["2"],
+    hint:"再加兩個條件：gym_members.status = 'gold' AND gym_checkins.check_in_date = 20260909。",
+    solution:"SELECT gym_members.name, gym_members.status, gym_checkins.check_in_date\nFROM gym_members\nJOIN gym_checkins ON gym_members.id = gym_checkins.member_id\nWHERE gym_members.id LIKE '48Z%'\n  AND gym_members.status = 'gold'\n  AND gym_checkins.check_in_date = 20260909;"
+  },
+  {
+    title:"比對車牌", skill:"串三張以上的表",
+    story:"最後一條線索：車牌裡有 H42。車牌在 <code>drivers_license</code>，要經過 <code>people.license_id</code> 才接得到會員。範例已經把四張表接好了。",
+    lesson:"JOIN 可以一直接下去：會員 → 打卡、會員 → 市民 → 駕照。每多一張表，就多一行 <code>JOIN … ON …</code>。",
+    example:"SELECT people.name, drivers_license.plate_number\nFROM gym_members\nJOIN gym_checkins ON gym_members.id = gym_checkins.member_id\nJOIN people ON gym_members.person_id = people.id\nJOIN drivers_license ON people.license_id = drivers_license.id\nWHERE gym_members.id LIKE '48Z%'\n  AND gym_members.status = 'gold'\n  AND gym_checkins.check_in_date = 20260909;",
+    task:"犯人是誰？",
+    answers:["周建宏"],
+    hint:"再加一個條件：drivers_license.plate_number LIKE '%H42%'。小心：有個金卡會員車牌也有 H42，但他 9 月 9 日沒來健身房，所以打卡條件不能拿掉。",
+    solution:"SELECT people.name, drivers_license.plate_number\nFROM gym_members\nJOIN gym_checkins ON gym_members.id = gym_checkins.member_id\nJOIN people ON gym_members.person_id = people.id\nJOIN drivers_license ON people.license_id = drivers_license.id\nWHERE gym_members.id LIKE '48Z%'\n  AND gym_members.status = 'gold'\n  AND gym_checkins.check_in_date = 20260909\n  AND drivers_license.plate_number LIKE '%H42%';"
+  }
+];
+
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem("sqldet")||"{}"); }catch(e){ return {}; } },
+  set(v){ try{ localStorage.setItem("sqldet", JSON.stringify(v)); }catch(e){} }
+};
+let state = Object.assign({solved:0, cur:0, drafts:{}}, store.get());
+if (state.v !== 2) state = {v:2, solved:0, cur:0, drafts:{}};
+
+let SQL = null, db = null;
+function buildDB(){
+  if (db) db.close();
+  db = new SQL.Database();
+  for (const [t,def] of Object.entries(DATA)){
+    const keys = Object.keys(def.cols);
+    const types = keys.map((k,i)=> typeof def.rows[0][i]==="number" ? "INTEGER" : "TEXT");
+    db.run(`CREATE TABLE ${t} (${keys.map((k,i)=>k+" "+types[i]).join(", ")})`);
+    const st = db.prepare(`INSERT INTO ${t} VALUES (${keys.map(()=>"?").join(",")})`);
+    def.rows.forEach(r => st.run(r)); st.free();
+  }
+}
+
+const $ = id => document.getElementById(id);
+/* GA4：依《編織日和・遊戲｜GA4 統一追蹤規範 v1.0》，事件由頁尾的 hyGame 送出 */
+const CASE_ID = "case01";
+const lv = i => "l" + String(i).padStart(2, "0");
+const hg = () => window.hyGame || null;
+let round = null; /* {level, wrong} 目前進行中的一局＝一個未破解的關卡 */
+function ensureRound(){
+  if (!hg() || state.cur < state.solved) return;
+  if (round && round.level === state.cur) return;
+  endRoundQuit();
+  round = {level: state.cur, wrong: 0};
+  hg().roundStart({option: CASE_ID, level: lv(state.cur)});
+}
+function endRoundQuit(){
+  if (!round || !hg()) return;
+  hg().roundEnd({result: "quit", item_count: 1, correct_count: 0});
+  round = null;
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderEvidence(){
+  $("evidence").innerHTML = LEVELS.map((l,i)=>{
+    const cls = i < state.solved ? "done" : "";
+    const cur = i === state.cur ? " cur" : "";
+    const dis = i > state.solved ? "disabled" : "";
+    return `<button type="button" class="ev ${cls}${cur}" data-i="${i}" ${dis}>${i<state.solved?"✓":"#"+i} ${esc(l.skill)}</button>`;
+  }).join("");
+  $("evidence").querySelectorAll(".ev").forEach(b => b.onclick = () => go(+b.dataset.i));
+}
+
+function renderFile(pop){
+  const l = LEVELS[state.cur], solved = state.cur < state.solved;
+  $("file").innerHTML = `
+    ${solved ? `<span class="stamp${pop?" pop":""}">破解</span>` : ""}
+    <span class="no">第 ${state.cur} 關 / 共 ${LEVELS.length-1} 關</span>
+    <h2>${esc(l.title)}</h2>
+    <p class="story">${l.story}</p>
+    <div class="skill"><b>本關語法 · ${esc(l.skill)}</b><div>${l.lesson}</div></div>
+    <p class="task">任務：${esc(l.task)}</p>
+    <form class="answer" id="ansForm">
+      <input id="ans" type="text" placeholder="輸入答案" autocomplete="off" ${solved?`value="${esc(l.answers[0])}"`:""}>
+      <button class="btn" type="submit">提交答案</button>
+    </form>
+    <p class="msg ${solved?"good":""}" id="msg">${solved ? "答對了。" : ""}</p>
+    ${solved && state.cur < LEVELS.length-1 ? `<div><button type="button" class="btn ghost" id="nextBtn">下一關 →</button></div>`:""}
+    <details id="dHint"><summary>需要提示</summary><p>${esc(l.hint)}</p></details>
+    <details id="dSol"><summary>看參考解答</summary><pre>${esc(l.solution)}</pre></details>`;
+  $("ansForm").onsubmit = e => { e.preventDefault(); check(); };
+  const nb = $("nextBtn"); if (nb) nb.onclick = () => go(state.cur+1);
+  $("dHint").addEventListener("toggle", e => { if (e.target.open && hg()){ ensureRound(); hg().event("sql_hint_open", {option: CASE_ID, level: lv(state.cur)}); } });
+  $("dSol").addEventListener("toggle", e => { if (e.target.open && hg()){ ensureRound(); hg().event("sql_solution_view", {option: CASE_ID, level: lv(state.cur)}); } });
+}
+
+function norm(s){ return String(s).replace(/\s+/g,"").toUpperCase(); }
+function check(){
+  const l = LEVELS[state.cur], v = norm($("ans").value);
+  if (!v){ setMsg("先寫下你的答案。","bad"); return; }
+  if (l.answers.map(norm).includes(v)){
+    const first = state.cur >= state.solved;
+    if (first){
+      ensureRound();
+      state.solved = state.cur+1;
+      if (round && hg()){ hg().roundEnd({result: "complete", item_count: 1, correct_count: round.wrong === 0 ? 1 : 0}); }
+      round = null;
+    }
+    store.set(state);
+    renderEvidence(); renderFile(first);
+    $("closed").hidden = state.solved < LEVELS.length;
+    setShare();
+  } else {
+    setMsg("線索對不上。再看一次查詢結果，或打開提示。","bad");
+    ensureRound(); if (round) round.wrong++;
+  }
+}
+function setMsg(t,c){ const m=$("msg"); m.textContent=t; m.className="msg "+c; }
+
+function go(i){
+  saveDraft();
+  if (round && round.level !== i) endRoundQuit();
+  state.cur = i; store.set(state);
+  renderEvidence(); renderFile(false);
+  $("sql").value = state.drafts[i] ?? LEVELS[i].example;
+  run();
+}
+function saveDraft(){ state.drafts[state.cur] = $("sql").value; store.set(state); }
+
+function run(){
+  const q = $("sql").value.trim();
+  const meta = $("meta"), out = $("result");
+  if (!q){ meta.textContent="查詢是空的。"; meta.className="meta"; out.innerHTML=""; return; }
+  if (!SQL){ meta.className="meta err"; meta.textContent="SQL 引擎還在載入，請稍候再按一次。"; return; }
+  buildDB();
+  let sets;
+  try { sets = db.exec(q); }
+  catch(e){
+    meta.className="meta err";
+    meta.textContent = "錯誤：" + e.message + "　→ 檢查欄位名稱拼字、文字是否用單引號、每個 JOIN 有沒有 ON。";
+    out.innerHTML=""; return;
+  }
+  meta.className="meta";
+  if (!sets.length){ meta.textContent="0 列"; out.innerHTML=`<p style="padding:10px 12px;margin:0;color:var(--muted)">沒有符合條件的資料。條件是不是太嚴格了？</p>`; return; }
+  const {columns, values} = sets[sets.length-1];
+  meta.textContent = `${values.length} 列`;
+  out.innerHTML = `<table><thead><tr>${columns.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${
+    values.map(r=>`<tr>${r.map(v=>`<td class="${typeof v==="number"?"num":""}">${v==null?"":esc(v)}</td>`).join("")}</tr>`).join("")
+  }</tbody></table>`;
+}
+
+function renderTables(){
+  $("tables").innerHTML = Object.entries(DATA).map(([t,d])=>`
+    <div class="tcard"><button type="button" data-t="${t}">${t}</button>
+      <p>${esc(d.desc)} · ${d.rows.length} 筆</p>
+      <ul>${Object.entries(d.cols).map(([c,z])=>`<li><span>${c}</span> ${esc(z)}</li>`).join("")}</ul></div>`).join("");
+  $("tables").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    $("sql").value = `SELECT * FROM ${b.dataset.t};`; saveDraft(); run(); $("sql").focus();
+  });
+}
+
+$("runBtn").onclick = () => { ensureRound(); saveDraft(); run(); };
+$("resetBtn").onclick = () => { $("sql").value = LEVELS[state.cur].example; saveDraft(); run(); };
+$("sql").addEventListener("keydown", e => {
+  if ((e.ctrlKey||e.metaKey) && e.key==="Enter"){ e.preventDefault(); ensureRound(); saveDraft(); run(); }
+  if (e.key==="Tab" && !e.shiftKey){ e.preventDefault(); const t=e.target,s=t.selectionStart; t.setRangeText("  ",s,t.selectionEnd,"end"); }
+});
+$("sql").addEventListener("input", () => { clearTimeout(window._d); window._d=setTimeout(saveDraft,400); });
+$("restart").onclick = () => { state={v:2,solved:0,cur:0,drafts:{}}; store.set(state); $("closed").hidden=true; go(0); };
+
+if (/[?]ref=share/.test(location.search) && hg()) hg().start("shared");
+state.cur = Math.min(state.cur, state.solved, LEVELS.length-1);
+renderTables(); renderEvidence(); renderFile(false);
+$("closed").hidden = state.solved < LEVELS.length;
+$("sql").value = state.drafts[state.cur] ?? LEVELS[state.cur].example;
+const SELF_HOSTED = /knittinghiyori\.com$/.test(location.hostname);
+const SHARE_URL = SELF_HOSTED ? "https://games.knittinghiyori.com/sql-detective/?ref=share" : "https://claude.ai/artifact/HjrWhAgpmcvy1PSVA6MTwB";
+function shareText(){ return state.solved >= LEVELS.length ? "我用 SQL 破了霞光畫廊失竊案！你能找出犯人嗎？" : "SQL 偵探遊戲：寫查詢找出偷畫的犯人，你能破案嗎？"; }
+function setShare(){
+  const u = encodeURIComponent(SHARE_URL), t = encodeURIComponent(shareText());
+  $("shFb").href = `https://www.facebook.com/sharer/sharer.php?u=${u}`;
+  $("shLine").href = `https://social-plugins.line.me/lineit/share?url=${u}&text=${t}`;
+  $("shThreads").href = `https://www.threads.net/intent/post?text=${t}%20${u}`;
+  $("shX").href = `https://twitter.com/intent/tweet?text=${t}&url=${u}`;
+  $("copyUrl").textContent = SHARE_URL;
+}
+$("shCopy").onclick = () => {
+  if (hg()) hg().share("copy_link", state.solved >= LEVELS.length ? "result" : "game");
+  const done = ok => { const m=$("copyMsg"); m.textContent = ok ? "已複製連結。" : "無法自動複製，請選取下方網址後手動複製。"; m.className = "msg " + (ok?"good":"bad"); };
+  try { navigator.clipboard.writeText(SHARE_URL).then(()=>done(true), ()=>{ selectUrl(); done(false); }); }
+  catch(e){ selectUrl(); done(false); }
+};
+document.querySelectorAll(".plats a").forEach(a => a.addEventListener("click", () => { if (hg()) hg().share(a.dataset.method, state.solved >= LEVELS.length ? "result" : "game"); }));
+function selectUrl(){ const r=document.createRange(); r.selectNodeContents($("copyUrl")); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+setShare();
+$("meta").textContent="SQL 引擎載入中…";
+if (window.initSqlJs) initSqlJs().then(m => { SQL = m; run(); }).catch(() => { $("meta").textContent="SQL 引擎載入失敗，請重新整理頁面。"; $("meta").className="meta err"; });
+else { $("meta").textContent="SQL 引擎載入失敗，請重新整理頁面。"; $("meta").className="meta err"; }
+</script>
+</body>
+</html>
