@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="零基礎也能玩的 SwiftUI 教學遊戲。跟著偵探故事，一章學一個概念：Text、VStack、@State、ForEach、Binding，邊寫程式邊破案。">
+<link rel="canonical" href="https://games.knittinghiyori.com/swiftui-detective/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="雨夜懷錶案｜用偵探故事學 SwiftUI">
+<meta property="og:description" content="零基礎也能玩：寫一段 SwiftUI，拿一條線索，最後指認犯人。">
+<meta property="og:url" content="https://games.knittinghiyori.com/swiftui-detective/">
+<meta name="twitter:card" content="summary">
+<!-- GA4（依《編織日和・遊戲｜GA4 統一追蹤規範 v1.0》） -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-ZQZHTYTRMQ',{game_id:'swiftui_detective',page_lang:'zh-Hant',content_group:'game'});</script>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>雨夜懷錶案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=Special+Elite&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --ink:#ffffff; --ink2:#f6f7f9; --ink3:#f1f3f6; --line:#dde2e8; --line2:#c3cbd5;
+  --fog:#111418; --soft:#3a424d; --mute:#5f6977; --amber:#a86200; --lamp:#f0a93b; --amber-soft:rgba(240,169,59,.15);
+  --rain:#2f6f9a; --red:#c7372c; --red-soft:rgba(199,55,44,.07); --green:#1d7f4e; --green-soft:rgba(29,127,78,.08);
+  --paper:#ffffff; --paper2:#fcfbf8; --paper-ink:#111418;
+  --code:#fbfcfd;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --serif:"Noto Serif TC","Songti TC",serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --type:"Special Elite","Courier New",monospace;
+}
+html,body{background:var(--ink);}
+body{color:var(--fog);font-family:var(--sans);font-size:15px;line-height:1.7;}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+code{font-family:var(--mono);font-size:.88em;background:var(--ink3);border:1px solid var(--line);padding:0 .35em;border-radius:3px;color:var(--fog);white-space:nowrap}
+
+.wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:0 60px}
+
+/* HERO */
+.hero{position:relative;padding-block:44px 26px;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:-40px -200px;z-index:-1;
+  background:radial-gradient(420px 260px at 12% 0%,rgba(240,169,59,.22),transparent 70%);}
+.hero::after{content:"";position:absolute;inset:0 -200px;z-index:-1;pointer-events:none;
+  background:repeating-linear-gradient(104deg,transparent 0 26px,rgba(47,111,154,.07) 26px 27px);
+  animation:rain 1.4s linear infinite;}
+@keyframes rain{from{transform:translate(0,0)}to{transform:translate(-7px,27px)}}
+@media (prefers-reduced-motion:reduce){.hero::after{animation:none}}
+.case-meta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;color:var(--mute);font-size:13px;letter-spacing:.06em}
+.stamp{font-family:var(--type);color:var(--amber);border:1.5px solid var(--amber);padding:1px 9px;transform:rotate(-3deg);display:inline-block;letter-spacing:.08em}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(42px,7.4vw,80px);line-height:1.05;margin:14px 0 12px;letter-spacing:.05em;text-wrap:balance}
+h1 .lamp{color:var(--amber)}
+.lede{max-width:62ch;color:var(--soft);margin:0 0 22px}
+.chapters{display:flex;flex-wrap:wrap;gap:8px}
+.chap{display:flex;align-items:center;gap:8px;background:var(--ink2);border:1px solid var(--line);border-radius:4px;padding:7px 12px;font-size:13px;line-height:1.3}
+.chap .n{font-family:var(--type);color:var(--mute)}
+.chap .k{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.chap:hover:not(:disabled){border-color:var(--line2)}
+.chap.on{border-color:var(--amber);background:var(--amber-soft)}
+.chap.on .n{color:var(--amber)}
+.chap.done .n::after{content:" ✓";color:var(--green)}
+.chap:disabled{opacity:.38;cursor:not-allowed}
+.chap.final{font-family:var(--type);letter-spacing:.06em}
+
+/* STAGE */
+#stage{display:grid;grid-template-columns:minmax(250px,330px) minmax(0,1fr) 300px;gap:22px;align-items:start;margin-top:8px}
+@media (max-width:1100px){#stage{grid-template-columns:minmax(0,1fr) 300px}.brief{grid-column:1 / -1}}
+@media (max-width:740px){#stage{grid-template-columns:minmax(0,1fr)}.canvas-col{justify-self:center}}
+
+.brief{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--amber);text-transform:uppercase}
+.brief h2{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1.3;margin:2px 0 0;text-wrap:balance}
+.story{margin:0;color:var(--soft)}
+.task{background:var(--ink3);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.tag{font-family:var(--type);font-size:12px;letter-spacing:.12em;color:var(--amber);display:block;margin-bottom:4px}
+.task p{margin:0}
+.notes{border-top:1px dashed var(--line2);padding-top:14px}
+.notes ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--soft)}
+.hintbox{font-size:14px;background:var(--amber-soft);border:1px solid rgba(240,169,59,.35);border-radius:6px;padding:10px 14px}
+.hintbox p{margin:0}
+.solved-note{font-size:13px;color:var(--green)}
+
+/* EDITOR */
+.editor-col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.editor{background:var(--code);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.ed-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--ink2);font-size:12px;color:var(--mute)}
+.ed-file{font-family:var(--mono);color:var(--fog);display:flex;align-items:center;gap:8px}
+.ed-file::before{content:"";width:8px;height:8px;border-radius:2px;background:#f05138}
+.ed-body{position:relative;display:grid;grid-template-columns:40px 1fr;height:420px}
+.gutter{margin:0;padding:14px 8px 14px 0;text-align:right;font:13px/22px var(--mono);color:#9aa5b3;overflow:hidden;user-select:none;border-right:1px solid var(--line)}
+.gutter span{display:block}
+.gutter span.bad{color:var(--red);background:var(--red-soft)}
+.code-area{position:relative;overflow:hidden}
+.code-area pre,.code-area textarea{position:absolute;inset:0;margin:0;padding:14px 16px;font:13px/22px var(--mono);white-space:pre;tab-size:4;border:0;letter-spacing:0}
+.code-area pre{color:#1d232b;overflow:hidden;pointer-events:none}
+.code-area textarea{background:transparent;color:transparent;caret-color:#111418;resize:none;outline:none;overflow:auto}
+.code-area textarea::selection{background:rgba(47,111,154,.18);color:transparent}
+.hl-kw{color:#b0156f;font-weight:500}.hl-at{color:#8a4a00}.hl-str{color:#c41a16}.hl-ty{color:#1f5f8b}.hl-md{color:#5b2ea8}.hl-cm{color:#707b88;font-style:italic}.hl-nu{color:#1c00cf}.hl-bd{color:#8a4a00}
+.err{display:flex;gap:10px;align-items:flex-start;padding:9px 14px;border-top:1px solid rgba(199,55,44,.35);background:var(--red-soft);color:#8f2119;font:12.5px/1.6 var(--mono)}
+.err b{color:var(--red);font-weight:500;white-space:nowrap}
+.tools{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:1px solid var(--line2);background:var(--ink2);border-radius:6px;padding:8px 14px;font-size:14px}
+.btn:hover{border-color:var(--mute)}
+.btn.run{background:var(--lamp);color:#111418;border-color:var(--lamp);font-weight:700}
+.btn.run:hover{background:#f5b957}
+.btn .kbd{font-family:var(--mono);font-size:11px;opacity:.7;margin-left:6px}
+.btn.warn{border-color:var(--red);color:var(--red)}
+.result{border-radius:8px;padding:14px 16px;border:1px solid var(--line)}
+.result p{margin:0}
+.result.fail{background:var(--red-soft);border-color:rgba(199,55,44,.35)}
+.result.pending{background:var(--amber-soft);border-color:rgba(240,169,59,.4)}
+.result.ok{background:var(--green-soft);border-color:rgba(29,127,78,.4);display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.result .tag{margin-bottom:2px}
+.result.fail .tag{color:var(--red)} .result.ok .tag{color:var(--green)}
+.ok-stamp{font-family:var(--type);color:var(--green);border:2px solid var(--green);padding:2px 10px;transform:rotate(-4deg);animation:stampin .35s ease-out}
+@keyframes stampin{from{transform:rotate(-12deg) scale(1.6);opacity:0}to{transform:rotate(-4deg) scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.ok-stamp{animation:none}}
+.sol{background:var(--code);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.sol pre{margin:0;padding:12px 16px;font:12.5px/20px var(--mono);overflow-x:auto;color:#1d232b}
+.sol .ed-bar button{background:none;border:1px solid var(--line2);border-radius:4px;padding:2px 10px;font-size:12px}
+
+/* PHONE */
+.canvas-col{display:flex;flex-direction:column;gap:10px;align-items:center}
+.canvas-label{font-size:12px;color:var(--mute);letter-spacing:.08em;display:flex;gap:8px;align-items:center}
+.canvas-label .dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.canvas-label.paused .dot{background:var(--red)}
+.phone{width:290px;height:592px;max-width:100%;background:#03060b;border-radius:48px;padding:11px;box-shadow:0 0 0 1px #2a3547,0 24px 50px rgba(17,20,24,.22)}
+.screen{position:relative;height:100%;border-radius:38px;background:#fff;overflow:hidden;display:flex;flex-direction:column;color:#000;
+  font-family:-apple-system,"SF Pro Text","PingFang TC","Noto Sans TC",sans-serif;font-size:14px;line-height:1.3}
+.screen.grouped{background:#f2f2f7}
+.status{display:flex;justify-content:space-between;align-items:center;padding:14px 26px 6px;font-size:12px;font-weight:600;flex:none;position:relative}
+.island{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:84px;height:24px;border-radius:14px;background:#000}
+.bars{display:flex;gap:2px;align-items:flex-end}.bars i{width:3px;background:#000;border-radius:1px}
+.sw-host{flex:1;overflow:auto;position:relative}
+.paused-veil{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;background:rgba(255,255,255,.82);backdrop-filter:blur(2px);font-size:13px;color:#3c3c43}
+.screen.grouped .paused-veil{background:rgba(242,242,247,.85)}
+.paused-veil b{display:block;font-size:15px;margin-bottom:4px;color:#000}
+.home-ind{height:5px;width:100px;border-radius:3px;background:#000;margin:8px auto 8px;flex:none}
+
+.sw-root{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 14px}
+.sw-root.fill{justify-content:flex-start;align-items:stretch;padding:0}
+.sw-text{white-space:pre-wrap;word-break:break-word}
+.sw-v{display:flex;flex-direction:column}
+.sw-h{display:flex;flex-direction:row;align-items:center}
+.sw-z{display:grid;place-items:center}.sw-z>*{grid-area:1/1}
+.sw-spacer{flex:1 1 0;min-width:6px;min-height:6px}
+.sw-divider{align-self:stretch;height:1px;background:rgba(60,60,67,.29)}
+.sw-img{display:inline-flex}.sw-img svg{width:1.2em;height:1.2em}
+.sw-img .missing{display:inline-block;width:1.2em;height:1.2em;border:1px dashed #c7c7cc;border-radius:3px}
+.sw-btn{background:none;border:0;color:#007aff;font-size:1em;padding:2px 0;font-family:inherit}
+[data-bs="borderedProminent"] .sw-btn{background:#007aff;color:#fff;border-radius:9px;padding:6px 14px}
+[data-bs="bordered"] .sw-btn{background:rgba(0,122,255,.12);border-radius:9px;padding:6px 14px}
+.sw-tf{width:100%;min-width:150px;font:inherit;border:0;padding:6px 2px;background:transparent;color:#000;outline:none}
+[data-tf="roundedBorder"] .sw-tf{border:1px solid #d1d1d6;border-radius:6px;padding:6px 8px;background:#fff}
+.sw-list{margin:10px 12px;background:#fff;border-radius:10px;overflow:hidden}
+.sw-row{padding:10px 14px;border-bottom:.5px solid rgba(60,60,67,.2);display:flex;align-items:center;gap:8px}
+.sw-row:last-child{border-bottom:0}
+.sw-m{display:flex;flex-direction:column;align-items:inherit}
+.sw-m>*{max-width:100%}
+
+/* FINALE */
+#finale{margin-top:8px;display:flex;flex-direction:column;gap:18px}
+#finale h2{font-family:var(--serif);font-size:30px;margin:0}
+.suspects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.suspect{text-align:left;background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.suspect:hover{border-color:var(--amber)}
+.suspect .role{font-size:13px;color:var(--mute)}
+.suspect .nm{font-family:var(--serif);font-size:22px;font-weight:700}
+.suspect .alibi{font-size:14px;color:var(--soft)}
+.suspect.wrong{border-color:rgba(239,91,79,.5)}
+.suspect.right{border-color:var(--green);background:var(--green-soft)}
+.verdict{border-radius:8px;padding:16px 18px;border:1px solid var(--line)}
+.verdict.fail{background:var(--red-soft);border-color:rgba(199,55,44,.35)}
+.verdict.ok{background:var(--green-soft);border-color:rgba(29,127,78,.4)}
+.verdict p{margin:6px 0 0}
+.closed{font-family:var(--type);font-size:30px;color:var(--red);border:3px solid var(--red);display:inline-block;padding:2px 16px;transform:rotate(-6deg);letter-spacing:.1em;animation:stampin .4s ease-out}
+@media (prefers-reduced-motion:reduce){.closed{animation:none}}
+
+/* VISIT */
+.visit{border:1px solid var(--line);border-radius:10px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 24px;align-items:center}
+.visit h3{font-family:var(--serif);font-size:22px;margin:0 0 6px}
+.visit p{margin:0;color:var(--soft)}
+.visit ul{margin:8px 0 0;padding-left:18px;color:var(--soft);font-size:14px}
+.visit .go{display:inline-flex;align-items:center;justify-content:center;background:var(--lamp);color:#111418;font-weight:700;text-decoration:none;border-radius:6px;padding:12px 20px;white-space:nowrap}
+.visit .go:hover{filter:brightness(1.05)}
+.visit small{grid-column:1 / -1;color:var(--mute);font-size:12px}
+@media (max-width:740px){.visit{grid-template-columns:minmax(0,1fr)}}
+.disclose{margin:-6px 0 0;font-size:12px;color:var(--mute)}
+/* BOARD */
+.board{margin-top:46px}
+.board-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:16px}
+.board h2{font-family:var(--serif);font-size:24px;margin:0}
+.board-head span{font-size:13px;color:var(--mute)}
+.board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
+.clue{position:relative;background:var(--paper);color:var(--paper-ink);padding:22px 16px 16px;border-radius:2px;border:1px solid var(--line);box-shadow:0 6px 16px rgba(17,20,24,.10);font-size:14px;line-height:1.6}
+.clue:nth-child(3n+1){transform:rotate(-1.2deg)}.clue:nth-child(3n+2){transform:rotate(.8deg);background:var(--paper2)}.clue:nth-child(3n){transform:rotate(-.4deg)}
+.clue::before{content:"";position:absolute;top:8px;left:50%;width:11px;height:11px;margin-left:-5px;border-radius:50%;background:#c2412f;box-shadow:0 2px 3px rgba(0,0,0,.4)}
+.clue .cn{font-family:var(--type);font-size:12px;letter-spacing:.1em;color:var(--amber);display:block}
+.clue b{display:block;font-family:var(--serif);font-size:16px;margin:2px 0 4px}
+.clue.locked{background:transparent;color:var(--mute);border:1px dashed var(--line2);box-shadow:none;transform:none}
+.clue.locked::before{display:none}
+.clue.locked .cn{color:var(--mute)}
+/* SHARE */
+.share{margin-top:48px;border:1px solid var(--line);border-radius:10px;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 28px;align-items:center;background:var(--ink)}
+.share h2{font-family:var(--serif);font-size:24px;margin:0 0 4px}
+.share p{margin:0;color:var(--soft)}
+.share-btns{display:flex;flex-wrap:wrap;gap:8px}
+.sbtn{display:inline-flex;align-items:center;justify-content:center;min-width:92px;padding:10px 16px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;border:1px solid transparent;color:#fff;cursor:pointer}
+.sbtn:hover{filter:brightness(1.08)}
+.sbtn.line{background:#06c755}.sbtn.fb{background:#1877f2}.sbtn.threads,.sbtn.x{background:#111418}
+.sbtn.copy{background:var(--ink);color:var(--fog);border-color:var(--line2)}
+.share-url{grid-column:1 / -1;width:100%;font:12.5px var(--mono);color:var(--mute);background:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+@media (max-width:740px){.share{grid-template-columns:minmax(0,1fr);padding:18px}}
+.foot{margin-top:40px;font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+.linkbtn{background:none;border:0;color:var(--mute);text-decoration:underline;padding:0;font-size:13px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="case-meta"><span class="stamp">CASE 0926</span><span>大稻埕 · 霧港咖啡 · 21:47 停電</span></div>
+    <h1>雨夜<span class="lamp">懷錶</span>案</h1>
+    <p class="lede">晚上九點四十七分，霧港咖啡停電三十秒。燈亮時，老闆鎖在保險箱裡的祖傳懷錶不見了。你是新來的偵探，手上只有一支還沒寫完的辦案 App。每用 SwiftUI 修好一個畫面，就多拿到一條線索。完全沒寫過程式也沒關係，從第 0 章開始，一次只學一件事。</p>
+    <nav class="chapters" id="chapters" aria-label="章節"></nav>
+  </header>
+
+  <main id="stage">
+    <section class="brief" id="brief"></section>
+
+    <section class="editor-col">
+      <div class="editor">
+        <div class="ed-bar"><span class="ed-file" id="fileName">WitnessCard.swift</span><span>Swift · SwiftUI</span></div>
+        <div class="ed-body">
+          <pre class="gutter" id="gutter" aria-hidden="true"></pre>
+          <div class="code-area">
+            <pre id="hl" aria-hidden="true"></pre>
+            <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-label="Swift 程式碼"></textarea>
+          </div>
+        </div>
+        <div class="err" id="err" hidden></div>
+      </div>
+      <div class="tools">
+        <button class="btn run" id="runBtn" type="button">執行並檢查<span class="kbd">⌘↵</span></button>
+        <button class="btn" id="hintBtn" type="button">給我提示</button>
+        <button class="btn" id="solBtn" type="button">看解答</button>
+        <button class="btn" id="resetBtn" type="button">重設程式碼</button>
+      </div>
+      <div id="result" hidden></div>
+      <div id="solution" hidden></div>
+    </section>
+
+    <section class="canvas-col">
+      <div class="canvas-label" id="canvasLabel"><span class="dot"></span><span id="canvasText">Canvas · 即時預覽</span></div>
+      <div class="phone">
+        <div class="screen" id="screen">
+          <div class="status"><span>21:47</span><span class="island"></span><span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span></div>
+          <div class="sw-host" id="host"></div>
+          <div class="home-ind"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section id="finale" hidden></section>
+
+  <section class="board" aria-labelledby="boardTitle">
+    <div class="board-head"><h2 id="boardTitle">證物板</h2><span id="boardCount"></span></div>
+    <div class="board-grid" id="board"></div>
+  </section>
+
+  <section class="share" aria-labelledby="shareTitle">
+    <div class="share-copy">
+      <span class="tag">CALL FOR BACKUP</span>
+      <h2 id="shareTitle">找朋友一起破案</h2>
+      <p id="shareLine">把案件丟給正在學 SwiftUI 的朋友，看誰先指認出犯人。</p>
+    </div>
+    <div class="share-btns">
+      <a class="sbtn line" id="shLine" target="_blank" rel="noopener">LINE</a>
+      <a class="sbtn fb" id="shFb" target="_blank" rel="noopener">Facebook</a>
+      <a class="sbtn threads" id="shThreads" target="_blank" rel="noopener">Threads</a>
+      <a class="sbtn x" id="shX" target="_blank" rel="noopener">X</a>
+      <button class="sbtn copy" id="shCopy" type="button">複製連結</button>
+    </div>
+    <input class="share-url" id="shUrl" readonly aria-label="遊戲連結">
+  </section>
+
+  <div class="foot"><span>預覽是在瀏覽器裡模擬的 SwiftUI 子集，語法與 Xcode 相同，可以直接貼進 Xcode 的 Preview 驗證。</span><button class="linkbtn" id="wipe" type="button">清除進度重新開始</button></div>
+</div>
+
+<script>
+/* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
+   各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
+   注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
+var HY_GAME_ID = 'swiftui_detective';  /* 遊戲登記表的 game_id */
+var HY_GAME_ROOT = '#stage, #finale';  /* 遊戲最外層的選擇器 */
+var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目前語言變數 */
+
+(function(){
+  var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
+  var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
+  var sent = {};
+  var playMs = 0, visibleAt = 0;        /* 實際遊玩時間：只算分頁在前景的時間 */
+  var rounds = 0, roundAt = 0, roundOpen = null;
+
+  function lang(){ try { return LANG_MAP[HY_GAME_LANG()] || 'zh-Hant'; } catch(e){ return 'zh-Hant'; } }
+  function now(){ return Date.now(); }
+  function secs(ms){ return Math.round(ms / 1000); }
+
+  function send(name, params, beacon){
+    try {
+      var p = {}, k, v;
+      params = params || {};
+      for (k in params) {
+        v = params[k];
+        if (v === undefined || v === null || v === '') continue;
+        if (typeof v === 'boolean') v = v ? 'yes' : 'no';
+        if (typeof v === 'string') v = v.slice(0, 100);   /* GA4 參數值上限 100 字元 */
+        p[k] = v;
+      }
+      p.game_id = HY_GAME_ID;
+      p.page_lang = lang();
+      p.content_group = 'game';
+      if (beacon) p.transport_type = 'beacon';
+      if (DEBUG) { p.debug_mode = true; if (window.console) console.log('[hy-game]', name, p); }
+      if (typeof window.gtag === 'function') { window.gtag('event', name, p); return; }
+      window.dataLayer = window.dataLayer || [];
+      (function(){ window.dataLayer.push(arguments); })('event', name, p);
+    } catch(e) {}
+  }
+
+  function playedMs(){ return playMs + (visibleAt ? now() - visibleAt : 0); }
+
+  var api = window.hyGame = {
+    /* 任何事件 */
+    event: send,
+    /* 每次載入頁面只送一次 */
+    once: function(name, params){ if (sent[name]) return; sent[name] = 1; send(name, params); },
+    /* 開始玩：entry = direct／shared／saved */
+    start: function(entry){
+      if (sent.game_start) return;
+      if (!document.hidden) visibleAt = now();
+      api.once('game_start', { entry_point: entry || 'direct' });
+    },
+    /* 一局開始：option＝模式、level＝難度 */
+    roundStart: function(params){
+      api.start('direct');
+      if (roundOpen) api.roundEnd({ result: 'quit' });   /* 上一局沒結束就開新局 → 記為放棄 */
+      params = params || {};
+      roundAt = playedMs();   /* 局的秒數同樣只算前景 */
+      roundOpen = { option: params.option, level: params.level };
+      send('round_start', params);
+    },
+    /* 一局結束：result＝complete／fail／quit／timeout，另帶 score、item_count、correct_count */
+    roundEnd: function(params, beacon){
+      if (!roundOpen) return;
+      var p = {}, k;
+      params = params || {};
+      for (k in roundOpen) p[k] = roundOpen[k];
+      for (k in params) p[k] = params[k];
+      p.duration_sec = secs(playedMs() - roundAt);
+      p.result = p.result || 'complete';
+      if (p.result !== 'quit') rounds = rounds + 1;
+      p.round_count = rounds;
+      roundOpen = null;
+      send('round_end', p, beacon);
+    },
+    /* 分享：method 見值域表，type = result／game */
+    share: function(method, type, extra){
+      var p = {}, k; extra = extra || {};
+      for (k in extra) p[k] = extra[k];
+      p.method = method; p.content_type = type;
+      send('share', p);
+    },
+    /* 選填：遊戲可覆寫，替 cta_click 補參數 */
+    ctaExtra: null
+  };
+
+  function inRoot(t){ if (!t || !t.closest) return null; return t.closest(HY_GAME_ROOT); }
+
+  /* 第一次在遊戲區點擊、輸入或按鍵 → 自動 game_start（點 CTA 不算；只捲動不算） */
+  function autoStart(e){
+    if (sent.game_start) return;
+    var t = e.target;
+    if (!inRoot(t)) return;
+    if (t.closest('[data-cta]')) return;
+    api.start('direct');
+  }
+  document.addEventListener('click', autoStart, true);
+  document.addEventListener('input', autoStart, true);
+  document.addEventListener('keydown', autoStart, true);
+
+  /* 點任何 [data-cta] → cta_click（與故事、工具同一個事件） */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('[data-cta]');
+    if (!a) return;
+    var p = {}, ex = {}, k;
+    try { if (typeof api.ctaExtra === 'function') ex = api.ctaExtra(a) || {}; } catch(err) {}
+    for (k in ex) p[k] = ex[k];
+    p.cta_id = a.getAttribute('data-cta');
+    p.cta_type = a.getAttribute('data-cta-type') || 'other';
+    p.link_url = a.href || '';
+    send('cta_click', p);
+  }, true);
+
+  /* 遊玩計時：切到背景暫停，回來繼續 */
+  document.addEventListener('visibilitychange', function(){
+    if (!sent.game_start) return;
+    if (document.hidden) {
+      if (visibleAt) { playMs = playMs + now() - visibleAt; visibleAt = 0; }
+    } else if (!sent.game_exit) {
+      visibleAt = now();
+    }
+  });
+
+  /* 離開頁面 → game_exit（每次載入只送一次；沒開始玩就不送） */
+  function exit(){
+    if (!sent.game_start || sent.game_exit) return;
+    if (roundOpen) api.roundEnd({ result: 'quit' }, true);
+    sent.game_exit = 1;
+    send('game_exit', { duration_sec: secs(playedMs()), round_count: rounds }, true);
+  }
+  window.addEventListener('pagehide', exit);
+})();
+/* ===== /GA4 統一追蹤 ===== */
+</script>
+<script>
+/* GA4：依《編織日和・遊戲｜GA4 統一追蹤規範 v1.0》，事件由上方 hyGame 送出。一局＝一個未破解的章節（l00–l07），結案指認＝l08 */
+const CASE_ID='case01';
+const lv=i=>'l'+String(i).padStart(2,'0');
+const hg=()=>window.hyGame||null;
+let round=null;
+function isClosed(){return !!SUSPECTS.find(x=>x.id===S.accused&&x.right)}
+function roundDone(i){return i<LEVELS.length?S.solved.includes(LEVELS[i].id):isClosed()}
+function ensureRound(){if(!hg()||roundDone(S.cur))return;if(round&&round.level===S.cur)return;endRoundQuit();round={level:S.cur,wrong:0};hg().roundStart({option:CASE_ID,level:lv(S.cur)})}
+function endRoundQuit(){if(!round||!hg())return;hg().roundEnd({result:'quit',item_count:1,correct_count:0});round=null}
+function endRoundComplete(){if(!round||!hg())return;hg().roundEnd({result:'complete',item_count:1,correct_count:round.wrong===0?1:0});round=null}
+
+/* ================= LEVELS ================= */
+const LEVELS = [
+{
+  id:'intro', key:'新手上路', file:'DetectiveBadge.swift', title:'領取偵探證',
+  story:'歡迎來到霧港分局。完全沒寫過程式也沒關係，這一章只要改一個字。左邊是程式碼，右邊是手機畫面：改左邊，右邊會立刻跟著變。',
+  task:'在左邊找到 <code>"新人偵探"</code>，把引號裡的字改成你的名字，然後按黃色的「執行並檢查」。',
+  notes:['Swift 是 Apple 的程式語言；SwiftUI 是用 Swift 畫 iPhone 畫面的工具。','雙引號 <code>" "</code> 裡面是要顯示的文字，可以隨便改；引號外面的英文是指令，要一字不差照抄。','<code>//</code> 後面是註解，給人看的筆記，電腦會跳過。','寫錯時編輯器下方會出現紅色錯誤，並標出第幾行。試試故意刪掉一個引號，看看會怎樣，再改回來。'],
+  hint:'只改引號裡的四個字，例如 <code>Text("阿福偵探")</code>。引號本身不要刪掉。',
+  starter:`import SwiftUI
+
+// 這是你的偵探證。雙斜線後面是註解，電腦會略過。
+struct DetectiveBadge: View {
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "person")
+                .font(.largeTitle)
+            Text("新人偵探")
+                .font(.title)
+            Text("霧港分局 · 見習")
+                .foregroundStyle(.gray)
+        }
+    }
+}`,
+  solution:`import SwiftUI
+
+// 這是你的偵探證。雙斜線後面是註解，電腦會略過。
+struct DetectiveBadge: View {
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "person")
+                .font(.largeTitle)
+            Text("阿福偵探")
+                .font(.title)
+            Text("霧港分局 · 見習")
+                .foregroundStyle(.gray)
+        }
+    }
+}`,
+  clue:{t:'偵探證', b:'你正式拿到辦案資格。下一章開始查案。'},
+  check(app){
+    const ts=views(app,'Text');
+    if(!ts.length) return fail('偵探證上的文字不見了。按「重設程式碼」可以回到原本的樣子。');
+    const named=ts.find(t=>t.mods.some(m=>m.name==='font'))||ts[0];
+    const v=(lit(named)||'').trim();
+    if(!v) return fail('名字不能空白，在引號裡打上你的名字。');
+    if(v==='新人偵探') return fail('還是「新人偵探」。把引號裡的字改成你的名字，再按一次執行。');
+    return ok();
+  }
+},
+{
+  id:'text', key:'Text', file:'WitnessCard.swift', title:'證物卡',
+  story:'報案的是今晚駐店的鋼琴老師。偵探守則第一條：先把證人的名字記下來。',
+  task:'在 <code>body</code> 裡加一個 <code>Text</code>，顯示證人的名字「林若琴」。',
+  notes:['SwiftUI 的畫面由一個個 View 組成，<code>body</code> 回傳要顯示的內容。','<code>Text("字串")</code> 是最基本的 View，字串要用雙引號包住。','大小寫有差：<code>text("…")</code> 會出現 Cannot find in scope。'],
+  hint:'只要一行：<code>Text("林若琴")</code>，放在 body 的大括號裡。',
+  starter:`import SwiftUI
+
+struct WitnessCard: View {
+    var body: some View {
+        // 在這裡加一個 Text
+
+    }
+}`,
+  solution:`import SwiftUI
+
+struct WitnessCard: View {
+    var body: some View {
+        Text("林若琴")
+    }
+}`,
+  clue:{t:'證人', b:'林若琴，駐店鋼琴老師，也是報案人。'},
+  check(app){
+    const ts=views(app,'Text');
+    if(!ts.length) return fail('證物卡還是空的。在 body 裡放一個 Text("…")。');
+    if(!ts.some(t=>(lit(t)||'').includes('林若琴'))) return fail('名字不對。筆記本上寫的是「林若琴」。');
+    return ok();
+  }
+},
+{
+  id:'mod', key:'modifier', file:'CameraFrame.swift', title:'監視器最後一格',
+  story:'監視器在停電前拍下最後一格，畫面角落有一行小字。字太小，很容易被漏看。把它放大、標成紅色。',
+  task:'在 <code>Text</code> 後面接上 <code>.font(.largeTitle)</code> 和 <code>.foregroundStyle(.red)</code>。',
+  notes:['modifier 是接在 View 後面的 <code>.方法()</code>，每接一個就回傳一個新的 View。','可以換行接下去，習慣上縮排對齊。','常用：<code>.font</code>、<code>.foregroundStyle</code>、<code>.bold()</code>、<code>.padding()</code>。試試 <code>.font(.system(size: 40))</code>。'],
+  hint:'在 <code>Text("21:47 吧檯無人")</code> 的下一行寫 <code>.font(.largeTitle)</code>，再下一行寫 <code>.foregroundStyle(.red)</code>。',
+  starter:`import SwiftUI
+
+struct CameraFrame: View {
+    var body: some View {
+        Text("21:47 吧檯無人")
+    }
+}`,
+  solution:`import SwiftUI
+
+struct CameraFrame: View {
+    var body: some View {
+        Text("21:47 吧檯無人")
+            .font(.largeTitle)
+            .foregroundStyle(.red)
+    }
+}`,
+  clue:{t:'監視器 21:47', b:'停電那一刻，吧檯空無一人。'},
+  check(app){
+    const t=views(app,'Text').find(t=>(lit(t)||'').includes('21:47'));
+    if(!t) return fail('Text("21:47 吧檯無人") 不見了，那是關鍵畫面。');
+    const f=modEnum(t,['font']);
+    if(!f) return fail('字還是太小。接上 .font(.largeTitle)。');
+    if(f!=='largeTitle') return fail(`.${f} 還不夠醒目，換成 .largeTitle。`);
+    const c=modEnum(t,['foregroundStyle','foregroundColor']);
+    if(!c) return fail('還差顏色。接上 .foregroundStyle(.red)。');
+    if(c!=='red') return fail(`.${c} 不夠刺眼，警示要用 .red。`);
+    return ok();
+  }
+},
+{
+  id:'vstack', key:'VStack', file:'Testimonies.swift', title:'三份證詞',
+  story:'停電那三十秒，三個人各自說了自己在哪裡。證詞散落在桌上，排成一欄才好對照。',
+  task:'用 <code>VStack(alignment: .leading, spacing: 12)</code> 把三個 <code>Text</code> 包起來，靠左對齊。',
+  notes:['<code>VStack</code> 垂直排列，<code>HStack</code> 水平排列，<code>ZStack</code> 疊在一起。','<code>alignment</code> 決定對齊方向，<code>spacing</code> 決定間距。','容器的內容寫在後面的大括號 <code>{ }</code> 裡。'],
+  hint:'在三行 Text 上面寫 <code>VStack(alignment: .leading, spacing: 12) {</code>，最下面補一個 <code>}</code>。',
+  starter:`import SwiftUI
+
+struct Testimonies: View {
+    var body: some View {
+        // 用 VStack 把下面三行包起來，並靠左對齊
+        Text("林若琴：我一直在台上彈琴")
+        Text("陳志遠：我在門口講電話")
+        Text("吳店長：我整晚都在吧檯")
+    }
+}`,
+  solution:`import SwiftUI
+
+struct Testimonies: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("林若琴：我一直在台上彈琴")
+            Text("陳志遠：我在門口講電話")
+            Text("吳店長：我整晚都在吧檯")
+        }
+    }
+}`,
+  clue:{t:'三份證詞', b:'吳店長說他整晚都在吧檯。跟監視器對不起來。'},
+  check(app){
+    const vs=views(app,'VStack');
+    if(!vs.length) return fail('證詞還散在桌上。用 VStack { } 把三個 Text 包起來。');
+    const v=vs.find(v=>v.children.filter(c=>c.kind==='view'&&c.name==='Text').length>=3);
+    if(!v) return fail('VStack 裡要直接放三個 Text。');
+    const a=arg(v,'alignment');
+    if(!a||a.t!=='enum') return fail('證詞置中很難對照。加上 alignment: .leading。');
+    if(a.name!=='leading') return fail(`.${a.name} 不對，證詞要靠左：.leading。`);
+    return ok();
+  }
+},
+{
+  id:'hstack', key:'HStack · Image', file:'WindowSill.swift', title:'窗台上的鞋印',
+  story:'你在後窗的窗台上發現泥濘的鞋印。拿出放大鏡，把圖示和紀錄排在同一行。',
+  task:'用 <code>HStack</code> 把 <code>Image(systemName: "magnifyingglass")</code> 放在 <code>Text</code> 左邊。',
+  notes:['<code>Image(systemName:)</code> 使用 Apple 內建的 SF Symbols 圖示。','<code>HStack</code> 由左到右排列，寫在前面的在左邊。','圖示也吃 <code>.font</code>，可以用 <code>.font(.title)</code> 放大。'],
+  hint:'<code>HStack {</code> 下一行放 <code>Image(systemName: "magnifyingglass")</code>，再放原本的 Text，最後 <code>}</code>。',
+  starter:`import SwiftUI
+
+struct WindowSill: View {
+    var body: some View {
+        Text("窗台：43 號泥鞋印，鞋尖朝外")
+    }
+}`,
+  solution:`import SwiftUI
+
+struct WindowSill: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .font(.title)
+            Text("窗台：43 號泥鞋印，鞋尖朝外")
+        }
+    }
+}`,
+  clue:{t:'窗台鞋印', b:'43 號泥鞋印，鞋尖朝外。有人從店內翻窗出去。'},
+  check(app){
+    const hs=views(app,'HStack');
+    if(!hs.length) return fail('圖示和紀錄要排在同一行，用 HStack { }。');
+    for(const h of hs){
+      const kids=h.children.filter(c=>c.kind==='view');
+      const ii=kids.findIndex(c=>c.name==='Image');
+      const ti=kids.findIndex(c=>c.name==='Text');
+      if(ii<0) continue;
+      const nm=arg(kids[ii],'systemName');
+      if(!nm||nm.t!=='str'||nm.v!=='magnifyingglass') return fail('圖示名稱要是 "magnifyingglass"，一個字都不能錯。');
+      if(ti<0) return fail('HStack 裡還缺鞋印紀錄的 Text。');
+      if(ii>ti) return fail('放大鏡要在左邊：Image 寫在 Text 前面。');
+      return ok();
+    }
+    return fail('HStack 裡還沒有放大鏡 Image(systemName: "magnifyingglass")。');
+  }
+},
+{
+  id:'state', key:'@State · Button', file:'Envelope.swift', title:'老闆的信封',
+  story:'老闆塞給你一個封好的信封：「保險箱密碼在裡面，只有我和店長知道。」信封要按下去才拆得開。',
+  task:'按鈕按下時執行 <code>isOpen.toggle()</code>；只有 <code>isOpen</code> 為 true 時才顯示 <code>Text("保險箱密碼：0427")</code>。',
+  notes:['<code>@State</code> 是 View 自己保管的狀態，值一改，畫面自動重畫。','<code>Button("標題") { 動作 }</code>：大括號裡是按下去要做的事。','<code>isOpen.toggle()</code> 在 true 和 false 之間切換。','body 裡可以用 <code>if isOpen { … }</code> 決定要不要顯示某個 View。'],
+  hint:'按鈕大括號裡寫 <code>isOpen.toggle()</code>。按鈕下面寫 <code>if isOpen {</code>、<code>Text("保險箱密碼：0427")</code>、<code>}</code>。寫完在右邊手機上按按看。',
+  starter:`import SwiftUI
+
+struct Envelope: View {
+    @State private var isOpen = false
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "envelope")
+                .font(.largeTitle)
+            Button("拆開信封") {
+                // 1. 切換 isOpen
+
+            }
+            .buttonStyle(.borderedProminent)
+            // 2. 只有 isOpen 為 true 時才顯示密碼
+
+        }
+    }
+}`,
+  solution:`import SwiftUI
+
+struct Envelope: View {
+    @State private var isOpen = false
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: isOpen ? "envelope.open" : "envelope")
+                .font(.largeTitle)
+            Button("拆開信封") {
+                isOpen.toggle()
+            }
+            .buttonStyle(.borderedProminent)
+            if isOpen {
+                Text("保險箱密碼：0427")
+            }
+        }
+    }
+}`,
+  clue:{t:'保險箱密碼', b:'0427。只有老闆和吳店長知道。'},
+  check(app){
+    if(!('isOpen' in app.state)) return fail('找不到 @State private var isOpen。');
+    const b=views(app,'Button')[0];
+    if(!b) return fail('按鈕不見了。');
+    if(!b.actions.some(s=>s.name==='isOpen')) return fail('按鈕按下去什麼都沒發生。在它的 { } 裡寫 isOpen.toggle()。');
+    let leak=false; walkNoIf(app.body,n=>{ if(n.name==='Text'&&(lit(n)||'').includes('0427')) leak=true; });
+    if(leak) return fail('密碼寫在 if 外面，信封還沒拆就被看光了。');
+    let ifn=null; walk(app.body,n=>{ if(n.kind==='if'&&mentions(n.cond,'isOpen')) ifn=ifn||n; });
+    if(!ifn) return fail('用 if isOpen { … } 把密碼包起來。');
+    let has=false; walk(ifn.then,n=>{ if(n.name==='Text'&&(lit(n)||'').includes('0427')) has=true; });
+    if(!has) return fail('if 裡面要放 Text("保險箱密碼：0427")。');
+    return ok();
+  }
+},
+{
+  id:'foreach', key:'List · ForEach', file:'SuspectList.swift', title:'嫌疑人名單',
+  story:'停電時還留在店裡的只有三個人。名單交給 List，不必一行一行手寫。',
+  task:'在 <code>List</code> 裡用 <code>ForEach(suspects, id: \\.self) { name in Text(name) }</code> 列出所有嫌疑人。',
+  notes:['<code>ForEach</code> 會對陣列裡每個元素各產生一個 View。','<code>id: \\.self</code> 告訴 SwiftUI 用元素本身區分每一列，少了它會報錯。','<code>name in</code> 是替每個元素取的名字，也可以直接用 <code>$0</code>。','試試在 <code>suspects</code> 陣列多加一個名字，看名單怎麼變。'],
+  hint:'在 List 的大括號裡寫 <code>ForEach(suspects, id: \\.self) { name in</code>，下一行 <code>Text(name)</code>，再 <code>}</code>。',
+  starter:`import SwiftUI
+
+struct SuspectList: View {
+    let suspects = ["林若琴", "陳志遠", "吳店長"]
+
+    var body: some View {
+        List {
+            // 用 ForEach 逐一顯示 suspects
+
+        }
+    }
+}`,
+  solution:`import SwiftUI
+
+struct SuspectList: View {
+    let suspects = ["林若琴", "陳志遠", "吳店長"]
+
+    var body: some View {
+        List {
+            ForEach(suspects, id: \\.self) { name in
+                HStack {
+                    Image(systemName: "person")
+                    Text(name)
+                }
+            }
+        }
+    }
+}`,
+  clue:{t:'嫌疑人', b:'林若琴、陳志遠、吳店長。'},
+  check(app){
+    const loops=[...views(app,'ForEach'),...views(app,'List').filter(l=>l.dataExpr)];
+    if(!loops.length) return fail('List 裡還沒有 ForEach。');
+    const lp=loops.find(l=>l.dataExpr&&l.dataExpr.t==='var'&&l.dataExpr.name==='suspects');
+    if(!lp) return fail('ForEach 要走訪的是 suspects 陣列：ForEach(suspects, id: \\.self)。');
+    const pn=lp.param||'$0';
+    let shows=false; walk(lp.children,n=>{ if(n.name==='Text'){ const a=n.args.find(x=>!x.label); if(a&&a.value.t==='var'&&a.value.name===pn) shows=true; if(a&&a.value.t==='str'&&a.value.v.includes('\\('+pn+')')) shows=true; } });
+    if(!shows) return fail(`每一列要顯示名字：在 ForEach 裡寫 Text(${pn})。`);
+    return ok();
+  }
+},
+{
+  id:'binding', key:'TextField · $Binding', file:'Safe.swift', title:'保險箱',
+  story:'最後是保險箱本身。輸入框必須和 <code>code</code> 綁在一起，你打的每個字才會存進 @State，if 才會重新判斷。',
+  task:'把 <code>____</code> 換成 <code>$code</code>。程式沒錯之後，在右邊手機的輸入框打入你拿到的密碼。',
+  notes:['<code>$code</code> 是 Binding：讓 TextField 同時能讀、也能寫 <code>code</code>。','少了 <code>$</code> 只是把目前的值複製過去，Swift 會報 <code>Binding&lt;String&gt;</code> 型別錯誤。試試看。','@State 一改變，body 重新計算，if 的結果跟著更新。'],
+  hint:'改成 <code>TextField("輸入四位數密碼", text: $code)</code>。密碼在第五章的信封裡。',
+  starter:`import SwiftUI
+
+struct Safe: View {
+    @State private var code = ""
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: code == "0427" ? "lock.open" : "lock")
+                .font(.largeTitle)
+            TextField("輸入四位數密碼", text: ____)
+                .textFieldStyle(.roundedBorder)
+            if code == "0427" {
+                Text("保險箱開了。懷錶不見了，錶盒上留著咖啡渣指印。")
+                    .foregroundStyle(.red)
+            }
+        }
+        .padding()
+    }
+}`,
+  solution:`import SwiftUI
+
+struct Safe: View {
+    @State private var code = ""
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: code == "0427" ? "lock.open" : "lock")
+                .font(.largeTitle)
+            TextField("輸入四位數密碼", text: $code)
+                .textFieldStyle(.roundedBorder)
+            if code == "0427" {
+                Text("保險箱開了。懷錶不見了，錶盒上留著咖啡渣指印。")
+                    .foregroundStyle(.red)
+            }
+        }
+        .padding()
+    }
+}`,
+  live:true,
+  clue:{t:'錶盒', b:'懷錶不見了，錶盒上有咖啡渣指印。碰過它的人在吧檯工作。'},
+  check(app,st){
+    const tf=views(app,'TextField')[0];
+    if(!tf) return fail('輸入框不見了。');
+    const tx=arg(tf,'text');
+    if(!tx||tx.t!=='bind'||tx.name!=='code') return fail('text: 後面要接 $code。');
+    let target=null; walk(app.body,n=>{ if(n.kind==='if'&&n.cond.t==='bin'&&n.cond.op==='=='){ const c=n.cond; if(c.l.t==='var'&&c.l.name==='code'&&c.r.t==='str') target=c.r.v; } });
+    if(target===null) return fail('if code == "0427" 那段被改掉了，保險箱不知道要比對什麼。');
+    if(st.code!==target) return pending('程式沒問題了。現在在右邊手機的輸入框打入密碼。');
+    return ok();
+  }
+}
+];
+
+const SUSPECTS=[
+  {id:'lin', name:'林若琴', role:'駐店鋼琴老師 · 報案人', alibi:'「九點四十到十點，我一直在台上彈琴。」',
+   verdict:'停電那三十秒，琴聲沒有停，全場客人都聽得到。她人在台上，沒辦法去碰保險箱。'},
+  {id:'chen', name:'陳志遠', role:'常客 · 報社記者', alibi:'「雨太大，我在門口講電話。」',
+   verdict:'他不知道保險箱密碼，信封上寫得很清楚，只有老闆和店長知道。錶盒上的咖啡渣也跟他無關。'},
+  {id:'wu', name:'吳店長', role:'霧港咖啡店長', alibi:'「我整晚都在吧檯，哪裡都沒去。」',
+   verdict:'21:47 的監視器拍到吧檯沒人，他的證詞是假的。他是除了老闆之外唯一知道密碼 0427 的人，錶盒上留著吧檯才有的咖啡渣指印。停電時他打開保險箱，從後窗翻出去把懷錶藏進巷子，再繞回吧檯。', right:true}
+];
+
+/* ================= HELPERS FOR CHECKS ================= */
+function ok(){return {s:'ok'}} function fail(m){return {s:'fail',m}} function pending(m){return {s:'pending',m}}
+function walk(nodes,fn){for(const n of nodes||[]){fn(n);if(n.kind==='if'){walk(n.then,fn);walk(n.els,fn);}if(n.children)walk(n.children,fn);}}
+function walkNoIf(nodes,fn){for(const n of nodes||[]){if(n.kind==='if')continue;fn(n);if(n.children)walkNoIf(n.children,fn);}}
+function views(app,name){const r=[];walk(app.body,n=>{if(n.kind==='view'&&n.name===name)r.push(n)});return r}
+function lit(n){const a=n.args.find(a=>!a.label);return a&&a.value.t==='str'?a.value.v:null}
+function arg(n,label){const a=n.args.find(a=>a.label===label);return a?a.value:null}
+function modEnum(n,names){for(const m of n.mods){if(names.includes(m.name)&&m.args[0]&&m.args[0].value.t==='enum')return m.args[0].value.name}return null}
+function mentions(e,name){if(!e||typeof e!=='object')return false;if(e.t==='var'&&e.name===name)return true;return ['l','r','e','c','a','b'].some(k=>mentions(e[k],name))}
+
+/* ================= TOKENIZER ================= */
+function err(line,msg){const e=new Error(msg);e.line=line;e.swift=true;return e}
+function tokenize(src){
+  const t=[];let i=0,line=1;const n=src.length;
+  const idStart=c=>/[A-Za-z_\u3400-\u9fff]/.test(c), idChar=c=>/[A-Za-z0-9_\u3400-\u9fff]/.test(c);
+  while(i<n){
+    const c=src[i];
+    if(c==='\n'){line++;i++;continue}
+    if(/\s/.test(c)){i++;continue}
+    if(c==='/'&&src[i+1]==='/'){while(i<n&&src[i]!=='\n')i++;continue}
+    if(c==='/'&&src[i+1]==='*'){i+=2;while(i<n&&!(src[i]==='*'&&src[i+1]==='/')){if(src[i]==='\n')line++;i++}i+=2;continue}
+    if(c==='"'||c==='“'||c==='”'){
+      if(c!=='"') throw err(line,"Unicode curly quote found, replace with '\"'（引號請用半形 \"）");
+      let j=i+1,s='';
+      while(j<n&&src[j]!=='"'){if(src[j]==='\n')throw err(line,'Unterminated string literal');if(src[j]==='\\'){s+=src[j]+(src[j+1]||'');j+=2;continue}s+=src[j];j++}
+      if(j>=n)throw err(line,'Unterminated string literal');
+      t.push({k:'str',v:s,line});i=j+1;continue;
+    }
+    if(/[0-9]/.test(c)){let j=i;while(j<n&&/[0-9.]/.test(src[j])){if(src[j]==='.'&&!/[0-9]/.test(src[j+1]||''))break;j++}t.push({k:'num',v:Number(src.slice(i,j)),line});i=j;continue}
+    if(idStart(c)){let j=i;while(j<n&&idChar(src[j]))j++;t.push({k:'id',v:src.slice(i,j),line});i=j;continue}
+    if(c==='@'){let j=i+1;while(j<n&&idChar(src[j]))j++;t.push({k:'attr',v:src.slice(i+1,j),line});i=j;continue}
+    if(c==='$'){let j=i+1;while(j<n&&idChar(src[j]))j++;const nm=src.slice(i+1,j);if(!nm)throw err(line,"Expected identifier after '$'");
+      if(/^[0-9]+$/.test(nm))t.push({k:'id',v:'$'+nm,line});else t.push({k:'bind',v:nm,line});i=j;continue}
+    if(c==='\\'&&src[i+1]==='.'){let j=i+2;while(j<n&&idChar(src[j]))j++;t.push({k:'kp',v:src.slice(i+2,j),line});i=j;continue}
+    const two=src.substr(i,2);
+    if(['==','!=','&&','||','+=','-=','->','<=','>='].includes(two)){t.push({k:'p',v:two,line});i+=2;continue}
+    if('(){}[],:.=!+-*<>?;'.includes(c)){t.push({k:'p',v:c,line});i++;continue}
+    if('（）｛｝，：'.includes(c)) throw err(line,`Invalid character '${c}'（請改用半形符號）`);
+    throw err(line,`Invalid character '${c}' in source file`);
+  }
+  return t;
+}
+
+/* ================= PARSER ================= */
+const VIEWS=new Set(['Text','Image','Button','VStack','HStack','ZStack','Group','List','ForEach','TextField','Spacer','Divider']);
+const CONTAINERS=new Set(['VStack','HStack','ZStack','Group']);
+const MODS=new Set(['font','foregroundColor','foregroundStyle','bold','italic','padding','background','textFieldStyle','buttonStyle','cornerRadius','frame','multilineTextAlignment','opacity','tint']);
+class P{
+  constructor(t){this.t=t;this.i=0}
+  peek(o=0){return this.t[this.i+o]}
+  next(){return this.t[this.i++]}
+  is(v,o=0){const x=this.peek(o);return !!x&&(x.k==='p'||x.k==='id')&&x.v===v}
+  eat(v){return this.is(v)?this.next():null}
+  line(){const x=this.peek()||this.t[this.t.length-1];return x?x.line:1}
+  expect(v){if(this.is(v))return this.next();const x=this.peek();throw err(this.line(),x?`Expected '${v}'，但看到 '${x.k==='str'?'"'+x.v+'"':x.v}'`:`Expected '${v}'`)}
+  done(){return this.i>=this.t.length}
+}
+function parseFile(src){
+  const p=new P(tokenize(src));
+  while(p.is('import')){p.next();p.next()}
+  if(!p.is('struct'))throw err(p.line(),"Expected 'struct'");
+  p.next();const nm=p.next();if(!nm||nm.k!=='id')throw err(p.line(),'Expected struct name');
+  p.expect(':');const proto=p.next();
+  if(!proto||proto.v!=='View')throw err(nm.line,`Type '${nm.v}' does not conform to protocol 'View'`);
+  p.expect('{');
+  const app={name:nm.v,state:{},consts:{},kinds:{},body:null};
+  while(!p.is('}')){
+    if(p.done())throw err(p.line(),"Expected '}' in struct");
+    let isState=false;
+    if(p.peek().k==='attr'){const a=p.next();if(a.v!=='State')throw err(a.line,`Unknown attribute '${a.v}'`);isState=true}
+    p.eat('private');
+    const kw=p.next();
+    if(!kw||(kw.v!=='var'&&kw.v!=='let'))throw err(kw?kw.line:p.line(),'Expected declaration（這裡只能宣告 var / let）');
+    const id=p.next();if(!id||id.k!=='id')throw err(kw.line,'Expected pattern');
+    if(id.v==='body'&&kw.v==='var'){
+      p.expect(':');p.eat('some');const v=p.next();if(!v||v.v!=='View')throw err(id.line,"body 的型別要寫 some View");
+      p.expect('{');app.body=parseViews(p);p.expect('}');continue;
+    }
+    if(p.eat(':'))skipType(p);
+    p.expect('=');
+    const e=parseExpr(p);
+    const val=evalExpr(e,{locals:{},state:app.state,consts:app.consts});
+    if(isState){if(kw.v!=='var')throw err(id.line,"@State 屬性必須用 var 宣告");app.state[id.v]=val}
+    else{app.consts[id.v]=val;app.kinds[id.v]=kw.v}
+  }
+  p.expect('}');
+  if(!p.done())throw err(p.line(),"Extraneous '}' at top level");
+  if(!app.body)throw err(nm.line,`Type '${nm.v}' does not conform to protocol 'View'（缺少 var body）`);
+  return app;
+}
+function skipType(p){if(p.eat('[')){let d=1;while(d>0){const x=p.next();if(!x)throw err(p.line(),"Expected ']'");if(x.v==='[')d++;else if(x.v===']')d--}}else{const x=p.next();if(!x||x.k!=='id')throw err(p.line(),'Expected type')}p.eat('?')}
+function parseViews(p){const out=[];while(!p.done()&&!p.is('}')){if(p.is('if')){out.push(parseIf(p));continue}out.push(parseView(p))}return out}
+function parseIf(p){const tk=p.next();const cond=parseExpr(p);p.expect('{');const then=parseViews(p);p.expect('}');let els=null;if(p.eat('else')){if(p.is('if'))els=[parseIf(p)];else{p.expect('{');els=parseViews(p);p.expect('}')}}return {kind:'if',cond,then,els,line:tk.line}}
+function parseView(p){
+  const tk=p.next();
+  if(tk.k!=='id'){throw err(tk.line,tk.k==='str'?`字串 "${tk.v}" 不能單獨放在這裡，要包在 Text(…) 裡`:`Expected view，但看到 '${tk.v}'`)}
+  if(!VIEWS.has(tk.v)){
+    const near=[...VIEWS].find(v=>v.toLowerCase()===tk.v.toLowerCase());
+    throw err(tk.line,`Cannot find '${tk.v}' in scope`+(near?`（你是指 ${near} 嗎？）`:''));
+  }
+  const node={kind:'view',name:tk.v,line:tk.line,args:[],mods:[],children:null};
+  if(p.is('('))node.args=parseArgs(p);
+  if(p.is('{'))node.trailing=parseClosure(p);
+  while(p.is('.')&&p.peek(1)&&p.peek(1).k==='id'){
+    p.next();const m=p.next();
+    if(!MODS.has(m.v))throw err(m.line,`Value of type 'some View' has no member '${m.v}'`);
+    const mod={name:m.v,line:m.line,args:[]};
+    if(p.is('('))mod.args=parseArgs(p);
+    else if(['bold','italic','padding'].includes(m.v))throw err(m.line,`'${m.v}' 後面要加括號：.${m.v}()`);
+    node.mods.push(mod);
+  }
+  finishView(node);return node;
+}
+function parseArgs(p){const out=[];p.expect('(');if(p.eat(')'))return out;
+  while(true){let label=null;const a=p.peek();if(a&&a.k==='id'&&p.is(':',1)){label=a.v;p.next();p.next()}
+    const value=p.is('{')?{t:'closure',...parseClosure(p)}:parseExpr(p);
+    out.push({label,value});if(p.eat(','))continue;p.expect(')');break}
+  return out}
+function parseClosure(p){const open=p.expect('{');let d=1;const toks=[];
+  while(true){const t=p.next();if(!t)throw err(open.line,"Expected '}' to match this '{'");if(t.k==='p'&&t.v==='{')d++;else if(t.k==='p'&&t.v==='}'){d--;if(d===0)break}toks.push(t)}
+  return {toks,line:open.line}}
+function viewClosure(cl,withParam){const sp=new P(cl.toks);let param=null;
+  if(withParam&&sp.peek()&&sp.peek().k==='id'&&sp.is('in',1)){param=sp.next().v;sp.next()}
+  const kids=parseViews(sp);return {kids,param}}
+function finishView(n){
+  const closure=n.trailing||(n.args.find(a=>a.value.t==='closure')||{}).value;
+  const unl=n.args.filter(a=>!a.label);
+  if(CONTAINERS.has(n.name)){if(!closure)throw err(n.line,`${n.name} 後面需要 { } 放內容`);n.children=viewClosure(closure).kids}
+  else if(n.name==='List'||n.name==='ForEach'){
+    if(!closure)throw err(n.line,`${n.name} 後面需要 { } 放內容`);
+    if(unl[0]){n.dataExpr=unl[0].value;const r=viewClosure(closure,true);n.children=r.kids;n.param=r.param;n.hasId=!!n.args.find(a=>a.label==='id')}
+    else{if(n.name==='ForEach')throw err(n.line,"ForEach 需要一個陣列：ForEach(陣列, id: \\.self)");n.children=viewClosure(closure).kids}
+  }
+  else if(n.name==='Button'){
+    if(!unl[0])throw err(n.line,"Button 需要標題：Button(\"標題\") { … }");
+    const act=n.trailing||(n.args.find(a=>a.label==='action')||{}).value;
+    if(!act)throw err(n.line,"Missing argument for parameter 'action' in call");
+    n.actions=parseActions(act.toks);
+  }
+  else if(n.name==='Text'&&!unl[0])throw err(n.line,'Missing argument for parameter #1 in call');
+  else if(n.name==='Image'&&!arg(n,'systemName'))throw err(n.line,unl[0]?"Missing argument label 'systemName:' in call":"Image 需要 systemName:");
+  else if(n.name==='TextField'){if(!unl[0])throw err(n.line,'TextField 需要提示文字');if(!arg(n,'text'))throw err(n.line,"Missing argument for parameter 'text' in call")}
+  else if(n.trailing)throw err(n.trailing.line,`Extra trailing closure passed in call to ${n.name}`);
+}
+function parseActions(toks){const p=new P(toks);const out=[];
+  while(!p.done()){const tk=p.next();
+    if(tk.k!=='id')throw err(tk.line,'Expected expression');
+    if(p.is('.')&&p.peek(1)&&p.peek(1).v==='toggle'){p.next();p.next();p.expect('(');p.expect(')');out.push({op:'toggle',name:tk.v,line:tk.line});continue}
+    if(p.is('=')||p.is('+=')||p.is('-=')){const op=p.next().v;out.push({op,name:tk.v,e:parseExpr(p),line:tk.line});continue}
+    if(p.is('('))throw err(tk.line,`Cannot find '${tk.v}' in scope`);
+    throw err(tk.line,`Expression of type '${tk.v}' is unused（要改變它？試試 ${tk.v}.toggle() 或 ${tk.v} = …）`);
+  }
+  p.eat(';');return out}
+function parseExpr(p){const c=parseOr(p);if(p.eat('?')){const a=parseExpr(p);p.expect(':');const b=parseExpr(p);return {t:'tern',c,a,b}}return c}
+function bin(sub,ops){return p=>{let l=sub(p);while(ops.some(o=>p.is(o))){const op=p.next().v;l={t:'bin',op,l,r:sub(p)}}return l}}
+function parseUnary(p){if(p.eat('!'))return {t:'not',e:parseUnary(p)};if(p.is('-')){p.next();return {t:'bin',op:'-',l:{t:'num',v:0},r:parseUnary(p)}}return parsePostfix(p)}
+const parseMul=bin(parseUnary,['*']),parseAdd=bin(parseMul,['+','-']),parseEq=bin(parseAdd,['==','!=','<','>','<=','>=']),parseAnd=bin(parseEq,['&&']),parseOr=bin(parseAnd,['||']);
+function parsePostfix(p){let e=parsePrimary(p);
+  while((e.t==='var'||e.t==='str')&&p.is('.')&&p.peek(1)&&p.peek(1).k==='id'){p.next();const m=p.next();let call=false;if(p.is('(')){p.expect('(');p.expect(')');call=true}e={t:'mem',e,name:m.v,call,line:m.line}}
+  return e}
+function parsePrimary(p){const x=p.next();if(!x)throw err(p.line(),'Expected expression');
+  if(x.k==='str')return {t:'str',v:x.v,line:x.line};
+  if(x.k==='num')return {t:'num',v:x.v};
+  if(x.k==='bind')return {t:'bind',name:x.v,line:x.line};
+  if(x.k==='kp')return {t:'kp',name:x.v};
+  if(x.k==='id'){if(x.v==='true'||x.v==='false')return {t:'bool',v:x.v==='true'};return {t:'var',name:x.v,line:x.line}}
+  if(x.v==='.'){const m=p.next();if(!m||m.k!=='id')throw err(x.line,"Expected member name following '.'");const e={t:'enum',name:m.v,args:[],line:m.line};if(p.is('('))e.args=parseArgs(p);return e}
+  if(x.v==='['){const items=[];if(p.eat(']'))return {t:'arr',items};while(true){items.push(parseExpr(p));if(p.eat(','))continue;p.expect(']');break}return {t:'arr',items}}
+  if(x.v==='('){const e=parseExpr(p);p.expect(')');return e}
+  throw err(x.line,`Expected expression，但看到 '${x.v}'`);
+}
+
+/* ================= EVALUATOR ================= */
+function lookup(name,env,line){
+  if(env.locals&&name in env.locals)return env.locals[name];
+  if(env.state&&name in env.state)return env.state[name];
+  if(env.consts&&name in env.consts)return env.consts[name];
+  throw err(line,`Cannot find '${name}' in scope`);
+}
+function interp(s,env,line){
+  return s.replace(/\\\(([^)]*)\)/g,(m,x)=>{const t=x.trim();if(/^[\w\u3400-\u9fff$]+$/.test(t))return String(lookup(t,env,line));return m})
+    .replace(/\\"/g,'"').replace(/\\n/g,'\n').replace(/\\\\/g,'\\');
+}
+function evalExpr(e,env){
+  switch(e.t){
+    case 'str':return interp(e.v,env,e.line);
+    case 'num':case 'bool':return e.v;
+    case 'var':return lookup(e.name,env,e.line);
+    case 'bind':return {binding:e.name};
+    case 'kp':return {keypath:e.name};
+    case 'enum':return {enumName:e.name,args:e.args};
+    case 'arr':return e.items.map(x=>evalExpr(x,env));
+    case 'not':return !evalExpr(e.e,env);
+    case 'tern':return evalExpr(e.c,env)?evalExpr(e.a,env):evalExpr(e.b,env);
+    case 'bin':{const l=evalExpr(e.l,env),r=evalExpr(e.r,env);
+      switch(e.op){case '==':return l===r;case '!=':return l!==r;case '<':return l<r;case '>':return l>r;case '<=':return l<=r;case '>=':return l>=r;case '&&':return l&&r;case '||':return l||r;case '+':return l+r;case '-':return l-r;case '*':return l*r}}
+    case 'mem':{const v=evalExpr(e.e,env);
+      if(e.name==='count')return v.length;if(e.name==='isEmpty')return v.length===0;
+      if(e.name==='uppercased'&&e.call)return String(v).toUpperCase();if(e.name==='lowercased'&&e.call)return String(v).toLowerCase();
+      throw err(e.line,`Value has no member '${e.name}'`)}
+    case 'closure':throw err(e.line,'這裡不能放 closure');
+  }
+  throw err(0,'Unsupported expression');
+}
+function validate(app){
+  walk(app.body,n=>{if(n.name!=='Button')return;for(const s of n.actions){
+    if(s.name in app.state){if(s.op==='toggle'&&typeof app.state[s.name]!=='boolean')throw err(s.line,`Value of type '${typeof app.state[s.name]==='string'?'String':'Int'}' has no member 'toggle'`);continue}
+    if(s.name in app.consts)throw err(s.line,app.kinds[s.name]==='let'?`Cannot assign to property: '${s.name}' is a 'let' constant`:"Cannot assign to property: 'self' is immutable（要改變的值需要 @State）");
+    throw err(s.line,`Cannot find '${s.name}' in scope`);
+  }});
+}
+
+/* ================= RENDERER ================= */
+const COLORS={red:'#ff3b30',blue:'#007aff',green:'#34c759',orange:'#ff9500',yellow:'#ffcc00',purple:'#af52de',pink:'#ff2d55',gray:'#8e8e93',black:'#000',white:'#fff',brown:'#a2845e',primary:'#000',secondary:'rgba(60,60,67,.6)',mint:'#00c7be',teal:'#30b0c7',indigo:'#5856d6',cyan:'#32ade6',clear:'transparent'};
+const FONTS={largeTitle:[27,400],title:[22,400],title2:[18,400],title3:[16,400],headline:[14,600],body:[14,400],callout:[13,400],subheadline:[12,400],footnote:[11,400],caption:[10,400],caption2:[9,400]};
+const ICONS={
+  magnifyingglass:'<circle cx="10" cy="10" r="6"/><path d="M14.5 14.5 20 20"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  'lock.open':'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.6-1.8"/>',
+  envelope:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  'envelope.open':'<path d="M3 10 12 4l9 6v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="m3 10 9 6 9-6"/>',
+  person:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+  questionmark:'<path d="M9 9a3 3 0 1 1 4.2 2.8c-.8.3-1.2 1-1.2 1.8V15"/><circle cx="12" cy="18.5" r=".8" fill="currentColor"/>',
+  'exclamationmark.triangle':'<path d="M12 3 2 20h20z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".8" fill="currentColor"/>',
+  'cup.and.saucer':'<path d="M5 8h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 9h2a2 2 0 0 1 0 4h-2M3 21h16"/>',
+  'figure.walk':'<circle cx="13" cy="4" r="2"/><path d="m9 21 3-7 3 3v4M8 12l2-4 4 1 2 3M12 14l-1-5"/>',
+  'checkmark.circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+  'xmark.circle':'<circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/>'
+};
+function icon(name){const p=ICONS[name];if(!p)return '<span class="missing" title="SF Symbol 找不到這個名稱"></span>';return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function colorOf(v,line){if(!v||!v.enumName)throw err(line,"這裡要放顏色，例如 .red");if(!(v.enumName in COLORS))throw err(line,`Type 'Color' has no member '${v.enumName}'`);return COLORS[v.enumName]}
+function renderApp(app,state){
+  const ctx={actions:[]};const env={locals:{},state,consts:app.consts};
+  const parts=renderNodes(app.body,env,ctx);
+  const fill=app.body.length===1&&app.body[0].kind==='view'&&app.body[0].name==='List';
+  return {html:`<div class="sw-root${fill?' fill':''}">${parts.join('')}</div>`,ctx,fill};
+}
+function renderNodes(nodes,env,ctx){const out=[];for(const n of nodes)out.push(...renderNode(n,env,ctx));return out}
+function loopItems(n,env,ctx){
+  const data=evalExpr(n.dataExpr,env);
+  if(!Array.isArray(data))throw err(n.line,`${n.name} 需要一個陣列`);
+  if(!n.hasId)throw err(n.line,`Referencing initializer 'init(_:content:)' on '${n.name}' requires that 'String' conform to 'Identifiable'（加上 id: \\.self）`);
+  return data.map(item=>{const loc={...env.locals};loc[n.param||'$0']=item;return renderNodes(n.children,{...env,locals:loc},ctx).join('')});
+}
+function renderNode(n,env,ctx){
+  if(n.kind==='if')return evalExpr(n.cond,env)?renderNodes(n.then,env,ctx):(n.els?renderNodes(n.els,env,ctx):[]);
+  const unl=n.args.filter(a=>!a.label);let inner;
+  switch(n.name){
+    case 'Text':{const v=evalExpr(unl[0].value,env);if(typeof v==='object')throw err(n.line,'Text 只能顯示字串');inner=`<div class="sw-text">${esc(v)}</div>`;break}
+    case 'Image':{const v=evalExpr(arg(n,'systemName'),env);inner=`<span class="sw-img">${icon(String(v))}</span>`;break}
+    case 'Button':{const i=ctx.actions.push({stmts:n.actions,env})-1;inner=`<button type="button" class="sw-btn" data-act="${i}">${esc(evalExpr(unl[0].value,env))}</button>`;break}
+    case 'VStack':case 'HStack':case 'ZStack':case 'Group':{
+      const sp=arg(n,'spacing');const gap=sp?Number(evalExpr(sp,env))*0.8:8*0.8;
+      const al=arg(n,'alignment');const a=al&&al.t==='enum'?al.name:'center';
+      const map={leading:'flex-start',trailing:'flex-end',center:'center',top:'flex-start',bottom:'flex-end',firstTextBaseline:'baseline'};
+      if(al&&!(a in map))throw err(n.line,`Type 'HorizontalAlignment' has no member '${a}'`);
+      if(n.name==='Group'){return renderNodes(n.children,env,ctx).map(h=>applyMods(n,h,env))}
+      const kids=renderNodes(n.children,env,ctx).join('');
+      const cls=n.name==='VStack'?'sw-v':n.name==='HStack'?'sw-h':'sw-z';
+      inner=`<div class="${cls}" style="gap:${gap}px;align-items:${map[a]}">${kids}</div>`;break}
+    case 'List':{const rows=n.dataExpr?loopItems(n,env,ctx):renderNodes(n.children,env,ctx);
+      inner=`<div class="sw-list">${rows.map(r=>`<div class="sw-row">${r}</div>`).join('')}</div>`;break}
+    case 'ForEach':return loopItems(n,env,ctx);
+    case 'TextField':{const t=arg(n,'text');
+      if(t.t!=='bind'){evalExpr(t,env);throw err(n.line,"Cannot convert value of type 'String' to expected argument type 'Binding<String>'（前面要加 $）")}
+      if(!(t.name in env.state))throw err(n.line,`Cannot find '$${t.name}' in scope（只有 @State 屬性可以用 $）`);
+      if(typeof env.state[t.name]!=='string')throw err(n.line,"TextField 要綁定 String 型別的 @State");
+      inner=`<input class="sw-tf" id="tf-${esc(t.name)}" data-bind="${esc(t.name)}" placeholder="${esc(evalExpr(unl[0].value,env))}" value="${esc(env.state[t.name])}" autocomplete="off">`;break}
+    case 'Spacer':inner='<div class="sw-spacer"></div>';break;
+    case 'Divider':inner='<div class="sw-divider"></div>';break;
+  }
+  return [applyMods(n,inner,env)];
+}
+function applyMods(n,inner,env){
+  if(!n.mods.length)return inner;
+  const st=[],data=[];
+  for(const m of n.mods){
+    const a0=m.args[0]?m.args[0].value:null;const v0=a0&&a0.t!=='closure'?evalExpr(a0,env):null;
+    switch(m.name){
+      case 'font':{if(!v0||!v0.enumName)throw err(m.line,'.font 需要字型，例如 .font(.title)');
+        if(v0.enumName==='system'){const s=v0.args.find(a=>a.label==='size');if(!s)throw err(m.line,'.system 需要 size:');st.push(`font-size:${evalExpr(s.value,env)*0.8}px`);break}
+        const f=FONTS[v0.enumName];if(!f)throw err(m.line,`Type 'Font' has no member '${v0.enumName}'`);st.push(`font-size:${f[0]}px`,`font-weight:${f[1]}`);break}
+      case 'foregroundColor':case 'foregroundStyle':case 'tint':st.push(`color:${colorOf(v0,m.line)}`);break;
+      case 'bold':st.push('font-weight:700');break;
+      case 'italic':st.push('font-style:italic');break;
+      case 'padding':{let edge='all',amt=16;for(const a of m.args){const v=evalExpr(a.value,env);if(typeof v==='number')amt=v;else if(v&&v.enumName)edge=v.enumName}
+        const px=amt*0.8+'px';const E={all:`padding:${px}`,horizontal:`padding-inline:${px}`,vertical:`padding-block:${px}`,top:`padding-top:${px}`,bottom:`padding-bottom:${px}`,leading:`padding-left:${px}`,trailing:`padding-right:${px}`};
+        if(!E[edge])throw err(m.line,`Type 'Edge.Set' has no member '${edge}'`);st.push(E[edge]);break}
+      case 'background':st.push(`background:${colorOf(v0,m.line)}`);break;
+      case 'cornerRadius':st.push(`border-radius:${Number(v0)*0.8}px`,'overflow:hidden');break;
+      case 'opacity':st.push(`opacity:${Number(v0)}`);break;
+      case 'multilineTextAlignment':st.push(`text-align:${({leading:'left',center:'center',trailing:'right'})[v0&&v0.enumName]||'left'}`);break;
+      case 'frame':for(const a of m.args){const v=evalExpr(a.value,env);
+        if(a.label==='width')st.push(`width:${v*0.8}px`);if(a.label==='height')st.push(`height:${v*0.8}px`,'justify-content:center');
+        if(a.label==='maxWidth'&&v&&v.enumName==='infinity')st.push('align-self:stretch','width:100%');}break;
+      case 'textFieldStyle':data.push(`data-tf="${esc(v0&&v0.enumName)}"`);st.push('align-self:stretch');break;
+      case 'buttonStyle':data.push(`data-bs="${esc(v0&&v0.enumName)}"`);break;
+    }
+  }
+  return `<div class="sw-m" style="${st.join(';')}" ${data.join(' ')}>${inner}</div>`;
+}
+
+/* ================= HIGHLIGHT ================= */
+function hl(src){
+  const re=/(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*"?)|(@\w+)|\b(import|struct|var|let|if|else|in|private|some|true|false|return)\b|(\$\w+)|(\.[A-Za-z_]\w*)|\b([A-Z]\w*)|\b(\d+(?:\.\d+)?)\b/g;
+  let out='',last=0,m;
+  while((m=re.exec(src))){out+=esc(src.slice(last,m.index));
+    const cls=m[1]?'cm':m[2]?'str':m[3]?'at':m[4]?'kw':m[5]?'bd':m[6]?'md':m[7]?'ty':'nu';
+    out+=`<span class="hl-${cls}">${esc(m[0])}</span>`;last=re.lastIndex}
+  return out+esc(src.slice(last))+'\n';
+}
+
+/* ================= STATE / STORAGE ================= */
+const KEY='swiftui-noir-v2';
+let S={solved:[],codes:{},cur:0,accused:null};
+try{const raw=localStorage.getItem(KEY);if(raw)S={...S,...JSON.parse(raw)};else{const old=localStorage.getItem('swiftui-noir-v1');if(old){const o=JSON.parse(old);S={...S,...o,cur:(o.cur||0)+1}}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+let app=null,STATE={},lastInit={},compileErr=null,ran=false,lastRender=null;
+const $=id=>document.getElementById(id);
+const ta=$('code'),hlEl=$('hl'),gutter=$('gutter');
+
+function unlocked(i){if(i===0)return true;if(i===LEVELS.length)return LEVELS.slice(1).every(l=>S.solved.includes(l.id));return S.solved.includes(LEVELS[i-1].id)||S.solved.includes(LEVELS[i].id)||(i===1)}
+
+function renderChapters(){
+  const nav=$('chapters');
+  nav.innerHTML=LEVELS.map((l,i)=>`<button type="button" class="chap${S.cur===i?' on':''}${S.solved.includes(l.id)?' done':''}" data-i="${i}" ${unlocked(i)?'':'disabled'}><span class="n">${String(i).padStart(2,'0')}</span><span>${l.title}</span><span class="k">${l.key}</span></button>`).join('')
+   +`<button type="button" class="chap final${S.cur===LEVELS.length?' on':''}" data-i="${LEVELS.length}" ${unlocked(LEVELS.length)?'':'disabled'}>結案 · 指認犯人</button>`;
+}
+function renderBoard(){
+  $('board').innerHTML=LEVELS.map((l,i)=>S.solved.includes(l.id)
+    ?`<div class="clue"><span class="cn">EVIDENCE ${String(i).padStart(2,'0')}</span><b>${l.clue.t}</b>${l.clue.b}</div>`
+    :`<div class="clue locked"><span class="cn">EVIDENCE ${String(i).padStart(2,'0')}</span>第 ${i} 章 · 尚未取得</div>`).join('');
+  $('boardCount').textContent=`${S.solved.length} / ${LEVELS.length} 條線索`;
+}
+function renderBrief(){
+  const L=LEVELS[S.cur];
+  $('brief').innerHTML=`<div><div class="eyebrow">第 ${S.cur} 章 · ${L.key}</div><h2>${L.title}</h2></div>
+    <p class="story">${L.story}</p>
+    <div class="task"><span class="tag">ASSIGNMENT</span><p>${L.task}</p></div>
+    ${S.solved.includes(L.id)?'<div class="solved-note">✓ 本章已破解，線索在證物板上。可以繼續改程式碼玩玩看。</div>':''}
+    <div id="hint" hidden></div>
+    <div class="notes"><span class="tag">SWIFTUI 筆記</span><ul>${L.notes.map(n=>`<li>${n}</li>`).join('')}</ul></div>`;
+}
+
+function syncEditor(){
+  hlEl.innerHTML=hl(ta.value);
+  const n=ta.value.split('\n').length;const bad=compileErr&&compileErr.line;
+  let g='';for(let i=1;i<=n;i++)g+=`<span${i===bad?' class="bad"':''}>${i}</span>`;
+  gutter.innerHTML=g;syncScroll();
+}
+function syncScroll(){hlEl.scrollTop=ta.scrollTop;hlEl.scrollLeft=ta.scrollLeft;gutter.scrollTop=ta.scrollTop}
+
+function compile(){
+  try{
+    const a=parseFile(ta.value);validate(a);
+    const ns={};for(const k in a.state){ns[k]=(k in STATE&&lastInit[k]===a.state[k])?STATE[k]:a.state[k]}
+    STATE=ns;lastInit={...a.state};app=a;compileErr=null;renderPreview();
+  }catch(e){
+    if(!e.swift){console.error(e);e=err(0,'無法解析這段程式碼')}
+    compileErr=e;app=null;showPaused();
+  }
+  showError();syncEditor();
+}
+function renderPreview(){
+  const host=$('host');
+  try{
+    const r=renderApp(app,STATE);lastRender=r;
+    host.innerHTML=r.html;$('screen').classList.toggle('grouped',r.fill);
+    setLabel(false);
+  }catch(e){if(!e.swift){console.error(e);e=err(0,'預覽失敗')}compileErr=e;app=null;showPaused();showError();syncEditor()}
+}
+function showPaused(){
+  const host=$('host');
+  if(!host.querySelector('.paused-veil'))host.insertAdjacentHTML('beforeend',`<div class="paused-veil"><div><b>預覽已暫停</b>修正左邊的錯誤後就會恢復。</div></div>`);
+  setLabel(true);
+}
+function setLabel(p){$('canvasLabel').classList.toggle('paused',p);$('canvasText').textContent=p?'Canvas · Preview paused':'Canvas · 即時預覽'}
+function showError(){
+  const el=$('err');
+  if(compileErr){el.hidden=false;el.innerHTML=`<b>${compileErr.line?'第 '+compileErr.line+' 行':'錯誤'}</b><span>${esc(compileErr.message)}</span>`}
+  else el.hidden=true;
+}
+function runCheck(){
+  ran=true;const L=LEVELS[S.cur];ensureRound();
+  if(compileErr){if(round)round.wrong++;return showResult({s:'fail',m:`程式還編譯不過：${compileErr.message}`})}
+  const r=L.check(app,STATE);showResult(r);
+  if(r.s==='fail'&&round)round.wrong++;
+  if(r.s==='ok'&&!S.solved.includes(L.id)){endRoundComplete();S.solved.push(L.id);save();renderChapters();renderBoard();renderBrief()}
+}
+function showResult(r){
+  const el=$('result');el.hidden=false;const L=LEVELS[S.cur];
+  if(r.s==='ok'){
+    const nextI=S.cur+1;const nextLabel=nextI<LEVELS.length?`下一章：${LEVELS[nextI].title} →`:'前往結案 →';
+    el.className='result ok';
+    el.innerHTML=`<div><span class="tag">線索入檔</span><p><b>${L.clue.t}</b>：${L.clue.b}</p></div><div style="display:flex;gap:12px;align-items:center"><span class="ok-stamp">SOLVED</span><button class="btn run" type="button" id="nextBtn">${nextLabel}</button></div>`;
+    $('nextBtn').onclick=()=>go(nextI);
+  }else{
+    el.className='result '+r.s;
+    el.innerHTML=`<span class="tag">${r.s==='fail'?'還差一步':'快到了'}</span><p>${esc(r.m)}</p>`;
+  }
+}
+function go(i){
+  if(!unlocked(i))return;
+  if(round&&round.level!==i)endRoundQuit();
+  if(i!==S.cur&&S.cur<LEVELS.length)S.codes[LEVELS[S.cur].id]=ta.value;
+  S.cur=i;save();renderChapters();
+  const fin=i===LEVELS.length;
+  $('stage').hidden=fin;$('finale').hidden=!fin;
+  if(fin){renderFinale();return}
+  const L=LEVELS[i];
+  ta.value=S.codes[L.id]||L.starter;$('fileName').textContent=L.file;
+  STATE={};lastInit={};ran=false;
+  $('result').hidden=true;$('solution').hidden=true;
+  renderBrief();compile();ta.scrollTop=0;syncScroll();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ================= FINALE ================= */
+function renderFinale(){
+  const f=$('finale');const acc=S.accused;const pick=SUSPECTS.find(s=>s.id===acc);
+  f.innerHTML=`<div><div class="eyebrow">結案</div><h2>誰拿走了懷錶？</h2></div>
+    <p class="story" style="max-width:62ch">所有線索都在證物板上。對照證詞、監視器、密碼和錶盒，指認一個人。</p>
+    <div class="suspects">${SUSPECTS.map(s=>`<button type="button" class="suspect${acc===s.id?(s.right?' right':' wrong'):''}" data-s="${s.id}"><span class="role">${s.role}</span><span class="nm">${s.name}</span><span class="alibi">${s.alibi}</span></button>`).join('')}</div>
+    ${pick?(pick.right
+      ?`<div class="verdict ok"><span class="closed">CASE CLOSED</span><p><b>犯人是吳店長。</b>${pick.verdict}</p><p>你用 Text、modifier、Stack、Image、@State、ForEach 和 Binding 拼出了整個案件。這七個概念，就是大多數 SwiftUI 畫面的骨架。</p></div>
+      <aside class="visit" aria-labelledby="visitTitle">
+        <div><span class="tag">FIELD TRIP</span><h3 id="visitTitle">走進真實的案發現場：大稻埕</h3>
+          <p>霧港咖啡是虛構的，大稻埕是真的。破案之後，去故事的舞台走一趟：</p>
+          <ul><li>迪化街的老街屋與南北貨</li><li>老茶行、布市和手作體驗</li><li>傍晚的大稻埕碼頭看夕陽</li></ul></div>
+        <a class="go" id="visitLink" href="https://klook.tpk.ro/WFgInpKd" target="_blank" rel="sponsored noopener" data-cta="dadaocheng_result" data-cta-type="affiliate">看大稻埕導覽與體驗 →</a>
+      </aside>
+      <aside class="visit" aria-labelledby="escapeTitle">
+        <div><span class="tag">NEXT CASE</span><h3 id="escapeTitle">意猶未盡？換你親自走進密室</h3>
+          <p>找線索、對證詞、解密碼，你剛剛在程式裡做的事，真人密室逃脫要你用眼睛和雙手再做一次。</p>
+          <ul><li>適合 2–6 人，朋友或同事一起組隊</li><li>有劇情、有機關，也有限時壓力</li></ul></div>
+        <a class="go" id="escapeLink" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="escape_room_result" data-cta-type="affiliate">看密室逃脫與實境解謎 →</a>
+      </aside>
+      <p class="disclose">以上兩個是聯盟連結：透過連結預訂，我會獲得少量分潤，你付的價格不變。</p>`
+      :`<div class="verdict fail"><span class="tag" style="color:var(--red)">不是 ${pick.name}</span><p>${pick.verdict}</p><p>再看一次證物板，找出說謊的人。</p></div>`):''}`;
+  f.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{const s=SUSPECTS.find(x=>x.id===b.dataset.s);if(!isClosed()){ensureRound();if(s.right)endRoundComplete();else if(round)round.wrong++}S.accused=b.dataset.s;save();renderFinale()});
+}
+
+/* ================= EVENTS ================= */
+$('chapters').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b&&!b.disabled)go(Number(b.dataset.i))});
+let deb;
+ta.addEventListener('input',()=>{syncEditor();clearTimeout(deb);deb=setTimeout(()=>{compile();S.codes[LEVELS[S.cur].id]=ta.value;save()},260)});
+ta.addEventListener('scroll',syncScroll);
+function insert(text){ta.focus();if(!document.execCommand('insertText',false,text)){ta.setRangeText(text,ta.selectionStart,ta.selectionEnd,'end');ta.dispatchEvent(new Event('input'))}}
+ta.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();compile();runCheck();return}
+  if(e.key==='Tab'&&!e.shiftKey){e.preventDefault();insert('    ');return}
+  if(e.key==='Enter'&&!e.isComposing){
+    const before=ta.value.slice(0,ta.selectionStart);const ln=before.slice(before.lastIndexOf('\n')+1);
+    let ind=(ln.match(/^\s*/)||[''])[0];if(/[{(]\s*$/.test(ln))ind+='    ';
+    e.preventDefault();insert('\n'+ind);
+  }
+});
+$('runBtn').onclick=()=>{compile();runCheck()};
+$('hintBtn').onclick=()=>{ensureRound();if(hg())hg().event('swiftui_hint_open',{option:CASE_ID,level:lv(S.cur)});const h=$('hint');h.hidden=false;h.className='hintbox';h.innerHTML=`<span class="tag">提示</span><p>${LEVELS[S.cur].hint}</p>`;h.scrollIntoView({block:'nearest',behavior:'smooth'})};
+$('solBtn').onclick=()=>{const L=LEVELS[S.cur];ensureRound();if(hg())hg().event('swiftui_solution_view',{option:CASE_ID,level:lv(S.cur)});const el=$('solution');el.hidden=false;el.className='sol';
+  el.innerHTML=`<div class="ed-bar"><span>參考解答</span><button type="button" id="applySol">套用到編輯器</button></div><pre>${hl(L.solution)}</pre>`;
+  $('applySol').onclick=()=>{ta.value=L.solution;compile();S.codes[L.id]=ta.value;save()}};
+let resetArm=null;
+$('resetBtn').onclick=()=>{const b=$('resetBtn');
+  if(!resetArm){b.textContent='再按一次確認重設';b.classList.add('warn');resetArm=setTimeout(()=>{resetArm=null;b.textContent='重設程式碼';b.classList.remove('warn')},3000);return}
+  clearTimeout(resetArm);resetArm=null;b.textContent='重設程式碼';b.classList.remove('warn');
+  const L=LEVELS[S.cur];ta.value=L.starter;delete S.codes[L.id];save();STATE={};lastInit={};compile();$('result').hidden=true};
+let wipeArm=null;
+$('wipe').onclick=()=>{const b=$('wipe');
+  if(!wipeArm){b.textContent='確定要清除全部進度？再按一次';wipeArm=setTimeout(()=>{wipeArm=null;b.textContent='清除進度重新開始'},3000);return}
+  clearTimeout(wipeArm);wipeArm=null;b.textContent='清除進度重新開始';endRoundQuit();S={solved:[],codes:{},cur:0,accused:null};save();renderBoard();go(0)};
+
+/* preview interaction */
+$('host').addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b||!lastRender||compileErr)return;
+  const a=lastRender.ctx.actions[Number(b.dataset.act)];
+  try{for(const s of a.stmts){
+    if(s.op==='toggle')STATE[s.name]=!STATE[s.name];
+    else{const v=evalExpr(s.e,{...a.env,state:STATE});if(s.op==='=')STATE[s.name]=v;else if(s.op==='+=')STATE[s.name]+=v;else STATE[s.name]-=v}
+  }}catch(er){compileErr=er.swift?er:err(0,'執行錯誤');showError();syncEditor();return}
+  renderPreview();if(ran&&LEVELS[S.cur].live)runCheck();
+});
+$('host').addEventListener('input',e=>{
+  const inp=e.target.closest('[data-bind]');if(!inp||compileErr)return;
+  const name=inp.dataset.bind,pos=inp.selectionStart;STATE[name]=inp.value;renderPreview();
+  const again=document.getElementById('tf-'+name);if(again){again.focus();try{again.setSelectionRange(pos,pos)}catch(_){}}
+  if(LEVELS[S.cur].live){if(!ran)ran=true;runCheck()}
+});
+
+/* share */
+const SHARE_URL=/knittinghiyori\.com$/.test(location.hostname)?'https://games.knittinghiyori.com/swiftui-detective/?ref=share':'https://claude.ai/artifact/EDY29KyH156mRENVs5u8Zq';
+function shareText(){
+  const n=S.solved.length;const closed=SUSPECTS.find(s=>s.id===S.accused&&s.right);
+  if(closed)return '我用 SwiftUI 破了「雨夜懷錶案」，你能多快找出犯人？';
+  if(n>0)return `我在「雨夜懷錶案」拿到 ${n}/${LEVELS.length} 條線索，一起用 SwiftUI 破案吧！`;
+  return '一款用 SwiftUI 破案的偵探遊戲：雨夜懷錶案';
+}
+function updateShare(){
+  const t=shareText(),u=encodeURIComponent(SHARE_URL),tx=encodeURIComponent(t);
+  $('shLine').href=`https://social-plugins.line.me/lineit/share?url=${u}&text=${tx}`;
+  $('shFb').href=`https://www.facebook.com/sharer/sharer.php?u=${u}`;
+  $('shThreads').href=`https://www.threads.net/intent/post?text=${encodeURIComponent(t+' '+SHARE_URL)}`;
+  $('shX').href=`https://twitter.com/intent/tweet?text=${tx}&url=${u}`;
+  $('shUrl').value=SHARE_URL;
+}
+$('shCopy').onclick=()=>{const b=$('shCopy');const done=()=>{b.textContent='已複製';setTimeout(()=>b.textContent='複製連結',1800)};
+  const sel=()=>{const i=$('shUrl');i.focus();i.select();b.textContent='已選取，按 ⌘C';setTimeout(()=>b.textContent='複製連結',2200)};
+  try{navigator.clipboard.writeText(`${shareText()} ${SHARE_URL}`).then(done,sel)}catch(_){sel()}};
+const _save=save;save=function(){_save();updateShare()};
+updateShare();
+[['shLine','line'],['shFb','facebook'],['shThreads','threads'],['shX','x'],['shCopy','copy_link']].forEach(([id,m])=>$(id).addEventListener('click',()=>{if(hg())hg().share(m,isClosed()?'result':'game')}));
+if(/[?&]ref=share/.test(location.search)&&hg())hg().start('shared');
+
+/* boot */
+renderBoard();
+go(Math.min(S.cur||0,LEVELS.length));
+if(!unlocked(S.cur))go(0);
+</script>
+
+</body>
+</html>
