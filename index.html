@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>編織日和小遊戲｜免費日文學習・打字練習線上小遊戲</title>
-<meta name="description" content="編織日和 Knitting Hiyori 的免費線上小遊戲：日文五十音、花卉日文、花語、日文與英文打字練習，打開瀏覽器就能玩。">
+<meta name="description" content="編織日和 Knitting Hiyori 的免費線上學習小遊戲：日文五十音、花語、關西腔聽力，還有 SQL、SwiftUI 程式入門偵探遊戲，零基礎也能邊玩邊學，打開瀏覽器就能玩。">
 <link rel="canonical" href="https://games.knittinghiyori.com/">
 <meta property="og:url" content="https://games.knittinghiyori.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="編織日和 Knitting Hiyori">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:title" content="編織日和小遊戲">
-<meta property="og:description" content="日文五十音、花語、打字練習⋯⋯打開瀏覽器就能玩的學習小遊戲。">
+<meta property="og:description" content="日文五十音、關西腔聽力、SQL 與 SwiftUI 偵探解謎⋯⋯打開瀏覽器就能玩的學習小遊戲。">
 <!-- <meta property="og:image" content="https://games.knittinghiyori.com/assets/og-hub.jpg"> -->
 <meta name="theme-color" content="#ffffff">
 <!-- GA4（與部落格、工具共用資源 G-ZQZHTYTRMQ）｜規範：遊戲 GA4 統一追蹤 v1.0 -->
@@ -29,7 +29,10 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"編織日和小遊戲","url":"https://games.knittinghiyori.com/","inLanguage":"zh-Hant","publisher":{"@type":"Organization","name":"編織日和 Knitting Hiyori","url":"https://knittinghiyori.com/"},
 "mainEntity":{"@type":"ItemList","itemListElement":[
- {"@type":"ListItem","position":1,"url":"https://games.knittinghiyori.com/hiyori-flower-shop/","name":"ひより花店：日文五十音小遊戲"}
+ {"@type":"ListItem","position":1,"url":"https://games.knittinghiyori.com/swiftui-detective/","name":"雨夜懷錶案：SwiftUI 偵探教學遊戲"},
+ {"@type":"ListItem","position":2,"url":"https://games.knittinghiyori.com/sql-detective/","name":"SQL 偵探：霞光畫廊失竊案"},
+ {"@type":"ListItem","position":3,"url":"https://games.knittinghiyori.com/tozai-dojo/","name":"東西腔道場：日文關東腔・關西腔小遊戲"},
+ {"@type":"ListItem","position":4,"url":"https://games.knittinghiyori.com/hiyori-flower-shop/","name":"ひより花店：日文五十音小遊戲"}
 ]}}
 </script>
 <style>
@@ -79,11 +82,34 @@ h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
 .divider h2{font-family:var(--jp);font-size:17px;margin:0;font-weight:700;letter-spacing:.15em;display:flex;align-items:center;gap:8px}
 .divider h2 small{font-size:12px;color:var(--mute);font-weight:500;letter-spacing:.2em}
 
+/* ── 篩選 ── */
+.filters{display:flex;flex-direction:column;gap:10px;margin:0 0 22px}
+.frow{display:flex;align-items:flex-start;gap:10px}
+.frow-label{flex:none;font-size:13px;color:var(--mute);padding-top:7px;min-width:64px;letter-spacing:.08em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:14px;border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:5px 14px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{border-color:var(--sakura)}
+.chip b{font-weight:500;font-size:12px;color:var(--mute)}
+.chip[aria-pressed="true"]{background:var(--sakura-deep);border-color:var(--sakura-deep);color:#fff}
+.chip[aria-pressed="true"] b{color:#fde3ea}
+.fstatus{font-size:13px;color:var(--mute);margin:0}
+.fstatus button{font:inherit;font-size:13px;background:none;border:0;color:var(--sakura-deep);cursor:pointer;padding:0 0 0 6px;text-decoration:underline;text-underline-offset:3px}
+.card[hidden],.chip[hidden],.frow[hidden]{display:none}
+.empty{grid-column:1/-1;text-align:center;color:var(--mute);padding:36px 0;font-size:15px}
+@media (max-width:560px){.frow{flex-direction:column;gap:6px}.frow-label{padding-top:0}.chips{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{flex:none}}
+
 /* ── 卡片 ── */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
 .card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;transition:.2s}
 .card:hover{transform:translateY(-3px);border-color:#f3c3d2;box-shadow:0 14px 30px rgba(217,72,115,.10)}
 .thumb{height:140px;display:grid;place-items:center;background:var(--sakura-soft);position:relative}
+.thumb.sora{background:var(--sora-soft)}
+.thumb.sora .no{color:#3f7ea6}
+.thumb.matcha{background:var(--matcha-soft)}
+.thumb.matcha .no{color:#4f8560}
+.thumb.yuzu{background:#fdf5e4}
+.thumb.yuzu .no{color:#b07a12}
+.badge-new{position:absolute;top:10px;right:12px;font-size:11px;font-weight:700;letter-spacing:.12em;color:#fff;background:var(--sakura-deep);border-radius:999px;padding:2px 10px;box-shadow:0 4px 10px rgba(217,72,115,.25)}
 .thumb .no{position:absolute;top:12px;left:14px;font-family:var(--jp);font-size:12px;color:var(--sakura-deep);letter-spacing:.2em}
 .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
 .body h3{font-family:var(--jp);font-size:18px;margin:0;line-height:1.5}
@@ -140,10 +166,61 @@ footer a:hover{text-decoration:underline}
 
 <div class="divider" id="games"><h2>遊戲一覽 <small>ゲーム</small></h2></div>
 
+<div class="filters" aria-label="篩選遊戲">
+  <div class="frow"><span class="frow-label">主題</span><div class="chips" data-group="topic"></div></div>
+  <div class="frow"><span class="frow-label">練習重點</span><div class="chips" data-group="skill"></div></div>
+  <p class="fstatus" aria-live="polite"></p>
+</div>
+
 <main class="grid">
   <!-- ▼ 新遊戲：複製一整個 <a class="card"> 區塊貼在最上面，新的排前面
-         要改：href、.no 編號、data-game（＝該遊戲在 GA4 遊戲規範登記的 game_id）、JSON-LD 清單 -->
-  <a class="card" href="/hiyori-flower-shop/" data-cta="game_card" data-cta-type="game" data-game="flower_shop">
+         要改：href、.no 編號、data-game（＝該遊戲在 GA4 遊戲規範登記的 game_id）、JSON-LD 清單
+         篩選：data-topic 填一個主題代碼、data-skill 填一到多個練習代碼（空格分隔）
+         代碼只能用頁尾 HY_FILTERS 清單裡有的；新代碼先加進清單再用 -->
+  <a class="card" href="/swiftui-detective/" data-cta="game_card" data-cta-type="game" data-game="swiftui_detective" data-topic="coding" data-skill="swift story">
+    <div class="thumb yuzu" aria-hidden="true">
+      <span class="no">No.04</span>
+      <span class="badge-new">NEW</span>
+      <svg viewBox="0 0 200 72" width="200" height="72"><g stroke="#b9cfe0" stroke-width="2" stroke-linecap="round"><line x1="34" y1="8" x2="28" y2="22"/><line x1="52" y1="30" x2="46" y2="44"/><line x1="30" y1="50" x2="24" y2="64"/><line x1="160" y1="10" x2="154" y2="24"/><line x1="176" y1="36" x2="170" y2="50"/><line x1="150" y1="52" x2="144" y2="66"/></g><circle cx="100" cy="8" r="5" fill="none" stroke="#b07a12" stroke-width="3"/><rect x="96" y="12" width="8" height="6" rx="2" fill="#b07a12"/><circle cx="100" cy="42" r="25" fill="#f2b33d"/><circle cx="100" cy="42" r="19" fill="#fff"/><g stroke="#2b2b2e" stroke-width="3" stroke-linecap="round"><line x1="100" y1="42" x2="100" y2="29"/><line x1="100" y1="42" x2="109" y2="47"/></g><circle cx="100" cy="42" r="2.5" fill="#d94873"/></svg>
+    </div>
+    <div class="body">
+      <h3>雨夜懷錶案：SwiftUI 偵探教學遊戲</h3>
+      <p>零基礎也能玩，一章學一個 SwiftUI 概念，邊寫程式邊破案。</p>
+      <div class="tags"><span class="t-sakura">程式學習</span><span class="t-matcha">SwiftUI</span><span class="t-sora">新手</span></div>
+      <span class="play">開始遊戲 →</span>
+    </div>
+  </a>
+  <!-- ▲ 遊戲卡片結束 -->
+
+  <a class="card" href="/sql-detective/" data-cta="game_card" data-cta-type="game" data-game="sql_detective" data-topic="coding" data-skill="sql story">
+    <div class="thumb matcha" aria-hidden="true">
+      <span class="no">No.03</span>
+      <svg viewBox="0 0 200 72" width="200" height="72"><rect x="30" y="10" width="104" height="52" rx="8" fill="#fff" stroke="#cfe3d5" stroke-width="2"/><text x="42" y="30" font-size="11" font-weight="700" fill="#4f8560" font-family="ui-monospace,Menlo,monospace">SELECT *</text><text x="42" y="44" font-size="11" fill="#7a7a80" font-family="ui-monospace,Menlo,monospace">FROM suspects</text><rect x="42" y="50" width="44" height="4" rx="2" fill="#f5b6c8"/><circle cx="142" cy="38" r="17" fill="#fff" fill-opacity=".6" stroke="#2b2b2e" stroke-width="4"/><line x1="154" y1="50" x2="170" y2="66" stroke="#2b2b2e" stroke-width="6" stroke-linecap="round"/><circle cx="142" cy="38" r="5" fill="#d94873"/></svg>
+    </div>
+    <div class="body">
+      <h3>SQL 偵探：霞光畫廊失竊案</h3>
+      <p>零基礎 SQL 入門。寫查詢、追線索，找出偷畫的犯人，第 0 關只要改一個字。</p>
+      <div class="tags"><span class="t-sakura">程式</span><span class="t-matcha">SQL</span><span class="t-sora">零基礎</span></div>
+      <span class="play">開始遊戲 →</span>
+    </div>
+  </a>
+  <!-- ▲ 遊戲卡片結束 -->
+
+  <a class="card" href="/tozai-dojo/" data-cta="game_card" data-cta-type="game" data-game="tozai_dojo" data-topic="japanese" data-skill="listening dialect">
+    <div class="thumb sora" aria-hidden="true">
+      <span class="no">No.02</span>
+      <svg viewBox="0 0 200 64" width="200" height="64"><circle cx="40" cy="32" r="24" fill="#7fb3d5"/><text x="40" y="41" text-anchor="middle" font-size="24" font-weight="700" fill="#fff" font-family="Zen Maru Gothic,Noto Sans TC,sans-serif">東</text><g fill="#b9cfe0"><rect x="76" y="26" width="5" height="12" rx="2.5"/><rect x="86" y="18" width="5" height="28" rx="2.5"/><rect x="96" y="22" width="5" height="20" rx="2.5"/></g><g fill="#f3b3c6"><rect x="106" y="16" width="5" height="32" rx="2.5"/><rect x="116" y="24" width="5" height="16" rx="2.5"/><rect x="126" y="28" width="5" height="8" rx="2.5"/></g><circle cx="160" cy="32" r="24" fill="#e8829f"/><text x="160" y="41" text-anchor="middle" font-size="24" font-weight="700" fill="#fff" font-family="Zen Maru Gothic,Noto Sans TC,sans-serif">西</text></svg>
+    </div>
+    <div class="body">
+      <h3>東西腔道場：日文關東腔・關西腔小遊戲</h3>
+      <p>聽發音、分東西、拚連擊，10 題分辨日文標準語（關東）與關西腔，附聽力題與東西文化冷知識。</p>
+      <div class="tags"><span class="t-sakura">日文</span><span class="t-matcha">關西腔</span><span class="t-sora">聽力</span></div>
+      <span class="play">開始遊戲 →</span>
+    </div>
+  </a>
+  <!-- ▲ 遊戲卡片結束 -->
+
+  <a class="card" href="/hiyori-flower-shop/" data-cta="game_card" data-cta-type="game" data-game="flower_shop" data-topic="japanese" data-skill="kana vocab typing">
     <div class="thumb" aria-hidden="true">
       <span class="no">No.01</span>
       <svg viewBox="0 0 200 60" width="200" height="60"><g transform="translate(20 10)"><g fill="#f28bb0"><ellipse cx="20" cy="10.5" rx="6" ry="9.5"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(60 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(120 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(240 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(300 20 20)"/></g><circle cx="20" cy="20" r="5.5" fill="#f2b33d"/></g><g transform="translate(80 10)"><g fill="#d94873"><ellipse cx="20" cy="10.5" rx="6" ry="9.5"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(60 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(120 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(240 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(300 20 20)"/></g><circle cx="20" cy="20" r="5.5" fill="#f2b33d"/></g><g transform="translate(140 10)"><g fill="#9b7fd6"><ellipse cx="20" cy="10.5" rx="6" ry="9.5"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(60 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(120 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(180 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(240 20 20)"/><ellipse cx="20" cy="10.5" rx="6" ry="9.5" transform="rotate(300 20 20)"/></g><circle cx="20" cy="20" r="5.5" fill="#f2b33d"/></g></svg>
@@ -157,7 +234,7 @@ footer a:hover{text-decoration:underline}
   </a>
   <!-- ▲ 遊戲卡片結束 -->
 
-  <div class="card soon"><div class="thumb">じゅんびちゅう…</div><div class="body"><h3>敬請期待</h3><p>更多學習小遊戲陸續推出。</p></div></div>
+  <div class="card soon" data-soon><div class="thumb">じゅんびちゅう…</div><div class="body"><h3>敬請期待</h3><p>更多學習小遊戲陸續推出。</p></div></div>
 </main>
 
 <section class="share" aria-labelledby="share-title">
@@ -318,10 +395,126 @@ var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目�
 })();
 /* ===== /GA4 統一追蹤 ===== */
 
+/* ===== 主頁專屬：遊戲篩選 =====
+   篩選按鈕依卡片的 data-topic／data-skill 自動產生，沒有遊戲的代碼不會出現
+   新代碼：在這裡加一行（代碼用英文，會送進 GA4；中文只用來顯示） */
+var HY_FILTERS = {
+  topic: [
+    ['japanese', '日文'],
+    ['coding', '程式']
+  ],
+  skill: [
+    ['kana', '五十音'],
+    ['vocab', '單字'],
+    ['listening', '聽力'],
+    ['typing', '打字'],
+    ['dialect', '方言'],
+    ['grammar', '文法'],
+    ['jlpt', 'JLPT'],
+    ['sql', 'SQL'],
+    ['swift', 'Swift'],
+    ['story', '劇情解謎']
+  ]
+};
+
+(function(){
+  var cards = [].slice.call(document.querySelectorAll('.grid .card[data-game]'));
+  var soon = document.querySelector('.grid .card[data-soon]');
+  var statusEl = document.querySelector('.fstatus');
+  var grid = document.querySelector('.grid');
+  var state = { topic: 'all', skill: 'all' };
+  var empty = document.createElement('p');
+  empty.className = 'empty'; empty.hidden = true;
+  empty.textContent = '這個組合還沒有遊戲，換個條件看看，或等下一款上線 🌸';
+  grid.appendChild(empty);
+
+  function codes(card, group){ return (card.getAttribute('data-' + group) || '').split(/\s+/).filter(Boolean); }
+  function match(card, group, val){ return val === 'all' || codes(card, group).indexOf(val) > -1; }
+  function visible(card){ return match(card, 'topic', state.topic) ? match(card, 'skill', state.skill) : false; }
+
+  function build(group){
+    var box = document.querySelector('.chips[data-group="' + group + '"]');
+    var list = [['all', '全部']].concat(HY_FILTERS[group]);
+    list.forEach(function(item){
+      var n = item[0] === 'all' ? cards.length : cards.filter(function(c){ return codes(c, group).indexOf(item[0]) > -1; }).length;
+      if (!n) return;
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip';
+      b.setAttribute('data-val', item[0]);
+      b.setAttribute('aria-pressed', 'false');
+      b.innerHTML = item[1] + ' <b>' + n + '</b>';
+      b.addEventListener('click', function(){
+        state[group] = item[0];
+        apply(true);
+        if (item[0] !== 'all') hyGame.event('hub_filter', { option: item[0], source: group });
+      });
+      box.appendChild(b);
+    });
+    /* 只有「全部」一個選項時，整列藏起來 */
+    if (box.children.length < 3) box.parentNode.hidden = true;
+  }
+
+  function apply(push){
+    /* 練習重點的數字跟著主題變；這個主題下沒有的練習先藏起來，避免篩出空白 */
+    var skillBtns = document.querySelectorAll('.chips[data-group="skill"] .chip');
+    [].forEach.call(skillBtns, function(b){
+      var v = b.getAttribute('data-val');
+      var n = cards.filter(function(c){ return match(c, 'topic', state.topic) ? match(c, 'skill', v) : false; }).length;
+      b.querySelector('b').textContent = n;
+      b.hidden = n === 0;
+      if (n === 0) { if (state.skill === v) state.skill = 'all'; }
+    });
+    ['topic', 'skill'].forEach(function(g){
+      var btns = document.querySelectorAll('.chips[data-group="' + g + '"] .chip');
+      [].forEach.call(btns, function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-val') === state[g])); });
+    });
+    var shown = 0;
+    cards.forEach(function(c){ var v = visible(c); c.hidden = !v; if (v) shown = shown + 1; });
+    /* 手機上按鈕列可橫向捲動：把選中的按鈕捲進畫面 */
+    [].forEach.call(document.querySelectorAll('.chips'), function(box){
+      var on = box.querySelector('.chip[aria-pressed="true"]');
+      if (on) box.scrollLeft = Math.max(0, on.offsetLeft - box.offsetLeft - 16);
+    });
+    var filtering = state.topic !== 'all' || state.skill !== 'all';
+    if (soon) soon.hidden = filtering;
+    empty.hidden = shown > 0;
+    statusEl.innerHTML = '';
+    if (filtering) {
+      statusEl.appendChild(document.createTextNode('找到 ' + shown + ' 款遊戲'));
+      var clear = document.createElement('button');
+      clear.type = 'button'; clear.textContent = '清除篩選';
+      clear.addEventListener('click', function(){ state.topic = 'all'; state.skill = 'all'; apply(true); });
+      statusEl.appendChild(clear);
+    }
+    if (push) {
+      var q = new URLSearchParams(location.search);
+      if (state.topic === 'all') q.delete('topic'); else q.set('topic', state.topic);
+      if (state.skill === 'all') q.delete('skill'); else q.set('skill', state.skill);
+      var s = q.toString();
+      try { history.replaceState(null, '', location.pathname + (s ? '?' + s : '') + location.hash); } catch(e) {}
+    }
+  }
+
+  build('topic'); build('skill');
+  /* 網址帶 ?topic=japanese 或 ?skill=listening 可以直接分享篩選結果 */
+  var q0 = new URLSearchParams(location.search);
+  ['topic', 'skill'].forEach(function(g){
+    var v = q0.get(g);
+    if (v) { if (document.querySelector('.chips[data-group="' + g + '"] .chip[data-val="' + v + '"]')) state[g] = v; }
+  });
+  apply(false);
+})();
+
 /* ===== 主頁專屬：點了哪個遊戲、分享 ===== */
 (function(){
   /* 遊戲卡片的 cta_click 補 option ＝ 目標遊戲的 game_id（卡片上的 data-game） */
-  hyGame.ctaExtra = function(a){ return { option: a.getAttribute('data-game') }; };
+  /* card_index＝點擊當下，這張卡在「目前看得到的卡片」中排第幾（篩選後會變）；數字參數，照送不註冊 */
+  hyGame.ctaExtra = function(a){
+    var game = a.getAttribute('data-game');
+    if (!game) return {};
+    var shown = [].slice.call(document.querySelectorAll('.grid .card[data-game]')).filter(function(c){ return !c.hidden; });
+    return { option: game, card_index: shown.indexOf(a) + 1 };
+  };
 
   var url  = document.querySelector('link[rel=canonical]').href;
   var text = '編織日和小遊戲｜日文五十音、花語、打字練習，打開瀏覽器就能玩 🌸';
