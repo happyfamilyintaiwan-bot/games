@@ -140,47 +140,6 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
 .rules li{display:flex;gap:10px;align-items:flex-start;font-size:14px}
 .rules b.k{flex:none;font-family:var(--mono);background:var(--gold);border:1.5px solid var(--ink);border-radius:6px;padding:0 6px;font-size:12px}
 
-/* ---------- share ---------- */
-const SHARE_URL='https://games.knittinghiyori.com/tozai-dojo/';
-function shareBar(type,text,label){
-  const u=SHARE_URL+'?via=share';
-  const e=encodeURIComponent, tu=e(u), tt=e(text);
-  const links=[
-    ['line','LINE','https://social-plugins.line.me/lineit/share?url='+tu+'&text='+tt],
-    ['facebook','Facebook','https://www.facebook.com/sharer/sharer.php?u='+tu],
-    ['threads','Threads','https://www.threads.net/intent/post?text='+e(text+' '+u)],
-    ['x','X','https://x.com/intent/post?text='+tt+'&url='+tu]
-  ];
-  const cls={line:'line',facebook:'fb',threads:'threads',x:'x'};
-  return `<div class="share"><span class="lbl">${esc(label)}</span><div class="row">`+
-    (navigator.share?`<button type="button" class="sb native" data-share="native" data-type="${type}" data-text="${esc(text)}" data-url="${esc(u)}">分享…</button>`:'')+
-    links.map(([m,n,h])=>`<a class="sb ${cls[m]}" href="${esc(h)}" target="_blank" rel="noopener" data-share="${m}" data-type="${type}">${n}</a>`).join('')+
-    `<button type="button" class="sb" data-share="copy_link" data-type="${type}" data-text="${esc(text)}" data-url="${esc(u)}">複製連結</button></div></div>`;
-}
-function track(fn){try{if(window.hyGame)fn(window.hyGame)}catch(e){}}
-document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-share]');if(!b)return;
-  const m=b.dataset.share,type=b.dataset.type;
-  if(m==='native'){
-    e.preventDefault();
-    navigator.share({title:'東西腔道場',text:b.dataset.text,url:b.dataset.url})
-      .then(()=>track(h=>h.share('native',type)))
-      .catch(err=>{if(err&&err.name==='AbortError')track(h=>h.event('share_cancel',{method:'native',content_type:type}));else toast('這裡無法開啟分享面板，請改用下面的按鈕')});
-    return;
-  }
-  if(m==='copy_link'){
-    e.preventDefault();
-    const txt=b.dataset.text+' '+b.dataset.url;
-    const done=()=>{toast('已複製，貼到任何地方分享吧');track(h=>h.share('copy_link',type))};
-    try{navigator.clipboard.writeText(txt).then(done).catch(()=>fallbackCopy(txt,done))}catch(err){fallbackCopy(txt,done)}
-    return;
-  }
-  track(h=>h.share(m,type));
-});
-function fallbackCopy(t,done){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();if(ok)done();else toast('無法自動複製，請手動複製網址：'+SHARE_URL)}
-/* 從分享連結進來 → entry_point=shared（要在互動前呼叫） */
-if(/[?]via=share/.test(location.search))track(h=>h.start('shared'));
-
 /* glossary */
 .gl{width:100%;border-collapse:collapse;font-size:15px}
 .gl th{font-size:12px;letter-spacing:.08em;color:var(--muted);text-align:left;font-weight:700;padding:8px;border-bottom:2px solid var(--ink)}
@@ -464,6 +423,47 @@ function result(){
 }
 
 /* glossary */
+/* ---------- share ---------- */
+const SHARE_URL='https://games.knittinghiyori.com/tozai-dojo/';
+function shareBar(type,text,label){
+  const u=SHARE_URL+'?via=share';
+  const e=encodeURIComponent, tu=e(u), tt=e(text);
+  const links=[
+    ['line','LINE','https://social-plugins.line.me/lineit/share?url='+tu+'&text='+tt],
+    ['facebook','Facebook','https://www.facebook.com/sharer/sharer.php?u='+tu],
+    ['threads','Threads','https://www.threads.net/intent/post?text='+e(text+' '+u)],
+    ['x','X','https://x.com/intent/post?text='+tt+'&url='+tu]
+  ];
+  const cls={line:'line',facebook:'fb',threads:'threads',x:'x'};
+  return `<div class="share"><span class="lbl">${esc(label)}</span><div class="row">`+
+    (navigator.share?`<button type="button" class="sb native" data-share="native" data-type="${type}" data-text="${esc(text)}" data-url="${esc(u)}">分享…</button>`:'')+
+    links.map(([m,n,h])=>`<a class="sb ${cls[m]}" href="${esc(h)}" target="_blank" rel="noopener" data-share="${m}" data-type="${type}">${n}</a>`).join('')+
+    `<button type="button" class="sb" data-share="copy_link" data-type="${type}" data-text="${esc(text)}" data-url="${esc(u)}">複製連結</button></div></div>`;
+}
+function track(fn){try{if(window.hyGame)fn(window.hyGame)}catch(e){}}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-share]');if(!b)return;
+  const m=b.dataset.share,type=b.dataset.type;
+  if(m==='native'){
+    e.preventDefault();
+    navigator.share({title:'東西腔道場',text:b.dataset.text,url:b.dataset.url})
+      .then(()=>track(h=>h.share('native',type)))
+      .catch(err=>{if(err&&err.name==='AbortError')track(h=>h.event('share_cancel',{method:'native',content_type:type}));else toast('這裡無法開啟分享面板，請改用下面的按鈕')});
+    return;
+  }
+  if(m==='copy_link'){
+    e.preventDefault();
+    const txt=b.dataset.text+' '+b.dataset.url;
+    const done=()=>{toast('已複製，貼到任何地方分享吧');track(h=>h.share('copy_link',type))};
+    try{navigator.clipboard.writeText(txt).then(done).catch(()=>fallbackCopy(txt,done))}catch(err){fallbackCopy(txt,done)}
+    return;
+  }
+  track(h=>h.share(m,type));
+});
+function fallbackCopy(t,done){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();if(ok)done();else toast('無法自動複製，請手動複製網址：'+SHARE_URL)}
+/* 從分享連結進來 → entry_point=shared（要在互動前呼叫） */
+if(/[?]via=share/.test(location.search))track(h=>h.start('shared'));
+
 function renderGlossary(){$('#gl-body').innerHTML=PAIRS.map(p=>`<tr><td class="e"><div class="cell">${spk(p.s,'sm')}<span lang="ja">${esc(p.s)}</span></div></td><td class="w"><div class="cell">${spk(p.k,'sm')}<span lang="ja">${esc(p.k)}</span></div></td><td class="z">${esc(p.z)}<small>${esc(p.n)}</small></td></tr>`).join('')}
 function tab(w){const g=w==='game';$('#tab-game').setAttribute('aria-selected',g);$('#tab-list').setAttribute('aria-selected',!g);$('#game').hidden=!g;$('#list').hidden=g}
 $('#tab-game').addEventListener('click',()=>tab('game'));
