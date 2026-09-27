@@ -20,7 +20,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('set', { content_group: 'game', game_id: 'hub', page_lang: 'zh-Hant' });
+  gtag('set', { content_group: 'game', game_id: 'hub', page_lang: 'zh-Hant', page_title: '遊戲|遊戲主頁|日文與程式學習小遊戲' });
   gtag('config', 'G-ZQZHTYTRMQ');
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,10 +29,12 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"編織日和小遊戲","url":"https://games.knittinghiyori.com/","inLanguage":"zh-Hant","publisher":{"@type":"Organization","name":"編織日和 Knitting Hiyori","url":"https://knittinghiyori.com/"},
 "mainEntity":{"@type":"ItemList","itemListElement":[
- {"@type":"ListItem","position":1,"url":"https://games.knittinghiyori.com/swiftui-detective/","name":"雨夜懷錶案：SwiftUI 偵探教學遊戲"},
- {"@type":"ListItem","position":2,"url":"https://games.knittinghiyori.com/sql-detective/","name":"SQL 偵探：霞光畫廊失竊案"},
- {"@type":"ListItem","position":3,"url":"https://games.knittinghiyori.com/tozai-dojo/","name":"東西腔道場：日文關東腔・關西腔小遊戲"},
- {"@type":"ListItem","position":4,"url":"https://games.knittinghiyori.com/hiyori-flower-shop/","name":"ひより花店：日文五十音小遊戲"}
+ {"@type":"ListItem","position":1,"url":"https://games.knittinghiyori.com/katsuyo-escape/","name":"活用館脫出：日文動詞變化密室逃脫","item":{"@type":"Game","name":"活用館脫出：日文動詞變化密室逃脫","url":"https://games.knittinghiyori.com/katsuyo-escape/","description":"五間密室練日文動詞變化。五段、一段、變格、て形音便、可能形，先熱身再破案，答錯即時解析。","inLanguage":"zh-Hant"}},
+ {"@type":"ListItem","position":2,"url":"https://games.knittinghiyori.com/jlpt-mishitsu/","name":"JLPT 單字密室","item":{"@type":"Game","name":"JLPT 單字密室","url":"https://games.knittinghiyori.com/jlpt-mishitsu/","description":"用密室逃脫背日檢單字。N5 到 N1 共 7,790 字、五間密室，四選一、錯題本、60 秒搜查。","inLanguage":"zh-Hant"}},
+ {"@type":"ListItem","position":3,"url":"https://games.knittinghiyori.com/swiftui-detective/","name":"雨夜懷錶案：SwiftUI 偵探教學遊戲"},
+ {"@type":"ListItem","position":4,"url":"https://games.knittinghiyori.com/sql-detective/","name":"SQL 偵探：霞光畫廊失竊案"},
+ {"@type":"ListItem","position":5,"url":"https://games.knittinghiyori.com/tozai-dojo/","name":"東西腔道場：日文關東腔・關西腔小遊戲"},
+ {"@type":"ListItem","position":6,"url":"https://games.knittinghiyori.com/hiyori-flower-shop/","name":"ひより花店：日文五十音小遊戲"}
 ]}}
 </script>
 <style>
@@ -109,6 +111,10 @@ h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
 .thumb.matcha .no{color:#4f8560}
 .thumb.yuzu{background:#fdf5e4}
 .thumb.yuzu .no{color:#b07a12}
+.thumb.fuji{background:#f3effb}
+.thumb.fuji .no{color:#7a5fc0}
+.thumb.exit{background:#e8f5ee}
+.thumb.exit .no{color:#00925A}
 .badge-new{position:absolute;top:10px;right:12px;font-size:11px;font-weight:700;letter-spacing:.12em;color:#fff;background:var(--sakura-deep);border-radius:999px;padding:2px 10px;box-shadow:0 4px 10px rgba(217,72,115,.25)}
 .thumb .no{position:absolute;top:12px;left:14px;font-family:var(--jp);font-size:12px;color:var(--sakura-deep);letter-spacing:.2em}
 .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -177,6 +183,36 @@ footer a:hover{text-decoration:underline}
          要改：href、.no 編號、data-game（＝該遊戲在 GA4 遊戲規範登記的 game_id）、JSON-LD 清單
          篩選：data-topic 填一個主題代碼、data-skill 填一到多個練習代碼（空格分隔）
          代碼只能用頁尾 HY_FILTERS 清單裡有的；新代碼先加進清單再用 -->
+  <a class="card" href="/katsuyo-escape/" data-cta="game_card" data-cta-type="game" data-game="katsuyo_escape" data-topic="japanese" data-skill="conjugation">
+    <div class="thumb exit" aria-hidden="true">
+      <span class="no">No.06</span>
+      <span class="badge-new">NEW</span>
+      <svg viewBox="0 0 200 72" width="200" height="72"><rect x="46" y="10" width="108" height="52" rx="8" fill="#00925A"/><rect x="58" y="18" width="30" height="36" rx="2" fill="#fff"/><rect x="62" y="22" width="22" height="32" fill="#cdeadb"/><circle cx="80" cy="39" r="2" fill="#00925A"/><text x="124" y="34" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" font-family="Zen Maru Gothic,Noto Sans TC,sans-serif">食べる</text><path d="M104 46 H140 M132 40 L140 46 L132 52" stroke="#f2b33d" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="body">
+      <h3>活用館脫出：日文動詞變化密室逃脫</h3>
+      <p>五間密室練日文動詞變化。五段、一段、變格、て形音便、可能形，先熱身再破案，答錯即時解析。</p>
+      <div class="tags"><span class="t-sakura">日文</span><span class="t-matcha">動詞變化</span><span class="t-sora">密室逃脫</span></div>
+      <span class="play">開始遊戲 →</span>
+    </div>
+  </a>
+  <!-- ▲ 遊戲卡片結束 -->
+
+  <a class="card" href="/jlpt-mishitsu/" data-cta="game_card" data-cta-type="game" data-game="jlpt_mishitsu" data-topic="japanese" data-skill="vocab jlpt">
+    <div class="thumb fuji" aria-hidden="true">
+      <span class="no">No.05</span>
+      <span class="badge-new">NEW</span>
+      <svg viewBox="0 0 200 72" width="200" height="72"><rect x="72" y="6" width="56" height="62" rx="6" fill="#9b7fd6"/><rect x="78" y="12" width="44" height="56" rx="3" fill="#b9a3e6"/><circle cx="113" cy="42" r="3.5" fill="#f2b33d"/><g font-family="Zen Maru Gothic,Noto Sans TC,sans-serif" font-weight="700" font-size="15"><rect x="18" y="16" width="36" height="24" rx="5" fill="#fff" stroke="#e3d9f5" stroke-width="2"/><text x="36" y="33" text-anchor="middle" fill="#7a5fc0">N5</text><rect x="146" y="30" width="36" height="24" rx="5" fill="#fff" stroke="#e3d9f5" stroke-width="2"/><text x="164" y="47" text-anchor="middle" fill="#d94873">N1</text></g><text x="100" y="37" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" font-family="Zen Maru Gothic,Noto Sans TC,sans-serif">単</text></svg>
+    </div>
+    <div class="body">
+      <h3>JLPT 單字密室</h3>
+      <p>用密室逃脫背日檢單字。N5 到 N1 共 7,790 字、五間密室，四選一、錯題本、60 秒搜查。</p>
+      <div class="tags"><span class="t-sakura">日文</span><span class="t-matcha">JLPT</span><span class="t-sora">單字</span></div>
+      <span class="play">開始遊戲 →</span>
+    </div>
+  </a>
+  <!-- ▲ 遊戲卡片結束 -->
+
   <a class="card" href="/swiftui-detective/" data-cta="game_card" data-cta-type="game" data-game="swiftui_detective" data-topic="coding" data-skill="swift story">
     <div class="thumb yuzu" aria-hidden="true">
       <span class="no">No.04</span>
@@ -406,6 +442,7 @@ var HY_FILTERS = {
   skill: [
     ['kana', '五十音'],
     ['vocab', '單字'],
+    ['conjugation', '動詞變化'],
     ['listening', '聽力'],
     ['typing', '打字'],
     ['dialect', '方言'],
