@@ -17,7 +17,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('set', { content_group: 'game', game_id: 'sql_detective', page_lang: 'zh-Hant' });
+  gtag('set', { content_group: 'game', game_id: 'sql_detective', page_lang: 'zh-Hant', page_title: '遊戲|霞光畫廊失竊案|SQL偵探入門' });
   gtag('config', 'G-ZQZHTYTRMQ');
 </script>
 <title>SQL 偵探：霞光畫廊失竊案｜零基礎 SQL 入門遊戲</title>
@@ -122,6 +122,13 @@ td.num{font-family:var(--mono)}
 .plats a:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
 .plats .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 #copyUrl{font-family:var(--mono);font-size:12px;color:var(--muted);word-break:break-all;user-select:all}
+.hubcta{margin-top:28px;background:var(--ink);color:#FFFFFF;padding:24px 22px;display:grid;gap:12px;border-radius:4px}
+.hubcta h2{font-family:var(--serif);font-size:24px;margin:0;color:#FFFFFF;text-wrap:balance}
+.hubcta p{margin:0;color:#D9DCE1}
+.hubcta a{justify-self:start;display:inline-flex;align-items:center;gap:10px;background:var(--tape);color:var(--tape-ink);font-weight:700;font-size:17px;text-decoration:none;padding:14px 26px;border-radius:4px;border:2px solid var(--tape)}
+.hubcta a:hover{background:#FFFFFF;border-color:#FFFFFF}
+.hubcta a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
+@media (max-width:480px){.hubcta a{justify-self:stretch;justify-content:center}}
 footer{margin-top:20px;color:var(--muted);font-size:13px}
 </style>
 <style>html,body{margin:0}</style>
@@ -197,6 +204,12 @@ footer{margin-top:20px;color:var(--muted);font-size:13px}
     </div>
     <p class="msg" id="copyMsg"></p>
     <div id="copyUrl"></div>
+  </section>
+
+  <section class="hubcta" aria-labelledby="hubH">
+    <h2 id="hubH">還想玩別的？回遊戲主頁看看</h2>
+    <p>日文、程式、推理解謎，主頁還有更多免費的互動小遊戲。</p>
+    <a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">探索更多互動遊戲 →</a>
   </section>
 
   <footer>資料皆為虛構。SQL 在你的瀏覽器裡執行，引擎是真正的 SQLite（sql.js），學到的語法可以直接用在其他資料庫。</footer>
@@ -564,7 +577,7 @@ const hg = () => window.hyGame || null;
 let round = null; /* {level, wrong} 目前進行中的一局＝一個未破解的關卡 */
 function ensureRound(){
   if (!hg() || state.cur < state.solved) return;
-  if (round && round.level === state.cur) return;
+  if (round ? round.level === state.cur : false) return;
   endRoundQuit();
   round = {level: state.cur, wrong: 0};
   hg().roundStart({option: CASE_ID, level: lv(state.cur)});
@@ -574,7 +587,8 @@ function endRoundQuit(){
   hg().roundEnd({result: "quit", item_count: 1, correct_count: 0});
   round = null;
 }
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const AMP = String.fromCharCode(38);
+const esc = s => String(s).split(AMP).join(AMP + "amp;").split("<").join(AMP + "lt;").split(">").join(AMP + "gt;").split('"').join(AMP + "quot;");
 
 function renderEvidence(){
   $("evidence").innerHTML = LEVELS.map((l,i)=>{
@@ -600,13 +614,13 @@ function renderFile(pop){
       <button class="btn" type="submit">提交答案</button>
     </form>
     <p class="msg ${solved?"good":""}" id="msg">${solved ? "答對了。" : ""}</p>
-    ${solved && state.cur < LEVELS.length-1 ? `<div><button type="button" class="btn ghost" id="nextBtn">下一關 →</button></div>`:""}
+    ${(solved ? state.cur < LEVELS.length-1 : false) ? `<div><button type="button" class="btn ghost" id="nextBtn">下一關 →</button></div>`:""}
     <details id="dHint"><summary>需要提示</summary><p>${esc(l.hint)}</p></details>
     <details id="dSol"><summary>看參考解答</summary><pre>${esc(l.solution)}</pre></details>`;
   $("ansForm").onsubmit = e => { e.preventDefault(); check(); };
   const nb = $("nextBtn"); if (nb) nb.onclick = () => go(state.cur+1);
-  $("dHint").addEventListener("toggle", e => { if (e.target.open && hg()){ ensureRound(); hg().event("sql_hint_open", {option: CASE_ID, level: lv(state.cur)}); } });
-  $("dSol").addEventListener("toggle", e => { if (e.target.open && hg()){ ensureRound(); hg().event("sql_solution_view", {option: CASE_ID, level: lv(state.cur)}); } });
+  $("dHint").addEventListener("toggle", e => { if (e.target.open ? hg() : false){ ensureRound(); hg().event("sql_hint_open", {option: CASE_ID, level: lv(state.cur)}); } });
+  $("dSol").addEventListener("toggle", e => { if (e.target.open ? hg() : false){ ensureRound(); hg().event("sql_solution_view", {option: CASE_ID, level: lv(state.cur)}); } });
 }
 
 function norm(s){ return String(s).replace(/\s+/g,"").toUpperCase(); }
@@ -618,7 +632,7 @@ function check(){
     if (first){
       ensureRound();
       state.solved = state.cur+1;
-      if (round && hg()){ hg().roundEnd({result: "complete", item_count: 1, correct_count: round.wrong === 0 ? 1 : 0}); }
+      if (round ? hg() : false){ hg().roundEnd({result: "complete", item_count: 1, correct_count: round.wrong === 0 ? 1 : 0}); }
       round = null;
     }
     store.set(state);
@@ -634,7 +648,7 @@ function setMsg(t,c){ const m=$("msg"); m.textContent=t; m.className="msg "+c; }
 
 function go(i){
   saveDraft();
-  if (round && round.level !== i) endRoundQuit();
+  if (round ? round.level !== i : false) endRoundQuit();
   state.cur = i; store.set(state);
   renderEvidence(); renderFile(false);
   $("sql").value = state.drafts[i] ?? LEVELS[i].example;
@@ -677,13 +691,13 @@ function renderTables(){
 $("runBtn").onclick = () => { ensureRound(); saveDraft(); run(); };
 $("resetBtn").onclick = () => { $("sql").value = LEVELS[state.cur].example; saveDraft(); run(); };
 $("sql").addEventListener("keydown", e => {
-  if ((e.ctrlKey||e.metaKey) && e.key==="Enter"){ e.preventDefault(); ensureRound(); saveDraft(); run(); }
-  if (e.key==="Tab" && !e.shiftKey){ e.preventDefault(); const t=e.target,s=t.selectionStart; t.setRangeText("  ",s,t.selectionEnd,"end"); }
+  if ((e.ctrlKey||e.metaKey) ? e.key==="Enter" : false){ e.preventDefault(); ensureRound(); saveDraft(); run(); }
+  if (e.key==="Tab" ? !e.shiftKey : false){ e.preventDefault(); const t=e.target,s=t.selectionStart; t.setRangeText("  ",s,t.selectionEnd,"end"); }
 });
 $("sql").addEventListener("input", () => { clearTimeout(window._d); window._d=setTimeout(saveDraft,400); });
 $("restart").onclick = () => { state={v:2,solved:0,cur:0,drafts:{}}; store.set(state); $("closed").hidden=true; go(0); };
 
-if (/[?]ref=share/.test(location.search) && hg()) hg().start("shared");
+if (/[?]ref=share/.test(location.search) ? hg() : false) hg().start("shared");
 state.cur = Math.min(state.cur, state.solved, LEVELS.length-1);
 renderTables(); renderEvidence(); renderFile(false);
 $("closed").hidden = state.solved < LEVELS.length;
@@ -694,9 +708,9 @@ function shareText(){ return state.solved >= LEVELS.length ? "我用 SQL 破了�
 function setShare(){
   const u = encodeURIComponent(SHARE_URL), t = encodeURIComponent(shareText());
   $("shFb").href = `https://www.facebook.com/sharer/sharer.php?u=${u}`;
-  $("shLine").href = `https://social-plugins.line.me/lineit/share?url=${u}&text=${t}`;
+  $("shLine").href = `https://social-plugins.line.me/lineit/share?url=${u}${AMP}text=${t}`;
   $("shThreads").href = `https://www.threads.net/intent/post?text=${t}%20${u}`;
-  $("shX").href = `https://twitter.com/intent/tweet?text=${t}&url=${u}`;
+  $("shX").href = `https://twitter.com/intent/tweet?text=${t}${AMP}url=${u}`;
   $("copyUrl").textContent = SHARE_URL;
 }
 $("shCopy").onclick = () => {
