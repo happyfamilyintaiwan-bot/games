@@ -3,17 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>編織日和小遊戲｜免費日文學習・打字練習線上小遊戲</title>
-<meta name="description" content="編織日和 Knitting Hiyori 的免費線上學習小遊戲：日文五十音、花語、關西腔聽力，還有 SQL、SwiftUI 程式入門偵探遊戲，零基礎也能邊玩邊學，打開瀏覽器就能玩。">
+<title>編織日和小遊戲｜免費日文與程式學習線上小遊戲</title>
+<meta name="description" content="編織日和 Knitting Hiyori 的免費線上學習小遊戲：日文五十音、日檢單字、動詞變化、關西腔聽力，還有 SQL、SwiftUI 程式入門偵探遊戲。零基礎也能邊玩邊學，打開瀏覽器就能玩。">
 <link rel="canonical" href="https://games.knittinghiyori.com/">
 <meta property="og:url" content="https://games.knittinghiyori.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="編織日和 Knitting Hiyori">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:title" content="編織日和小遊戲">
-<meta property="og:description" content="日文五十音、關西腔聽力、SQL 與 SwiftUI 偵探解謎⋯⋯打開瀏覽器就能玩的學習小遊戲。">
+<meta property="og:description" content="日文五十音、日檢單字、動詞變化、關西腔，SQL 與 SwiftUI 偵探解謎⋯⋯打開瀏覽器就能玩的學習小遊戲。">
 <!-- <meta property="og:image" content="https://games.knittinghiyori.com/assets/og-hub.jpg"> -->
 <meta name="theme-color" content="#ffffff">
+<!-- 網站 icon（檔案在 repo 的 /icons/；遊戲頁貼同一段） -->
+<link rel="icon" href="/icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <!-- GA4（與部落格、工具共用資源 G-ZQZHTYTRMQ）｜規範：遊戲 GA4 統一追蹤 v1.0 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
 <script>
@@ -68,7 +73,7 @@ header{position:relative;padding:56px 0 36px;text-align:center}
 h1{font-family:var(--jp);font-size:clamp(28px,6vw,40px);font-weight:700;line-height:1.35;margin:18px 0 6px;letter-spacing:.08em}
 h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
 .kana{font-family:var(--jp);font-size:14px;color:var(--mute);letter-spacing:.35em;margin:0}
-.lead{color:var(--mute);margin:16px auto 0;max-width:520px;font-size:16px}
+.lead{color:var(--mute);margin:16px auto 0;max-width:600px;font-size:16px}
 
 .cta-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px}
 .btn{font:inherit;font-size:15px;font-weight:500;border-radius:999px;padding:11px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:.18s;border:1.5px solid transparent}
@@ -160,7 +165,7 @@ footer a:hover{text-decoration:underline}
   <span class="stamp">あそびながら まなぶ</span>
   <h1><span class="mark">編織日和</span>小遊戲</h1>
   <p class="kana">KNITTING HIYORI GAMES</p>
-  <p class="lead">邊玩邊學：日文五十音、花卉日文、打字練習。<br>免下載、免註冊，打開就能玩。</p>
+  <p class="lead">用小遊戲學日文、學寫程式：<br>五十音、日檢單字、動詞變化、關西腔，還有 SQL、SwiftUI 偵探解謎。<br>零基礎也能玩，免下載、免註冊，打開就能玩。</p>
   <div class="cta-row">
     <a class="btn btn-ghost" href="#games">開始玩 ↓</a>
     <button class="btn btn-primary js-share" type="button">
@@ -275,7 +280,7 @@ footer a:hover{text-decoration:underline}
 
 <section class="share" aria-labelledby="share-title">
   <h2 id="share-title">喜歡的話，分享給朋友吧 🌸</h2>
-  <p>一起邊玩邊學日文，比一個人練更有動力！</p>
+  <p>找朋友一起邊玩邊學，比一個人練更有動力！</p>
   <div class="share-list">
     <a class="sbtn s-line" data-net="line" target="_blank" rel="noopener"><i></i>LINE</a>
     <a class="sbtn s-fb" data-net="facebook" target="_blank" rel="noopener"><i></i>Facebook</a>
@@ -554,7 +559,7 @@ var HY_FILTERS = {
   };
 
   var url  = document.querySelector('link[rel=canonical]').href;
-  var text = '編織日和小遊戲｜日文五十音、花語、打字練習，打開瀏覽器就能玩 🌸';
+  var text = '編織日和小遊戲｜日文單字、動詞變化、關西腔，還有 SQL、SwiftUI 偵探解謎，打開瀏覽器就能玩 🌸';
   var u = encodeURIComponent(url), t = encodeURIComponent(text);
   var links = {
     line:     'https://social-plugins.line.me/lineit/share?url=' + u,
