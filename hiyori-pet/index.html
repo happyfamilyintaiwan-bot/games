@@ -143,6 +143,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
   var RATE = { full: 5, mood: 4, clean: 2, perPoop: 3 };
   var POOP_MIN_H = 4, POOP_MAX_H = 8, POOP_MAX = 3;   /* 平均每 6 小時 1 坨，最多 3 坨 */
   var SLEEP_FROM = 22, SLEEP_TO = 7, SLEEP_FACTOR = 0.5;   /* 睡覺時下降速度減半 */
+  var WAKE_PENALTY = 10, WAKE_MIN = 15;   /* 睡覺時照顧會吵醒牠：心情 -10，之後醒著 15 分鐘不再扣 */
   var LOW = 30;   /* 低於這個數字就算「餓了／髒了」 */
 
   var VERSION = 1;
@@ -211,12 +212,25 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
     play:  function(s){ s.mood = clamp(s.mood + 25); s.full = clamp(s.full - 5); },
     clean: function(s){ s.poops = 0; s.clean = 100; }
   };
+  function isWoken(s, t){ return isAsleep(t) ? s.awakeUntil > t : false; }
   function mood(s, t){
-    if (isAsleep(t)) return { key: 'sleep', text: '睡覺中⋯ zZ' };
+    if (isAsleep(t)) {
+      if (!isWoken(s, t)) return { key: 'sleep', text: '睡覺中⋯ zZ（照顧牠會吵醒牠）' };
+    }
     if (s.full < LOW) return { key: 'hungry', text: '肚子餓了' };
     if (s.clean < LOW || s.poops >= 2) return { key: 'dirty', text: '想洗澎澎' };
     if (s.mood < LOW) return { key: 'bored', text: '想要你陪我玩' };
+    if (isWoken(s, t)) return { key: 'woken', text: '被吵醒了⋯揉揉眼睛' };
     return { key: 'happy', text: '今天心情很好！' };
+  }
+  /* 照顧：睡覺時第一下會吵醒牠 */
+  function act(s, name, t){
+    simulate(s, t);
+    if (isAsleep(t)) {
+      if (!isWoken(s, t)) s.mood = clamp(s.mood - WAKE_PENALTY);
+      s.awakeUntil = t + WAKE_MIN * 60000;
+    }
+    ACTIONS[name](s);
   }
 
   /* ---- 畫面 ---- */
@@ -239,7 +253,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
     simulate(state, t);
     var m = mood(state, t);
     var asleep = m.key === 'sleep';
-    $('hp-screen').classList.toggle('is-night', asleep);
+    $('hp-screen').classList.toggle('is-night', isAsleep(t));
     var pet = $('hp-pet');
     pet.classList.toggle('is-sleep', asleep);
     pet.classList.toggle('is-hungry', m.key === 'hungry');
@@ -251,16 +265,13 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
     var poops = '';
     for (var i = 0; i < state.poops; i++) poops += '<div class="hp-poop"></div>';
     $('hp-poops').innerHTML = poops;
-    var btns = document.querySelectorAll('#hiyori-pet [data-act]');
-    for (var j = 0; j < btns.length; j++) btns[j].disabled = asleep;
     if (DEBUG) { $('hp-dbg-speed').textContent = SPEED; $('hp-dbg-time').textContent = fmt(t); }
   }
 
   document.querySelector('#hiyori-pet .hp-actions').addEventListener('click', function(e){
     var b = e.target.closest('[data-act]');
-    if (!b || b.disabled) return;
-    simulate(state, now());
-    ACTIONS[b.getAttribute('data-act')](state);
+    if (!b) return;
+    act(state, b.getAttribute('data-act'), now());
     save();
     render();
   });
@@ -282,7 +293,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
       render();
     });
     /* 給自動測試用 */
-    window.hpCore = { simulate: simulate, newState: newState, isAsleep: isAsleep, mood: mood, ACTIONS: ACTIONS, RATE: RATE, getState: function(){ return state; } };
+    window.hpCore = { simulate: simulate, newState: newState, isAsleep: isAsleep, mood: mood, act: act, ACTIONS: ACTIONS, RATE: RATE, getState: function(){ return state; } };
   }
 
   render();
