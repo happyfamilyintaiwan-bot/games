@@ -60,7 +60,32 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .kh-ad__label{display:block;font-size:12px;letter-spacing:.08em;opacity:.6;margin-bottom:6px;line-height:1.4}
 .kh-legal{display:block;max-width:640px;font-size:12px;line-height:1.8;opacity:.7;text-align:center;margin:16px auto 24px;padding:0 16px;box-sizing:border-box}
 .kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
-#hiyori-pet{max-width:420px;margin:20px auto 0;border-radius:20px;background:#fff4e6;padding:24px 16px;text-align:center;color:#8a6d4b}
+/* ===== 日和毛孩 ===== */
+#hiyori-pet{max-width:420px;margin:20px auto 0;color:#5b4636;font-size:15px}
+.hp-screen{position:relative;border-radius:24px;background:#fff4e6;padding:16px;text-align:center;transition:background .6s}
+.hp-screen.is-night{background:#2f3352;color:#e8e6ff}
+.hp-stage{height:150px;display:flex;align-items:flex-end;justify-content:center;gap:10px}
+.hp-pet{width:96px;height:96px;border-radius:18px;background:#ffb36b;box-shadow:inset -8px -8px 0 rgba(0,0,0,.08);animation:hp-bob 1.6s steps(2) infinite;transition:background .4s}
+.hp-pet.is-hungry{background:#9cc3e6}
+.hp-pet.is-dirty{background:#c8a27a}
+.hp-pet.is-sleep{background:#8d86c9;animation:none}
+@keyframes hp-bob{0%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hp-poops{display:flex;gap:6px}
+.hp-poop{width:22px;height:18px;border-radius:50% 50% 40% 40%;background:#8a5a3b}
+.hp-status{margin-top:10px;min-height:24px;font-weight:700}
+.hp-bars{margin-top:14px;display:grid;gap:8px}
+.hp-bar{display:grid;grid-template-columns:3em 1fr 2.5em;align-items:center;gap:8px}
+.hp-bar__track{height:12px;border-radius:6px;background:#efe3d3;overflow:hidden}
+.hp-bar__fill{height:100%;border-radius:6px;background:#7cc49a;transition:width .4s}
+.hp-bar__fill.is-low{background:#e98a7a}
+.hp-bar__num{text-align:right;font-variant-numeric:tabular-nums;color:#8a6d4b}
+.hp-actions{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hp-actions button{font:inherit;font-weight:700;padding:12px 0;border:0;border-radius:14px;background:#d94873;color:#fff;cursor:pointer}
+.hp-actions button:disabled{background:#cfc6bd;cursor:default}
+.hp-debug{margin-top:16px;padding:12px;border:2px dashed #c9b8a6;border-radius:14px;font-size:13px;color:#6b6b70}
+.hp-debug[hidden]{display:none}
+.hp-debug__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.hp-debug button{font:inherit;padding:6px 10px;border:1px solid #c9b8a6;border-radius:10px;background:#fff;cursor:pointer}
 .page-foot{max-width:760px;margin:28px auto 0;font-size:13px;color:#6b6b70;border-top:1px solid #e7e7ea;padding-top:12px}
 </style>
 </head>
@@ -70,7 +95,29 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 
 <!-- 遊戲本體 -->
 <div id="hiyori-pet">
-  <p>施工中：像素貓狗即將在這裡出生。</p>
+  <div class="hp-screen" id="hp-screen">
+    <div class="hp-stage"><div class="hp-pet" id="hp-pet"></div><div class="hp-poops" id="hp-poops"></div></div>
+    <div class="hp-status" id="hp-status"></div>
+  </div>
+  <div class="hp-bars">
+    <div class="hp-bar"><span>飽足</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-full"></div></div><span class="hp-bar__num" id="hp-num-full"></span></div>
+    <div class="hp-bar"><span>心情</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-mood"></div></div><span class="hp-bar__num" id="hp-num-mood"></span></div>
+    <div class="hp-bar"><span>清潔</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-clean"></div></div><span class="hp-bar__num" id="hp-num-clean"></span></div>
+  </div>
+  <div class="hp-actions">
+    <button type="button" data-act="feed">餵飯</button>
+    <button type="button" data-act="play">陪玩</button>
+    <button type="button" data-act="clean">清理</button>
+  </div>
+  <div class="hp-debug" id="hp-debug" hidden>
+    <div>測試模式｜速度 <b id="hp-dbg-speed"></b> 倍｜遊戲時間 <b id="hp-dbg-time"></b></div>
+    <div class="hp-debug__btns">
+      <button type="button" data-skip="1">+1 小時</button>
+      <button type="button" data-skip="6">+6 小時</button>
+      <button type="button" data-skip="24">+1 天</button>
+      <button type="button" id="hp-dbg-reset">重置測試存檔</button>
+    </div>
+  </div>
 </div>
 
 <section class="page-about">
@@ -88,6 +135,165 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 </div>
 <footer class="page-foot"><a href="/" style="color:inherit" data-cta="more_games" data-cta-type="hub">← 更多小遊戲</a>｜© 編織日和 Knitting Hiyori｜<a href="https://knittinghiyori.com/" style="color:inherit" data-cta="footer" data-cta-type="mainsite">回到部落格</a></footer>
 <p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<script>
+/* ===== 日和毛孩｜遊戲本體 =====
+   注意：照 games 的慣例，不用「和號」字元與雙斜線註解 */
+(function(){
+  /* ---- 可調整的數值（每小時下降多少） ---- */
+  var RATE = { full: 5, mood: 4, clean: 2, perPoop: 3 };
+  var POOP_MIN_H = 4, POOP_MAX_H = 8, POOP_MAX = 3;   /* 平均每 6 小時 1 坨，最多 3 坨 */
+  var SLEEP_FROM = 22, SLEEP_TO = 7, SLEEP_FACTOR = 0.5;   /* 睡覺時下降速度減半 */
+  var LOW = 30;   /* 低於這個數字就算「餓了／髒了」 */
+
+  var VERSION = 1;
+  var HOUR = 3600000, STEP = 600000;   /* 離線補算時每 10 分鐘算一步 */
+  var params = new URLSearchParams(location.search);
+  var DEBUG = params.get('hy_debug') === '1';
+  var SPEED = DEBUG ? Math.max(1, Number(params.get('speed')) || 1) : 1;
+  /* 測試存檔與正式存檔分開，測試不會弄亂正式的那隻 */
+  var SAVE_KEY = DEBUG ? 'hiyori-pet:save-debug' : 'hiyori-pet:save';
+  var CLOCK_KEY = 'hiyori-pet:debug-clock';
+
+  function clamp(n){ return Math.max(0, Math.min(100, n)); }
+  function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+  function load(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } }
+
+  /* ---- 時鐘：正式模式就是現在時間；測試模式可以加速、可以往前跳 ---- */
+  var clock = DEBUG ? (load(CLOCK_KEY) || { realAt: Date.now(), gameAt: Date.now() }) : null;
+  function now(){
+    if (!DEBUG) return Date.now();
+    return clock.gameAt + (Date.now() - clock.realAt) * SPEED;
+  }
+  function rebase(extraMs){
+    if (!DEBUG) return;
+    clock = { realAt: Date.now(), gameAt: now() + (extraMs || 0) };
+    store(CLOCK_KEY, clock);
+  }
+
+  /* ---- 狀態與規則 ---- */
+  function randPoopH(){ return POOP_MIN_H + Math.random() * (POOP_MAX_H - POOP_MIN_H); }
+  function newState(t){
+    return { v: VERSION, createdAt: t, lastTick: t, full: 80, mood: 80, clean: 100, poops: 0, nextPoopIn: randPoopH() };
+  }
+  function upgrade(s){
+    /* 以後改規則時，在這裡把舊版存檔升級成新版 */
+    if (!s || typeof s !== 'object') return null;
+    if (s.v !== VERSION) return null;
+    return s;
+  }
+  function isAsleep(t){
+    var h = new Date(t).getHours();
+    return h >= SLEEP_FROM || h < SLEEP_TO;
+  }
+  /* 把狀態從上次時間一路算到 to：離開多久都一次補算完 */
+  function simulate(s, to){
+    var t = s.lastTick;
+    if (!(to > t)) return s;   /* 時間倒退（例如改過電腦時鐘）就先不動 */
+    while (t < to) {
+      var dt = Math.min(STEP, to - t);
+      var h = dt / HOUR;
+      var f = isAsleep(t) ? SLEEP_FACTOR : 1;
+      s.full = clamp(s.full - RATE.full * h * f);
+      s.mood = clamp(s.mood - RATE.mood * h * f);
+      s.clean = clamp(s.clean - (RATE.clean + RATE.perPoop * s.poops) * h);
+      s.nextPoopIn -= h;
+      if (s.nextPoopIn <= 0) {
+        if (s.poops < POOP_MAX) s.poops += 1;
+        s.nextPoopIn += randPoopH();
+      }
+      t += dt;
+    }
+    s.lastTick = to;
+    return s;
+  }
+  var ACTIONS = {
+    feed:  function(s){ s.full = clamp(s.full + 30); },
+    play:  function(s){ s.mood = clamp(s.mood + 25); s.full = clamp(s.full - 5); },
+    clean: function(s){ s.poops = 0; s.clean = 100; }
+  };
+  function mood(s, t){
+    if (isAsleep(t)) return { key: 'sleep', text: '睡覺中⋯ zZ' };
+    if (s.full < LOW) return { key: 'hungry', text: '肚子餓了' };
+    if (s.clean < LOW || s.poops >= 2) return { key: 'dirty', text: '想洗澎澎' };
+    if (s.mood < LOW) return { key: 'bored', text: '想要你陪我玩' };
+    return { key: 'happy', text: '今天心情很好！' };
+  }
+
+  /* ---- 畫面 ---- */
+  var $ = function(id){ return document.getElementById(id); };
+  var state = upgrade(load(SAVE_KEY)) || newState(now());
+
+  function save(){ store(SAVE_KEY, state); rebase(0); }
+  function setBar(name, val){
+    var fill = $('hp-bar-' + name);
+    fill.style.width = val + '%';
+    fill.classList.toggle('is-low', val < LOW);
+    $('hp-num-' + name).textContent = Math.round(val);
+  }
+  function fmt(t){
+    var d = new Date(t), p = function(n){ return (n < 10 ? '0' : '') + n; };
+    return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+  function render(){
+    var t = now();
+    simulate(state, t);
+    var m = mood(state, t);
+    var asleep = m.key === 'sleep';
+    $('hp-screen').classList.toggle('is-night', asleep);
+    var pet = $('hp-pet');
+    pet.classList.toggle('is-sleep', asleep);
+    pet.classList.toggle('is-hungry', m.key === 'hungry');
+    pet.classList.toggle('is-dirty', m.key === 'dirty');
+    $('hp-status').textContent = m.text;
+    setBar('full', state.full);
+    setBar('mood', state.mood);
+    setBar('clean', state.clean);
+    var poops = '';
+    for (var i = 0; i < state.poops; i++) poops += '<div class="hp-poop"></div>';
+    $('hp-poops').innerHTML = poops;
+    var btns = document.querySelectorAll('#hiyori-pet [data-act]');
+    for (var j = 0; j < btns.length; j++) btns[j].disabled = asleep;
+    if (DEBUG) { $('hp-dbg-speed').textContent = SPEED; $('hp-dbg-time').textContent = fmt(t); }
+  }
+
+  document.querySelector('#hiyori-pet .hp-actions').addEventListener('click', function(e){
+    var b = e.target.closest('[data-act]');
+    if (!b || b.disabled) return;
+    simulate(state, now());
+    ACTIONS[b.getAttribute('data-act')](state);
+    save();
+    render();
+  });
+
+  if (DEBUG) {
+    $('hp-debug').hidden = false;
+    $('hp-debug').addEventListener('click', function(e){
+      var b = e.target.closest('[data-skip]');
+      if (!b) return;
+      rebase(Number(b.getAttribute('data-skip')) * HOUR);
+      render();
+      save();
+    });
+    $('hp-dbg-reset').addEventListener('click', function(){
+      try { localStorage.removeItem(SAVE_KEY); localStorage.removeItem(CLOCK_KEY); } catch(e) {}
+      clock = { realAt: Date.now(), gameAt: Date.now() };
+      state = newState(now());
+      save();
+      render();
+    });
+    /* 給自動測試用 */
+    window.hpCore = { simulate: simulate, newState: newState, isAsleep: isAsleep, mood: mood, ACTIONS: ACTIONS, RATE: RATE, getState: function(){ return state; } };
+  }
+
+  render();
+  save();
+  setInterval(render, 1000);
+  setInterval(save, 10000);
+  document.addEventListener('visibilitychange', function(){ if (document.hidden) save(); else render(); });
+  window.addEventListener('pagehide', save);
+})();
+/* ===== /日和毛孩 ===== */
+</script>
 <script>
 /* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
    各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
