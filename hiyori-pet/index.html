@@ -99,6 +99,40 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .hp-adopt__pick canvas{width:96px;height:96px;image-rendering:pixelated;image-rendering:crisp-edges}
 .hp-adopt__name{display:flex;align-items:center;gap:10px;margin-top:14px;font-weight:700}
 .hp-adopt__go{margin-top:14px;width:100%;font:inherit;font-weight:700;padding:12px 0;border:0;border-radius:14px;background:#d94873;color:#fff;cursor:pointer}
+.hp-tabs{margin-top:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.hp-tabs button{position:relative;font:inherit;font-size:14px;font-weight:700;color:#5b4636;background:#fff;border:2px solid #efe3d3;border-radius:12px;padding:8px 0;cursor:pointer}
+.hp-tabs button[aria-pressed="true"]{border-color:#d94873;color:#d94873}
+.hp-badge{position:absolute;top:-7px;right:-5px;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:#d94873;color:#fff;font-size:11px;line-height:18px}
+.hp-panel{margin-top:10px;padding:14px;border-radius:18px;background:#fffaf3;border:2px solid #efe3d3}
+.hp-panel p{margin:0}
+.hp-panel__sum,.hp-empty{font-size:13px;color:#8a6d4b}
+.hp-panel__title{margin-top:14px;font-weight:700}
+.hp-mail{border-bottom:1px dashed #e6d6c3}
+.hp-mail:last-child{border-bottom:0}
+.hp-mail__head{display:flex;gap:10px;width:100%;font:inherit;color:inherit;text-align:left;background:none;border:0;padding:10px 2px;cursor:pointer}
+.hp-mail__date{flex:none;width:3em;color:#8a6d4b;font-size:13px;font-variant-numeric:tabular-nums}
+.hp-mail__first{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hp-mail.is-new .hp-mail__first{font-weight:700}
+.hp-mail.is-new .hp-mail__date::after{content:"";display:inline-block;width:7px;height:7px;margin-left:5px;border-radius:50%;background:#d94873;vertical-align:middle}
+.hp-mail__body{padding:2px 2px 14px 3.6em;line-height:1.9}
+.hp-mail__sign{text-align:right;color:#8a6d4b;margin-top:6px}
+.hp-snacks{margin-top:10px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.hp-snack{display:flex;align-items:center;gap:6px;font-size:13px;padding:6px 8px;border-radius:10px;background:#fff;border:1px solid #efe3d3;min-width:0}
+.hp-snack.is-locked{color:#c3b4a4}
+.hp-snack__dot{flex:none;width:12px;height:12px;border-radius:50%;background:#efe3d3;box-shadow:inset 0 0 0 1px rgba(74,50,38,.25)}
+.hp-cards{margin-top:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.hp-card{font:inherit;color:inherit;text-align:center;background:#fff;border:2px solid #efe3d3;border-radius:12px;padding:6px;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.hp-card__img{width:100%;aspect-ratio:3/2;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:6px}
+.hp-card__back{aspect-ratio:3/2;display:flex;flex-direction:column;justify-content:center;font-size:13px;line-height:1.7;padding:4px}
+.hp-card__trip{margin-top:6px;color:#d94873;font-size:12px}
+.hp-card__cap{font-size:12px;color:#8a6d4b}
+.hp-dex{margin-top:10px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.hp-dex__cell{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:#8a6d4b;background:#fff4e6;border-radius:12px;padding:6px 2px}
+.hp-dex__cell canvas{width:72px;height:72px;image-rendering:pixelated;image-rendering:crisp-edges}
+.hp-album{margin:6px 0 0;padding-left:1.2em;font-size:14px}
+.hp-newegg{margin-top:12px;font:inherit;font-weight:700;padding:10px 18px;border:0;border-radius:12px;background:#d94873;color:#fff;cursor:pointer}
+.hp-newegg.is-quiet{background:#efe3d3;color:#5b4636;margin-left:8px}
+.hp-newegg__ask{margin-top:12px}
 .hp-debug{margin-top:16px;padding:12px;border:2px dashed #c9b8a6;border-radius:14px;font-size:13px;color:#6b6b70}
 .hp-debug[hidden]{display:none}
 .hp-debug__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -142,6 +176,13 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
       <button type="button" data-act="poop">清便便</button>
       <button type="button" data-act="bath">洗澡</button>
     </div>
+    <div class="hp-tabs" id="hp-tabs" role="group" aria-label="收藏">
+      <button type="button" data-tab="mail" aria-pressed="false">信箱<span class="hp-badge" id="hp-unread" hidden></span></button>
+      <button type="button" data-tab="snack" aria-pressed="false">點心櫃</button>
+      <button type="button" data-tab="card" aria-pressed="false">明信片</button>
+      <button type="button" data-tab="dex" aria-pressed="false">圖鑑</button>
+    </div>
+    <div class="hp-panel" id="hp-panel" hidden></div>
   </div>
   <div class="hp-debug" id="hp-debug" hidden>
     <div>測試模式｜速度 <b id="hp-dbg-speed"></b> 倍｜遊戲時間 <b id="hp-dbg-time"></b></div>
@@ -150,6 +191,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
       <button type="button" data-skip="1">+1 小時</button>
       <button type="button" data-skip="6">+6 小時</button>
       <button type="button" data-skip="24">+1 天</button>
+      <button type="button" data-dbg="trip">讓牠去旅行</button>
       <button type="button" id="hp-dbg-reset">重置測試存檔</button>
     </div>
   </div>
@@ -497,14 +539,238 @@ var HP_PX = (function(){
     }
     ctx.putImageData(img, 0, 0);
   }
+  /* 圖鑑還沒收集到的格子：灰色剪影 */
+  function silhouette(canvas, sp, form){
+    var g = build(sp, form, 'happy', 0), ctx = canvas.getContext('2d');
+    var img = ctx.createImageData(W, H);
+    for (var i = 0; i < g.length; i++) {
+      if (!g[i]) continue;
+      var rgb = hex(g[i] === OUT ? '#b9ab9d' : '#ddd3c8');
+      img.data[i * 4] = rgb[0]; img.data[i * 4 + 1] = rgb[1]; img.data[i * 4 + 2] = rgb[2]; img.data[i * 4 + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
   return {
-    W: W, H: H, build: build, draw: draw,
+    W: W, H: H, build: build, draw: draw, silhouette: silhouette,
     SPECIES: ['cat', 'dog'],
     FORMS: ['egg', 'baby', 'teen', 'round', 'active', 'elegant'],
     EXPRS: ['happy', 'hungry', 'bored', 'dirty', 'sleep', 'sick']
   };
 })();
 /* ===== /像素圖引擎 ===== */
+</script>
+<script>
+/* ===== 日和毛孩｜內容 v1（T2-2）：信件、點心、明信片 =====
+   改文字只要改這一段。信件裡可以用：{name} 名字、{toy} 玩具、{me} 貓／狗、{city} 城市。
+   一行一句，用 \n 換行；不要用破折號。 */
+var HP_DATA = {
+  TOY: { cat: '毛線球', dog: '網球' },
+  ME: { cat: '貓', dog: '狗' },
+  LETTERS: {
+    /* 特別的信：破殼、長大、旅行回來、離家回來、連續照顧 7 天 */
+    hatch: ['外面好亮\n我眨了好多次眼睛\n才看清楚\n原來第一個看到的是你'],
+    teenUp: ['我變大了一點\n昨天的我\n可能認不出今天的我\n但你一定認得'],
+    adultUp: ['我長大了\n可是被你摸頭的時候\n我還是\n那顆蛋裡的我'],
+    trip: ['{city}很好玩\n可是走了好多路\n最想回去的地方\n還是你家'],
+    home: ['我去朋友家住了幾天\n他們都對我很好\n可是沒有人\n會這樣叫我的名字'],
+    streak7: ['你連續來看我七天了\n我在牆上偷偷畫了七條線\n明天\n會有第八條嗎'],
+    /* 幼年（第 1～2 天） */
+    baby: [
+      '今天學會一件事\n尾巴是我的\n追了很久才知道',
+      '你的手指\n比我的頭還大\n可是摸起來\n剛剛好',
+      '我把{toy}\n藏在沙發底下\n明天再假裝\n第一次發現它',
+      '地板很涼\n我把肚子貼上去\n跟它說了一下午的話',
+      '窗外有一隻鳥\n我們看了彼此好久\n最後是我先睡著',
+      '今天打了三個噴嚏\n每一個\n都把自己嚇一跳',
+      '我還不太會走直線\n可是走向你的時候\n很直',
+      '你出門以後\n房間變得好大\n我只好把它睡滿',
+      '我的名字是{name}\n我練習了很多次\n你叫的時候\n我就會轉頭',
+      '今天的陽光\n從窗戶走到沙發\n我跟著它\n睡了三個地方',
+      '我把你的拖鞋\n搬到門口\n這樣你一回來\n就會先看到我'
+    ],
+    /* 少年（第 3～6 天） */
+    teen: [
+      '我現在跳得上椅子了\n下不來的部分\n我們明天再練習',
+      '今天在鏡子裡\n看到一隻很帥的{me}\n我盯著牠很久\n牠也盯著我',
+      '你說我長大了\n可是我覺得\n是沙發變小了',
+      '我學會假裝沒聽到\n可是你打開零食袋的聲音\n我聽得很清楚',
+      '今天練習坐好\n坐了三秒\n是我的最高紀錄',
+      '風把窗簾吹起來\n我以為是誰來了\n原來只是下午',
+      '我在你的毛衣上\n留了幾根毛\n這樣你出門的時候\n我也一起去',
+      '我有一個秘密基地\n在紙箱裡\n你可以進來\n但要先敲門',
+      '雨天的聲音\n像有人在屋頂上走路\n我陪它走了一整晚',
+      '你打字很快\n我在旁邊\n數著每一個字\n數到睡著',
+      '今天追了自己的影子\n沒追到\n可是它也沒有跑遠',
+      '我好像有點叛逆\n你叫我的時候\n我先數到三\n才過去',
+      '{toy}跑到很遠的地方\n我追過去\n回頭發現\n你也在看',
+      '長大以後\n我想變成\n你出門也會想念的那種'
+    ],
+    /* 成年：各型態專屬 */
+    round: [
+      '最近的我\n比較圓一點\n抱起來\n應該比較暖吧',
+      '點心的袋子\n我認得每一種聲音\n就像認得你的腳步',
+      '我坐下來的時候\n肚子也一起坐下來\n我們都很滿足'
+    ],
+    active: [
+      '今天在客廳跑了二十圈\n第二十一圈\n是跑去門口等你',
+      '{toy}被我咬得\n有點舊了\n可是我們的感情\n很新',
+      '我跳得比昨天高\n差一點\n就碰到你頭上的燈'
+    ],
+    elegant: [
+      '我把毛理得很整齊\n你回來的時候\n要第一個看到',
+      '窗邊的位置\n我坐得剛剛好\n陽光也是',
+      '今天洗完澡\n我在鏡子前站了很久\n不是在看自己\n是在等你說好香'
+    ],
+    /* 成年：共用 */
+    adult: [
+      '我們認識很久了\n你開門的聲音\n我閉著眼睛也知道',
+      '你今天看起來有點累\n我就安靜地\n躺在你腳邊\n當一個暖暖的東西',
+      '其實我每天都在等\n但我不會說\n只會在你回來的時候\n剛好醒來',
+      '晚上的月亮\n很像一個不能吃的點心\n我看了很久\n決定原諒它',
+      '你說今天要早點睡\n我已經先幫你\n把被子躺暖了',
+      '如果有一天你很難過\n我會把我最喜歡的{toy}\n借你一天'
+    ],
+    /* 依狀態（任何階段） */
+    hungry: [
+      '我的碗\n今天特別乾淨\n乾淨到可以照鏡子',
+      '肚子在叫\n我問它在叫誰\n它說在叫你',
+      '我在廚房門口坐了很久\n不是在等吃的\n是在等你\n剛好帶吃的來'
+    ],
+    dirty: [
+      '我身上\n有一點點味道\n是今天冒險的味道\n可能要洗一下',
+      '我在地上滾了好多圈\n現在全身都是灰\n像剛從很遠的地方回來',
+      '角落有一點亂\n我假裝沒看到\n你可以也假裝一下\n然後幫我收'
+    ],
+    bored: [
+      '今天的時間很長\n我數了窗外的車\n數到第三十台\n你還沒回來',
+      '{toy}放在那裡\n一整天都沒動\n它好像也在等你',
+      '我把自己的尾巴\n當玩具玩了一下午\n它不太好玩\n你比較好玩'
+    ],
+    night: [
+      '我在做夢\n夢裡有很多點心\n還有你\n你比點心還重要一點點',
+      '晚安\n我先睡了\n夢裡見的時候\n記得叫我的名字',
+      '半夜醒來一次\n確認你還在\n然後放心地\n繼續睡'
+    ]
+  },
+  /* 每日禮物：30 種點心（名字、顏色） */
+  SNACKS: [
+    ['鯛魚燒', '#e3a25c'], ['布丁', '#f5d36b'], ['地瓜球', '#e8b04f'], ['雞蛋糕', '#f0c56a'], ['銅鑼燒', '#b9783f'],
+    ['蘋果片', '#e8505b'], ['小魚乾', '#a7b4c2'], ['起司塊', '#ffd34d'], ['香蕉片', '#f7e08a'], ['南瓜餅', '#f29b38'],
+    ['紅豆餅', '#a0522d'], ['草莓大福', '#ff9fb5'], ['仙貝', '#d8a35c'], ['杏仁豆腐', '#fff4e0'], ['豆花', '#f3e3c3'],
+    ['芒果冰', '#ffb84d'], ['鳳梨酥', '#e7b65a'], ['牛奶糖', '#d9b38c'], ['蜂蜜蛋糕', '#f2b950'], ['抹茶餅乾', '#8fb36a'],
+    ['雞肉條', '#c98b5a'], ['鮭魚片', '#ff9a7a'], ['優格', '#fbf6ee'], ['地瓜乾', '#d9813a'], ['蔓越莓餅乾', '#c2405a'],
+    ['肉鬆蛋捲', '#e2b36a'], ['紅蘿蔔條', '#f28a3a'], ['蘋果派', '#d99a4e'], ['水果凍', '#9fd6ff'], ['綿綿冰', '#ffd6e0']
+  ],
+  /* 明信片城市：名字、背面的話 */
+  CITIES: {
+    kyoto:    { name: '京都', text: '鳥居是紅色的\n一座接著一座\n我走到第一百座的時候\n有點想你' },
+    hokkaido: { name: '北海道', text: '這裡的雪\n踩下去會發出聲音\n像在小聲說\n歡迎' },
+    okinawa:  { name: '沖繩', text: '海是透明的\n我看得到自己的腳\n也看得到\n想跟你說的話' },
+    seoul:    { name: '首爾', text: '塔上掛了好多鎖\n我沒有鎖\n所以把想念\n掛在你那邊' },
+    tainan:   { name: '台南', text: '這裡的燈籠很紅\n東西都很甜\n我吃了一口\n就想到你也會喜歡' },
+    hualien:  { name: '花蓮', text: '山跟海\n靠得好近\n像我們\n坐在沙發上的時候' }
+  },
+  CITY_ORDER: ['kyoto', 'hokkaido', 'okinawa', 'seoul', 'tainan', 'hualien']
+};
+
+/* ---- 明信片像素圖：48×32，每個城市一個畫面 ---- */
+var HP_PC = (function(){
+  var W = 48, H = 32;
+  function grid(){ var g = new Array(W * H); for (var i = 0; i < g.length; i++) g[i] = null; return g; }
+  function px(g, x, y, c){ x = Math.round(x); y = Math.round(y); if (x < 0 || y < 0 || x >= W || y >= H) return; g[y * W + x] = c; }
+  function rect(g, x, y, w, h, c){ for (var j = 0; j < h; j++) for (var i = 0; i < w; i++) px(g, x + i, y + j, c); }
+  function ell(g, cx, cy, rx, ry, c){
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry;
+      if (dx * dx + dy * dy <= 1) g[y * W + x] = c;
+    }
+  }
+  function tri(g, ax, ay, bx, by, qx, qy, c){
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var sx = x + 0.5, sy = y + 0.5;
+      var d1 = (sx - bx) * (ay - by) - (ax - bx) * (sy - by);
+      var d2 = (sx - qx) * (by - qy) - (bx - qx) * (sy - qy);
+      var d3 = (sx - ax) * (qy - ay) - (qx - ax) * (sy - ay);
+      var neg = d1 < 0 || d2 < 0 || d3 < 0, pos = d1 > 0 || d2 > 0 || d3 > 0;
+      if (!(neg ? pos : false)) g[y * W + x] = c;
+    }
+  }
+  function dots(g, pts, c){ for (var i = 0; i < pts.length; i++) px(g, pts[i][0], pts[i][1], c); }
+  function torii(g, x, y, w, h, c){
+    rect(g, x + 2, y + 2, 2, h - 2, c); rect(g, x + w - 4, y + 2, 2, h - 2, c);
+    rect(g, x - 1, y - 1, w + 2, 1, '#3a2a2a'); rect(g, x, y, w, 2, c); rect(g, x + 1, y + 4, w - 2, 1, c);
+  }
+  var SCENES = {
+    kyoto: function(g){
+      rect(g, 0, 0, W, 20, '#ffe1e6'); rect(g, 0, 0, W, 7, '#ffcfd8');
+      ell(g, 4, 15, 6, 7, '#8fb07a'); ell(g, 44, 15, 6, 7, '#8fb07a');
+      rect(g, 0, 20, W, 12, '#cdb99c');
+      tri(g, 18, 32, 30, 32, 24, 20, '#eadfcd');
+      torii(g, 18, 12, 12, 9, '#d9483b');
+      torii(g, 10, 7, 28, 16, '#e8503f');
+      dots(g, [[3,4],[9,2],[15,5],[33,3],[40,6],[45,2],[6,9],[42,10],[27,3],[21,1]], '#ff9fb5');
+      dots(g, [[4,5],[34,4],[41,7]], '#ffffff');
+    },
+    hokkaido: function(g){
+      rect(g, 0, 0, W, 22, '#bfe3ff');
+      tri(g, 4, 23, 22, 5, 40, 23, '#8fa6c9'); tri(g, 16, 11, 22, 5, 28, 11, '#ffffff');
+      tri(g, 26, 23, 38, 11, 52, 23, '#a9bbd8'); tri(g, 34, 15, 38, 11, 42, 15, '#ffffff');
+      rect(g, 0, 22, W, 10, '#f5f8ff');
+      rect(g, 7, 21, 8, 6, '#c0503f'); tri(g, 5, 21.5, 11, 16.5, 17, 21.5, '#ffffff'); rect(g, 10, 23, 2, 4, '#7a3b2e');
+      dots(g, [[3,3],[12,8],[30,3],[44,6],[36,1],[8,12],[46,13],[20,2]], '#ffffff');
+    },
+    okinawa: function(g){
+      rect(g, 0, 0, W, 14, '#a8e2ff');
+      ell(g, 38, 6, 3.5, 3.5, '#ffd34d');
+      rect(g, 0, 14, W, 10, '#2fb3c9'); rect(g, 0, 18, W, 2, '#6fd6e0');
+      rect(g, 0, 24, W, 8, '#f6e3b4');
+      for (var i = 0; i < 12; i++) rect(g, 9 + Math.round(i * 0.35), 25 - i, 2, 1, '#8a5a3b');
+      ell(g, 9, 13, 5, 1.6, '#4f9a4f'); ell(g, 16, 13, 5, 1.6, '#5fae55'); ell(g, 12.5, 11.5, 3, 2, '#5fae55');
+      dots(g, [[22,16],[23,16],[30,21],[31,21],[40,17],[41,17],[5,20],[6,20]], '#ffffff');
+      dots(g, [[3,5],[4,5],[18,3],[19,3],[20,3]], '#ffffff');
+    },
+    seoul: function(g){
+      rect(g, 0, 0, W, 12, '#f4b6b0'); rect(g, 0, 12, W, 12, '#ffd4a8');
+      ell(g, 22, 34, 30, 13, '#6d9a6a');
+      rect(g, 21, 7, 2, 16, '#efe8de'); ell(g, 22, 10, 3.2, 1.7, '#d8cfc6'); rect(g, 21, 2, 1, 5, '#efe8de');
+      rect(g, 32, 22, 6, 10, '#8c8a9a'); rect(g, 39, 19, 5, 13, '#7a7889'); rect(g, 44, 23, 4, 9, '#9a98a8');
+      rect(g, 2, 24, 5, 8, '#8c8a9a'); rect(g, 7, 21, 4, 11, '#7a7889');
+      dots(g, [[34,24],[36,26],[40,21],[42,24],[41,27],[45,25],[4,26],[8,23],[9,26],[34,28]], '#ffe27a');
+    },
+    tainan: function(g){
+      rect(g, 0, 0, W, 26, '#ffe2b8');
+      rect(g, 2, 4, 44, 1, '#7a3b2e');
+      [6, 15, 24, 33, 42].forEach(function(x){ rect(g, x, 5, 1, 1, '#7a3b2e'); ell(g, x + 0.5, 7.5, 1.8, 2, '#e8505b'); rect(g, x - 1, 7, 3, 1, '#ffd34d'); });
+      rect(g, 11, 16, 26, 10, '#f1d9b5');
+      rect(g, 8, 13, 32, 3, '#c0392b');
+      tri(g, 3, 10, 10, 13, 10, 16, '#c0392b'); tri(g, 45, 10, 38, 13, 38, 16, '#c0392b');
+      rect(g, 13, 16, 2, 10, '#c0392b'); rect(g, 33, 16, 2, 10, '#c0392b');
+      rect(g, 21, 18, 6, 8, '#8a3b2e'); rect(g, 23, 18, 2, 8, '#a8503b');
+      rect(g, 0, 26, W, 6, '#d9c3a0');
+    },
+    hualien: function(g){
+      rect(g, 0, 0, W, 20, '#cfeaff');
+      ell(g, 34, 6, 5, 2, '#ffffff'); ell(g, 40, 5, 4, 2.2, '#ffffff');
+      rect(g, 0, 18, W, 14, '#3f8fc9'); rect(g, 0, 18, W, 2, '#6fb7e0');
+      tri(g, -2, 32, 2, 3, 26, 32, '#6f8a6c'); tri(g, -2, 32, 12, 9, 34, 32, '#8aa284');
+      tri(g, 2, 32, 6, 14, 14, 32, '#5c7559');
+      dots(g, [[28,23],[29,23],[36,26],[37,26],[42,22],[43,22],[31,29],[32,29]], '#ffffff');
+    }
+  };
+  function hex(c){ return [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)]; }
+  function draw(canvas, key){
+    var g = grid();
+    SCENES[key](g);
+    var ctx = canvas.getContext('2d'), img = ctx.createImageData(W, H);
+    for (var i = 0; i < g.length; i++) {
+      var rgb = hex(g[i] || '#ffffff');
+      img.data[i * 4] = rgb[0]; img.data[i * 4 + 1] = rgb[1]; img.data[i * 4 + 2] = rgb[2]; img.data[i * 4 + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  return { W: W, H: H, draw: draw };
+})();
+/* ===== /內容 ===== */
 </script>
 <script>
 /* ===== 日和毛孩｜遊戲本體 =====
@@ -519,6 +785,8 @@ var HP_PX = (function(){
   var HATCH_MIN = 10;   /* 孵蛋 10 分鐘 */
   var BABY_DAYS = 2, TEEN_DAYS = 6;   /* 幼年第 1～2 天、少年第 3～6 天、第 7 天起成年 */
   var AWAY_H = 24;   /* 三條狀態都是 0 超過 24 小時，就留紙條離家出走 */
+  var TRIP_HIGH = 70, TRIP_DAYS = 3, TRIP_H = 24;   /* 連 3 天平均心情 70 以上，隔天醒來就出門旅行 1 天 */
+  var STREAK_LETTER = 7;   /* 連續照顧 7 天有一封特別的信 */
   var CARE = {   /* 各動作的效果；care＝少年期要記在哪一類（決定成年型態） */
     meal:  { full: 30 },
     snack: { mood: 15, full: 5, care: 'snack' },
@@ -532,7 +800,7 @@ var HP_PX = (function(){
   var SPN = { cat: '曼基貓', dog: '邊境牧羊犬' };
   var FORMN = { egg: '蛋', baby: '幼年', teen: '少年', round: '成年・圓滾滾型', active: '成年・活力型', elegant: '成年・優雅型' };
 
-  var VERSION = 2;
+  var VERSION = 3;
   var MIN = 60000, HOUR = 3600000, DAY = 86400000, STEP = 600000;   /* 離線補算時每 10 分鐘算一步 */
   var params = new URLSearchParams(location.search);
   var DEBUG = params.get('hy_debug') === '1';
@@ -540,6 +808,8 @@ var HP_PX = (function(){
   /* 測試存檔與正式存檔分開，測試不會弄亂正式的那隻 */
   var SAVE_KEY = DEBUG ? 'hiyori-pet:save-debug' : 'hiyori-pet:save';
   var CLOCK_KEY = 'hiyori-pet:debug-clock';
+  /* 收藏本：圖鑑、養過的毛孩、明信片、點心櫃。換一隻毛孩也會留著 */
+  var BOOK_KEY = DEBUG ? 'hiyori-pet:book-debug' : 'hiyori-pet:book';
 
   function clamp(n){ return Math.max(0, Math.min(100, n)); }
   function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
@@ -559,16 +829,25 @@ var HP_PX = (function(){
 
   /* ---- 存檔 ---- */
   function randPoopH(){ return POOP_MIN_H + Math.random() * (POOP_MAX_H - POOP_MIN_H); }
+  function dayKey(t){ var d = new Date(t); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+  /* v3 新增的欄位：舊存檔缺什麼就補什麼 */
+  function fill(s){
+    var D = { letters: [], usedLetters: {}, day: 0, careDay: 0, streak: 0, moodDay: { key: 0, sum: 0, hrs: 0 },
+      highDays: 0, tripPending: false, tripAt: 0, tripCity: '', tripBack: '', trips: [] };
+    for (var k in D) if (!(k in s)) s[k] = D[k];
+    return s;
+  }
   function adopt(sp, name, t){
-    return { v: VERSION, createdAt: t, lastTick: t, sp: sp, name: name, bornAt: t, hatchedAt: 0,
+    return fill({ v: VERSION, createdAt: t, lastTick: t, sp: sp, name: name, bornAt: t, hatchedAt: 0,
       adult: '', care: { snack: 0, play: 0, clean: 0 }, careLast: '', lastForm: 'egg',
-      full: 80, mood: 80, clean: 100, poops: 0, nextPoopIn: randPoopH(), awakeUntil: 0, zeroSince: 0, awayAt: 0 };
+      full: 80, mood: 80, clean: 100, poops: 0, nextPoopIn: randPoopH(), awakeUntil: 0, zeroSince: 0, awayAt: 0, day: dayKey(t) });
   }
   function upgrade(s){
     /* 以後改規則時，在這裡把舊版存檔升級成新版。
-       v1 是 T1-1 的測試版，還沒有選貓狗，所以讀到 v1 就回到領養畫面 */
+       v1 是 T1-1 的測試版，還沒有選貓狗，讀到 v1 就回到領養畫面；v2 → v3 補上信箱、旅行、連續天數 */
     if (!s || typeof s !== 'object') return null;
-    if (s.v === VERSION) return s;
+    if (s.v === 2) s.v = 3;
+    if (s.v === VERSION) return fill(s);
     return null;
   }
 
@@ -603,6 +882,11 @@ var HP_PX = (function(){
       if (!s.hatchedAt) {
         /* 蛋：狀態不變，時間到就破殼 */
         if (t + dt >= s.bornAt + HATCH_MIN * MIN) s.hatchedAt = s.bornAt + HATCH_MIN * MIN;
+      } else if (s.tripAt) {
+        /* 旅行中：狀態不下降，24 小時後回家 */
+        if (t + dt >= s.tripAt + TRIP_H * HOUR) { s.tripBack = s.tripCity; s.tripAt = 0; s.tripCity = ''; s.zeroSince = 0; }
+      } else if (s.tripPending ? !isAsleep(t) : false) {
+        startTrip(s, t);   /* 睡醒就出門 */
       } else if (!s.awayAt) {
         var f = isAsleep(t) ? SLEEP_FACTOR : 1;
         s.full = clamp(s.full - RATE.full * h * f);
@@ -613,10 +897,11 @@ var HP_PX = (function(){
           if (s.poops < POOP_MAX) s.poops += 1;
           s.nextPoopIn += randPoopH();
         }
+        trackMood(s, t, h);
         /* 三條都是 0 超過 24 小時 → 離家出走（出門期間狀態不再下降） */
         if (s.full + s.mood + s.clean <= 0) {
           if (!s.zeroSince) s.zeroSince = t;
-          if (t + dt - s.zeroSince >= AWAY_H * HOUR) s.awayAt = t + dt;
+          if (t + dt - s.zeroSince >= AWAY_H * HOUR) { s.awayAt = t + dt; s.highDays = 0; s.tripPending = false; }
         } else s.zeroSince = 0;
       }
       t += dt;
@@ -624,9 +909,36 @@ var HP_PX = (function(){
     s.lastTick = to;
     return s;
   }
+  /* 每天結算平均心情：連 3 天 ≥70 就準備出門（幼年還太小，等長到少年） */
+  function trackMood(s, t, h){
+    var k = dayKey(t);
+    if (s.moodDay.key !== k) {
+      var md = s.moodDay;
+      if (md.hrs >= 12) {   /* 那天至少有半天的紀錄才算 */
+        if (md.sum / md.hrs >= TRIP_HIGH) s.highDays += 1;
+        else s.highDays = 0;
+        if (s.highDays >= TRIP_DAYS) {
+          if (formAt(s, t) !== 'baby') { s.tripPending = true; s.highDays = 0; }
+        }
+      }
+      s.moodDay = { key: k, sum: 0, hrs: 0 };
+    }
+    s.moodDay.sum += s.mood * h;
+    s.moodDay.hrs += h;
+  }
+  function startTrip(s, t){
+    var all = HP_DATA.CITY_ORDER, left = all.filter(function(c){ return s.trips.indexOf(c) < 0; });
+    if (!left.length) left = all;
+    s.tripCity = left[Math.floor(Math.random() * left.length)];
+    s.trips.push(s.tripCity);
+    s.tripAt = t;
+    s.tripPending = false;
+    s.zeroSince = 0;   /* 旅行期間不算「狀態歸零」的時間，回來才不會馬上又離家 */
+  }
   function isWoken(s, t){ return isAsleep(t) ? s.awakeUntil > t : false; }
   function mood(s, t, form){
     if (s.awayAt) return { key: 'away', text: '桌上有一張紙條：「我去找朋友玩了」' };
+    if (s.tripAt) return { key: 'trip', text: '出門旅行了，不知道去了哪裡⋯明天這時候回來' };
     if (form === 'egg') {
       var left = Math.max(1, Math.ceil((s.bornAt + HATCH_MIN * MIN - t) / MIN));
       return { key: 'egg', text: '蛋在微微晃動⋯再 ' + left + ' 分鐘就會破殼' };
@@ -653,6 +965,48 @@ var HP_PX = (function(){
     s.care[kind] += 1;
     s.careLast = kind;
   }
+  /* 連續照顧天數：那天有照顧（任何一個動作）就算 1 天 */
+  function markCareDay(s, t){
+    var k = dayKey(t);
+    if (s.careDay === k) return;
+    s.streak = s.careDay === dayKey(t - DAY) ? s.streak + 1 : 1;
+    s.careDay = k;
+    if (s.streak === STREAK_LETTER) deliver(s, ['streak7'], t);
+  }
+  function streakNow(s, t){
+    var k = s.careDay;
+    return k === dayKey(t) || k === dayKey(t - DAY) ? s.streak : 0;
+  }
+
+  /* ---- 信箱：每天 1 封，依階段和心情挑；同一隻不會重複，用完才重來 ---- */
+  function pickLetter(s, cats){
+    var pool = [], fresh = [];
+    cats.forEach(function(c){ HP_DATA.LETTERS[c].forEach(function(x, i){ pool.push(c + '-' + i); }); });
+    pool.forEach(function(id){ if (!s.usedLetters[id]) fresh.push(id); });
+    if (!fresh.length) { pool.forEach(function(id){ delete s.usedLetters[id]; }); fresh = pool; }
+    var id = fresh[Math.floor(Math.random() * fresh.length)];
+    s.usedLetters[id] = 1;
+    return id;
+  }
+  function deliver(s, cats, t, city){
+    var L = { id: pickLetter(s, cats), at: t, read: false };
+    if (city) L.city = city;
+    s.letters.unshift(L);
+    if (s.letters.length > 120) s.letters.length = 120;
+  }
+  function dailyCats(s, t, form){
+    var k = mood(s, t, form).key;
+    if (k === 'hungry' || k === 'dirty' || k === 'bored') return [k];
+    if (k === 'sleep') return ['night'];
+    if (form === 'baby' || form === 'teen') return [form];
+    return [form, 'adult'];
+  }
+  function letterText(s, L){
+    var p = L.id.split('-'), txt = HP_DATA.LETTERS[p[0]][Number(p[1])] || '';
+    return txt.replace(/\{name\}/g, s.name).replace(/\{toy\}/g, HP_DATA.TOY[s.sp]).replace(/\{me\}/g, HP_DATA.ME[s.sp])
+      .replace(/\{city\}/g, L.city ? HP_DATA.CITIES[L.city].name : '');
+  }
+
   function act(s, name, t){
     simulate(s, t);
     wake(s, t);
@@ -662,17 +1016,20 @@ var HP_PX = (function(){
     if (c.poops) s.poops = 0;
     if (c.clean) s.clean = clamp(s.clean + c.clean);
     countCare(s, t, c.care);
+    markCareDay(s, t);
   }
   function played(s, caught, t){
     simulate(s, t);
     s.mood = clamp(s.mood + PLAY.base + PLAY.perCatch * caught);
     s.full = clamp(s.full + PLAY.full);
     countCare(s, t, 'play');
+    markCareDay(s, t);
   }
   function fetchHome(s, t){
     simulate(s, t);
     s.awayAt = 0; s.zeroSince = 0;
     s.full = 50; s.mood = 50; s.clean = 60; s.poops = 0;
+    deliver(s, ['home'], t);
   }
 
   /* ---- 畫面 ---- */
@@ -680,13 +1037,46 @@ var HP_PX = (function(){
   var state = upgrade(load(SAVE_KEY));
   var flash = { text: '', until: 0 };
   var game = null;
-  function say(text, ms){ flash = { text: text, until: Date.now() + (ms || 4000) }; }
+  function newBook(){ return { v: 1, dex: {}, album: [], postcards: [], snacks: [], giftDay: 0 }; }
+  var book = load(BOOK_KEY);
+  if (!book || book.v !== 1) book = newBook();
+  function saveBook(){ store(BOOK_KEY, book); }
+  /* 每日禮物：每天第一次打開送 1 種還沒有的點心 */
+  function giveGift(t){
+    var k = dayKey(t), left = [];
+    if (book.giftDay === k) return '';
+    book.giftDay = k;
+    for (var i = 0; i < HP_DATA.SNACKS.length; i++) if (book.snacks.indexOf(i) < 0) left.push(i);
+    if (!left.length) { saveBook(); return ''; }
+    var id = left[Math.floor(Math.random() * left.length)];
+    book.snacks.push(id);
+    saveBook();
+    return HP_DATA.SNACKS[id][0];
+  }
+  /* 畫面上的提示：背景發生的事（禮物、破殼、旅行回來）排隊一則一則播，最多排 2 則、等超過 15 秒就不播；
+     玩家剛做的事（點心、接飛盤、找回來）用 now 立刻顯示 */
+  var flashQ = [];
+  function say(text, ms, now){
+    var r = Date.now();
+    if (now) { flashQ = []; flash = { text: text, until: r + (ms || 4000) }; return; }
+    flashQ.push({ text: text, ms: ms || 4000, at: r });
+    if (flashQ.length > 2) flashQ.shift();   /* 只留最新的 2 則 */
+  }
+  function flashText(){
+    var r = Date.now();
+    if (flash.until <= r) {
+      while (flashQ.length ? r - flashQ[0].at > 15000 : false) flashQ.shift();
+      var n = flashQ.shift();
+      if (n) flash = { text: n.text, until: r + n.ms };
+    }
+    return flash.until > r ? flash.text : '';
+  }
   function track(name, p){ try { if (window.hyGame) window.hyGame.event(name, p); } catch(e) {} }
 
   /* ---- 像素寵物：心情決定表情 ----
      測試模式可用網址只換外觀（不改存檔）：pet=cat／dog、form=egg／baby／teen／round／active／elegant */
   var LOOK = { woken: 'happy', egg: 'happy' };
-  var petSp = 'cat', petForm = 'egg', petExpr = 'happy', petFrame = 0, petAway = false;
+  var petSp = 'cat', petForm = 'egg', petExpr = 'happy', petFrame = 0, petAway = false, petGone = false;
   var dbgSp = DEBUG ? params.get('pet') : '', dbgForm = DEBUG ? params.get('form') : '';
   function drawPet(){
     if (!state) {
@@ -695,7 +1085,7 @@ var HP_PX = (function(){
       return;
     }
     var c = $('hp-pet');
-    if (petAway) c.getContext('2d').clearRect(0, 0, c.width, c.height);
+    if (petGone) c.getContext('2d').clearRect(0, 0, c.width, c.height);
     else HP_PX.draw(c, petSp, petForm, petExpr, petFrame);
   }
 
@@ -712,8 +1102,11 @@ var HP_PX = (function(){
   }
   function ageText(s, t, form){
     if (form === 'egg') return SPN[s.sp] + '的蛋';
-    return SPN[s.sp] + '・' + FORMN[form] + '・第 ' + (Math.floor((t - s.hatchedAt) / DAY) + 1) + ' 天';
+    var txt = SPN[s.sp] + '・' + FORMN[form] + '・第 ' + (Math.floor((t - s.hatchedAt) / DAY) + 1) + ' 天';
+    var n = streakNow(s, t);
+    return n >= 2 ? txt + '｜連續照顧 ' + n + ' 天' : txt;
   }
+  function isAdult(form){ return form === 'round' || form === 'active' || form === 'elegant'; }
   function render(){
     var t = now();
     if (DEBUG) { $('hp-dbg-speed').textContent = SPEED; $('hp-dbg-time').textContent = fmt(t); }
@@ -724,7 +1117,21 @@ var HP_PX = (function(){
     var form = formAt(state, t);
     var m = mood(state, t, form);
     petAway = m.key === 'away';
+    petGone = petAway || m.key === 'trip';
+    /* 旅行回來：明信片收進相簿＋一封信 */
+    if (state.tripBack) {
+      var city = state.tripBack;
+      state.tripBack = '';
+      book.postcards.unshift({ city: city, name: state.name, sp: state.sp, at: t });
+      saveBook();
+      deliver(state, ['trip'], t, city);
+      say(state.name + '旅行回來了！帶回一張' + HP_DATA.CITIES[city].name + '的明信片', 6000);
+      save();
+    }
     if (form !== state.lastForm) {
+      if (state.lastForm === 'egg') deliver(state, ['hatch'], t);
+      else if (form === 'teen') deliver(state, ['teenUp'], t);
+      else if (isAdult(form)) { deliver(state, ['adultUp'], t); book.dex[state.sp + '-' + form] = 1; saveBook(); }
       if (petAway) { /* 出門中就不播「長大了」 */ }
       else if (state.lastForm === 'egg') say('破殼了！' + state.name + '來到你家了', 6000);
       else say(state.name + '長大了！變成' + FORMN[form], 6000);
@@ -732,9 +1139,19 @@ var HP_PX = (function(){
       state.lastForm = form;
       save();
     }
+    /* 新的一天：送禮物、寫一封信 */
+    if (state.day !== dayKey(t)) {
+      state.day = dayKey(t);
+      var gift = giveGift(t);
+      var canWrite = form === 'egg' ? false : !petGone;
+      if (canWrite) deliver(state, dailyCats(state, t, form), t);
+      if (gift) say('今天的禮物：' + gift + '，收進點心櫃了', 6000);
+      else if (canWrite) say('信箱有一封新的信', 5000);
+      save();
+    }
     $('hp-screen').classList.toggle('is-night', isAsleep(t));
-    var showFlash = petAway ? false : Date.now() < flash.until;   /* 出門中一律顯示紙條 */
-    $('hp-status').textContent = game ? game.text : (showFlash ? flash.text : m.text);
+    var ft = petAway ? '' : flashText();   /* 離家出走時一律顯示紙條 */
+    $('hp-status').textContent = game ? game.text : (ft || m.text);
     petSp = dbgSp === 'cat' || dbgSp === 'dog' ? dbgSp : state.sp;
     petForm = HP_PX.FORMS.indexOf(dbgForm) >= 0 ? dbgForm : form;
     petExpr = game ? 'happy' : (LOOK[m.key] || m.key);
@@ -748,9 +1165,158 @@ var HP_PX = (function(){
     $('hp-name').textContent = state.name;
     $('hp-age').textContent = ageText(state, t, form);
     $('hp-home').hidden = !petAway;
-    var lock = form === 'egg' || petAway || !!game;
+    var lock = form === 'egg' || petGone || !!game;
     var btns = document.querySelectorAll('#hp-actions button');
     for (var j = 0; j < btns.length; j++) btns[j].disabled = lock;
+    var unread = state.letters.filter(function(L){ return !L.read; }).length;
+    $('hp-unread').hidden = !unread;
+    $('hp-unread').textContent = unread;
+    var sig = [state.letters.length, book.snacks.length, book.postcards.length, Object.keys(book.dex).length, book.album.length, form, petGone].join('|');
+    if (sig !== panelSig) { panelSig = sig; renderPanel(); }
+  }
+
+  /* ---- 收藏分頁：信箱、點心櫃、明信片、圖鑑 ---- */
+  var tab = '', panelSig = '';
+  function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; }
+  function fmtDay(t){ var d = new Date(t); return (d.getMonth() + 1) + '/' + d.getDate(); }
+  function lines(box, text){ text.split('\n').forEach(function(l){ box.appendChild(el('p', '', l)); }); }
+  $('hp-tabs').addEventListener('click', function(e){
+    var b = e.target.closest('[data-tab]');
+    if (!b) return;
+    var k = b.getAttribute('data-tab');
+    tab = tab === k ? '' : k;
+    var all = document.querySelectorAll('#hp-tabs [data-tab]');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i].getAttribute('data-tab') === tab ? 'true' : 'false');
+    renderPanel();
+  });
+  function renderPanel(){
+    var box = $('hp-panel');
+    box.hidden = !tab;
+    box.textContent = '';
+    if (!tab) return;
+    if (!state) return;
+    ({ mail: panelMail, snack: panelSnack, card: panelCard, dex: panelDex })[tab](box);
+  }
+  function panelMail(box){
+    if (!state.letters.length) { box.appendChild(el('p', 'hp-empty', '信箱還是空的。破殼之後，牠每天都會寫一封信給你。')); return; }
+    state.letters.forEach(function(L){
+      var item = el('div', 'hp-mail' + (L.read ? '' : ' is-new'));
+      var text = letterText(state, L);
+      var head = el('button', 'hp-mail__head');
+      head.type = 'button';
+      head.appendChild(el('span', 'hp-mail__date', fmtDay(L.at)));
+      head.appendChild(el('span', 'hp-mail__first', text.split('\n')[0]));
+      var body = el('div', 'hp-mail__body');
+      body.hidden = true;
+      lines(body, text);
+      body.appendChild(el('p', 'hp-mail__sign', state.name));
+      head.addEventListener('click', function(){
+        body.hidden = !body.hidden;
+        if (L.read) return;
+        L.read = true;
+        item.classList.remove('is-new');
+        track('mailbox_read', { letter_id: L.id });
+        save();
+        render();
+      });
+      item.appendChild(head);
+      item.appendChild(body);
+      box.appendChild(item);
+    });
+  }
+  function panelSnack(box){
+    var S = HP_DATA.SNACKS;
+    box.appendChild(el('p', 'hp-panel__sum', '收集了 ' + book.snacks.length + '／' + S.length + ' 種。每天第一次打開送一種。'));
+    var grid = el('div', 'hp-snacks');
+    S.forEach(function(sn, i){
+      var have = book.snacks.indexOf(i) >= 0;
+      var chip = el('div', 'hp-snack' + (have ? '' : ' is-locked'));
+      var dot = el('span', 'hp-snack__dot');
+      if (have) dot.style.background = sn[1];
+      chip.appendChild(dot);
+      chip.appendChild(el('span', '', have ? sn[0] : '？？？'));
+      grid.appendChild(chip);
+    });
+    box.appendChild(grid);
+  }
+  function panelCard(box){
+    if (!book.postcards.length) { box.appendChild(el('p', 'hp-empty', '還沒有明信片。連續 3 天心情都很好，牠就會自己出門旅行，帶一張回來。')); return; }
+    box.appendChild(el('p', 'hp-panel__sum', '點一下明信片看背面。'));
+    var grid = el('div', 'hp-cards');
+    book.postcards.forEach(function(pc){
+      var C = HP_DATA.CITIES[pc.city];
+      var card = el('button', 'hp-card');
+      card.type = 'button';
+      var cv = el('canvas', 'hp-card__img');
+      cv.width = HP_PC.W; cv.height = HP_PC.H;
+      HP_PC.draw(cv, pc.city);
+      var back = el('div', 'hp-card__back');
+      back.hidden = true;
+      lines(back, C.text);
+      back.appendChild(el('p', 'hp-mail__sign', pc.name));
+      back.appendChild(el('p', 'hp-card__trip', '想帶毛孩一起去旅行嗎？'));
+      card.appendChild(cv);
+      card.appendChild(back);
+      card.appendChild(el('span', 'hp-card__cap', C.name + '｜' + pc.name + '｜' + fmtDay(pc.at)));
+      card.addEventListener('click', function(){ cv.hidden = !cv.hidden; back.hidden = !back.hidden; });
+      grid.appendChild(card);
+    });
+    box.appendChild(grid);
+  }
+  function panelDex(box){
+    var forms = ['round', 'active', 'elegant'], FN = { round: '圓滾滾', active: '活力', elegant: '優雅' }, n = Object.keys(book.dex).length;
+    box.appendChild(el('p', 'hp-panel__sum', '圖鑑 ' + n + '／6。換一種照顧方式，就會長成不一樣的樣子。'));
+    var grid = el('div', 'hp-dex');
+    ['cat', 'dog'].forEach(function(sp){
+      forms.forEach(function(f){
+        var have = book.dex[sp + '-' + f];
+        var cell = el('div', 'hp-dex__cell');
+        var cv = el('canvas', '');
+        cv.width = HP_PX.W; cv.height = HP_PX.H;
+        if (have) HP_PX.draw(cv, sp, f, 'happy', 0); else HP_PX.silhouette(cv, sp, f);
+        cell.appendChild(cv);
+        cell.appendChild(el('span', '', have ? SPN[sp] + '・' + FN[f] : '？？？'));
+        grid.appendChild(cell);
+      });
+    });
+    box.appendChild(grid);
+    if (book.album.length) {
+      box.appendChild(el('p', 'hp-panel__title', '養過的毛孩'));
+      var ul = el('ul', 'hp-album');
+      book.album.forEach(function(a){
+        ul.appendChild(el('li', '', a.name + '（' + SPN[a.sp] + '・' + FORMN[a.form] + '・' + fmtDay(a.from) + '～' + fmtDay(a.to) + '）'));
+      });
+      box.appendChild(ul);
+    }
+    var t = now(), form = formAt(state, t);
+    if (isAdult(form) ? !petGone : false) {
+      var go = el('button', 'hp-newegg', '領養新的蛋');
+      go.type = 'button';
+      var ask = el('div', 'hp-newegg__ask');
+      ask.hidden = true;
+      ask.appendChild(el('p', '', state.name + '會收進「養過的毛孩」，信箱的信會一起帶走。確定嗎？'));
+      var yes = el('button', 'hp-newegg', '確定，領養新的蛋'); yes.type = 'button';
+      var no = el('button', 'hp-newegg is-quiet', '再想想'); no.type = 'button';
+      ask.appendChild(yes); ask.appendChild(no);
+      go.addEventListener('click', function(){ go.hidden = true; ask.hidden = false; });
+      no.addEventListener('click', function(){ go.hidden = false; ask.hidden = true; });
+      yes.addEventListener('click', function(){ retire(now()); });
+      box.appendChild(go);
+      box.appendChild(ask);
+    } else if (!isAdult(form)) {
+      box.appendChild(el('p', 'hp-empty', '長到成年之後，就可以領養新的蛋。'));
+    }
+  }
+  function retire(t){
+    simulate(state, t);
+    book.album.unshift({ name: state.name, sp: state.sp, form: formAt(state, t), from: state.createdAt, to: t });
+    saveBook();
+    try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+    state = null;
+    tab = '';
+    var all = document.querySelectorAll('#hp-tabs [data-tab]');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', 'false');
+    render();
   }
 
   /* ---- 領養 ---- */
@@ -765,7 +1331,10 @@ var HP_PX = (function(){
   });
   $('hp-adopt-go').addEventListener('click', function(){
     var name = $('hp-name-in').value.trim().slice(0, 10) || NAMES[pick];
-    state = adopt(pick, name, now());
+    var t = now();
+    state = adopt(pick, name, t);
+    var gift = giveGift(t);
+    if (gift) say('送你一份見面禮：' + gift + '，收進點心櫃了', 6000);
     track('pet_adopt', { pet_type: pick });
     save();
     render();
@@ -794,13 +1363,17 @@ var HP_PX = (function(){
     var name = b.getAttribute('data-act');
     if (name === 'play') { startPlay(); return; }
     act(state, name, now());
+    if (name === 'snack') {
+      var own = book.snacks;
+      say(state.name + '吃了' + (own.length ? HP_DATA.SNACKS[own[Math.floor(Math.random() * own.length)]][0] : '小點心') + '，心情變好了', 3000, true);
+    }
     track('pet_action', { action: name });
     save();
     render();
   });
   $('hp-home').addEventListener('click', function(){
     fetchHome(state, now());
-    say(state.name + '回來了！', 5000);
+    say(state.name + '回來了！', 5000, true);
     track('pet_action', { action: 'home' });
     save();
     render();
@@ -863,7 +1436,7 @@ var HP_PX = (function(){
     $('hp-pet').style.transform = '';
     $('hp-disc').hidden = true;
     played(state, c, now());
-    say(c ? '接到 ' + c + ' 個飛盤！心情 +' + gain : '一個都沒接到，還是玩得很開心！心情 +' + gain, 5000);
+    say(c ? '接到 ' + c + ' 個飛盤！心情 +' + gain : '一個都沒接到，還是玩得很開心！心情 +' + gain, 5000, true);
     try { if (window.hyGame) window.hyGame.roundEnd({ result: 'complete', score: c, item_count: PLAY.throws.length, correct_count: c }); } catch(e) {}
     track('pet_action', { action: 'play' });
     save();
@@ -879,6 +1452,16 @@ var HP_PX = (function(){
   if (DEBUG) {
     $('hp-debug').hidden = false;
     $('hp-debug').addEventListener('click', function(e){
+      if (e.target.closest('[data-dbg="trip"]')) {
+        if (!state) return;
+        var t = now();
+        simulate(state, t);
+        if (formAt(state, t) === 'egg' || state.awayAt || state.tripAt) return;
+        startTrip(state, t);
+        save();
+        render();
+        return;
+      }
       var b = e.target.closest('[data-skip]');
       if (!b) return;
       rebase(Number(b.getAttribute('data-skip')) * HOUR);
@@ -886,14 +1469,17 @@ var HP_PX = (function(){
       save();
     });
     $('hp-dbg-reset').addEventListener('click', function(){
-      try { localStorage.removeItem(SAVE_KEY); localStorage.removeItem(CLOCK_KEY); } catch(e) {}
+      try { localStorage.removeItem(SAVE_KEY); localStorage.removeItem(CLOCK_KEY); localStorage.removeItem(BOOK_KEY); } catch(e) {}
       clock = { realAt: Date.now(), gameAt: Date.now() };
       state = null;
+      book = newBook();
       render();
     });
     /* 給自動測試用 */
     window.hpCore = { simulate: simulate, adopt: adopt, formAt: formAt, decide: decide, mood: mood, act: act, played: played,
-      fetchHome: fetchHome, upgrade: upgrade, isAsleep: isAsleep, CARE: CARE, PLAY: PLAY, RATE: RATE,
+      fetchHome: fetchHome, upgrade: upgrade, dayKey: dayKey, startTrip: startTrip, deliver: deliver, dailyCats: dailyCats,
+      letterText: letterText, giveGift: giveGift, markCareDay: markCareDay, streakNow: streakNow, retire: retire,
+      getBook: function(){ return book; }, isAsleep: isAsleep, CARE: CARE, PLAY: PLAY, RATE: RATE,
       getState: function(){ return state; }, getGame: function(){ return game; }, setState: function(s){ state = s; save(); render(); } };
   }
 
