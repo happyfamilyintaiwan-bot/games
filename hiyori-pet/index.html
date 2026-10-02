@@ -62,7 +62,9 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 /* ===== 日和毛孩 ===== */
 #hiyori-pet{max-width:420px;margin:20px auto 0;color:#5b4636;font-size:15px}
-.hp-screen{position:relative;border-radius:24px;background:#fff4e6;padding:16px;text-align:center;transition:background .6s}
+#hiyori-pet [hidden]{display:none}
+.hp-screen{position:relative;border-radius:24px;background:#fff4e6;padding:16px;text-align:center;transition:background .6s;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.hp-screen.is-playing{cursor:pointer}
 .hp-screen.is-night{background:#2f3352;color:#e8e6ff}
 .hp-stage{height:150px;display:flex;align-items:flex-end;justify-content:center;gap:10px}
 .hp-pet{width:96px;height:96px;image-rendering:pixelated;image-rendering:crisp-edges}
@@ -75,9 +77,28 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .hp-bar__fill{height:100%;border-radius:6px;background:#7cc49a;transition:width .4s}
 .hp-bar__fill.is-low{background:#e98a7a}
 .hp-bar__num{text-align:right;font-variant-numeric:tabular-nums;color:#8a6d4b}
-.hp-actions{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hp-actions{margin-top:14px;display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.hp-actions button{grid-column:span 2}
+.hp-actions button:nth-child(n+4){grid-column:span 3}
 .hp-actions button{font:inherit;font-weight:700;padding:12px 0;border:0;border-radius:14px;background:#d94873;color:#fff;cursor:pointer}
 .hp-actions button:disabled{background:#cfc6bd;cursor:default}
+.hp-disc{position:absolute;width:24px;height:10px;border-radius:50%;background:#e8505b;box-shadow:inset 0 -3px 0 #b83a45,0 0 0 2px #4a3226}
+.hp-home{margin-top:10px;font:inherit;font-weight:700;padding:10px 22px;border:0;border-radius:14px;background:#d94873;color:#fff;cursor:pointer}
+.hp-name{display:flex;align-items:baseline;gap:8px;margin-top:12px}
+.hp-name b{font-size:17px}
+.hp-name span{color:#8a6d4b;font-size:13px}
+.hp-name button{margin-left:auto;font:inherit;font-size:13px;background:none;border:0;color:#d94873;cursor:pointer;padding:4px}
+.hp-rename{display:flex;gap:8px;margin-top:6px}
+.hp-rename input,.hp-adopt__name input{flex:1;min-width:0;font:inherit;padding:8px 12px;border:2px solid #efe3d3;border-radius:12px;background:#fff;color:inherit}
+.hp-rename button{font:inherit;font-weight:700;border:0;border-radius:12px;background:#d94873;color:#fff;padding:8px 16px;cursor:pointer}
+.hp-adopt{border-radius:24px;background:#fff4e6;padding:20px 16px;text-align:center}
+.hp-adopt__title{font-weight:700;font-size:17px;margin:0}
+.hp-adopt__pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.hp-adopt__pick button{font:inherit;font-weight:700;color:inherit;background:#fff;border:3px solid #efe3d3;border-radius:18px;padding:10px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.hp-adopt__pick button[aria-pressed="true"]{border-color:#d94873}
+.hp-adopt__pick canvas{width:96px;height:96px;image-rendering:pixelated;image-rendering:crisp-edges}
+.hp-adopt__name{display:flex;align-items:center;gap:10px;margin-top:14px;font-weight:700}
+.hp-adopt__go{margin-top:14px;width:100%;font:inherit;font-weight:700;padding:12px 0;border:0;border-radius:14px;background:#d94873;color:#fff;cursor:pointer}
 .hp-debug{margin-top:16px;padding:12px;border:2px dashed #c9b8a6;border-radius:14px;font-size:13px;color:#6b6b70}
 .hp-debug[hidden]{display:none}
 .hp-debug__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -91,23 +112,41 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 
 <!-- 遊戲本體 -->
 <div id="hiyori-pet">
-  <div class="hp-screen" id="hp-screen">
-    <div class="hp-stage"><canvas class="hp-pet" id="hp-pet" width="32" height="32" role="img" aria-label="你的毛孩"></canvas><div class="hp-poops" id="hp-poops"></div></div>
-    <div class="hp-status" id="hp-status"></div>
+  <div class="hp-adopt" id="hp-adopt" hidden>
+    <p class="hp-adopt__title">想養哪一隻？</p>
+    <div class="hp-adopt__pick">
+      <button type="button" data-sp="cat" aria-pressed="true"><canvas id="hp-pick-cat" width="32" height="32"></canvas>曼基貓</button>
+      <button type="button" data-sp="dog" aria-pressed="false"><canvas id="hp-pick-dog" width="32" height="32"></canvas>邊境牧羊犬</button>
+    </div>
+    <label class="hp-adopt__name" for="hp-name-in">名字<input id="hp-name-in" maxlength="10" placeholder="麻糬" autocomplete="off"></label>
+    <button type="button" class="hp-adopt__go" id="hp-adopt-go">領養這顆蛋</button>
   </div>
-  <div class="hp-bars">
-    <div class="hp-bar"><span>飽足</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-full"></div></div><span class="hp-bar__num" id="hp-num-full"></span></div>
-    <div class="hp-bar"><span>心情</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-mood"></div></div><span class="hp-bar__num" id="hp-num-mood"></span></div>
-    <div class="hp-bar"><span>清潔</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-clean"></div></div><span class="hp-bar__num" id="hp-num-clean"></span></div>
-  </div>
-  <div class="hp-actions">
-    <button type="button" data-act="feed">餵飯</button>
-    <button type="button" data-act="play">陪玩</button>
-    <button type="button" data-act="clean">清理</button>
+  <div id="hp-main" hidden>
+    <div class="hp-screen" id="hp-screen">
+      <div class="hp-stage"><canvas class="hp-pet" id="hp-pet" width="32" height="32" role="img" aria-label="你的毛孩"></canvas><div class="hp-poops" id="hp-poops"></div></div>
+      <div class="hp-status" id="hp-status" aria-live="polite"></div>
+      <button type="button" class="hp-home" id="hp-home" hidden>找牠回來</button>
+      <div class="hp-disc" id="hp-disc" hidden></div>
+    </div>
+    <div class="hp-name"><b id="hp-name"></b><span id="hp-age"></span><button type="button" id="hp-rename">改名</button></div>
+    <form class="hp-rename" id="hp-rename-box" hidden><input id="hp-rename-in" maxlength="10" autocomplete="off" aria-label="新名字"><button type="submit">儲存</button></form>
+    <div class="hp-bars">
+      <div class="hp-bar"><span>飽足</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-full"></div></div><span class="hp-bar__num" id="hp-num-full"></span></div>
+      <div class="hp-bar"><span>心情</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-mood"></div></div><span class="hp-bar__num" id="hp-num-mood"></span></div>
+      <div class="hp-bar"><span>清潔</span><div class="hp-bar__track"><div class="hp-bar__fill" id="hp-bar-clean"></div></div><span class="hp-bar__num" id="hp-num-clean"></span></div>
+    </div>
+    <div class="hp-actions" id="hp-actions">
+      <button type="button" data-act="meal">正餐</button>
+      <button type="button" data-act="snack">點心</button>
+      <button type="button" data-act="play">陪玩</button>
+      <button type="button" data-act="poop">清便便</button>
+      <button type="button" data-act="bath">洗澡</button>
+    </div>
   </div>
   <div class="hp-debug" id="hp-debug" hidden>
     <div>測試模式｜速度 <b id="hp-dbg-speed"></b> 倍｜遊戲時間 <b id="hp-dbg-time"></b></div>
     <div class="hp-debug__btns">
+      <button type="button" data-skip="0.17">+10 分</button>
       <button type="button" data-skip="1">+1 小時</button>
       <button type="button" data-skip="6">+6 小時</button>
       <button type="button" data-skip="24">+1 天</button>
@@ -118,7 +157,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 
 <section class="page-about">
   <h2>玩法</h2>
-  <ul><li>選貓或狗，從蛋開始養，約 7 天長大，照顧方式不同會長成不同樣子</li><li>餵食、陪玩、清理，晚上牠會自己睡覺</li><li>每天打開信箱，讀牠寫給你的信</li><li>電腦版 Chrome 可以把牠放到桌面上，邊工作邊陪你</li></ul>
+  <ul><li>選曼基貓或邊境牧羊犬，從蛋開始養，約 7 天長大，照顧方式不同會長成不同樣子</li><li>餵正餐和點心、陪牠玩接飛盤、清便便和洗澡，晚上牠會自己睡覺</li><li>每天打開信箱，讀牠寫給你的信</li><li>電腦版 Chrome 可以把牠放到桌面上，邊工作邊陪你</li></ul>
   <h2>適合誰？</h2>
   <ul><li>小時候養過電子雞、想再養一次的人</li><li>想養寵物但現在沒辦法養的人</li><li>工作時想要一個小夥伴陪在桌面上的人</li></ul>
   <!-- 連到部落格的介紹文章（文章寫好再打開） -->
@@ -471,15 +510,30 @@ var HP_PX = (function(){
 /* ===== 日和毛孩｜遊戲本體 =====
    注意：照 games 的慣例，不用「和號」字元與雙斜線註解 */
 (function(){
-  /* ---- 可調整的數值（每小時下降多少） ---- */
-  var RATE = { full: 5, mood: 4, clean: 2, perPoop: 3 };
+  /* ---- 可調整的數值 ---- */
+  var RATE = { full: 5, mood: 4, clean: 2, perPoop: 3 };   /* 每小時下降多少 */
   var POOP_MIN_H = 4, POOP_MAX_H = 8, POOP_MAX = 3;   /* 平均每 6 小時 1 坨，最多 3 坨 */
   var SLEEP_FROM = 22, SLEEP_TO = 7, SLEEP_FACTOR = 0.5;   /* 睡覺時下降速度減半 */
   var WAKE_PENALTY = 10, WAKE_MIN = 15;   /* 睡覺時照顧會吵醒牠：心情 -10，之後醒著 15 分鐘不再扣 */
   var LOW = 30;   /* 低於這個數字就算「餓了／髒了」 */
+  var HATCH_MIN = 10;   /* 孵蛋 10 分鐘 */
+  var BABY_DAYS = 2, TEEN_DAYS = 6;   /* 幼年第 1～2 天、少年第 3～6 天、第 7 天起成年 */
+  var AWAY_H = 24;   /* 三條狀態都是 0 超過 24 小時，就留紙條離家出走 */
+  var CARE = {   /* 各動作的效果；care＝少年期要記在哪一類（決定成年型態） */
+    meal:  { full: 30 },
+    snack: { mood: 15, full: 5, care: 'snack' },
+    poop:  { clean: 10, poops: true, care: 'clean' },
+    bath:  { clean: 100, care: 'clean' }
+  };
+  /* 接飛盤：10 秒丟 6 個，每接 1 個心情多 +4 */
+  var PLAY = { base: 8, perCatch: 4, full: -5, throws: [600, 2200, 3800, 5400, 7000, 8600], ms: 10000, fly: 1500, jump: 600, jumpH: 56, reach: 28 };
+  var ADULT = { snack: 'round', play: 'active', clean: 'elegant' };
+  var NAMES = { cat: '麻糬', dog: '豆豆' };
+  var SPN = { cat: '曼基貓', dog: '邊境牧羊犬' };
+  var FORMN = { egg: '蛋', baby: '幼年', teen: '少年', round: '成年・圓滾滾型', active: '成年・活力型', elegant: '成年・優雅型' };
 
-  var VERSION = 1;
-  var HOUR = 3600000, STEP = 600000;   /* 離線補算時每 10 分鐘算一步 */
+  var VERSION = 2;
+  var MIN = 60000, HOUR = 3600000, DAY = 86400000, STEP = 600000;   /* 離線補算時每 10 分鐘算一步 */
   var params = new URLSearchParams(location.search);
   var DEBUG = params.get('hy_debug') === '1';
   var SPEED = DEBUG ? Math.max(1, Number(params.get('speed')) || 1) : 1;
@@ -503,49 +557,80 @@ var HP_PX = (function(){
     store(CLOCK_KEY, clock);
   }
 
-  /* ---- 狀態與規則 ---- */
+  /* ---- 存檔 ---- */
   function randPoopH(){ return POOP_MIN_H + Math.random() * (POOP_MAX_H - POOP_MIN_H); }
-  function newState(t){
-    return { v: VERSION, createdAt: t, lastTick: t, full: 80, mood: 80, clean: 100, poops: 0, nextPoopIn: randPoopH() };
+  function adopt(sp, name, t){
+    return { v: VERSION, createdAt: t, lastTick: t, sp: sp, name: name, bornAt: t, hatchedAt: 0,
+      adult: '', care: { snack: 0, play: 0, clean: 0 }, careLast: '', lastForm: 'egg',
+      full: 80, mood: 80, clean: 100, poops: 0, nextPoopIn: randPoopH(), awakeUntil: 0, zeroSince: 0, awayAt: 0 };
   }
   function upgrade(s){
-    /* 以後改規則時，在這裡把舊版存檔升級成新版 */
+    /* 以後改規則時，在這裡把舊版存檔升級成新版。
+       v1 是 T1-1 的測試版，還沒有選貓狗，所以讀到 v1 就回到領養畫面 */
     if (!s || typeof s !== 'object') return null;
-    if (s.v !== VERSION) return null;
-    return s;
+    if (s.v === VERSION) return s;
+    return null;
   }
+
+  /* ---- 規則 ---- */
   function isAsleep(t){
     var h = new Date(t).getHours();
     return h >= SLEEP_FROM || h < SLEEP_TO;
+  }
+  /* 成年型態：少年期點心、陪玩、清理哪種做最多；平手看最後一次做的是哪種 */
+  function decide(s){
+    var order = ['snack', 'play', 'clean'], best = 'snack', top = -1;
+    for (var i = 0; i < order.length; i++) {
+      var k = order[i], v = s.care[k] + (k === s.careLast ? 0.5 : 0);
+      if (v > top) { top = v; best = k; }
+    }
+    return ADULT[best];
+  }
+  function formAt(s, t){
+    if (!s.hatchedAt) return 'egg';
+    var age = t - s.hatchedAt;
+    if (age < BABY_DAYS * DAY) return 'baby';
+    if (age < TEEN_DAYS * DAY) return 'teen';
+    if (!s.adult) s.adult = decide(s);
+    return s.adult;
   }
   /* 把狀態從上次時間一路算到 to：離開多久都一次補算完 */
   function simulate(s, to){
     var t = s.lastTick;
     if (!(to > t)) return s;   /* 時間倒退（例如改過電腦時鐘）就先不動 */
     while (t < to) {
-      var dt = Math.min(STEP, to - t);
-      var h = dt / HOUR;
-      var f = isAsleep(t) ? SLEEP_FACTOR : 1;
-      s.full = clamp(s.full - RATE.full * h * f);
-      s.mood = clamp(s.mood - RATE.mood * h * f);
-      s.clean = clamp(s.clean - (RATE.clean + RATE.perPoop * s.poops) * h);
-      s.nextPoopIn -= h;
-      if (s.nextPoopIn <= 0) {
-        if (s.poops < POOP_MAX) s.poops += 1;
-        s.nextPoopIn += randPoopH();
+      var dt = Math.min(STEP, to - t), h = dt / HOUR;
+      if (!s.hatchedAt) {
+        /* 蛋：狀態不變，時間到就破殼 */
+        if (t + dt >= s.bornAt + HATCH_MIN * MIN) s.hatchedAt = s.bornAt + HATCH_MIN * MIN;
+      } else if (!s.awayAt) {
+        var f = isAsleep(t) ? SLEEP_FACTOR : 1;
+        s.full = clamp(s.full - RATE.full * h * f);
+        s.mood = clamp(s.mood - RATE.mood * h * f);
+        s.clean = clamp(s.clean - (RATE.clean + RATE.perPoop * s.poops) * h);
+        s.nextPoopIn -= h;
+        if (s.nextPoopIn <= 0) {
+          if (s.poops < POOP_MAX) s.poops += 1;
+          s.nextPoopIn += randPoopH();
+        }
+        /* 三條都是 0 超過 24 小時 → 離家出走（出門期間狀態不再下降） */
+        if (s.full + s.mood + s.clean <= 0) {
+          if (!s.zeroSince) s.zeroSince = t;
+          if (t + dt - s.zeroSince >= AWAY_H * HOUR) s.awayAt = t + dt;
+        } else s.zeroSince = 0;
       }
       t += dt;
     }
     s.lastTick = to;
     return s;
   }
-  var ACTIONS = {
-    feed:  function(s){ s.full = clamp(s.full + 30); },
-    play:  function(s){ s.mood = clamp(s.mood + 25); s.full = clamp(s.full - 5); },
-    clean: function(s){ s.poops = 0; s.clean = 100; }
-  };
   function isWoken(s, t){ return isAsleep(t) ? s.awakeUntil > t : false; }
-  function mood(s, t){
+  function mood(s, t, form){
+    if (s.awayAt) return { key: 'away', text: '桌上有一張紙條：「我去找朋友玩了」' };
+    if (form === 'egg') {
+      var left = Math.max(1, Math.ceil((s.bornAt + HATCH_MIN * MIN - t) / MIN));
+      return { key: 'egg', text: '蛋在微微晃動⋯再 ' + left + ' 分鐘就會破殼' };
+    }
     if (isAsleep(t)) {
       if (!isWoken(s, t)) return { key: 'sleep', text: '睡覺中⋯ zZ（照顧牠會吵醒牠）' };
     }
@@ -555,31 +640,66 @@ var HP_PX = (function(){
     if (isWoken(s, t)) return { key: 'woken', text: '被吵醒了⋯揉揉眼睛' };
     return { key: 'happy', text: '今天心情很好！' };
   }
-  /* 照顧：睡覺時第一下會吵醒牠 */
-  function act(s, name, t){
-    simulate(s, t);
+  /* 睡覺時照顧，第一下會吵醒牠 */
+  function wake(s, t){
     if (isAsleep(t)) {
       if (!isWoken(s, t)) s.mood = clamp(s.mood - WAKE_PENALTY);
-      s.awakeUntil = t + WAKE_MIN * 60000;
+      s.awakeUntil = t + WAKE_MIN * MIN;
     }
-    ACTIONS[name](s);
+  }
+  function countCare(s, t, kind){
+    if (!kind) return;
+    if (formAt(s, t) !== 'teen') return;   /* 只有少年期的照顧會影響成年型態 */
+    s.care[kind] += 1;
+    s.careLast = kind;
+  }
+  function act(s, name, t){
+    simulate(s, t);
+    wake(s, t);
+    var c = CARE[name];
+    if (c.full) s.full = clamp(s.full + c.full);
+    if (c.mood) s.mood = clamp(s.mood + c.mood);
+    if (c.poops) s.poops = 0;
+    if (c.clean) s.clean = clamp(s.clean + c.clean);
+    countCare(s, t, c.care);
+  }
+  function played(s, caught, t){
+    simulate(s, t);
+    s.mood = clamp(s.mood + PLAY.base + PLAY.perCatch * caught);
+    s.full = clamp(s.full + PLAY.full);
+    countCare(s, t, 'play');
+  }
+  function fetchHome(s, t){
+    simulate(s, t);
+    s.awayAt = 0; s.zeroSince = 0;
+    s.full = 50; s.mood = 50; s.clean = 60; s.poops = 0;
   }
 
   /* ---- 畫面 ---- */
   var $ = function(id){ return document.getElementById(id); };
+  var state = upgrade(load(SAVE_KEY));
+  var flash = { text: '', until: 0 };
+  var game = null;
+  function say(text, ms){ flash = { text: text, until: Date.now() + (ms || 4000) }; }
+  function track(name, p){ try { if (window.hyGame) window.hyGame.event(name, p); } catch(e) {} }
 
-  /* ---- 像素寵物（T1-2）：心情決定表情。選貓狗、長大等 T2-1 再接上，先固定曼基貓少年 ----
-     測試模式可用網址換外觀：pet=dog、form=egg／baby／teen／round／active／elegant */
-  var LOOK = { woken: 'happy' };   /* 剛被吵醒先用開心的臉 */
-  var petSp = 'cat', petForm = 'teen', petExpr = 'happy', petFrame = 0;
-  if (DEBUG) {
-    if (params.get('pet') === 'dog') petSp = 'dog';
-    if (HP_PX.FORMS.indexOf(params.get('form')) >= 0) petForm = params.get('form');
+  /* ---- 像素寵物：心情決定表情 ----
+     測試模式可用網址只換外觀（不改存檔）：pet=cat／dog、form=egg／baby／teen／round／active／elegant */
+  var LOOK = { woken: 'happy', egg: 'happy' };
+  var petSp = 'cat', petForm = 'egg', petExpr = 'happy', petFrame = 0, petAway = false;
+  var dbgSp = DEBUG ? params.get('pet') : '', dbgForm = DEBUG ? params.get('form') : '';
+  function drawPet(){
+    if (!state) {
+      HP_PX.draw($('hp-pick-cat'), 'cat', 'baby', 'happy', petFrame);
+      HP_PX.draw($('hp-pick-dog'), 'dog', 'baby', 'happy', petFrame);
+      return;
+    }
+    var c = $('hp-pet');
+    if (petAway) c.getContext('2d').clearRect(0, 0, c.width, c.height);
+    else HP_PX.draw(c, petSp, petForm, petExpr, petFrame);
   }
-  function drawPet(){ HP_PX.draw($('hp-pet'), petSp, petForm, petExpr, petFrame); }
-  var state = upgrade(load(SAVE_KEY)) || newState(now());
 
-  function save(){ store(SAVE_KEY, state); rebase(0); }
+  function save(){ if (state) store(SAVE_KEY, state); rebase(0); }
   function setBar(name, val){
     var fill = $('hp-bar-' + name);
     fill.style.width = val + '%';
@@ -590,31 +710,172 @@ var HP_PX = (function(){
     var d = new Date(t), p = function(n){ return (n < 10 ? '0' : '') + n; };
     return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
   }
+  function ageText(s, t, form){
+    if (form === 'egg') return SPN[s.sp] + '的蛋';
+    return SPN[s.sp] + '・' + FORMN[form] + '・第 ' + (Math.floor((t - s.hatchedAt) / DAY) + 1) + ' 天';
+  }
   function render(){
     var t = now();
+    if (DEBUG) { $('hp-dbg-speed').textContent = SPEED; $('hp-dbg-time').textContent = fmt(t); }
+    $('hp-adopt').hidden = !!state;
+    $('hp-main').hidden = !state;
+    if (!state) { drawPet(); return; }
     simulate(state, t);
-    var m = mood(state, t);
+    var form = formAt(state, t);
+    var m = mood(state, t, form);
+    petAway = m.key === 'away';
+    if (form !== state.lastForm) {
+      if (petAway) { /* 出門中就不播「長大了」 */ }
+      else if (state.lastForm === 'egg') say('破殼了！' + state.name + '來到你家了', 6000);
+      else say(state.name + '長大了！變成' + FORMN[form], 6000);
+      track('pet_stage', { stage: form });
+      state.lastForm = form;
+      save();
+    }
     $('hp-screen').classList.toggle('is-night', isAsleep(t));
-    petExpr = LOOK[m.key] || m.key;
+    var showFlash = petAway ? false : Date.now() < flash.until;   /* 出門中一律顯示紙條 */
+    $('hp-status').textContent = game ? game.text : (showFlash ? flash.text : m.text);
+    petSp = dbgSp === 'cat' || dbgSp === 'dog' ? dbgSp : state.sp;
+    petForm = HP_PX.FORMS.indexOf(dbgForm) >= 0 ? dbgForm : form;
+    petExpr = game ? 'happy' : (LOOK[m.key] || m.key);
     drawPet();
-    $('hp-status').textContent = m.text;
     setBar('full', state.full);
     setBar('mood', state.mood);
     setBar('clean', state.clean);
     var poops = '';
-    for (var i = 0; i < state.poops; i++) poops += '<div class="hp-poop"></div>';
+    if (!petAway) for (var i = 0; i < state.poops; i++) poops += '<div class="hp-poop"></div>';
     $('hp-poops').innerHTML = poops;
-    if (DEBUG) { $('hp-dbg-speed').textContent = SPEED; $('hp-dbg-time').textContent = fmt(t); }
+    $('hp-name').textContent = state.name;
+    $('hp-age').textContent = ageText(state, t, form);
+    $('hp-home').hidden = !petAway;
+    var lock = form === 'egg' || petAway || !!game;
+    var btns = document.querySelectorAll('#hp-actions button');
+    for (var j = 0; j < btns.length; j++) btns[j].disabled = lock;
   }
 
-  document.querySelector('#hiyori-pet .hp-actions').addEventListener('click', function(e){
-    var b = e.target.closest('[data-act]');
+  /* ---- 領養 ---- */
+  var pick = 'cat';
+  document.querySelector('#hiyori-pet .hp-adopt__pick').addEventListener('click', function(e){
+    var b = e.target.closest('[data-sp]');
     if (!b) return;
-    act(state, b.getAttribute('data-act'), now());
+    pick = b.getAttribute('data-sp');
+    var all = document.querySelectorAll('#hiyori-pet .hp-adopt__pick [data-sp]');
+    for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === b ? 'true' : 'false');
+    $('hp-name-in').placeholder = NAMES[pick];
+  });
+  $('hp-adopt-go').addEventListener('click', function(){
+    var name = $('hp-name-in').value.trim().slice(0, 10) || NAMES[pick];
+    state = adopt(pick, name, now());
+    track('pet_adopt', { pet_type: pick });
     save();
     render();
   });
 
+  /* ---- 改名 ---- */
+  $('hp-rename').addEventListener('click', function(){
+    var box = $('hp-rename-box');
+    box.hidden = !box.hidden;
+    if (!box.hidden) { $('hp-rename-in').value = state.name; $('hp-rename-in').focus(); }
+  });
+  $('hp-rename-box').addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = $('hp-rename-in').value.trim().slice(0, 10);
+    if (v) state.name = v;
+    $('hp-rename-box').hidden = true;
+    save();
+    render();
+  });
+
+  /* ---- 照顧 ---- */
+  $('hp-actions').addEventListener('click', function(e){
+    var b = e.target.closest('[data-act]');
+    if (!b) return;
+    if (b.disabled) return;
+    var name = b.getAttribute('data-act');
+    if (name === 'play') { startPlay(); return; }
+    act(state, name, now());
+    track('pet_action', { action: name });
+    save();
+    render();
+  });
+  $('hp-home').addEventListener('click', function(){
+    fetchHome(state, now());
+    say(state.name + '回來了！', 5000);
+    track('pet_action', { action: 'home' });
+    save();
+    render();
+  });
+
+  /* ---- 接飛盤：點畫面跳起來，在飛盤飛過頭上時接住 ---- */
+  function startPlay(){
+    var t = now();
+    simulate(state, t);
+    wake(state, t);
+    var scr = $('hp-screen').getBoundingClientRect(), pr = $('hp-pet').getBoundingClientRect();
+    /* 飛盤高度跟著頭頂走：幼年頭比較低、成年比較高 */
+    var g = HP_PX.build(petSp, petForm, 'happy', 0), top = 0;
+    while (top < HP_PX.H - 1) { if (g.slice(top * HP_PX.W, top * HP_PX.W + HP_PX.W).some(Boolean)) break; top += 1; }
+    var head = pr.top - scr.top + top * pr.height / HP_PX.H;
+    game = { at: performance.now(), next: 0, caught: 0, disc: null, jumpAt: -1, text: '點畫面讓牠跳起來接飛盤！',
+      w: scr.width, cx: pr.left - scr.left + pr.width / 2, y: head - PLAY.reach - 2 };
+    $('hp-screen').classList.add('is-playing');
+    try { if (window.hyGame) window.hyGame.roundStart({ option: 'frisbee' }); } catch(e) {}
+    render();
+    requestAnimationFrame(tick);
+  }
+  function jump(){
+    if (!game) return;
+    if (game.jumpAt < 0) game.jumpAt = performance.now() - game.at;
+  }
+  function tick(ts){
+    if (!game) return;
+    var e = ts - game.at, d = $('hp-disc'), off = 0;
+    if (game.next < PLAY.throws.length) {
+      if (e >= PLAY.throws[game.next]) { game.disc = e; game.next += 1; }
+    }
+    if (game.jumpAt >= 0) {
+      var p = (e - game.jumpAt) / PLAY.jump;
+      if (p >= 1) game.jumpAt = -1;
+      else off = -4 * PLAY.jumpH * p * (1 - p);
+    }
+    $('hp-pet').style.transform = off ? 'translateY(' + off.toFixed(1) + 'px)' : '';
+    if (game.disc !== null) {
+      var q = (e - game.disc) / PLAY.fly, x = game.w - q * (game.w + 40);
+      d.hidden = false;
+      d.style.left = x.toFixed(1) + 'px';
+      d.style.top = game.y + 'px';
+      if (q >= 1) { game.disc = null; d.hidden = true; }
+      else if (Math.abs(x + 12 - game.cx) < 24) {
+        if (off <= -PLAY.reach) { game.caught += 1; game.disc = null; d.hidden = true; }
+      }
+    }
+    game.text = '點畫面跳起來接！接到 ' + game.caught + ' 個｜剩 ' + Math.max(0, Math.ceil((PLAY.ms - e) / 1000)) + ' 秒';
+    $('hp-status').textContent = game.text;
+    if (e >= PLAY.ms) {
+      if (game.disc === null) { endPlay(); return; }
+    }
+    requestAnimationFrame(tick);
+  }
+  function endPlay(){
+    var c = game.caught, gain = PLAY.base + PLAY.perCatch * c;
+    game = null;
+    $('hp-screen').classList.remove('is-playing');
+    $('hp-pet').style.transform = '';
+    $('hp-disc').hidden = true;
+    played(state, c, now());
+    say(c ? '接到 ' + c + ' 個飛盤！心情 +' + gain : '一個都沒接到，還是玩得很開心！心情 +' + gain, 5000);
+    try { if (window.hyGame) window.hyGame.roundEnd({ result: 'complete', score: c, item_count: PLAY.throws.length, correct_count: c }); } catch(e) {}
+    track('pet_action', { action: 'play' });
+    save();
+    render();
+  }
+  $('hp-screen').addEventListener('pointerdown', jump);
+  document.addEventListener('keydown', function(e){
+    if (!game) return;
+    if (e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); jump(); }
+  });
+
+  /* ---- 測試模式 ---- */
   if (DEBUG) {
     $('hp-debug').hidden = false;
     $('hp-debug').addEventListener('click', function(e){
@@ -627,22 +888,23 @@ var HP_PX = (function(){
     $('hp-dbg-reset').addEventListener('click', function(){
       try { localStorage.removeItem(SAVE_KEY); localStorage.removeItem(CLOCK_KEY); } catch(e) {}
       clock = { realAt: Date.now(), gameAt: Date.now() };
-      state = newState(now());
-      save();
+      state = null;
       render();
     });
     /* 給自動測試用 */
-    window.hpCore = { simulate: simulate, newState: newState, isAsleep: isAsleep, mood: mood, act: act, ACTIONS: ACTIONS, RATE: RATE, getState: function(){ return state; } };
+    window.hpCore = { simulate: simulate, adopt: adopt, formAt: formAt, decide: decide, mood: mood, act: act, played: played,
+      fetchHome: fetchHome, upgrade: upgrade, isAsleep: isAsleep, CARE: CARE, PLAY: PLAY, RATE: RATE,
+      getState: function(){ return state; }, getGame: function(){ return game; }, setState: function(s){ state = s; save(); render(); } };
   }
 
   render();
   save();
   setInterval(render, 1000);
+  setInterval(save, 10000);
   /* 2 格動畫；系統設定「減少動態」的人就不動 */
   var still = false;
   try { still = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
   if (!still) setInterval(function(){ petFrame = 1 - petFrame; drawPet(); }, 550);
-  setInterval(save, 10000);
   document.addEventListener('visibilitychange', function(){ if (document.hidden) save(); else render(); });
   window.addEventListener('pagehide', save);
 })();
