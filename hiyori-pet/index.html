@@ -65,11 +65,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .hp-screen{position:relative;border-radius:24px;background:#fff4e6;padding:16px;text-align:center;transition:background .6s}
 .hp-screen.is-night{background:#2f3352;color:#e8e6ff}
 .hp-stage{height:150px;display:flex;align-items:flex-end;justify-content:center;gap:10px}
-.hp-pet{width:96px;height:96px;border-radius:18px;background:#ffb36b;box-shadow:inset -8px -8px 0 rgba(0,0,0,.08);animation:hp-bob 1.6s steps(2) infinite;transition:background .4s}
-.hp-pet.is-hungry{background:#9cc3e6}
-.hp-pet.is-dirty{background:#c8a27a}
-.hp-pet.is-sleep{background:#8d86c9;animation:none}
-@keyframes hp-bob{0%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.hp-pet{width:96px;height:96px;image-rendering:pixelated;image-rendering:crisp-edges}
 .hp-poops{display:flex;gap:6px}
 .hp-poop{width:22px;height:18px;border-radius:50% 50% 40% 40%;background:#8a5a3b}
 .hp-status{margin-top:10px;min-height:24px;font-weight:700}
@@ -96,7 +92,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 <!-- 遊戲本體 -->
 <div id="hiyori-pet">
   <div class="hp-screen" id="hp-screen">
-    <div class="hp-stage"><div class="hp-pet" id="hp-pet"></div><div class="hp-poops" id="hp-poops"></div></div>
+    <div class="hp-stage"><canvas class="hp-pet" id="hp-pet" width="32" height="32" role="img" aria-label="你的毛孩"></canvas><div class="hp-poops" id="hp-poops"></div></div>
     <div class="hp-status" id="hp-status"></div>
   </div>
   <div class="hp-bars">
@@ -135,6 +131,342 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 </div>
 <footer class="page-foot"><a href="/" style="color:inherit" data-cta="more_games" data-cta-type="hub">← 更多小遊戲</a>｜© 編織日和 Knitting Hiyori｜<a href="https://knittinghiyori.com/" style="color:inherit" data-cta="footer" data-cta-type="mainsite">回到部落格</a></footer>
 <p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<script>
+/* ===== 日和毛孩｜像素圖引擎 v1（T1-2）=====
+   預覽頁（全部 124 張）：my-agent 的 100_Todo/projects/hiyori-pet/sprites-preview.html
+   照 games 的慣例：不用「和號」字元與雙斜線註解。
+   畫法：在 32×32 的格子上用圓形、三角形堆出身體，自動描邊，再畫上表情與小道具。
+   想調整外觀，改下面 PAL（顏色）或各個 body 函式裡的數字即可。 */
+var HP_PX = (function(){
+  var W = 32, H = 32;
+  var OUT = '#4a3226';   /* 描邊：深咖啡，比黑色柔和 */
+  var PAL = {
+    cat: { base:'#dfba93', shade:'#c7a07a', light:'#f2d9bb', patch:'#a39a94', patchD:'#857c76', patchL:'#c9bfb6', white:'#fffaf3', ear:'#ffa3b4', nose:'#f27d90',
+      pupil:'#3a2618', iris:'#3a2618', eyeLine:'#3a2618', scarf:'#e8505b', scarfD:'#b83a45', ribbon:'#ff7eb3', ribbonD:'#d9548a',
+      egg:'#fff6ea', eggShade:'#ecdcc8', spot:'#968d87', spot2:'#dcb48c' },
+    dog: { base:'#3f3633', shade:'#2b2422', light:'#5c514c', patch:'#3f3633', patchD:'#2b2422', patchL:'#3f3633', white:'#fffaf3', ear:'#b07c6e', nose:'#1e1716',
+      pupil:'#120c0a', iris:'#9a6440', eyeLine:'#f4e9df', scarf:'#4a8fd6', scarfD:'#2f6aa8', ribbon:'#5aa0e8', ribbonD:'#2f6aa8',
+      egg:'#fff8ee', eggShade:'#e9dccb', spot:'#3f3633', spot2:'#3f3633' }
+  };
+  var C = { white:'#ffffff', blush:'#ff8fa3', mouth:'#7a3b2e', tongue:'#ff7a8a', drool:'#9fd6ff',
+    dirt:'#9b6b43', dirtD:'#7a4f2e', fly:'#3a2618', wing:'#cfe9ff', stink:'#8fc25a', zzz:'#8f86f0',
+    gloom:'#7fa6e0', sweat:'#8fd0ff', star:'#ffc940', fish:'#6fb7e0', bone:'#b98a55', eye:'#3a2618', yarn:'#ff7e9a', yarnD:'#d9546f', ball:'#c8de4a', ballD:'#9fb52f' };
+
+  /* ---- 格子與基本形狀 ---- */
+  function grid(){ var g = new Array(W * H); for (var i = 0; i < g.length; i++) g[i] = null; return g; }
+  function inb(x, y){ if (x < 0 || y < 0) return false; return x < W ? y < H : false; }
+  function px(g, x, y, c){ x = Math.round(x); y = Math.round(y); if (inb(x, y)) g[y * W + x] = c; }
+  function get(g, x, y){ return inb(x, y) ? g[y * W + x] : null; }
+  function ell(g, cx, cy, rx, ry, c){
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry;
+      if (dx * dx + dy * dy <= 1) g[y * W + x] = c;
+    }
+  }
+  /* 只塗在指定顏色上（例：花紋只畫在毛上，不會跑出身體） */
+  function paint(g, cx, cy, rx, ry, c, only){
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var dx = (x + 0.5 - cx) / rx, dy = (y + 0.5 - cy) / ry;
+      if (dx * dx + dy * dy <= 1) { if (only.indexOf(g[y * W + x]) >= 0) g[y * W + x] = c; }
+    }
+  }
+  function rect(g, x, y, w, h, c){ for (var j = 0; j < h; j++) for (var i = 0; i < w; i++) px(g, x + i, y + j, c); }
+  function tri(g, ax, ay, bx, by, qx, qy, c){
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var sx = x + 0.5, sy = y + 0.5;
+      var d1 = (sx - bx) * (ay - by) - (ax - bx) * (sy - by);
+      var d2 = (sx - qx) * (by - qy) - (bx - qx) * (sy - qy);
+      var d3 = (sx - ax) * (qy - ay) - (qx - ax) * (sy - ay);
+      var neg = d1 < 0 || d2 < 0 || d3 < 0;
+      var pos = d1 > 0 || d2 > 0 || d3 > 0;
+      if (!(neg ? pos : false)) g[y * W + x] = c;
+    }
+  }
+  function path(g, pts, r, c){ for (var i = 0; i < pts.length; i++) ell(g, pts[i][0], pts[i][1], r, r, c); }
+  /* 有陰影的圓：先畫整顆暗色，再往左上疊一顆亮色，右下就留下一圈影子 */
+  function ball(g, cx, cy, rx, ry, p){
+    ell(g, cx, cy, rx, ry, p.shade);
+    ell(g, cx - 0.6, cy - 0.8, rx - 0.8, ry - 0.9, p.base);
+  }
+  function outline(g, c){
+    var o = g.slice();
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      if (g[y * W + x]) continue;
+      if (get(g, x - 1, y) || get(g, x + 1, y) || get(g, x, y - 1) || get(g, x, y + 1)) o[y * W + x] = c;
+    }
+    return o;
+  }
+  function merge(a, b){ for (var i = 0; i < a.length; i++) if (b[i]) a[i] = b[i]; return a; }
+  function shiftRows(g, y0, y1, dx){
+    for (var y = y0; y <= y1; y++) {
+      var row = g.slice(y * W, y * W + W);
+      for (var x = 0; x < W; x++) { var sx = x - dx; g[y * W + x] = sx >= 0 ? (sx < W ? row[sx] : null) : null; }
+    }
+  }
+  function fur(p){ return [p.base, p.shade, p.light]; }
+
+  /* ---- 頭：曼基貓＝尖耳＋灰色虎斑塊；邊牧＝圓弧立耳＋黑毛。兩隻都有白色鼻樑線和白嘴 ---- */
+  function ears(g, sp, hx, hy, rx, ry, p){
+    var top = hy - ry, side = hy - ry * 0.45;
+    if (sp === 'cat') {
+      tri(g, hx - rx + 1, side, hx - rx + 1.8, top - 2.6, hx - 1.5, top + 1, p.base);
+      tri(g, hx + rx - 1, side, hx + rx - 1.8, top - 2.6, hx + 1.5, top + 1, p.base);
+      tri(g, hx - rx + 2.1, side - 0.6, hx - rx + 2.3, top - 0.9, hx - 3, top + 1.3, p.ear);
+      tri(g, hx + rx - 2.1, side - 0.6, hx + rx - 2.3, top - 0.9, hx + 3, top + 1.3, p.ear);
+    } else {
+      ell(g, hx - rx + 1.7, top + 0.9, 2.4, 3, p.base);
+      ell(g, hx + rx - 1.7, top + 0.9, 2.4, 3, p.base);
+    }
+  }
+  function head(g, sp, p, hx, hy, rx, ry){
+    ears(g, sp, hx, hy, rx, ry, p);
+    ball(g, hx, hy, rx, ry, p);
+    var t = Math.round(hy - ry);
+    if (sp === 'cat') {
+      /* 第 3 輪：灰色只留額頭虎斑線和兩頰淡灰，其他都是米色 */
+      paint(g, hx - rx + 1.2, hy + 0.6, 1.5, 1.8, p.patchL, fur(p));
+      paint(g, hx + rx - 1.2, hy + 0.6, 1.5, 1.8, p.patchL, fur(p));
+      rect(g, hx - 1, t + 1, 2, 2, p.patchD);
+      rect(g, hx - 3, t + 1, 1, 3, p.patch); rect(g, hx + 2, t + 1, 1, 3, p.patch);
+      rect(g, hx - 5, t + 2, 1, 2, p.patch); rect(g, hx + 4, t + 2, 1, 2, p.patch);
+      rect(g, hx - 1, t + 3, 2, Math.round(hy) - t - 3, p.white);
+      rect(g, hx - 2, hy - 1, 4, 2, p.white);
+    } else {
+      ell(g, hx - rx + 1.9, t + 0.4, 1, 1.4, p.ear);
+      ell(g, hx + rx - 1.9, t + 0.4, 1, 1.4, p.ear);
+      px(g, hx - Math.round(rx * 0.55), hy - Math.round(ry * 0.6), p.light);
+      rect(g, hx - 1, t, 2, Math.round(ry) + 1, p.white);
+    }
+    if (sp === 'cat') ell(g, hx, hy + ry * 0.4, rx * 0.5, ry * 0.4, p.white);
+    else ell(g, hx, hy + ry * 0.42, rx * 0.42, ry * 0.34, p.white);
+    return { hx: hx, hy: hy, rx: rx, ry: ry };
+  }
+
+  /* ---- 身體零件 ---- */
+  function leg(g, x, y, w, h, p){ rect(g, x, y, w, h, p.shade); rect(g, x, y + h - 1, w, 1, p.white); }
+  function tail(g, sp, p, pts, r){
+    path(g, pts, r, p.base);
+    var last = pts[pts.length - 1];
+    if (sp === 'cat') {
+      for (var i = 1; i < pts.length; i += 2) paint(g, pts[i][0], pts[i][1], r * 0.8, r * 0.8, p.patch, fur(p));
+    } else ell(g, last[0], last[1], r * 0.9, r * 0.9, p.white);
+  }
+  function backPatch(g, sp, p, cx, cy, rx, ry){
+    if (sp === 'cat') paint(g, cx, cy, rx, ry, p.patch, fur(p));
+  }
+
+  /* ---- 身體：每個階段、每種成年型態一個函式；bob＝第 2 格往下 1 格（呼吸感） ---- */
+  function baby(g, sp, p, bob){
+    rect(g, 11, 28, 3, 1, p.white); rect(g, 18, 28, 3, 1, p.white);
+    return head(g, sp, p, 16, 22 + bob, 7 + bob * 0.4, 6.2 - bob * 0.4);
+  }
+  function teen(g, sp, p, bob){
+    tail(g, sp, p, [[21.5,25.5],[23,24.5],[24,23],[24.5,21.5],[24.5,20]], 1.3);
+    leg(g, 12, 27, 3, 2, p); leg(g, 17, 27, 3, 2, p);
+    ball(g, 16, 23.5, 5.5, 4.5, p);
+    backPatch(g, sp, p, 20, 21, 1.8, 1.5);
+    ell(g, 16, 24.5, 3.2, 3, p.white);
+    return head(g, sp, p, 16, 15 + bob, 7, 6.6);
+  }
+  /* 圓滾滾型：第 2 輪縮小（身體寬 19 → 約 15 格），圓潤但不是一顆球 */
+  function round(g, sp, p, bob){
+    tail(g, sp, p, [[22.5,25.5],[24,24.5],[25,23],[25.4,21.5]], 1.4);
+    leg(g, 11, 27, 3, 2, p); leg(g, 18, 27, 3, 2, p);
+    ball(g, 16, 22.5, 7.8, 6.3, p);
+    backPatch(g, sp, p, 21, 19.5, 2, 1.6);
+    ell(g, 16, 24, 5, 4, p.white);
+    return head(g, sp, p, 16, 13 + bob, 7.3, 6.8);
+  }
+  function active(g, sp, p, bob){
+    var cat = sp === 'cat';
+    var by = cat ? 22.5 : 21.5, ly = cat ? 26 : 24;   /* 曼基貓腿短，身體放低 */
+    tail(g, sp, p, cat ? [[23.5,21.5],[25,19.5],[26,17.5],[26.3,15.5],[25.6,13.8]] : [[23.5,19.5],[24.2,17.5],[24.4,15.5],[24,13.8]], 1.3);
+    leg(g, 11, ly, 2, 29 - ly, p); leg(g, 14, ly + 1, 2, 28 - ly, p);
+    leg(g, 19, ly + 1, 2, 28 - ly, p); leg(g, 22, ly, 2, 29 - ly, p);
+    ball(g, 17, by, 7.5, 4.8, p);
+    backPatch(g, sp, p, 21, by - 3, 2, 1.4);
+    ell(g, 16.5, by + 1.5, 4.5, 2.4, p.white);
+    var r = head(g, sp, p, 13, (cat ? 13 : 12) + bob, 7, 6.6);
+    var top = r.hy + r.ry - 1;   /* 領巾：貓紅色、邊牧藍色 */
+    tri(g, r.hx - 4.5, top, r.hx + 4.5, top, r.hx, top + 4.5, p.scarf);
+    rect(g, r.hx - 4, Math.round(top), 8, 1, p.scarfD);
+    return r;
+  }
+  function elegant(g, sp, p, bob){
+    tail(g, sp, p, [[20.5,27.6],[22.5,27],[24,25.6],[24.6,23.6],[24.2,21.6],[23.2,20.4]], 1.5);
+    ball(g, 16, 22.5, 5.6, 6.5, p);
+    backPatch(g, sp, p, 20, 19.5, 1.6, 1.8);
+    ell(g, 16, 21.5, 3.2, 4.4, p.white);
+    rect(g, 13, 25, 2, 4, p.white); rect(g, 17, 25, 2, 4, p.white);
+    rect(g, 15, 25, 2, 4, p.shade);
+    return head(g, sp, p, 16, 11 + bob, 6.8, 6.4);
+  }
+  var BODY = { baby: baby, teen: teen, round: round, active: active, elegant: elegant };
+
+  /* ---- 蛋：第 2 格上半部往右歪 1 格，看起來在搖 ---- */
+  function egg(g, p, frame){
+    ell(g, 16, 21, 6.3, 8, p.eggShade);
+    ell(g, 15.4, 20.2, 5.6, 7.2, p.egg);
+    ell(g, 13, 18, 1.6, 1.3, p.spot); ell(g, 19, 22.5, 1.8, 1.5, p.spot2);
+    ell(g, 14.5, 25.8, 1.4, 1.1, p.spot2); ell(g, 19.5, 15.5, 1.2, 1, p.spot);
+    px(g, 12, 15, C.white); px(g, 12, 16, C.white);
+    g = outline(g, OUT);
+    if (frame) shiftRows(g, 0, 17, 1);
+    return g;
+  }
+
+  /* ---- 表情 ---- */
+  function eye(g, x, y, kind, p){
+    var k = p.pupil, l = p.eyeLine;
+    if (kind === 'open') { px(g, x, y, C.white); px(g, x + 1, y, k); px(g, x, y + 1, k); px(g, x + 1, y + 1, p.iris); }
+    else if (kind === 'joy') { px(g, x, y, l); px(g, x + 1, y, l); px(g, x - 1, y + 1, l); px(g, x + 2, y + 1, l); }
+    else if (kind === 'shut') { px(g, x - 1, y, l); px(g, x + 2, y, l); px(g, x, y + 1, l); px(g, x + 1, y + 1, l); }
+    else if (kind === 'flat') { rect(g, x - 1, y + 1, 4, 1, l); }
+    else if (kind === 'tired') { rect(g, x - 1, y, 4, 1, l); px(g, x, y + 1, k); px(g, x + 1, y + 1, p.iris); }
+  }
+  function mouth(g, hx, hy, kind, p){
+    px(g, hx - 1, hy + 2, p.nose); px(g, hx, hy + 2, p.nose);
+    var m = C.mouth;
+    if (kind === 'smile') { px(g, hx - 2, hy + 3, m); px(g, hx + 1, hy + 3, m); }
+    else if (kind === 'open') { px(g, hx - 1, hy + 3, m); px(g, hx, hy + 3, m); px(g, hx - 1, hy + 4, C.tongue); px(g, hx, hy + 4, C.tongue); }
+    else if (kind === 'frown') { px(g, hx - 1, hy + 4, m); px(g, hx, hy + 4, m); px(g, hx - 2, hy + 5, m); px(g, hx + 1, hy + 5, m); }
+    else if (kind === 'wavy') { px(g, hx - 2, hy + 5, m); px(g, hx - 1, hy + 4, m); px(g, hx, hy + 5, m); px(g, hx + 1, hy + 4, m); }
+  }
+  var FACES = {
+    happy:  { eyes: ['open', 'joy'],    mouth: 'smile', blush: true },
+    hungry: { eyes: ['open', 'open'],   mouth: 'open' },
+    bored:  { eyes: ['open', 'open'],   mouth: 'open' },
+    dirty:  { eyes: ['flat', 'flat'],   mouth: 'frown' },
+    sleep:  { eyes: ['shut', 'shut'],   mouth: 'none' },
+    sick:   { eyes: ['tired', 'tired'], mouth: 'wavy' }
+  };
+  function face(g, r, p, f, frame){
+    var hx = r.hx, hy = r.hy, e = Math.round(r.rx * 0.45);
+    eye(g, hx - e - 1, hy, f.eyes[frame], p);
+    eye(g, hx + e - 1, hy, f.eyes[frame], p);
+    mouth(g, hx, hy, f.mouth, p);
+    if (f.blush) { rect(g, hx - e - 3, hy + 2, 2, 1, C.blush); rect(g, hx + e + 1, hy + 2, 2, 1, C.blush); }
+  }
+
+  /* ---- 小道具：Zzz、想吃泡泡、蒼蠅、生病的藍線與汗、蝴蝶結、閃光 ---- */
+  function glyphZ(g, x, y, big, c){
+    if (big) { rect(g, x, y, 4, 1, c); px(g, x + 3, y + 1, c); px(g, x + 2, y + 2, c); px(g, x + 1, y + 3, c); rect(g, x, y + 4, 4, 1, c); }
+    else { rect(g, x, y, 3, 1, c); px(g, x + 2, y + 1, c); px(g, x + 1, y + 2, c); rect(g, x, y + 3, 3, 1, c); }
+  }
+  function dirt(g, p){
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var c = g[y * W + x];
+      if (c === p.base || c === p.shade || c === p.white || c === p.light || c === p.patch) {
+        if ((x * 7 + y * 11) % 17 === 0) { g[y * W + x] = C.dirt; if (get(g, x + 1, y) === c) g[y * W + x + 1] = C.dirtD; }
+      }
+    }
+  }
+  /* 泡泡：肚子餓＝魚／骨頭；想玩＝毛線球／網球 */
+  function bubble(g, sp, frame, toy){
+    var b = grid(), by = 5 - frame;
+    ell(b, 27, by, 3.6, 3.1, C.white);
+    ell(b, 23.6, by + 5, 0.9, 0.9, C.white);
+    b = outline(b, OUT);
+    if (toy) {
+      if (sp === 'cat') {
+        ell(b, 27, by, 2, 2, C.yarn);
+        px(b, 26, by - 1, C.yarnD); px(b, 27, by, C.yarnD); px(b, 28, by + 1, C.yarnD);
+        px(b, 29, by + 2, C.yarnD);
+      } else {
+        ell(b, 27, by, 2, 2, C.ball);
+        px(b, 26, by - 1, C.white); px(b, 26, by, C.white); px(b, 27, by + 1, C.white);
+        px(b, 28, by + 1, C.ballD);
+      }
+    } else if (sp === 'cat') {
+      ell(b, 26.5, by, 1.8, 1, C.fish);
+      tri(b, 28, by, 29.6, by - 1.6, 29.6, by + 1.6, C.fish);
+      px(b, 25, by - 1, C.eye);
+    } else {
+      rect(b, 25, by, 4, 1, C.bone);
+      px(b, 24, by - 1, C.bone); px(b, 24, by + 1, C.bone);
+      px(b, 29, by - 1, C.bone); px(b, 29, by + 1, C.bone);
+    }
+    return merge(g, b);
+  }
+  function bow(g, bx, by, p){
+    var b = grid();
+    rect(b, bx - 3, by - 1, 2, 3, p.ribbon); rect(b, bx + 1, by - 1, 2, 3, p.ribbon);
+    rect(b, bx - 1, by, 2, 1, p.ribbonD);
+    px(b, bx - 3, by + 1, p.ribbonD); px(b, bx + 2, by + 1, p.ribbonD);
+    return merge(g, outline(b, OUT));
+  }
+  function sparkle(g, x, y, big){
+    px(g, x, y, C.star);
+    if (big) { px(g, x - 1, y, C.star); px(g, x + 1, y, C.star); px(g, x, y - 1, C.star); px(g, x, y + 1, C.star); }
+  }
+  function fx(g, r, sp, form, expr, frame){
+    var hx = r.hx, hy = r.hy;
+    if (expr === 'sleep') {
+      glyphZ(g, 25, 7, false, C.zzz);
+      if (frame) glyphZ(g, 27, 1, true, C.zzz);
+    } else if (expr === 'hungry') {
+      g = bubble(g, sp, frame, false);
+      px(g, hx + 1, hy + 5 + frame, C.drool);
+    } else if (expr === 'bored') {
+      g = bubble(g, sp, frame, true);
+    } else if (expr === 'dirty') {
+      var f = frame ? [[26,4],[27,8]] : [[25,6],[28,9]];
+      for (var i = 0; i < f.length; i++) { px(g, f[i][0], f[i][1], C.fly); px(g, f[i][0] - 1, f[i][1] - 1, C.wing); }
+      var s = frame ? 1 : 0;
+      px(g, 3 + s, 13, C.stink); px(g, 2 + s, 12, C.stink); px(g, 3 + s, 11, C.stink); px(g, 2 + s, 10, C.stink); px(g, 3 + s, 9, C.stink);
+    } else if (expr === 'sick') {
+      var cols = [hx - 4, hx - 2, hx + 1, hx + 3];
+      for (var j = 0; j < cols.length; j++) { px(g, cols[j], hy - 3, C.gloom); px(g, cols[j], hy - 2, C.gloom); }
+      var sx = Math.round(hx + r.rx - 2), sy = Math.round(hy - r.ry * 0.3) + frame;
+      px(g, sx, sy, C.sweat); rect(g, sx - 1, sy + 1, 2, 2, C.sweat); px(g, sx - 1, sy + 1, C.white);
+    } else if (expr === 'happy') {
+      if (form === 'elegant') {
+        if (frame) { sparkle(g, 5, 7, false); sparkle(g, 8, 3, true); }
+        else sparkle(g, 5, 7, true);
+      }
+    }
+    return g;
+  }
+
+  /* ---- 組合一張圖 ---- */
+  var cache = {};
+  function build(sp, form, expr, frame){
+    var key = sp + '-' + form + '-' + expr + '-' + frame;
+    if (cache[key]) return cache[key];
+    var p = PAL[sp], g = grid();
+    if (form === 'egg') g = egg(g, p, frame);
+    else {
+      var r = BODY[form](g, sp, p, expr === 'sick' ? 0 : frame);
+      if (expr === 'dirty') dirt(g, p);
+      g = outline(g, OUT);
+      face(g, r, p, FACES[expr], frame);
+      if (form === 'elegant') g = bow(g, r.hx + 4, Math.round(r.hy - r.ry + 2), p);
+      g = fx(g, r, sp, form, expr, frame);
+    }
+    cache[key] = g;
+    return g;
+  }
+  function hex(c){ return [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)]; }
+  /* 畫到 32×32 的 canvas 上（放大交給 CSS 的 image-rendering: pixelated） */
+  function draw(canvas, sp, form, expr, frame){
+    var g = build(sp, form, expr, frame), ctx = canvas.getContext('2d');
+    var img = ctx.createImageData(W, H);
+    for (var i = 0; i < g.length; i++) {
+      if (!g[i]) continue;
+      var rgb = hex(g[i]);
+      img.data[i * 4] = rgb[0]; img.data[i * 4 + 1] = rgb[1]; img.data[i * 4 + 2] = rgb[2]; img.data[i * 4 + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  return {
+    W: W, H: H, build: build, draw: draw,
+    SPECIES: ['cat', 'dog'],
+    FORMS: ['egg', 'baby', 'teen', 'round', 'active', 'elegant'],
+    EXPRS: ['happy', 'hungry', 'bored', 'dirty', 'sleep', 'sick']
+  };
+})();
+/* ===== /像素圖引擎 ===== */
+</script>
 <script>
 /* ===== 日和毛孩｜遊戲本體 =====
    注意：照 games 的慣例，不用「和號」字元與雙斜線註解 */
@@ -235,6 +567,16 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 
   /* ---- 畫面 ---- */
   var $ = function(id){ return document.getElementById(id); };
+
+  /* ---- 像素寵物（T1-2）：心情決定表情。選貓狗、長大等 T2-1 再接上，先固定曼基貓少年 ----
+     測試模式可用網址換外觀：pet=dog、form=egg／baby／teen／round／active／elegant */
+  var LOOK = { woken: 'happy' };   /* 剛被吵醒先用開心的臉 */
+  var petSp = 'cat', petForm = 'teen', petExpr = 'happy', petFrame = 0;
+  if (DEBUG) {
+    if (params.get('pet') === 'dog') petSp = 'dog';
+    if (HP_PX.FORMS.indexOf(params.get('form')) >= 0) petForm = params.get('form');
+  }
+  function drawPet(){ HP_PX.draw($('hp-pet'), petSp, petForm, petExpr, petFrame); }
   var state = upgrade(load(SAVE_KEY)) || newState(now());
 
   function save(){ store(SAVE_KEY, state); rebase(0); }
@@ -252,12 +594,9 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
     var t = now();
     simulate(state, t);
     var m = mood(state, t);
-    var asleep = m.key === 'sleep';
     $('hp-screen').classList.toggle('is-night', isAsleep(t));
-    var pet = $('hp-pet');
-    pet.classList.toggle('is-sleep', asleep);
-    pet.classList.toggle('is-hungry', m.key === 'hungry');
-    pet.classList.toggle('is-dirty', m.key === 'dirty');
+    petExpr = LOOK[m.key] || m.key;
+    drawPet();
     $('hp-status').textContent = m.text;
     setBar('full', state.full);
     setBar('mood', state.mood);
@@ -299,6 +638,10 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
   render();
   save();
   setInterval(render, 1000);
+  /* 2 格動畫；系統設定「減少動態」的人就不動 */
+  var still = false;
+  try { still = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
+  if (!still) setInterval(function(){ petFrame = 1 - petFrame; drawPet(); }, 550);
   setInterval(save, 10000);
   document.addEventListener('visibilitychange', function(){ if (document.hidden) save(); else render(); });
   window.addEventListener('pagehide', save);
