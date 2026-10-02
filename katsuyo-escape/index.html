@@ -30,7 +30,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('set', { content_group: 'game', game_id: 'katsuyo_escape', page_lang: 'zh-Hant' });
+  gtag('set', { content_group: 'game', game_id: 'katsuyo_escape', page_lang: 'zh-Hant', page_title: '遊戲|活用館脱出|日文動詞變化' });
   gtag('config', 'G-ZQZHTYTRMQ');
 </script>
 <meta name="description" content="免費日文動詞變化遊戲！五間密室依序考動詞分類、ない形、ます形、て形音便、ば形、命令形與可能形，先熱身再破案，答錯即時解析。免註冊，手機電腦都能玩。">
@@ -54,7 +54,10 @@ body{margin:0}
 <title>日文動詞變化遊戲｜活用館脫出：密室逃脫練五段・一段・て形音便</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+JP:wght@500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900">
 <style>
 :root{
   --bg:#FFFFFF; --ink:#111413; --muted:#5B6661; --line:#DCE4DF; --soft:#F3F7F5;
@@ -239,6 +242,16 @@ button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 .about h2{margin:0;font-size:18px;font-weight:900}
 .about p{margin:0;font-size:14px;color:var(--muted)}
 .about a{color:var(--exit-dark)}
+
+/* hub CTA */
+.hubcta{display:flex;flex-direction:column;gap:12px;align-items:flex-start;background:var(--exit);color:var(--exit-ink);border-radius:10px;padding:22px;box-shadow:inset 0 0 0 3px var(--exit-dark)}
+.hubcta .eyebrow{color:#DDF3E8}
+.hubcta h2{margin:0;font-size:22px;font-weight:900;line-height:1.3}
+.hubcta p{margin:0;font-size:15px;color:#EAF7F0}
+.hubbtn{display:inline-flex;align-items:center;gap:10px;background:#FFFFFF;color:var(--ink);border:2px solid var(--ink);border-radius:8px;padding:14px 24px;font-size:17px;font-weight:900;text-decoration:none}
+.hubbtn:hover{background:var(--amber)}
+.hubbtn:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+@media (max-width:460px){.hubbtn{width:100%;justify-content:center}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -266,12 +279,17 @@ button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 <section class="about">
     <h2>活用館脫出是什麼？</h2>
     <p>活用館脫出是一款免費的日文動詞變化練習遊戲。五間密室依序考動詞分類（五段、上一段、下一段、サ變、カ變）、未然形、連用形與て形音便、假定形與命令形，以及可能形。第一次玩可以先看 5 張熱身卡，已經熟悉的人可直接跳過。</p>
-    <p>完整玩法與常見錯誤整理：<a href="https://knittinghiyori.com/japanese-verb-conjugation-game/" data-cta="about_article" data-cta-type="article">日文動詞變化怎麼練最快？活用館脫出玩法介紹</a>　·　<a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">更多學習小遊戲</a></p>
+    <p>完整玩法與常見錯誤整理：<a href="https://knittinghiyori.com/japanese-verb-conjugation-game/" data-cta="about_article" data-cta-type="article">日文動詞變化怎麼練最快？活用館脫出玩法介紹</a></p>
+  </section>
+  <section class="hubcta" aria-label="更多學習小遊戲">
+    <span class="eyebrow">逃出活用館之後</span>
+    <h2>還有更多日文與程式小遊戲</h2>
+    <p>五十音花店、日檢單字密室、關西腔道場、SQL 與 SwiftUI 偵探，都在遊戲主頁。</p>
+    <a class="hubbtn" href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">探索更多互動遊戲 →</a>
   </section>
 </div>
 
 <p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
-
 
 <script>
 /* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
@@ -505,8 +523,8 @@ function distractors(v,f,ans){
     }
     (CONFUSE[f]||[]).forEach(g=>c.push(conj(v,g)));
   }
-  c=[...new Set(c)].filter(x=>x&&x!==ans&&x!==v.w);
-  if(c.length<3){Object.keys(FORMS).forEach(g=>{const y=conj(v,g);if(y!==ans&&!c.includes(y))c.push(y);});}
+  c=[...new Set(c)].filter(x=>[x,x!==ans,x!==v.w].every(Boolean));
+  if(c.length<3){Object.keys(FORMS).forEach(g=>{const y=conj(v,g);if([y!==ans,!c.includes(y)].every(Boolean))c.push(y);});}
   return shuffle(c.slice(0,Math.max(3,c.length))).slice(0,3);
 }
 
@@ -551,7 +569,7 @@ function conjQ(v,f){
 function hintFor(v,f){
   const F=FORMS[f];
   const steps=[
-    "先分類："+(v.t==="s"||v.t==="k"?"這是變格動詞，直接背":v.w.endsWith("る")&&(v.t==="gx"||v.t==="g")?"る結尾，看る前面的音；小心例外五段":v.w.endsWith("る")?"る前是 "+v.r.slice(-2,-1)+"（"+(v.t==="i1"?"い段":"え段")+"）→ 一段":"不是る結尾 → 一定是五段"),
+    "先分類："+(v.t==="s"||v.t==="k"?"這是變格動詞，直接背":(v.w.endsWith("る")?(v.t==="gx"||v.t==="g"):false)?"る結尾，看る前面的音；小心例外五段":v.w.endsWith("る")?"る前是 "+v.r.slice(-2,-1)+"（"+(v.t==="i1"?"い段":"え段")+"）→ 一段":"不是る結尾 → 一定是五段"),
     F.name+" 從 "+F.base+" 出發"+(F.att?"，後接 "+F.att.replace("＋",""):"")
   ];
   return steps.join("　／　");
@@ -597,12 +615,13 @@ function identifyQ(v){
     opts:IDF.slice(),ans,jp:false,ex:part+(tail==="。"?"。":tail)+" → "+ans,why:"判斷依據是後接詞："+why,
     hint:"口訣：未然形＝ない・う・よう／連用形＝ます・た・て／連体形＝時・こと・ので／仮定形＝ば"};
 }
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+const AMP=String.fromCharCode(38);
+function esc(s){return String(s).split(AMP).join(AMP+"amp;").split("<").join(AMP+"lt;").split(">").join(AMP+"gt;").split('"').join(AMP+"quot;");}
 
 /* ---------- rooms ---------- */
 const ROOMS=[
  {jp:"玄関",zh:"玄關",title:"分類之門",story:"門上刻著五種動詞的符號。每判斷對一個動詞，鎖上的轉盤就轉到一格。",
-  build(){const used=new Set(),qs=[];const pool=shuffle(V.filter(v=>v.t!=="k"&&v.t!=="s"));
+  build(){const used=new Set(),qs=[];const pool=shuffle(V.filter(v=>!["k","s"].includes(v.t)));
     const gx=pool.filter(v=>v.t==="gx").slice(0,2),rest=pool.filter(v=>v.t!=="gx");
     const picks=[...gx,rest.find(v=>v.t==="g"),rest.find(v=>v.t==="i1"),rest.find(v=>v.t==="e1")];
     if(Math.random()<.5)picks[1]=V.find(v=>v.t==="k");else picks[1]=pick(V.filter(v=>v.t==="s"));
@@ -610,7 +629,7 @@ const ROOMS=[
  {jp:"書庫",zh:"書庫",title:"未然形的書架",story:"這裡每本書都寫著還沒發生的事。否定、意志、被動、使役，都從未然形出發。",
   build(){const u=new Set();return shuffle(["nai","nai","vol","pass","caus"]).map(f=>conjQ(weightedVerb(u),f));}},
  {jp:"廊下",zh:"走廊",title:"連用形的長廊",story:"長廊盡頭有ます、た、て三扇門。五段動詞接た・て時會音變，腳下到處是陷阱。",
-  build(){const u=new Set();const g=()=>{let v;do{v=weightedVerb(u);}while(Math.random()<.4&&!(v.t==="g"||v.t==="gx"));return v;};
+  build(){const u=new Set();const g=()=>{let v;do{v=weightedVerb(u);}while(Math.random()<.4?!(v.t==="g"||v.t==="gx"):false);return v;};
     return shuffle(["masu","te","te","ta","ta"]).map(f=>conjQ(f==="masu"?weightedVerb(u):g(),f));}},
  {jp:"地下室",zh:"地下室",title:"假定與命令",story:"牆上用粉筆寫著「行け」。它是假定形還是命令形？答案藏在後面有沒有「ば」。",
   build(){const u=new Set();return shuffle(["ba","ba","imp","imp","proh"]).map(f=>conjQ(weightedVerb(u),f));}},
@@ -654,12 +673,12 @@ function intro(){
   </div>
   <div class="plan-label">館內平面圖</div>
   <div class="plan"><button class="roomrow warm" id="warmrow"><span class="no jp">控室</span><span class="nm"><b>熱身：管理員的筆記</b><span>5 張教學卡・不計時・不扣蠟燭</span></span><span class="chip ${S.tutored?"done":"now"}">${S.tutored?"已讀過":"建議先看"}</span></button>${rows}</div>
-  ${S.cleared===0&&!S.tutored?`<div class="choice">
+  ${(S.cleared===0?!S.tutored:false)?`<div class="choice">
     <button class="primary" id="tut"><b>先熱身再破案</b><span>5 張卡帶你過一次分類、活用形、音便，約 2 分鐘</span></button>
     <button id="skip"><b>跳過教學，直接破案</b><span>已經熟悉五段／一段／變格的人</span></button>
   </div>`:`<div class="btnrow">
     <button class="btn go" id="go">${S.cleared===0?"開始脫出":S.cleared>=ROOMS.length?"再逃一次":"繼續：進入"+ROOMS[S.cleared].zh}</button>
-    ${S.cleared>0&&S.cleared<ROOMS.length?'<button class="btn ghost" id="reset">從頭開始</button>':""}
+    ${(S.cleared>0?S.cleared<ROOMS.length:false)?'<button class="btn ghost" id="reset">從頭開始</button>':""}
   </div>`}
   ${S.best!=null?`<div class="best">最佳脫出時間 ${fmt(S.best)}</div>`:""}
   <p class="src">規則依據：<a href="https://knittinghiyori.com/japanese-verb-conjugation-six-forms-five-types/" target="_blank" rel="noopener" data-cta="source_article" data-cta-type="article">編織日和｜五種動詞分類 × 六大活用形</a>。動詞取自 JLPT N5–N4。</p>
@@ -684,10 +703,10 @@ function shareLinks(text){
   const u=encodeURIComponent(SHARE_URL),full=text+" "+SHARE_TAGS;
   return [
     ["facebook","Facebook","#1877F2","https://www.facebook.com/sharer/sharer.php?u="+u],
-    ["line","LINE","#06C755","https://social-plugins.line.me/lineit/share?url="+u+"&text="+encodeURIComponent(full)],
+    ["line","LINE","#06C755","https://social-plugins.line.me/lineit/share?url="+u+AMP+"text="+encodeURIComponent(full)],
     ["threads","Threads","#111413","https://www.threads.net/intent/post?text="+encodeURIComponent(full+"\n"+SHARE_URL)],
-    ["x","X","#111413","https://twitter.com/intent/tweet?text="+encodeURIComponent(full)+"&url="+u],
-    ["telegram","Telegram","#229ED9","https://t.me/share/url?url="+u+"&text="+encodeURIComponent(full)]
+    ["x","X","#111413","https://twitter.com/intent/tweet?text="+encodeURIComponent(full)+AMP+"url="+u],
+    ["telegram","Telegram","#229ED9","https://t.me/share/url?url="+u+AMP+"text="+encodeURIComponent(full)]
   ];
 }
 function renderShare(text,isResult){
@@ -867,10 +886,10 @@ function answer(btn){
   const last=R.q===R.qs.length-1;
   document.getElementById("fb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"轉盤轉到了":"答錯，蠟燭熄了一根"}</b>
     <span class="ex">${esc(q.ex)}</span><span>${esc(q.why)}</span>
-    <div class="btnrow" style="margin-top:6px"><button class="btn ${ok?"go":""}" id="cont">${R.lives<=0?"……":ok&&R.solved===5?"打開鎖":"下一道鎖"}</button></div></div>`;
+    <div class="btnrow" style="margin-top:6px"><button class="btn ${ok?"go":""}" id="cont">${R.lives<=0?"……":(ok?R.solved===5:false)?"打開鎖":"下一道鎖"}</button></div></div>`;
   // update hud
   app.querySelectorAll(".candle").forEach((c,k)=>c.classList.toggle("out",k>=R.lives));
-  app.querySelectorAll(".dial").forEach((d,k)=>{if(k<R.solved&&!d.classList.contains("set")){d.classList.add("set");d.textContent=R.code[k];}});
+  app.querySelectorAll(".dial").forEach((d,k)=>{if(k<R.solved?!d.classList.contains("set"):false){d.classList.add("set");d.textContent=R.code[k];}});
   const c=document.getElementById("cont");c.focus({preventScroll:true});
   c.onclick=()=>{
     if(R.lives<=0){endRound("fail");renderRoom("fail");return;}
@@ -921,9 +940,9 @@ function escaped(){
 }
 
 document.addEventListener("keydown",e=>{
-  if(e.target&&e.target.closest&&e.target.closest("input,textarea,a"))return;
-  if(/^[1-6]$/.test(e.key)){const b=app.querySelectorAll(".opt")[+e.key-1];if(b&&!b.disabled)b.click();}
-  else if(e.key==="Enter"&&R){const c=document.getElementById("cont");if(c&&document.activeElement!==c){e.preventDefault();c.click();}}
+  if(e.target?(e.target.closest?e.target.closest("input,textarea,a"):null):null)return;
+  if(/^[1-6]$/.test(e.key)){const b=app.querySelectorAll(".opt")[+e.key-1];if(b?!b.disabled:false)b.click();}
+  else if(e.key==="Enter"?R:null){const c=document.getElementById("cont");if(c?document.activeElement!==c:false){e.preventDefault();c.click();}}
 });
 
 if(/[?]ref=share/.test(location.search)){const h=HG();if(h)h.start("shared");}
