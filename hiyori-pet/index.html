@@ -785,16 +785,16 @@ var HP_PC = (function(){
   var HATCH_MIN = 10;   /* 孵蛋 10 分鐘 */
   var BABY_DAYS = 2, TEEN_DAYS = 6;   /* 幼年第 1～2 天、少年第 3～6 天、第 7 天起成年 */
   var AWAY_H = 24;   /* 三條狀態都是 0 超過 24 小時，就留紙條離家出走 */
-  var TRIP_HIGH = 70, TRIP_DAYS = 3, TRIP_H = 24;   /* 連 3 天平均心情 70 以上，隔天醒來就出門旅行 1 天 */
+  var TRIP_HIGH = 60, TRIP_DAYS = 5, TRIP_H = 24;   /* 連 5 天平均心情 60 以上，隔天醒來就出門旅行 1 天 */
   var STREAK_LETTER = 7;   /* 連續照顧 7 天有一封特別的信 */
   var CARE = {   /* 各動作的效果；care＝少年期要記在哪一類（決定成年型態） */
-    meal:  { full: 30 },
+    meal:  { full: 50 },
     snack: { mood: 15, full: 5, care: 'snack' },
-    poop:  { clean: 10, poops: true, care: 'clean' },
+    poop:  { clean: 10, poops: true },   /* 清便便是基本照顧，不影響成年型態 */
     bath:  { clean: 100, care: 'clean' }
   };
-  /* 接飛盤：10 秒丟 6 個，每接 1 個心情多 +4 */
-  var PLAY = { base: 8, perCatch: 4, full: -5, throws: [600, 2200, 3800, 5400, 7000, 8600], ms: 10000, fly: 1500, jump: 600, jumpH: 56, reach: 28 };
+  /* 接飛盤：10 秒丟 6 個，保底 +15，每接 1 個心情多 +4 */
+  var PLAY = { base: 15, perCatch: 4, full: -5, throws: [600, 2200, 3800, 5400, 7000, 8600], ms: 10000, fly: 1500, jump: 600, jumpH: 56, reach: 28 };
   var ADULT = { snack: 'round', play: 'active', clean: 'elegant' };
   var NAMES = { cat: '麻糬', dog: '豆豆' };
   var SPN = { cat: '曼基貓', dog: '邊境牧羊犬' };
@@ -856,7 +856,7 @@ var HP_PC = (function(){
     var h = new Date(t).getHours();
     return h >= SLEEP_FROM || h < SLEEP_TO;
   }
-  /* 成年型態：少年期點心、陪玩、清理哪種做最多；平手看最後一次做的是哪種 */
+  /* 成年型態：少年期點心、陪玩、洗澡哪種做最多（清便便不算）；平手看最後一次做的是哪種 */
   function decide(s){
     var order = ['snack', 'play', 'clean'], best = 'snack', top = -1;
     for (var i = 0; i < order.length; i++) {
@@ -909,7 +909,7 @@ var HP_PC = (function(){
     s.lastTick = to;
     return s;
   }
-  /* 每天結算平均心情：連 3 天 ≥70 就準備出門（幼年還太小，等長到少年） */
+  /* 每天結算平均心情：連 5 天 ≥60 就準備出門（幼年還太小，等長到少年） */
   function trackMood(s, t, h){
     var k = dayKey(t);
     if (s.moodDay.key !== k) {
@@ -1240,7 +1240,7 @@ var HP_PC = (function(){
     box.appendChild(grid);
   }
   function panelCard(box){
-    if (!book.postcards.length) { box.appendChild(el('p', 'hp-empty', '還沒有明信片。連續 3 天心情都很好，牠就會自己出門旅行，帶一張回來。')); return; }
+    if (!book.postcards.length) { box.appendChild(el('p', 'hp-empty', '還沒有明信片。連續 5 天心情都不錯，牠就會自己出門旅行，帶一張回來。')); return; }
     box.appendChild(el('p', 'hp-panel__sum', '點一下明信片看背面。'));
     var grid = el('div', 'hp-cards');
     book.postcards.forEach(function(pc){
