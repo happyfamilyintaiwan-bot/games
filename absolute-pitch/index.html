@@ -827,6 +827,7 @@ function tone(f,timbre,dur){
     for(var n=1;n<=6;n++){var o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f*n*(1+0.0004*n*n);g.gain.value=1/Math.pow(n,1.6);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+0.5)}
   }else{
     var os=c.createOscillator();os.type=timbre;os.frequency.value=f;os.connect(out);
+    if(f<350){for(var h=2;h<=3;h++){var oh=c.createOscillator(),gh=c.createGain();oh.type='sine';oh.frequency.value=f*h;gh.gain.value=h===2?0.35:0.2;oh.connect(gh);gh.connect(out);oh.start(t);oh.stop(t+dur+0.2)}} /* 350 Hz 以下補一點泛音：小喇叭放不出基頻時，耳朵仍能從泛音聽出音高 */
     var peak=timbre==='sine'?0.3:0.28;
     out.gain.setValueAtTime(0.0001,t);out.gain.exponentialRampToValueAtTime(peak,t+0.03);out.gain.setValueAtTime(peak,t+dur-0.15);out.gain.exponentialRampToValueAtTime(0.0008,t+dur+0.1);
     os.start(t);os.stop(t+dur+0.2);
@@ -958,7 +959,7 @@ async function nextTrial(){
   if(S.noise){status(T.noise);noise(1);await sleep(1300)}else{await sleep(500)}
   if(!mode)return;
   var pc=mode==='test'?queue.pop():(mode==='review'?pickReview():pickTrain());
-  var oct=3+Math.floor(Math.random()*3);
+  var oct=4+Math.floor(Math.random()*3); /* C4–B6（262–1976 Hz）：C3 在手機喇叭幾乎發不出聲 */
   cur={pc:pc,oct:oct};scopeColor=INK;scopeW=2.2;tone(freq(pc,oct),S.timbre,1);t0=performance.now();
   waiting=true;paintWheel();
   if(mode==='review')reviewLeft--;
@@ -1148,22 +1149,22 @@ function render(){
   if(!mode)$('reviewBtn').hidden=!bank().length;
 }
 function drawChart(){
-  var box=$('chartBox'),T=S.tests.slice(-10);
-  if(!T.length){box.innerHTML='<div class="empty">'+T.chartEmpty+'</div>';return}
+  var box=$('chartBox'),TS=S.tests.slice(-10); /* 不能叫 T：會蓋掉文字表 T（chartEmpty、chartAria） */
+  if(!TS.length){box.innerHTML='<div class="empty">'+T.chartEmpty+'</div>';return}
   var W=Math.max(280,Math.min(560,box.clientWidth||520)),H=200,L=30,Rm=10,Tp=16,B=26,iw=W-L-Rm,ih=H-Tp-B;
-  function X(i){return T.length===1?L+iw/2:L+i*iw/(T.length-1)}
+  function X(i){return TS.length===1?L+iw/2:L+i*iw/(TS.length-1)}
   function Y(v){return Tp+ih-(v/100)*ih}
   var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+T.chartAria+'">';
   [0,50,100].forEach(function(v){s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#eceef2" stroke-width="1"/><text x="'+(L-6)+'" y="'+(Y(v)+3)+'" text-anchor="end">'+v+'</text>'});
   s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+Y(90)+'" y2="'+Y(90)+'" stroke="#16161a" stroke-width="1" stroke-dasharray="4 3"/>';
   s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+Y(8.3)+'" y2="'+Y(8.3)+'" stroke="#8a8d99" stroke-width="1" stroke-dasharray="1 3"/>';
-  var path=T.map(function(t,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(t.acc).toFixed(1)}).join(' ');
-  if(T.length>1)s+='<path d="'+path+'" fill="none" stroke="#16161a" stroke-width="1.8" stroke-linejoin="round"/>';
-  T.forEach(function(t,i){var lastPt=i===T.length-1;s+='<circle cx="'+X(i)+'" cy="'+Y(t.acc)+'" r="'+(lastPt?4:2.6)+'" fill="'+(lastPt?'#16161a':'#ffffff')+'" stroke="#16161a" stroke-width="1.5"/>'});
-  var lt=T[T.length-1],lx=X(T.length-1),ly=Y(lt.acc);
-  s+='<text class="lab" x="'+(T.length===1?lx+8:lx-8)+'" y="'+(ly<Tp+14?ly+16:ly-9)+'" text-anchor="'+(T.length===1?'start':'end')+'">'+lt.acc+'%</text>';
-  s+='<text x="'+L+'" y="'+(H-4)+'">'+T[0].d.slice(5).replace('-','/')+'</text>';
-  if(T.length>1)s+='<text x="'+(W-Rm)+'" y="'+(H-4)+'" text-anchor="end">'+lt.d.slice(5).replace('-','/')+'</text>';
+  var path=TS.map(function(t,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(t.acc).toFixed(1)}).join(' ');
+  if(TS.length>1)s+='<path d="'+path+'" fill="none" stroke="#16161a" stroke-width="1.8" stroke-linejoin="round"/>';
+  TS.forEach(function(t,i){var lastPt=i===TS.length-1;s+='<circle cx="'+X(i)+'" cy="'+Y(t.acc)+'" r="'+(lastPt?4:2.6)+'" fill="'+(lastPt?'#16161a':'#ffffff')+'" stroke="#16161a" stroke-width="1.5"/>'});
+  var lt=TS[TS.length-1],lx=X(TS.length-1),ly=Y(lt.acc);
+  s+='<text class="lab" x="'+(TS.length===1?lx+8:lx-8)+'" y="'+(ly<Tp+14?ly+16:ly-9)+'" text-anchor="'+(TS.length===1?'start':'end')+'">'+lt.acc+'%</text>';
+  s+='<text x="'+L+'" y="'+(H-4)+'">'+TS[0].d.slice(5).replace('-','/')+'</text>';
+  if(TS.length>1)s+='<text x="'+(W-Rm)+'" y="'+(H-4)+'" text-anchor="end">'+lt.d.slice(5).replace('-','/')+'</text>';
   box.innerHTML=s+'</svg>';
 }
 
