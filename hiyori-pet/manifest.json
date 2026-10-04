@@ -1,0 +1,15 @@
+{
+  "name": "日和毛孩",
+  "short_name": "日和毛孩",
+  "description": "免費網頁電子寵物：選一隻像素貓或狗，從蛋開始照顧。",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff4e6",
+  "theme_color": "#d94873",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

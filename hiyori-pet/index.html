@@ -22,6 +22,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<!-- 加到主畫面（PWA） -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-title" content="日和毛孩">
 <!-- 標題：遊戲名｜主要關鍵字（60 字內） -->
 <title>日和毛孩｜免費網頁電子寵物，養一隻像素貓狗</title>
 <!-- 描述：誰適合、能學到什麼（80–120 字） -->
@@ -134,6 +137,14 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .hp-newegg{margin-top:12px;font:inherit;font-weight:700;padding:10px 18px;border:0;border-radius:12px;background:#d94873;color:#fff;cursor:pointer}
 .hp-newegg.is-quiet{background:#efe3d3;color:#5b4636;margin-left:8px}
 .hp-newegg__ask{margin-top:12px}
+.hp-tools{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.hp-tools button{font:inherit;font-size:13px;font-weight:700;color:#5b4636;background:#fff;border:2px solid #efe3d3;border-radius:12px;padding:7px 12px;cursor:pointer}
+.hp-tools button[aria-pressed="true"]{border-color:#d94873;color:#d94873}
+.hp-tools__hint{margin:6px 2px 0;font-size:12px;color:#8a6d4b}
+.hp-tip{margin-top:12px;padding:12px 14px;border-radius:16px;background:#fff4e6;border:2px dashed #e8b9c7;font-size:14px;line-height:1.7}
+.hp-move textarea{display:block;width:100%;box-sizing:border-box;min-height:84px;margin-top:8px;font:12px/1.5 ui-monospace,Menlo,monospace;padding:8px;border:2px solid #efe3d3;border-radius:10px;background:#fff;color:inherit;word-break:break-all}
+.hp-move__msg{margin-top:8px;font-size:13px;min-height:1.4em}
+.hp-move__msg.is-err{color:#c0392b}
 .hp-debug{margin-top:16px;padding:12px;border:2px dashed #c9b8a6;border-radius:14px;font-size:13px;color:#6b6b70}
 .hp-debug[hidden]{display:none}
 .hp-debug__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -184,6 +195,31 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
       <button type="button" data-tab="dex" aria-pressed="false">圖鑑</button>
     </div>
     <div class="hp-panel" id="hp-panel" hidden></div>
+  </div>
+  <div class="hp-tools" id="hp-tools">
+    <button type="button" id="hp-pip-btn" hidden>放到桌面</button>
+    <button type="button" id="hp-install-btn" hidden>加到主畫面</button>
+    <button type="button" id="hp-move-btn" aria-pressed="false">搬家碼</button>
+  </div>
+  <p class="hp-tools__hint" id="hp-pip-hint" hidden>毛孩在小窗陪你了。這個分頁可以縮小，但不要關掉喔。</p>
+  <div class="hp-tip" id="hp-ios-tip" hidden>
+    <b>小提醒：</b>在 iPhone 上把日和毛孩「加入主畫面」，毛孩比較不會不見。點 Safari 下方的分享按鈕，選「加入主畫面」就好。
+    <div><button type="button" class="hp-newegg" id="hp-ios-ok">知道了</button></div>
+  </div>
+  <div class="hp-panel hp-move" id="hp-move" hidden>
+    <p class="hp-panel__sum">換手機或電腦時，用搬家碼把毛孩、圖鑑、明信片和點心櫃一起帶走。</p>
+    <p class="hp-panel__title">帶走</p>
+    <button type="button" class="hp-newegg" id="hp-move-out">產生搬家碼</button>
+    <textarea id="hp-move-code" readonly hidden aria-label="你的搬家碼"></textarea>
+    <button type="button" class="hp-newegg is-quiet" id="hp-move-copy" hidden>複製</button>
+    <p class="hp-panel__title">搬進來</p>
+    <textarea id="hp-move-in" placeholder="把搬家碼整段貼在這裡" aria-label="貼上搬家碼"></textarea>
+    <button type="button" class="hp-newegg" id="hp-move-go">搬進來</button>
+    <div class="hp-newegg__ask" id="hp-move-ask" hidden>
+      <p id="hp-move-ask-text"></p>
+      <button type="button" class="hp-newegg" id="hp-move-yes">確定，搬進來</button><button type="button" class="hp-newegg is-quiet" id="hp-move-no">再想想</button>
+    </div>
+    <p class="hp-move__msg" id="hp-move-msg" aria-live="polite"></p>
   </div>
   <div class="hp-debug" id="hp-debug" hidden>
     <div>測試模式｜速度 <b id="hp-dbg-speed"></b> 倍｜遊戲時間 <b id="hp-dbg-time"></b></div>
@@ -1087,6 +1123,10 @@ var HP_PC = (function(){
     var c = $('hp-pet');
     if (petGone) c.getContext('2d').clearRect(0, 0, c.width, c.height);
     else HP_PX.draw(c, petSp, petForm, petExpr, petFrame);
+    if (pipEls) {
+      if (petGone) pipEls.cv.getContext('2d').clearRect(0, 0, pipEls.cv.width, pipEls.cv.height);
+      else HP_PX.draw(pipEls.cv, petSp, petForm, petExpr, petFrame);
+    }
   }
 
   function save(){ if (state) store(SAVE_KEY, state); rebase(0); }
@@ -1112,7 +1152,8 @@ var HP_PC = (function(){
     if (DEBUG) { $('hp-dbg-speed').textContent = SPEED; $('hp-dbg-time').textContent = fmt(t); }
     $('hp-adopt').hidden = !!state;
     $('hp-main').hidden = !state;
-    if (!state) { drawPet(); return; }
+    updateTools();
+    if (!state) { if (pipWin) pipWin.close(); drawPet(); return; }
     simulate(state, t);
     var form = formAt(state, t);
     var m = mood(state, t, form);
@@ -1168,6 +1209,7 @@ var HP_PC = (function(){
     var lock = form === 'egg' || petGone || !!game;
     var btns = document.querySelectorAll('#hp-actions button');
     for (var j = 0; j < btns.length; j++) btns[j].disabled = lock;
+    renderPip($('hp-status').textContent, lock, NEED.indexOf(m.key) >= 0, isAsleep(t));
     var unread = state.letters.filter(function(L){ return !L.read; }).length;
     $('hp-unread').hidden = !unread;
     $('hp-unread').textContent = unread;
@@ -1362,15 +1404,19 @@ var HP_PC = (function(){
     if (b.disabled) return;
     var name = b.getAttribute('data-act');
     if (name === 'play') { startPlay(); return; }
+    doAct(name, 'page');
+  });
+  function doAct(name, where){
+    if (!state) return;
     act(state, name, now());
     if (name === 'snack') {
       var own = book.snacks;
       say(state.name + '吃了' + (own.length ? HP_DATA.SNACKS[own[Math.floor(Math.random() * own.length)]][0] : '小點心') + '，心情變好了', 3000, true);
     }
-    track('pet_action', { action: name });
+    track('pet_action', { action: name, option: where });
     save();
     render();
-  });
+  }
   $('hp-home').addEventListener('click', function(){
     fetchHome(state, now());
     say(state.name + '回來了！', 5000, true);
@@ -1448,6 +1494,182 @@ var HP_PC = (function(){
     if (e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); jump(); }
   });
 
+  /* ---- 浮動小窗（電腦版 Chrome／Edge 的 Document Picture-in-Picture） ----
+     小窗跟著這個分頁：分頁縮小沒關係，關掉小窗也會消失 */
+  var NEED = ['hungry', 'dirty', 'bored'];
+  var canPip = 'documentPictureInPicture' in window;
+  var pipWin = null, pipEls = null;
+  var PIP_CSS = 'html,body{height:100%}body{margin:0;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;background:#fff4e6;color:#5b4636;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;-webkit-user-select:none;user-select:none;transition:background .6s}'
+    + 'body.is-night{background:#2f3352;color:#e8e6ff}'
+    + 'canvas{width:96px;height:96px;image-rendering:pixelated;image-rendering:crisp-edges}'
+    + 'canvas.is-need{animation:hop 1.1s steps(2) infinite}'
+    + '@keyframes hop{0%{transform:translateY(0)}50%{transform:translateY(-8px)}}'
+    + '.s{font-size:13px;font-weight:700;min-height:2.6em;padding:0 10px;line-height:1.3}'
+    + '.b{display:flex;gap:4px}'
+    + 'button{font:inherit;font-size:12px;font-weight:700;padding:6px 9px;border:0;border-radius:10px;background:#d94873;color:#fff;cursor:pointer}'
+    + 'button:disabled{background:#cfc6bd;cursor:default}';
+  function openPip(){
+    if (!canPip || pipWin || !state) return;
+    window.documentPictureInPicture.requestWindow({ width: 220, height: 260 }).then(function(w){
+      pipWin = w;
+      var d = w.document;
+      d.title = state.name + '｜日和毛孩';
+      var st = d.createElement('style'); st.textContent = PIP_CSS; d.head.appendChild(st);
+      var cv = d.createElement('canvas'); cv.width = HP_PX.W; cv.height = HP_PX.H;
+      var tx = d.createElement('div'); tx.className = 's'; tx.setAttribute('aria-live', 'polite');
+      var row = d.createElement('div'); row.className = 'b';
+      [['meal', '正餐'], ['snack', '點心'], ['poop', '清便便']].forEach(function(a){
+        var x = d.createElement('button'); x.type = 'button'; x.textContent = a[1]; x.setAttribute('data-act', a[0]); row.appendChild(x);
+      });
+      row.addEventListener('click', function(e){
+        var x = e.target.closest('[data-act]');
+        if (!x || x.disabled) return;
+        doAct(x.getAttribute('data-act'), 'pip');
+      });
+      d.body.appendChild(cv); d.body.appendChild(tx); d.body.appendChild(row);
+      pipEls = { cv: cv, tx: tx, btns: row.querySelectorAll('button') };
+      w.addEventListener('pagehide', function(){ pipWin = null; pipEls = null; updateTools(); });
+      track('pet_pip_open', {});
+      render();
+    }).catch(function(err){
+      if (DEBUG) console.warn('[hiyori-pet] 小窗開不起來', err);
+      say('這個瀏覽器暫時開不了小窗，換 Chrome 或 Edge 試試看', 5000, true);
+      render();
+    });
+  }
+  function renderPip(text, lock, need, night){
+    if (!pipEls) return;
+    pipEls.tx.textContent = text;
+    pipEls.cv.classList.toggle('is-need', need ? !lock : false);
+    pipWin.document.body.classList.toggle('is-night', night);
+    for (var i = 0; i < pipEls.btns.length; i++) pipEls.btns[i].disabled = lock;
+  }
+  $('hp-pip-btn').addEventListener('click', function(){ if (pipWin) pipWin.close(); else openPip(); });
+
+  /* ---- 加到主畫面 ----
+     Chrome／Android：瀏覽器准許時出現「加到主畫面」按鈕；iPhone：沒有按鈕可以叫，第一次來時用小卡教怎麼加 */
+  var installEvt = null, IOS_KEY = 'hiyori-pet:ios-tip';
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); installEvt = e; updateTools(); });
+  window.addEventListener('appinstalled', function(){ installEvt = null; track('pet_pwa_install', {}); updateTools(); });
+  $('hp-install-btn').addEventListener('click', function(){
+    if (!installEvt) return;
+    installEvt.prompt();
+    installEvt.userChoice.then(function(){ installEvt = null; updateTools(); }).catch(function(){});
+  });
+  function isIOS(){
+    if (DEBUG ? params.get('ios') === '1' : false) return true;
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) return true;
+    return navigator.platform === 'MacIntel' ? navigator.maxTouchPoints > 1 : false;
+  }
+  function isStandalone(){
+    try { if (window.matchMedia('(display-mode: standalone)').matches) return true; } catch(e) {}
+    return navigator.standalone === true;
+  }
+  var tipDone = false;
+  try { tipDone = !!localStorage.getItem(IOS_KEY); } catch(e) {}
+  $('hp-ios-ok').addEventListener('click', function(){
+    tipDone = true;
+    try { localStorage.setItem(IOS_KEY, '1'); } catch(e) {}
+    updateTools();
+  });
+  if ('serviceWorker' in navigator) { try { navigator.serviceWorker.register('sw.js').catch(function(){}); } catch(e) {} }
+
+  function updateTools(){
+    var pb = $('hp-pip-btn');
+    pb.hidden = !(canPip ? !!state : false);
+    pb.textContent = pipWin ? '收回小窗' : '放到桌面';
+    pb.setAttribute('aria-pressed', pipWin ? 'true' : 'false');
+    $('hp-pip-hint').hidden = !pipWin;
+    $('hp-install-btn').hidden = !installEvt;
+    $('hp-ios-tip').hidden = !(state ? (isIOS() ? !(isStandalone() || tipDone) : false) : false);
+  }
+
+  /* ---- 搬家碼：存檔＋收藏本打包成一串文字，換裝置時貼上 ----
+     格式：HP1.<base64 的 JSON>.<檢查碼>；檢查碼不對就不讀，避免貼到一半的碼把存檔弄壞 */
+  var MOVE_HEAD = 'HP1.';
+  function checksum(str){
+    var h = 5381;
+    for (var i = 0; i < str.length; i++) h = (h * 33 + str.charCodeAt(i)) % 4294967296;
+    return h.toString(36);
+  }
+  function toB64(str){
+    var bytes = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+  function fromB64(b64){
+    var bin = atob(b64), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function makeMoveCode(){
+    var body = toB64(JSON.stringify({ v: 1, at: Date.now(), save: state, book: book }));
+    return MOVE_HEAD + body + '.' + checksum(body);
+  }
+  function readMoveCode(code){
+    code = String(code || '').replace(/\s+/g, '');
+    if (!code) return { err: '還沒有貼上搬家碼。' };
+    if (code.indexOf(MOVE_HEAD) !== 0) return { err: '這不是日和毛孩的搬家碼，請確認有沒有整段複製。' };
+    var rest = code.slice(MOVE_HEAD.length), dot = rest.lastIndexOf('.');
+    if (dot < 0) return { err: '搬家碼不完整，請回原本的裝置重新整段複製。' };
+    var body = rest.slice(0, dot);
+    if (checksum(body) !== rest.slice(dot + 1)) return { err: '搬家碼不完整或被改到了，請回原本的裝置重新整段複製。' };
+    var data = null;
+    try { data = JSON.parse(fromB64(body)); } catch(e) { return { err: '搬家碼讀不出來，請回原本的裝置重新整段複製。' }; }
+    if (!data || data.v !== 1 || !data.book || data.book.v !== 1) return { err: '這個搬家碼的版本讀不出來。' };
+    var s = data.save ? upgrade(data.save) : null;
+    if (data.save ? !s : false) return { err: '這個搬家碼的版本讀不出來。' };
+    return { save: s, book: data.book };
+  }
+  var moveData = null;
+  function moveMsg(text, err){ var m = $('hp-move-msg'); m.textContent = text; m.classList.toggle('is-err', !!err); }
+  function applyMove(){
+    state = moveData.save;
+    book = moveData.book;
+    moveData = null;
+    if (state) store(SAVE_KEY, state); else { try { localStorage.removeItem(SAVE_KEY); } catch(e) {} }
+    saveBook();
+    panelSig = '';
+    $('hp-move-ask').hidden = true;
+    $('hp-move-in').value = '';
+    moveMsg(state ? '搬好了！' + state.name + '已經在這裡了。' : '搬好了！圖鑑和明信片都在，可以領養新的毛孩。');
+    track('pet_move', { option: 'import' });
+    render();
+  }
+  $('hp-move-btn').addEventListener('click', function(){
+    var box = $('hp-move');
+    box.hidden = !box.hidden;
+    $('hp-move-btn').setAttribute('aria-pressed', box.hidden ? 'false' : 'true');
+    if (!box.hidden) moveMsg('');
+  });
+  $('hp-move-out').addEventListener('click', function(){
+    if (state) simulate(state, now());
+    var ta = $('hp-move-code');
+    ta.value = makeMoveCode();
+    ta.hidden = false;
+    $('hp-move-copy').hidden = false;
+    moveMsg('這就是你的搬家碼。複製起來，到新裝置打開日和毛孩，貼在「搬進來」。');
+    track('pet_move', { option: 'export' });
+  });
+  $('hp-move-copy').addEventListener('click', function(){
+    var ta = $('hp-move-code');
+    var done = function(){ moveMsg('已複製！到新裝置貼上就可以了。'); };
+    var fallback = function(){ ta.focus(); ta.select(); try { document.execCommand('copy'); done(); } catch(e) { moveMsg('請長按文字框，全選後複製。'); } };
+    if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(done).catch(fallback); else fallback();
+  });
+  $('hp-move-go').addEventListener('click', function(){
+    var r = readMoveCode($('hp-move-in').value);
+    if (r.err) { moveMsg(r.err, true); return; }
+    moveData = r;
+    if (!state) { applyMove(); return; }
+    var who = r.save ? r.save.name : '（沒有毛孩，只有圖鑑和明信片）';
+    $('hp-move-ask-text').textContent = '搬進來以後，現在的' + state.name + '會被換成搬家碼裡的' + who + '，圖鑑和明信片也會換成搬家碼裡的。確定嗎？';
+    $('hp-move-ask').hidden = false;
+    moveMsg('');
+  });
+  $('hp-move-yes').addEventListener('click', function(){ if (moveData) applyMove(); });
+  $('hp-move-no').addEventListener('click', function(){ moveData = null; $('hp-move-ask').hidden = true; });
+
   /* ---- 測試模式 ---- */
   if (DEBUG) {
     $('hp-debug').hidden = false;
@@ -1479,7 +1701,7 @@ var HP_PC = (function(){
     window.hpCore = { simulate: simulate, adopt: adopt, formAt: formAt, decide: decide, mood: mood, act: act, played: played,
       fetchHome: fetchHome, upgrade: upgrade, dayKey: dayKey, startTrip: startTrip, deliver: deliver, dailyCats: dailyCats,
       letterText: letterText, giveGift: giveGift, markCareDay: markCareDay, streakNow: streakNow, retire: retire,
-      getBook: function(){ return book; }, isAsleep: isAsleep, CARE: CARE, PLAY: PLAY, RATE: RATE,
+      getBook: function(){ return book; }, isAsleep: isAsleep, makeMoveCode: makeMoveCode, readMoveCode: readMoveCode, openPip: openPip, getPip: function(){ return pipWin; }, CARE: CARE, PLAY: PLAY, RATE: RATE,
       getState: function(){ return state; }, getGame: function(){ return game; }, setState: function(s){ state = s; save(); render(); } };
   }
 
