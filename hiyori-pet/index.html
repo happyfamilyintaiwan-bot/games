@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="spec-version" content="core-v1.1/games-v1.1">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -42,7 +43,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('set', { content_group: 'game', game_id: 'hiyori-pet', page_lang: 'zh-Hant' });
+  gtag('set', { content_group: 'game', game_id: 'hiyori_pet', page_lang: 'zh-Hant', page_title: '遊戲|日和毛孩|網頁電子寵物' });
   gtag('config', 'G-ZQZHTYTRMQ');
 </script>
 <script type="application/ld+json">
@@ -570,22 +571,21 @@ var HP_DATA = {
     /* 特別的信：破殼、長大、旅行回來、離家回來、連續照顧 7 天 */
     hatch: ['外面好亮\n我眨了好多次眼睛\n才看清楚\n原來第一個看到的是你'],
     teenUp: ['我變大了一點\n昨天的我\n可能認不出今天的我\n但你一定認得'],
-    adultUp: ['我長大了\n可是被你摸頭的時候\n我還是\n那顆蛋裡的我'],
-    trip: ['{city}很好玩\n可是走了好多路\n最想回去的地方\n還是你家'],
-    home: ['我去朋友家住了幾天\n他們都對我很好\n可是沒有人\n會這樣叫我的名字'],
+    adultUp: ['我長大了\n可是被你摸頭的時候\n我還是\n那個愛賴皮的我'],
+    trip: ['{city}很好玩\n可是走了好多路\n最想回去的地方\n還是我們家'],
+    home: ['我去朋友家住了幾天\n他們都對我很好\n可是沒有人\n像你一樣'],
     streak7: ['你連續來看我七天了\n我在牆上偷偷畫了七條線\n明天\n會有第八條嗎'],
     /* 幼年（第 1～2 天） */
     baby: [
       '今天學會一件事\n尾巴是我的\n追了很久才知道',
-      '你的手指\n比我的頭還大\n可是摸起來\n剛剛好',
       '我把{toy}\n藏在沙發底下\n明天再假裝\n第一次發現它',
       '地板很涼\n我把肚子貼上去\n跟它說了一下午的話',
       '窗外有一隻鳥\n我們看了彼此好久\n最後是我先睡著',
       '今天打了三個噴嚏\n每一個\n都把自己嚇一跳',
-      '我還不太會走直線\n可是走向你的時候\n很直',
-      '你出門以後\n房間變得好大\n我只好把它睡滿',
+      '我還不太會走直線\n可是走向你的時候\n我會努力',
+      '你出門以後\n房間變得好大\n我只好跟自己的影子玩',
       '我的名字是{name}\n我練習了很多次\n你叫的時候\n我就會轉頭',
-      '今天的陽光\n從窗戶走到沙發\n我跟著它\n睡了三個地方',
+      '今天的陽光\n從窗戶走到沙發\n我跟著它\n靜靜的等你回來',
       '我把你的拖鞋\n搬到門口\n這樣你一回來\n就會先看到我'
     ],
     /* 少年（第 3～6 天） */
@@ -1215,7 +1215,7 @@ var HP_PC = (function(){
         if (L.read) return;
         L.read = true;
         item.classList.remove('is-new');
-        track('mailbox_read', { letter_id: L.id });
+        track('pet_mail_read', { letter_id: L.id });
         save();
         render();
       });
@@ -1500,7 +1500,7 @@ var HP_PC = (function(){
 /* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
    各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
    注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
-var HY_GAME_ID = 'hiyori-pet';  /* 遊戲登記表的 game_id */
+var HY_GAME_ID = 'hiyori_pet';  /* 遊戲登記表的 game_id */
 var HY_GAME_ROOT = '#hiyori-pet';  /* 遊戲本體的容器 */
 var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目前語言變數 */
 
