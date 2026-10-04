@@ -1,31 +1,31 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Travelpayouts Drive（games；head 第一個 script） -->
 <script data-cfasync="false">(function(){var s=document.createElement("script");s.async=1;s.setAttribute("data-cmp-ab","2");s.src="https://emrld.ltd/NTc4NjIz.js?t=578623";document.head.appendChild(s);})();</script>
-<title>絶対音感養成所｜大人でも身につく？絶対音感トレーニングゲーム（12音テスト付き）</title>
-<meta name="description" content="大人でも絶対音感は身につく？2019〜2025年の成人向けトレーニング研究をもとにした無料のブラウザゲーム。1音ずつ解放、問題間のノイズ、3オクターブと複数の音色、12音の判定テストと自分専用の苦手リスト付き。">
-<link rel="canonical" href="https://games.knittinghiyori.com/ja/absolute-pitch/">
+<title>Absolute Pitch Trainer | Can Adults Learn Perfect Pitch? Free Ear Training Game</title>
+<meta name="description" content="Can adults learn absolute pitch? A free ear training game built on 2019–2025 adult training studies: unlock one note at a time, noise between notes, three octaves and sounds, a 12-note test and your own mistake log.">
+<link rel="canonical" href="https://games.knittinghiyori.com/absolute-pitch/en/">
 <link rel="alternate" hreflang="zh-Hant" href="https://games.knittinghiyori.com/absolute-pitch/">
-<link rel="alternate" hreflang="en" href="https://games.knittinghiyori.com/en/absolute-pitch/">
-<link rel="alternate" hreflang="ja" href="https://games.knittinghiyori.com/ja/absolute-pitch/">
+<link rel="alternate" hreflang="en" href="https://games.knittinghiyori.com/absolute-pitch/en/">
+<link rel="alternate" hreflang="ja" href="https://games.knittinghiyori.com/absolute-pitch/ja/">
 <link rel="alternate" hreflang="x-default" href="https://games.knittinghiyori.com/absolute-pitch/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="編織日和ミニゲーム">
-<meta property="og:title" content="絶対音感養成所｜大人でも絶対音感は身につく？">
-<meta property="og:description" content="研究と同じ方法で練習：1音ずつ、ノイズで相対音感を断ち、12音テストで確認。1日10分から。">
-<meta property="og:url" content="https://games.knittinghiyori.com/ja/absolute-pitch/">
-<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="Knitting Hiyori Games">
+<meta property="og:title" content="Absolute Pitch Trainer | Can adults learn perfect pitch?">
+<meta property="og:description" content="Train the way the studies did: one note at a time, noise between notes, a 12-note test. Ten minutes a day.">
+<meta property="og:url" content="https://games.knittinghiyori.com/absolute-pitch/en/">
+<meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="zh_TW">
-<meta property="og:locale:alternate" content="en_US">
-<meta property="og:image" content="https://games.knittinghiyori.com/ja/absolute-pitch/og.png">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:image" content="https://games.knittinghiyori.com/absolute-pitch/en/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="絶対音感養成所：12色の音名ホイール">
+<meta property="og:image:alt" content="Absolute Pitch Trainer: a 12-color note wheel">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://games.knittinghiyori.com/ja/absolute-pitch/og.png">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/absolute-pitch/en/og.png">
 <meta name="author" content="編織日和">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <!-- 網站 logo icon（檔案在 /icons/） -->
@@ -36,11 +36,10 @@
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;700">
 <style>
-:root{--serif:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif;--sans:"Noto Sans JP","Hiragino Sans","Yu Gothic",Meiryo,system-ui,sans-serif}
+:root{--serif:"Fraunces","Iowan Old Style","Georgia",serif;--sans:"Instrument Sans","Helvetica Neue",Arial,system-ui,sans-serif}
 
 /* 版面概念：首屏就是「調音盤」── 12 色音名輪盤 + 圓形示波器；白底黑字，色彩只屬於 12 個音名。 */
 :root{
@@ -70,8 +69,8 @@ p{margin:0}
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px 0}
 .mark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:1.05rem}
 .mark svg{flex:none}
-.langs{display:flex;align-items:center;gap:2px;font-size:.85rem}
-.langs a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;color:var(--ink-2);text-decoration:none;border-radius:999px}
+.langs{display:flex;align-items:center;gap:2px;font-size:.85rem;flex-shrink:0;white-space:nowrap}
+.langs a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:var(--ink-2);text-decoration:none;border-radius:999px}
 .langs a:hover{color:var(--ink);background:var(--well)}
 .langs a[aria-current="page"]{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
 
@@ -304,7 +303,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('set', { content_group: 'game', game_id: 'absolute_pitch', page_lang: 'ja', page_title: '遊戲|絕對音感養成所|成人絕對音感訓練' });
+  gtag('set', { content_group: 'game', game_id: 'absolute_pitch', page_lang: 'en', page_title: '遊戲|絕對音感養成所|成人絕對音感訓練' });
   gtag('config', 'G-ZQZHTYTRMQ');
 </script>
 <script type="application/ld+json">
@@ -312,20 +311,20 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
  {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "絶対音感養成所",
-  "alternateName": "大人のための絶対音感トレーニングゲーム",
-  "url": "https://games.knittinghiyori.com/ja/absolute-pitch/",
-  "description": "2019〜2025年の成人向け絶対音感トレーニング研究をもとにした無料のブラウザゲーム。1音ずつの解放、問題間のノイズ、複数のオクターブと音色、12音の判定テスト、自分専用の苦手リスト。",
+  "name": "Absolute Pitch Trainer",
+  "alternateName": "Absolute pitch training game for adults",
+  "url": "https://games.knittinghiyori.com/absolute-pitch/en/",
+  "description": "A free browser game based on 2019–2025 adult absolute pitch training studies: unlock one note at a time, noise masking between notes, several octaves and timbres, a 12-note test and a personal mistake log.",
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Web browser",
-  "inLanguage": "ja",
+  "inLanguage": "en",
   "isAccessibleForFree": true,
   "offers": {
    "@type": "Offer",
    "price": "0",
-   "priceCurrency": "JPY"
+   "priceCurrency": "USD"
   },
-  "image": "https://games.knittinghiyori.com/ja/absolute-pitch/og.png",
+  "image": "https://games.knittinghiyori.com/absolute-pitch/en/og.png",
   "datePublished": "2026-10-03",
   "dateModified": "2026-10-04",
   "author": {
@@ -341,11 +340,11 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
   "about": [
    {
     "@type": "Thing",
-    "name": "絶対音感"
+    "name": "Absolute pitch"
    },
    {
     "@type": "Thing",
-    "name": "聴音トレーニング"
+    "name": "Ear training"
    }
   ],
   "citation": [
@@ -360,58 +359,50 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
   "mainEntity": [
    {
     "@type": "Question",
-    "name": "絶対音感とは？",
+    "name": "What is absolute pitch?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "絶対音感（absolute pitch、完全音感とも）は、基準となる音がなくても、聞いた音の音名がわかる能力です。たとえば聞いた瞬間にF♯（ファ♯）だとわかります。一般の人では約1万人に1人とよく言われ、音楽専攻の学生ではより高い割合です。"
+     "text": "Absolute pitch, also called perfect pitch, is the ability to name a note without any reference note, for example knowing a sound is F♯ the moment you hear it. A common estimate is about 1 in 10,000 people, with higher rates among music students."
     }
    },
    {
     "@type": "Question",
-    "name": "絶対音感と相対音感の違いは？",
+    "name": "How is absolute pitch different from relative pitch?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "相対音感は、基準となる音を知ったうえで、ほかの音との距離から音名を判断します。絶対音感は基準音なしで直接音名がわかります。音楽の訓練を受けた人の多くは相対音感を持っていますが、絶対音感はずっと少数です。"
+     "text": "Relative pitch needs a known reference note and works out other notes from the distance; absolute pitch names the note directly, with no reference. Most trained musicians have relative pitch, while absolute pitch is much rarer."
     }
    },
    {
     "@type": "Question",
-    "name": "大人でも絶対音感は身につく？",
+    "name": "Can adults learn absolute pitch?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "一部の人は身につきます。Van Hedger ら（2019）、Wong ら（2020、2025）の訓練研究では、約20〜32時間の訓練で、生まれつきの人と同じテスト基準に達した大人がいます。ただし多くの人は一部の音名のみで、12音すべてを習得したのはおよそ7人に1人です。"
+     "text": "Some can. In training studies by Van Hedger et al. (2019) and Wong et al. (2020, 2025), some adults reached the same test standard as people born with absolute pitch after about 20 to 32 hours of training. Most learned only some of the notes, and about one in seven learned all 12."
     }
    },
    {
     "@type": "Question",
-    "name": "絶対音感の練習にはどれくらいかかる？",
+    "name": "How long does it take to learn absolute pitch?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "研究の訓練量は週2〜4時間を約8週間、合計20〜32時間、平均約1万5千問です。このゲームではそれを1日100問、約10分に分けています。"
+     "text": "The studies mostly used 2 to 4 hours a week for about 8 weeks, 20 to 32 hours in total, around 15,000 trials on average. This game splits that into 100 trials a day, about 10 minutes."
     }
    },
    {
     "@type": "Question",
-    "name": "身についたかどうかはどうやってわかる？",
+    "name": "How do I know if I have learned it?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "「判定テスト」を使います。12音を3回ずつ、正誤の表示なし、問題間にノイズありで出題します。研究での基準はおおむね12音で正答率90%以上、2秒以内の回答です。当てずっぽうだと約8%です。"
+     "text": "Use the test: each of the 12 notes plays 3 times, with no feedback and noise between notes. The standard in the studies is roughly 90% accuracy across 12 notes, answering within 2 seconds; guessing gets about 8%."
     }
    },
    {
     "@type": "Question",
-    "name": "音名がドレミではなくC・D・Eなのはなぜ？",
+    "name": "What is the mistake log for?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "研究や国際的な表記に合わせて英語音名を使っています。C＝ド、D＝レ、E＝ミ、F＝ファ、G＝ソ、A＝ラ、B＝シ、♯はシャープです。"
-    }
-   },
-   {
-    "@type": "Question",
-    "name": "苦手リストは何のため？",
-    "acceptedAnswer": {
-     "@type": "Answer",
-     "text": "聞き間違えやすい音は人によって違います。ゲームは「どの音をどの音と間違えたか」を記録し、「苦手を復習」でその音を集中して出題します。間違えたときは、押した音のあとに正解の音を鳴らすので、聞き比べられます。何度か正解すると、その組み合わせはリストから外れます。"
+     "text": "Everyone confuses different notes. The game records which note you most often hear as which, and Review mistakes focuses on those notes. When you miss, it plays the note you chose and then the right one so you can compare them. After you get a pair right a few times, it leaves the log."
     }
    }
   ]
@@ -423,20 +414,20 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
    {
     "@type": "ListItem",
     "position": 1,
-    "name": "編織日和ミニゲーム",
+    "name": "Knitting Hiyori Games",
     "item": "https://games.knittinghiyori.com/"
    },
    {
     "@type": "ListItem",
     "position": 2,
-    "name": "絶対音感養成所",
-    "item": "https://games.knittinghiyori.com/ja/absolute-pitch/"
+    "name": "Absolute Pitch Trainer",
+    "item": "https://games.knittinghiyori.com/absolute-pitch/en/"
    }
   ]
  }
 ]
 </script>
-<meta name="spec-version" content="core-v1.0/games-v1.0">
+<meta name="spec-version" content="core-v1.1/games-v1.1">
 </head>
 <body>
 
@@ -444,62 +435,62 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
   <header class="top">
     <div class="mark">
       <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="#16161a" stroke-width="1.6"/><circle cx="13" cy="2" r="2.2" fill="#C34F4B"/><circle cx="22.5" cy="18.5" r="2.2" fill="#33903C"/><circle cx="3.5" cy="18.5" r="2.2" fill="#4E75D2"/></svg>
-      絶対音感養成所
+      Absolute Pitch Trainer
     </div>
-    <nav class="langs" aria-label="言語"><a href="https://games.knittinghiyori.com/absolute-pitch/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a><a href="https://games.knittinghiyori.com/en/absolute-pitch/" hreflang="en" lang="en" data-lang-link="en">EN</a><a href="https://games.knittinghiyori.com/ja/absolute-pitch/" hreflang="ja" lang="ja" data-lang-link="ja" aria-current="page">日本語</a></nav>
+    <nav class="langs" aria-label="Language"><a href="https://games.knittinghiyori.com/absolute-pitch/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a><a href="https://games.knittinghiyori.com/absolute-pitch/en/" hreflang="en" lang="en" data-lang-link="en" aria-current="page">EN</a><a href="https://games.knittinghiyori.com/absolute-pitch/ja/" hreflang="ja" lang="ja" data-lang-link="ja">日本語</a></nav>
   </header>
 
   <section class="hero">
     <div class="intro">
-      <h1 class="kicker">絶対音感トレーニングゲーム：大人でも練習できる12音の聞き分け</h1>
-      <p class="display"><span>一音を聞いて、</span><span>名前を当てる。</span></p>
-      <p class="lede">基準音なしで、耳だけでCかF♯かを聞き分ける。研究では、<b>20時間あまりの体系的な訓練を受けた大人の一部</b>が、生まれつき絶対音感を持つ人に近い水準に達しています。このゲームは研究と同じやり方で、1音ずつ練習します。</p>
+      <h1 class="kicker">Absolute pitch training game: learn to name all 12 notes as an adult</h1>
+      <p class="display"><span>Hear one note.</span><span>Name it.</span></p>
+      <p class="lede">No reference note, just your ear telling C from F♯. Studies have found that <b>some adults, after 20-odd hours of structured training</b>, reach the level of people born with absolute pitch. This game follows the same method: one note at a time.</p>
     </div>
 
     <div class="side">
-      <dl class="stats" aria-label="あなたの記録">
-        <div><dt>連続練習日数</dt><dd id="sStreak">0</dd></div>
-        <div><dt>今日の問題数</dt><dd><span id="sToday">0</span><small> / 100</small></dd><div class="daybar"><i id="sTodayBar"></i></div></div>
-        <div><dt>解放した音名</dt><dd><span id="sLevel">1</span><small> / 12</small></dd><div class="pips" id="pips"></div></div>
-        <div><dt>累計問題数</dt><dd id="sTotal">0</dd></div>
+      <dl class="stats" aria-label="Your progress">
+        <div><dt>Day streak</dt><dd id="sStreak">0</dd></div>
+        <div><dt>Today</dt><dd><span id="sToday">0</span><small> / 100</small></dd><div class="daybar"><i id="sTodayBar"></i></div></div>
+        <div><dt>Notes unlocked</dt><dd><span id="sLevel">1</span><small> / 12</small></dd><div class="pips" id="pips"></div></div>
+        <div><dt>Total answered</dt><dd id="sTotal">0</dd></div>
       </dl>
       <p class="nudge" id="nudge"></p>
     </div>
 
     <div class="room" id="room">
       <div class="room-head">
-        <span class="mode" id="modeLabel">トレーニング</span>
-        <span class="room-sub" id="roomSub">聞こえた音の名前をタップ。まだ解放していない音は「その他」を押します。</span>
+        <span class="mode" id="modeLabel">Training</span>
+        <span class="room-sub" id="roomSub">Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.</span>
       </div>
 
       <div class="wheel" id="wheel">
         <svg class="ring draw" id="ring" viewBox="0 0 100 100" aria-hidden="true"></svg>
         <canvas id="scope" aria-hidden="true"></canvas>
-        <button class="other" id="otherBtn" type="button">その他</button>
+        <button class="other" id="otherBtn" type="button">Other</button>
       </div>
-      <p class="status" id="status" aria-live="polite">イヤホンをつけて「トレーニング開始」を押してください</p>
+      <p class="status" id="status" aria-live="polite">Put on headphones and press Start training</p>
 
       <div class="meters" id="meters">
-        <div id="mAcc"><b>—</b>直近20問の正答率</div>
-        <div id="mRt"><b>—</b>反応時間の中央値</div>
-        <div class="next" id="mNext"><b>G</b>次に解放</div>
+        <div id="mAcc"><b>—</b>Last 20 accuracy</div>
+        <div id="mRt"><b>—</b>Median response time</div>
+        <div class="next" id="mNext"><b>G</b>Next unlock</div>
       </div>
 
       <div class="controls">
-        <button class="btn" id="trainBtn" type="button">トレーニング開始</button>
-        <button class="btn line" id="testBtn" type="button">判定テスト</button>
-        <button class="btn line" id="reviewBtn" type="button" hidden>苦手を復習</button>
-        <button class="btn line" id="stopBtn" type="button" hidden>一時停止</button>
+        <button class="btn" id="trainBtn" type="button">Start training</button>
+        <button class="btn line" id="testBtn" type="button">Take the test</button>
+        <button class="btn line" id="reviewBtn" type="button" hidden>Review mistakes</button>
+        <button class="btn line" id="stopBtn" type="button" hidden>Pause</button>
       </div>
 
       <div class="toggles">
-        <label><input type="checkbox" id="noiseOpt" checked> 問題間にノイズ</label>
-        <label>音色
+        <label><input type="checkbox" id="noiseOpt" checked> Noise between notes</label>
+        <label>Sound
           <select id="timbreOpt">
-            <option value="mix">ミックス</option>
-            <option value="piano">ピアノ風</option>
-            <option value="triangle">やわらか</option>
-            <option value="sine">純音</option>
+            <option value="mix">Mixed</option>
+            <option value="piano">Piano-like</option>
+            <option value="triangle">Soft</option>
+            <option value="sine">Pure tone</option>
           </select>
         </label>
       </div>
@@ -509,131 +500,130 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
     </div>
   </section>
 
-  <div class="share" aria-label="シェア">
-    <p id="shareLabel">友だちと一緒に練習して、どちらが先に12音を解放できるか競いましょう。</p>
+  <div class="share" aria-label="Share">
+    <p id="shareLabel">Train with a friend and see who unlocks all 12 notes first.</p>
     <div class="share-row">
       <button type="button" data-share="line">LINE</button>
       <button type="button" data-share="facebook">Facebook</button>
       <button type="button" data-share="threads">Threads</button>
       <button type="button" data-share="x">X</button>
       <button type="button" data-share="telegram">Telegram</button>
-      <button type="button" data-share="copy_link" id="copyBtn">リンクをコピー</button>
+      <button type="button" data-share="copy_link" id="copyBtn">Copy link</button>
     </div>
   </div>
 
   <section class="sec" aria-labelledby="recH">
     <div class="sec-head">
-      <h2 id="recH">あなたの練習記録</h2>
-      <p>研究でも、上達が見えるまで数週間かかりました。毎日10分戻ってくれば、ここに記録が残ります。間違えた音は自動で苦手リストに入ります。記録はこの端末のブラウザにだけ保存されます。</p>
+      <h2 id="recH">Your practice log</h2>
+      <p>In the studies, progress took weeks to show. Come back for 10 minutes a day and this page keeps track; notes you miss go straight into your mistake log. Your data stays in this browser on this device.</p>
     </div>
     <div class="sec-body">
       <div id="bank">
-        <h3>苦手リスト</h3>
+        <h3>Your mistake log</h3>
         <div id="bankBox"></div>
       </div>
       <div>
-        <h3>直近8週間</h3>
+        <h3>Last 8 weeks</h3>
         <div class="heatwrap">
-          <div class="wk" aria-hidden="true"><span>月</span><span></span><span>水</span><span></span><span>金</span><span></span><span>日</span></div>
-          <div class="heat" id="heat" aria-label="直近8週間の1日ごとの問題数"></div>
+          <div class="wk" aria-hidden="true"><span>M</span><span></span><span>W</span><span></span><span>F</span><span></span><span>S</span></div>
+          <div class="heat" id="heat" aria-label="Answers per day over the last 8 weeks"></div>
         </div>
-        <div class="legend">少 <i style="background:#eef0f3"></i><i style="background:#cdd0d8"></i><i style="background:#8b8f9c"></i><i style="background:#16161a"></i> 多（100問以上）</div>
+        <div class="legend">Less <i style="background:#eef0f3"></i><i style="background:#cdd0d8"></i><i style="background:#8b8f9c"></i><i style="background:#16161a"></i> More (100+)</div>
       </div>
       <div>
-        <h3>累計問題数</h3>
+        <h3>Total answered</h3>
         <div class="track" id="track"></div>
-        <p class="cap">2025年の研究参加者は平均15,327問、約21時間練習しました。右端がそのゴールです。</p>
+        <p class="cap">Participants in the 2025 study answered 15,327 trials on average, about 21 hours. The far right is where they finished.</p>
       </div>
       <div>
-        <h3>テスト結果</h3>
+        <h3>Test scores</h3>
         <div id="chartBox"></div>
-        <p class="cap">7日ごとのテストがおすすめです。破線は研究での絶対音感の基準（90%）、点線は当てずっぽうの確率（約8%）です。</p>
+        <p class="cap">Take the test every 7 days. The dashed line is the absolute pitch level used in the studies (90%); the dotted line is chance (about 8%).</p>
       </div>
     </div>
   </section>
 
   <section class="sec" aria-labelledby="sciH">
     <div class="sec-head">
-      <h2 id="sciH">大人になってからでも絶対音感は身につく？</h2>
-      <p>2019〜2025年の成人を対象とした3つの訓練研究のまとめ。編織日和編集、最終更新：2026年10月4日。</p>
+      <h2 id="sciH">Can adults learn absolute pitch?</h2>
+      <p>A summary of three adult training studies from 2019 to 2025. Compiled by Knitting Hiyori. Last updated October 4, 2026.</p>
     </div>
     <div class="sec-body">
-      <p class="answer"><b>一部の大人は身につけられます。</b>絶対音感は幼少期の「臨界期」にしか身につかないと考えられてきましたが、近年の訓練研究では、約8週間で生まれつきの人と同じテスト基準に達した大人がいます。ただし大量の体系的な練習が必要で、全員が12音すべてを習得できるわけではありません。</p>
+      <p class="answer"><b>Some adults can.</b> Absolute pitch was long thought to develop only during a critical period in early childhood, but in recent training studies some adults reached the same test standard as people born with it in about 8 weeks. It takes a lot of structured practice, and not everyone gets all 12 notes.</p>
       <div class="tablebox">
         <table>
-          <thead><tr><th>研究</th><th>参加者</th><th>訓練量</th><th>結果</th></tr></thead>
+          <thead><tr><th>Study</th><th>Participants</th><th>Training</th><th>Result</th></tr></thead>
           <tbody>
-            <tr><td>Van Hedger ら 2019</td><td>聴覚的作業記憶で選ばれた成人6人</td><td class="n">8週間、約32時間</td><td>最も成績の良かった人は全てのAPテストに合格し、4か月後も維持</td></tr>
-            <tr><td>Wong ら 2020</td><td>声調のない言語を話す13人</td><td class="n">約20時間</td><td>2人が12音すべてを、生まれつきの人に近い正確さと速さで識別</td></tr>
-            <tr><td>Wong ら 2025</td><td>音楽経験者12人、オンライン訓練</td><td class="n">8週間、平均21.4時間</td><td>平均7音を正答率90%で習得、12音すべてを習得した人も</td></tr>
+            <tr><td>Van Hedger et al. 2019</td><td>6 adults, selected for auditory working memory</td><td class="n">8 weeks, about 32 hours</td><td>The best learner passed every AP test and kept the skill 4 months later</td></tr>
+            <tr><td>Wong et al. 2020</td><td>13 speakers of non-tonal languages</td><td class="n">About 20 hours</td><td>2 could name all 12 notes with accuracy and speed close to people born with AP</td></tr>
+            <tr><td>Wong et al. 2025</td><td>12 musicians, online training</td><td class="n">8 weeks, 21.4 hours on average</td><td>Learned 7 notes on average at 90% accuracy; some learned all 12</td></tr>
             </tbody>
         </table>
       </div>
       <ul class="facts">
-        <li>ほとんどの人ははっきり上達しますが、12音すべてを習得できるのはおよそ7人に1人です。</li>
-        <li>他の知覚学習と同じく、練習した音色やオクターブほど正確で、訓練後1〜3か月は維持されます。</li>
-        <li>声調言語の背景は必須ではありません。聴覚的作業記憶が高い人ほど早く覚えます。</li>
+        <li>Most people improve clearly, but only about one in seven gets all 12 notes.</li>
+        <li>The skill behaves like other perceptual learning: it is most accurate for the sounds and octaves you trained on, and it lasts 1 to 3 months after training.</li>
+        <li>You do not need a tonal-language background; people with better auditory working memory learn faster.</li>
         </ul>
       <div>
-        <h3>このゲームが研究から取り入れた6つのこと</h3>
+        <h3>Six things this game takes from the studies</h3>
         <ul class="methods">
-          <li><b>1音ずつ増やす</b><span>最初は1音だけ覚え、それ以外は「その他」と答えます。直近20問で正答率90%以上、反応も十分に速くなってから次の音を解放します。</span></li>
-          <li><b>鍵盤ではなく音名で覚える</b><span>同じ音名が3つのオクターブでランダムに出るので、高さではなく音の「色」で覚えられます。</span></li>
-          <li><b>相対音感を断つ</b><span>問題の間に1秒のノイズを入れ、前の音から計算できないようにします。</span></li>
-          <li><b>正確で、速く</b><span>絶対音感とは聞いた瞬間にわかること。そのため反応時間にも合格ラインがあります。</span></li>
-          <li><b>音色を変える</b><span>ピアノだけで練習すると、他の楽器で外しやすくなります。音色を混ぜると力が移りやすくなります。</span></li>
-          <li><b>毎日少しずつ、数週間</b><span>研究の多くは週2〜4時間を8週間。週末に3時間より、毎日10〜20分のほうが効果的です。</span></li>
+          <li><b>One more note at a time</b><span>Start with a single note and answer “Other” for everything else. A new note unlocks only after 90% accuracy over 20 trials with a fast enough response.</span></li>
+          <li><b>Learn note names, not keys</b><span>Each note appears in three random octaves, so your ear locks onto the color of the note rather than its height.</span></li>
+          <li><b>Cut out relative pitch</b><span>A second of noise between notes stops you from working out the answer from the previous note.</span></li>
+          <li><b>Fast and accurate</b><span>Absolute pitch means knowing instantly, not calculating, so response time has to pass too.</span></li>
+          <li><b>Change the sound</b><span>Train only on piano and other instruments will trip you up. Mixed sounds help the skill transfer.</span></li>
+          <li><b>A little every day, for weeks</b><span>Most studies used 2 to 4 hours a week for 8 weeks. Ten to twenty minutes a day beats three hours once a week.</span></li>
           </ul>
       </div>
       <div class="refs">
         <a href="https://doi.org/10.1371/journal.pone.0223047" target="_blank" rel="noopener" data-cta="source_vanhedger2019" data-cta-type="other">Van Hedger, Heald, Nusbaum (2019). Absolute pitch can be learned by some adults. PLOS ONE.</a>
         <a href="https://journals.sagepub.com/doi/abs/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
         <a href="https://doi.org/10.3758/s13414-019-01869-3" target="_blank" rel="noopener" data-cta="source_wong2020app" data-cta-type="other">Wong et al. (2020). Is it impossible to acquire absolute pitch in adulthood? APP.</a>
-        <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Neuroscience News の記事。</a>
+        <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Neuroscience News coverage.</a>
       </div>
     </div>
   </section>
 
   <section class="sec" aria-labelledby="faqH">
     <div class="sec-head">
-      <h2 id="faqH">絶対音感のよくある質問</h2>
-      <p>練習を始める前によく聞かれること。</p>
+      <h2 id="faqH">Absolute pitch FAQ</h2>
+      <p>What people most often ask before they start.</p>
     </div>
     <div class="sec-body">
       <dl class="faq">
-        <div><dt>絶対音感とは？</dt><dd>絶対音感（absolute pitch、完全音感とも）は、基準となる音がなくても、聞いた音の音名がわかる能力です。たとえば聞いた瞬間にF♯（ファ♯）だとわかります。一般の人では約1万人に1人とよく言われ、音楽専攻の学生ではより高い割合です。</dd></div>
-        <div><dt>絶対音感と相対音感の違いは？</dt><dd>相対音感は、基準となる音を知ったうえで、ほかの音との距離から音名を判断します。絶対音感は基準音なしで直接音名がわかります。音楽の訓練を受けた人の多くは相対音感を持っていますが、絶対音感はずっと少数です。</dd></div>
-        <div><dt>大人でも絶対音感は身につく？</dt><dd>一部の人は身につきます。Van Hedger ら（2019）、Wong ら（2020、2025）の訓練研究では、約20〜32時間の訓練で、生まれつきの人と同じテスト基準に達した大人がいます。ただし多くの人は一部の音名のみで、12音すべてを習得したのはおよそ7人に1人です。</dd></div>
-        <div><dt>絶対音感の練習にはどれくらいかかる？</dt><dd>研究の訓練量は週2〜4時間を約8週間、合計20〜32時間、平均約1万5千問です。このゲームではそれを1日100問、約10分に分けています。</dd></div>
-        <div><dt>身についたかどうかはどうやってわかる？</dt><dd>「判定テスト」を使います。12音を3回ずつ、正誤の表示なし、問題間にノイズありで出題します。研究での基準はおおむね12音で正答率90%以上、2秒以内の回答です。当てずっぽうだと約8%です。</dd></div>
-        <div><dt>音名がドレミではなくC・D・Eなのはなぜ？</dt><dd>研究や国際的な表記に合わせて英語音名を使っています。C＝ド、D＝レ、E＝ミ、F＝ファ、G＝ソ、A＝ラ、B＝シ、♯はシャープです。</dd></div>
-        <div><dt>苦手リストは何のため？</dt><dd>聞き間違えやすい音は人によって違います。ゲームは「どの音をどの音と間違えたか」を記録し、「苦手を復習」でその音を集中して出題します。間違えたときは、押した音のあとに正解の音を鳴らすので、聞き比べられます。何度か正解すると、その組み合わせはリストから外れます。</dd></div>
+        <div><dt>What is absolute pitch?</dt><dd>Absolute pitch, also called perfect pitch, is the ability to name a note without any reference note, for example knowing a sound is F♯ the moment you hear it. A common estimate is about 1 in 10,000 people, with higher rates among music students.</dd></div>
+        <div><dt>How is absolute pitch different from relative pitch?</dt><dd>Relative pitch needs a known reference note and works out other notes from the distance; absolute pitch names the note directly, with no reference. Most trained musicians have relative pitch, while absolute pitch is much rarer.</dd></div>
+        <div><dt>Can adults learn absolute pitch?</dt><dd>Some can. In training studies by Van Hedger et al. (2019) and Wong et al. (2020, 2025), some adults reached the same test standard as people born with absolute pitch after about 20 to 32 hours of training. Most learned only some of the notes, and about one in seven learned all 12.</dd></div>
+        <div><dt>How long does it take to learn absolute pitch?</dt><dd>The studies mostly used 2 to 4 hours a week for about 8 weeks, 20 to 32 hours in total, around 15,000 trials on average. This game splits that into 100 trials a day, about 10 minutes.</dd></div>
+        <div><dt>How do I know if I have learned it?</dt><dd>Use the test: each of the 12 notes plays 3 times, with no feedback and noise between notes. The standard in the studies is roughly 90% accuracy across 12 notes, answering within 2 seconds; guessing gets about 8%.</dd></div>
+        <div><dt>What is the mistake log for?</dt><dd>Everyone confuses different notes. The game records which note you most often hear as which, and Review mistakes focuses on those notes. When you miss, it plays the note you chose and then the right one so you can compare them. After you get a pair right a few times, it leaves the log.</dd></div>
         </dl>
     </div>
   </section>
 
-  <div class="reset"><button id="resetBtn" type="button">記録を消去</button><span id="resetMsg"></span></div>
+  <div class="reset"><button id="resetBtn" type="button">Clear my data</button><span id="resetMsg"></span></div>
 </div>
 
 <!-- 回遊戲主頁（GA4 cta_click：about_hub／game） -->
-<nav class="kh-hub" aria-label="ほかのゲーム">
+<nav class="kh-hub" aria-label="More games">
   <a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">
     <span class="kh-hub__icon" aria-hidden="true"></span>
     <span class="kh-hub__txt">
-      <span class="kh-hub__kicker">ほかにも遊んでみる？</span>
-      <span class="kh-hub__title">ほかのインタラクティブゲームを見る →</span>
-      <span class="kh-hub__sub">日本語・プログラミング・音感のミニゲーム（サイトは中国語）</span>
+      <span class="kh-hub__kicker">Want to play something else?</span>
+      <span class="kh-hub__title">Explore more interactive games →</span>
+      <span class="kh-hub__sub">Japanese, coding and ear training mini-games (site in Chinese)</span>
     </span>
   </a>
 </nav>
 <!-- Google AdSense 手動廣告單元（games slot，每頁 1 個） -->
-<div class="kh-ad kh-ad--game" aria-label="広告">
-  <span class="kh-ad__label">広告</span>
+<div class="kh-ad kh-ad--game" aria-label="Advertisement">
+  <span class="kh-ad__label">Advertisement</span>
   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2022028565680247" data-ad-slot="5316670118" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
-<p class="kh-legal">当サイトはアクセス解析（Google Analytics）と広告配信（Google AdSense）のためにCookieを使用し、一部に旅行系アフィリエイトリンクを含みます。<a href="https://knittinghiyori.com/privacy-policy/">プライバシーポリシー</a></p>
+<p class="kh-legal">This site uses cookies for analytics (Google Analytics) and ads (Google AdSense), and some links are travel affiliate links.<a href="https://knittinghiyori.com/privacy-policy/">Privacy</a></p>
 
 <script>
 /* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
@@ -641,7 +631,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
    注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
 var HY_GAME_ID = 'absolute_pitch';  /* 遊戲登記表的 game_id */
 var HY_GAME_ROOT = '#room';  /* 遊戲最外層的選擇器 */
-var HY_GAME_LANG = function(){ return 'ja'; };  /* 多語遊戲改成回傳目前語言變數 */
+var HY_GAME_LANG = function(){ return 'en'; };  /* 多語遊戲改成回傳目前語言變數 */
 
 (function(){
   var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
@@ -781,7 +771,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "音名 ", "other": "その他", "bankEmptyHas": "今は直す苦手はありません。間違えた音は自動でここに入り、よく混同する組み合わせが上に並びます。", "bankEmptyNew": "間違えた音は自動でここに入ります。しばらく練習すると、よく混同する組み合わせが上に並びます。", "fixedN": "これまでに{0}組を克服しました。", "pair": "{0}<span class=\"as\">を</span>{1}<span class=\"as\">と聞き間違え</span>", "worst": "全体で間違えやすい音：", "sep": "、", "reviewBtn20": "苦手を復習（20問）", "bankFoot": "残り{0}組{1}。1回正解するごとに回数が1減ります。", "bankFootFixed": "、克服{0}組", "noise": "ノイズ中", "qTest": "<b class=\"num\">{0}</b> / 36 問目", "qReview": "苦手の復習　<b class=\"num\">{0}</b> / {1} 問目", "qTrain": "この音は？", "hit": "<b>正解</b>　{0}、<span class=\"num\">{1}</span> Hz、<span class=\"num\">{2}</span> 秒", "contrast": "{0}まず押した音 {1}、次に正解の {2}<b>{3}</b>", "miss": "<b>不正解</b>　正解は {0}{1}。もう一度聞いてみましょう", "missOther": "（まだ解放前なので「その他」）", "unlockTitle": "新しい音名を解放：{0}", "unlockText": "これからは「その他」ではありません。しばらくはこの音の響きをよく聞いてみましょう。", "allTitle": "12音すべて合格", "allText": "判定テストで、研究の基準に届いているか確かめましょう。", "modeTrain": "トレーニング", "subTrain": "聞こえた音の名前をタップ。まだ解放していない音は「その他」を押します。", "modeTest": "判定テスト", "subTest": "12音がランダムに出題され、オクターブも音色も変わり、正誤は表示されません。直感で答えてください。", "modeReview": "苦手の復習", "subReview": "よく混同する音を集中して練習します。間違えると、押した音と正解を続けて鳴らすので聞き比べられます。", "start": "トレーニング開始", "cont": "トレーニングを続ける", "paused": "一時停止しました。今日の記録は保存されています", "v90": "研究での絶対音感の基準に達しました。数週間後にもう一度テストして、維持できているか確かめましょう。", "v50": "音名の記憶ができつつあり、当てずっぽうを大きく上回っています。毎日の目標を続けましょう。", "v20": "一部の音名はもうつかめています。多くの人が通る段階なので、続けることが大切です。", "v0": "今は当てずっぽうに近い結果です。これは普通のスタート地点で、研究の参加者もここから始めました。", "rAcc": "12音の正答率", "rRt": "秒（反応の中央値）", "rNear": "半音以内の誤差", "barsAria": "音名ごとの正答率", "rNote": "「半音以内」の割合が高く正答率が低い場合は、だいたいの音域はつかめていて、あとは精度です。次のテスト：{0}。", "shareResult": "このテスト結果をシェア：12音の正答率 {0}%。", "testDone": "テスト完了。結果は下にあります", "revTitle": "復習完了", "revBody": "{1}問中{0}問正解{2}。{3}", "revFixed": "、{0}組を克服", "revLeft": "苦手リストに残り{0}組。明日もう一度復習しましょう。", "revClear": "苦手リストが空になりました。通常のトレーニングに戻りましょう。", "revDone": "復習完了", "nFirst": "初めての方は、<strong>C（ド）</strong>の1音から始めましょう。最初にテストを受けて、スタート時の成績を残すこともできます。", "nRemain": "今日の目標まであと<strong>{0}問</strong>です{1}。", "nStreak": "。{0}日連続をキープしましょう", "nDone": "今日の目標を達成しました。<strong>明日も来れば</strong>{0}日連続になります。", "nTest": "今週のテストを受けられます。", "nBank": "苦手リストに<strong>{0}組</strong>あります。", "mAccN": "直近{0}問の正答率", "mAcc0": "直近20問の正答率", "mRt": "秒（反応の中央値）", "mRt0": "反応時間の中央値", "mNext": "次に解放", "mAll": "<b>全音</b>解放済み", "heatTip": "{0}：{1}問", "trackTip": "{0}問", "chartEmpty": "まだテスト結果がありません。まず1回受けてスタート地点にし、毎週比べてみましょう。", "chartAria": "テスト正答率の推移", "shareGame": "絶対音感養成所で練習中、12音中{0}音を解放しました。大人でも絶対音感は身につく？試してみて", "shareRes": "絶対音感テストの結果：12音で正答率{0}%。大人でも絶対音感は身につく？試してみて", "copied": "コピーしました", "testAbort": "テストを中止しました。今回の成績は記録されません", "resetArm": "もう一度押すと消去します。元に戻せません", "resetDone": "消去しました", "resetStatus": "記録を消去しました。Cからやり直します"},LANG='ja',LOC='ja-JP',PAGE_URL='https://games.knittinghiyori.com/ja/absolute-pitch/';
+var T={"noteAria": "Note ", "other": "Other", "bankEmptyHas": "Nothing to fix right now. Notes you miss land here, with the pairs you mix up most at the top.", "bankEmptyNew": "Notes you miss land here automatically. After some practice, the pairs you mix up most will show at the top.", "fixedN": "{0} pairs fixed so far.", "pair": "{0}<span class=\"as\">heard as</span>{1}", "worst": "Notes you miss most overall: ", "sep": ", ", "reviewBtn20": "Review mistakes (20)", "bankFoot": "{0} pairs to fix{1}. Each correct answer takes one off the count.", "bankFootFixed": ", {0} fixed", "noise": "Noise break", "qTest": "Question <b class=\"num\">{0}</b> of 36", "qReview": "Review: question <b class=\"num\">{0}</b> of {1}", "qTrain": "Which note is this?", "hit": "<b>Correct</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}First your pick, {1}, then the answer, {2}<b>{3}</b>", "miss": "<b>Not quite</b> · It was {0}{1}. Listen again", "missOther": ", not unlocked yet, so “Other”", "unlockTitle": "New note unlocked: {0}", "unlockText": "From now on it is no longer “Other”. Listen for how it sounds over the next few rounds.", "allTitle": "All 12 notes passed", "allText": "Take the test to see whether you reach the level used in the studies.", "modeTrain": "Training", "subTrain": "Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.", "modeTest": "Test", "subTest": "All 12 notes in random order, with different octaves and sounds and no feedback. Go with your first instinct.", "modeReview": "Review", "subReview": "Focus on the notes you mix up most. When you miss, you hear your pick and then the answer, back to back.", "start": "Start training", "cont": "Continue training", "paused": "Paused. Today’s progress is saved", "v90": "You reached the absolute pitch level used in the studies. Test again in a few weeks to check it holds.", "v50": "Your note memory is taking shape, well above chance. Keep going with the daily goal.", "v20": "You can already catch some notes. Most people pass through this stage; keep practicing.", "v0": "This is close to chance. That is a normal starting point; the study participants started here too.", "rAcc": "12-note accuracy", "rRt": "s median response", "rNear": "within a semitone", "barsAria": "Accuracy by note", "rNote": "If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision. Next test: {0}.", "shareResult": "Share this test: {0}% on 12 notes.", "testDone": "Test finished. Results below", "revTitle": "Review finished", "revBody": "You got {0} of {1} right{2}. {3}", "revFixed": " and fixed {0} pairs", "revLeft": "{0} pairs left in your log. Come back tomorrow for another round.", "revClear": "Your log is clear. Back to regular training.", "revDone": "Review finished", "nFirst": "First time here? Start with a single note, <strong>C</strong>. You can also take the test first to record a starting score.", "nRemain": "<strong>{0} more</strong> to reach today’s goal{1}.", "nStreak": " and keep your {0}-day streak", "nDone": "Today’s goal is done. <strong>Come back tomorrow</strong> to make it a {0}-day streak.", "nTest": " This week’s test is ready.", "nBank": " <strong>{0} pairs</strong> in your mistake log.", "mAccN": "Last {0} accuracy", "mAcc0": "Last 20 accuracy", "mRt": "s median response", "mRt0": "Median response time", "mNext": "Next unlock", "mAll": "<b>All</b> unlocked", "heatTip": "{0}: {1}", "trackTip": "{0} answered", "chartEmpty": "No test scores yet. Take one now as your starting point and compare each week.", "chartAria": "Test accuracy over time", "shareGame": "I am training absolute pitch and have unlocked {0} of 12 notes. Can adults learn perfect pitch? Try it:", "shareRes": "My absolute pitch test: {0}% on 12 notes. Can adults learn perfect pitch? Try it:", "copied": "Copied", "testAbort": "Test stopped. This attempt is not recorded", "resetArm": "Press again to clear. This cannot be undone", "resetDone": "Cleared", "resetStatus": "Data cleared. Starting again from C"},LANG='en',LOC='en-US',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/en/';
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -1197,7 +1187,7 @@ $('resetBtn').addEventListener('click',function(){
 if(reduce)$('ring').classList.remove('draw');
 $('trainBtn').textContent=S.total>0?T.cont:T.start;
 /* 語言切換 */
-document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'ja'},true)}catch(e){}})});
+document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'en'},true)}catch(e){}})});
 paintWheel();render();sizeScope();
 })();
 </script>
