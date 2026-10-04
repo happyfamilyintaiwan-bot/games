@@ -2,11 +2,13 @@
 
 - 這個 repo：遊戲站（GitHub Pages，純 HTML），**負責人 Zoe**；規範看 `games.md`。
 - 一款遊戲一個資料夾；多語遊戲的英日版放在遊戲資料夾裡（`/<slug>/en/`、`/<slug>/ja/`）。
-- `season-booking`（季節訂房倒數）是工具，正在轉移到 tools：Alison 的新版上線前，**不要擴充 games 裡的 season_booking**。
+- 工具型內容放 tools，不放 games（例：季節訂房倒數由 Alison 在 tools 製作）。
 
 ## 先問是誰
 
 工作階段開始時，使用者會說自己是 **Zoe** 或 **Alison**。沒說就先問，再依下面的分工做事。
+
+兩人**共用同一個 GitHub 帳號**（happyfamilyintaiwan-bot），GitHub 分不出是誰，所以靠這兩點區分：Alison 的工作一律在 `alison/<主題>` 分支，合併時訊息開頭寫「Alison:」。
 
 - **Alison**：一律在 `alison/<主題>` 分支工作，**不直接推 main**。收工時推上分支並開 PR（目標 main），PR 說明要有 DELIVERY 內容：
   1. 改了什麼、為什麼
