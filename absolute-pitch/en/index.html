@@ -69,9 +69,11 @@ p{margin:0}
 .top{display:flex;flex-direction:column;gap:12px;padding-block:10px 0}
 /* 編織日和品牌列（所有遊戲頁共用寫法） */
 .kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
-.kh-brand{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--ink);text-decoration:none;font-family:var(--sans);font-size:.9rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
-.kh-brand img{width:28px;height:28px;border-radius:6px;flex:none}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--ink);text-decoration:none;font-family:var(--sans);font-size:.9rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
 .kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+/* 窄螢幕：品牌列右邊有語言切換，藏掉「・小遊戲」只留 logo＋編織日和，避免橫向溢出 */
+@media(max-width:400px){.kh-brand-sub{display:none}}
 .mark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:1.05rem}
 .mark svg{flex:none}
 .langs{display:flex;align-items:center;gap:2px;font-size:.85rem;flex-shrink:0;white-space:nowrap}
@@ -432,14 +434,14 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
  }
 ]
 </script>
-<meta name="spec-version" content="core-v1.1/games-v1.2">
+<meta name="spec-version" content="core-v1.1/games-v1.2.1">
 </head>
 <body>
 
 <div class="wrap">
   <header class="top">
     <div class="kh-brand-row">
-      <a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/favicon-96.png" width="28" height="28" alt="">編織日和 · Games</a>
+      <a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和<span class="kh-brand-sub"> · Games</span></a>
       <nav class="langs" aria-label="Language"><a href="https://games.knittinghiyori.com/absolute-pitch/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a><a href="https://games.knittinghiyori.com/absolute-pitch/en/" hreflang="en" lang="en" data-lang-link="en" aria-current="page">EN</a><a href="https://games.knittinghiyori.com/absolute-pitch/ja/" hreflang="ja" lang="ja" data-lang-link="ja">日本語</a></nav>
     </div>
     <div class="mark">
