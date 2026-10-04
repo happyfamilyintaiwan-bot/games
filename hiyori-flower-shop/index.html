@@ -387,6 +387,7 @@ function romaNice(w){return tokenize(w).map(function(u){return u.isN?'n':u.c[0]}
 var DEFAULT_SHARE='我在「ひより花店」邊顧花店邊學日文五十音、花卉日文和日文打字，一起來玩 👉';
 function shareURL(){
   try{var q=new URLSearchParams(location.search).get('share');if(q)return q}catch(e){}
+  if(location.hostname==='games.knittinghiyori.com')return 'https://games.knittinghiyori.com/hiyori-flower-shop/?ref=share';
   var a=root.getAttribute('data-share-url');if(a)return a;
   return location.href.split('#')[0];
 }
@@ -397,6 +398,7 @@ function shareBox(text){
   '<a class="hg-sbtn line" data-share-net="line" target="_blank" rel="noopener" href="https://line.me/R/share?text='+e(t+'\n'+u)+'">LINE 分享</a>'+
   '<a class="hg-sbtn" data-share-net="facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+e(u)+'">Facebook</a>'+
   '<a class="hg-sbtn" data-share-net="threads" target="_blank" rel="noopener" href="https://www.threads.net/intent/post?text='+e(t+' '+u)+'">Threads</a>'+
+  '<a class="hg-sbtn" data-share-net="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+e(t+' '+u)+'">X</a>'+
   '<button class="hg-sbtn" data-act="copy" data-share-net="copy_text" data-copy="'+escH(t+' '+u)+'">複製分享文字</button>'+
   '<button class="hg-sbtn" data-act="copy" data-share-net="copy_link" data-copy="'+escH(u)+'">複製網址</button>'+
   (navigator.share?'<button class="hg-sbtn" data-act="nshare" data-text="'+escH(t)+'">更多分享…</button>':'')+
@@ -1007,5 +1009,6 @@ var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目�
 })();
 /* ===== /GA4 統一追蹤 ===== */
 </script>
+<script>try{if(/[?\x26]ref=share/.test(location.search))if(window.hyGame)window.hyGame.start('shared')}catch(e){}</script>
 </body>
 </html>
