@@ -129,18 +129,36 @@ p{margin:0}
 .key[disabled]{cursor:default}
 .key.locked{border:1.5px dashed #cfd1d9;color:#b3b6c1;background:transparent}
 .key.locked::after{display:none}
-.key.hit{background:var(--c);border-color:var(--c);color:#fff;transform:translate(-50%,-50%) scale(1.1)}
+.key.hit{background:var(--ok);border-color:var(--ok);color:#fff;transform:translate(-50%,-50%) scale(1.1)}
 .key.hit::after,.key.miss::after,.key.picked::after{background:#fff}
-.key.miss{background:var(--ink);color:#fff}
-.key.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--c)}
+.key.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.key.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
 .key.picked{background:var(--ink);color:#fff}
 .other{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:7px 18px;font-weight:700;font-size:.92rem;transition:background .18s,color .18s,box-shadow .25s}
 .other:hover:not([disabled]){background:var(--ink);color:#fff}
 .other[disabled]{cursor:default}
-.other.hit{background:var(--ink);color:#fff}
-.other.miss{background:var(--ink);color:#fff}
-.other.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ink)}
+.other.hit{background:var(--ok);border-color:var(--ok);color:#fff}
+.other.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.other.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
 
+/* 對錯回饋：綠 ✓、紅 ✕（不用音名色，色弱也看得出符號）；不加音效，避免給耳朵參考音 */
+:root{--ok:#2E7D4F;--ng:#C0392B}
+.key[data-fb]::before,.other[data-fb]::before{content:attr(data-fb);position:absolute;top:-10px;right:-10px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--ink);color:#fff;font:700 12px/22px var(--sans);text-align:center;white-space:nowrap;z-index:2}
+.key.hit[data-fb]::before,.other.hit[data-fb]::before,.key.answer[data-fb]::before,.other.answer[data-fb]::before{background:var(--ok)}
+.key.miss[data-fb]::before,.other.miss[data-fb]::before{background:var(--ng)}
+.other[data-fb]::before{top:-12px;right:-6px}
+.fb{position:absolute;left:50%;top:29%;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;display:grid;justify-items:center;font:800 2.6rem/1 var(--sans);transition:opacity .15s,transform .2s var(--ease);z-index:3}
+.fb small{font-size:.95rem;font-weight:700;margin-top:4px;white-space:nowrap}
+.fb.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.fb.ok{color:var(--ok)}.fb.ng{color:var(--ng)}
+.fb{background:rgba(255,255,255,.92);border-radius:18px;padding:6px 14px 8px;box-shadow:0 4px 14px rgba(22,22,26,.12)}
+.status.ok b{color:var(--ok)}.status.ng b{color:var(--ng)}
+@keyframes fbPulse{50%{box-shadow:0 0 0 4px var(--paper),0 0 0 11px var(--ok)}}
+.btn2{display:inline-grid;justify-items:center;gap:1px;padding:8px 22px;line-height:1.35}
+.btn2 small{font-size:.72rem;font-weight:500;opacity:.85}
+.btn.first{animation:firstGlow 1.6s ease-in-out infinite}
+@keyframes firstGlow{50%{box-shadow:0 0 0 6px rgba(46,125,79,.25)}}
+@media (prefers-reduced-motion:reduce){.key.answer,.other.answer,.btn.first{animation:none}.fb{transition:none}}
 .status{text-align:center;min-height:1.75em;font-size:.95rem;color:var(--ink-2)}
 .status b{color:var(--ink)}
 .status .sw{display:inline-block;width:.7em;height:.7em;border-radius:50%;vertical-align:.02em;margin-right:.35em}
@@ -491,6 +509,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="wheel" id="wheel">
         <svg class="ring draw" id="ring" viewBox="0 0 100 100" aria-hidden="true"></svg>
         <canvas id="scope" aria-hidden="true"></canvas>
+        <div class="fb" id="fb" aria-hidden="true"></div>
         <button class="other" id="otherBtn" type="button">その他</button>
       </div>
       <p class="status" id="status" aria-live="polite">イヤホンをつけて「トレーニング開始」を押してください</p>
@@ -502,8 +521,8 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       </div>
 
       <div class="controls">
-        <button class="btn" id="trainBtn" type="button">トレーニング開始</button>
-        <button class="btn line" id="testBtn" type="button">判定テスト</button>
+        <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">トレーニング開始</span><small>毎日の練習、1音ずつ解放</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>判定テスト</span><small>週1回、12音をテスト</small></button>
         <button class="btn line" id="reviewBtn" type="button" hidden>苦手を復習</button>
         <button class="btn line" id="stopBtn" type="button" hidden>一時停止</button>
       </div>
@@ -797,7 +816,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "音名 ", "other": "その他", "bankEmptyHas": "今は直す苦手はありません。間違えた音は自動でここに入り、よく混同する組み合わせが上に並びます。", "bankEmptyNew": "間違えた音は自動でここに入ります。しばらく練習すると、よく混同する組み合わせが上に並びます。", "fixedN": "これまでに{0}組を克服しました。", "pair": "{0}<span class=\"as\">を</span>{1}<span class=\"as\">と聞き間違え</span>", "worst": "全体で間違えやすい音：", "sep": "、", "reviewBtn20": "苦手を復習（20問）", "bankFoot": "残り{0}組{1}。1回正解するごとに回数が1減ります。", "bankFootFixed": "、克服{0}組", "noise": "ノイズ中", "qTest": "<b class=\"num\">{0}</b> / 36 問目", "qReview": "苦手の復習　<b class=\"num\">{0}</b> / {1} 問目", "qTrain": "この音は？", "hit": "<b>正解</b>　{0}、<span class=\"num\">{1}</span> Hz、<span class=\"num\">{2}</span> 秒", "contrast": "{0}まず押した音 {1}、次に正解の {2}<b>{3}</b>", "miss": "<b>不正解</b>　正解は {0}{1}。もう一度聞いてみましょう", "missOther": "（まだ解放前なので「その他」）", "unlockTitle": "新しい音名を解放：{0}", "unlockText": "これからは「その他」ではありません。しばらくはこの音の響きをよく聞いてみましょう。", "allTitle": "12音すべて合格", "allText": "判定テストで、研究の基準に届いているか確かめましょう。", "modeTrain": "トレーニング", "subTrain": "聞こえた音の名前をタップ。まだ解放していない音は「その他」を押します。", "modeTest": "判定テスト", "subTest": "12音がランダムに出題され、オクターブも音色も変わり、正誤は表示されません。直感で答えてください。", "modeReview": "苦手の復習", "subReview": "よく混同する音を集中して練習します。間違えると、押した音と正解を続けて鳴らすので聞き比べられます。", "start": "トレーニング開始", "cont": "トレーニングを続ける", "paused": "一時停止しました。今日の記録は保存されています", "v90": "研究での絶対音感の基準に達しました。数週間後にもう一度テストして、維持できているか確かめましょう。", "v50": "音名の記憶ができつつあり、当てずっぽうを大きく上回っています。毎日の目標を続けましょう。", "v20": "一部の音名はもうつかめています。多くの人が通る段階なので、続けることが大切です。", "v0": "今は当てずっぽうに近い結果です。これは普通のスタート地点で、研究の参加者もここから始めました。", "rAcc": "12音の正答率", "rRt": "秒（反応の中央値）", "rNear": "半音以内の誤差", "barsAria": "音名ごとの正答率", "rNote": "「半音以内」の割合が高く正答率が低い場合は、だいたいの音域はつかめていて、あとは精度です。次のテスト：{0}。", "shareResult": "このテスト結果をシェア：12音の正答率 {0}%。", "testDone": "テスト完了。結果は下にあります", "revTitle": "復習完了", "revBody": "{1}問中{0}問正解{2}。{3}", "revFixed": "、{0}組を克服", "revLeft": "苦手リストに残り{0}組。明日もう一度復習しましょう。", "revClear": "苦手リストが空になりました。通常のトレーニングに戻りましょう。", "revDone": "復習完了", "nFirst": "初めての方は、<strong>C（ド）</strong>の1音から始めましょう。最初にテストを受けて、スタート時の成績を残すこともできます。", "nRemain": "今日の目標まであと<strong>{0}問</strong>です{1}。", "nStreak": "。{0}日連続をキープしましょう", "nDone": "今日の目標を達成しました。<strong>明日も来れば</strong>{0}日連続になります。", "nTest": "今週のテストを受けられます。", "nBank": "苦手リストに<strong>{0}組</strong>あります。", "mAccN": "直近{0}問の正答率", "mAcc0": "直近20問の正答率", "mRt": "秒（反応の中央値）", "mRt0": "反応時間の中央値", "mNext": "次に解放", "mAll": "<b>全音</b>解放済み", "heatTip": "{0}：{1}問", "trackTip": "{0}問", "chartEmpty": "まだテスト結果がありません。まず1回受けてスタート地点にし、毎週比べてみましょう。", "chartAria": "テスト正答率の推移", "shareGame": "絶対音感養成所で練習中、12音中{0}音を解放しました。大人でも絶対音感は身につく？試してみて", "shareRes": "絶対音感テストの結果：12音で正答率{0}%。大人でも絶対音感は身につく？試してみて", "copied": "コピーしました", "testAbort": "テストを中止しました。今回の成績は記録されません", "resetArm": "もう一度押すと消去します。元に戻せません", "resetDone": "消去しました", "resetStatus": "記録を消去しました。Cからやり直します"},LANG='ja',LOC='ja-JP',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/ja/';
+var T={"noteAria": "音名 ", "other": "その他", "bankEmptyHas": "今は直す苦手はありません。間違えた音は自動でここに入り、よく混同する組み合わせが上に並びます。", "bankEmptyNew": "間違えた音は自動でここに入ります。しばらく練習すると、よく混同する組み合わせが上に並びます。", "fixedN": "これまでに{0}組を克服しました。", "pair": "{0}<span class=\"as\">を</span>{1}<span class=\"as\">と聞き間違え</span>", "worst": "全体で間違えやすい音：", "sep": "、", "reviewBtn20": "苦手を復習（20問）", "bankFoot": "残り{0}組{1}。1回正解するごとに回数が1減ります。", "bankFootFixed": "、克服{0}組", "noise": "ノイズ中", "qTest": "<b class=\"num\">{0}</b> / 36 問目", "qReview": "苦手の復習　<b class=\"num\">{0}</b> / {1} 問目", "qTrain": "この音は？", "hit": "<b>正解</b>　{0}、<span class=\"num\">{1}</span> Hz、<span class=\"num\">{2}</span> 秒", "contrast": "{0}まず押した音 {1}、次に正解の {2}<b>{3}</b>", "miss": "<b>不正解</b>　正解は {0}{1}。もう一度聞いてみましょう", "missOther": "（まだ解放前なので「その他」）", "unlockTitle": "新しい音名を解放：{0}", "unlockText": "これからは「その他」ではありません。しばらくはこの音の響きをよく聞いてみましょう。", "allTitle": "12音すべて合格", "allText": "判定テストで、研究の基準に届いているか確かめましょう。", "modeTrain": "トレーニング", "subTrain": "聞こえた音の名前をタップ。まだ解放していない音は「その他」を押します。", "modeTest": "判定テスト", "subTest": "12音がランダムに出題され、オクターブも音色も変わり、正誤は表示されません。直感で答えてください。", "modeReview": "苦手の復習", "subReview": "よく混同する音を集中して練習します。間違えると、押した音と正解を続けて鳴らすので聞き比べられます。", "start": "トレーニング開始", "cont": "トレーニングを続ける", "paused": "一時停止しました。今日の記録は保存されています", "v90": "研究での絶対音感の基準に達しました。数週間後にもう一度テストして、維持できているか確かめましょう。", "v50": "音名の記憶ができつつあり、当てずっぽうを大きく上回っています。毎日の目標を続けましょう。", "v20": "一部の音名はもうつかめています。多くの人が通る段階なので、続けることが大切です。", "v0": "今は当てずっぽうに近い結果です。これは普通のスタート地点で、研究の参加者もここから始めました。", "rAcc": "12音の正答率", "rRt": "秒（反応の中央値）", "rNear": "半音以内の誤差", "barsAria": "音名ごとの正答率", "rNote": "「半音以内」の割合が高く正答率が低い場合は、だいたいの音域はつかめていて、あとは精度です。次のテスト：{0}。", "shareResult": "このテスト結果をシェア：12音の正答率 {0}%。", "testDone": "テスト完了。結果は下にあります", "revTitle": "復習完了", "revBody": "{1}問中{0}問正解{2}。{3}", "revFixed": "、{0}組を克服", "revLeft": "苦手リストに残り{0}組。明日もう一度復習しましょう。", "revClear": "苦手リストが空になりました。通常のトレーニングに戻りましょう。", "revDone": "復習完了", "nFirst": "初めての方は、<strong>C（ド）</strong>の1音から始めましょう。最初にテストを受けて、スタート時の成績を残すこともできます。", "nRemain": "今日の目標まであと<strong>{0}問</strong>です{1}。", "nStreak": "。{0}日連続をキープしましょう", "nDone": "今日の目標を達成しました。<strong>明日も来れば</strong>{0}日連続になります。", "nTest": "今週のテストを受けられます。", "nBank": "苦手リストに<strong>{0}組</strong>あります。", "mAccN": "直近{0}問の正答率", "mAcc0": "直近20問の正答率", "mRt": "秒（反応の中央値）", "mRt0": "反応時間の中央値", "mNext": "次に解放", "mAll": "<b>全音</b>解放済み", "heatTip": "{0}：{1}問", "trackTip": "{0}問", "chartEmpty": "まだテスト結果がありません。まず1回受けてスタート地点にし、毎週比べてみましょう。", "chartAria": "テスト正答率の推移", "shareGame": "絶対音感養成所で練習中、12音中{0}音を解放しました。大人でも絶対音感は身につく？試してみて", "shareRes": "絶対音感テストの結果：12音で正答率{0}%。大人でも絶対音感は身につく？試してみて", "copied": "コピーしました", "testAbort": "テストを中止しました。今回の成績は記録されません", "resetArm": "もう一度押すと消去します。元に戻せません", "resetDone": "消去しました", "resetStatus": "記録を消去しました。Cからやり直します", "trainSub": "毎日の練習、1音ずつ解放", "testSub": "週1回、12音をテスト", "fbAns": "正解"},LANG='ja',LOC='ja-JP',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/ja/';
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -943,14 +962,14 @@ function sw(pc){return '<span class="sw" style="background:'+COLORS[pc]+'"></spa
 function paintWheel(){
   var act=active();
   keys.forEach(function(b,pc){
-    b.className='key';
+    b.className='key';b.removeAttribute('data-fb');
     var on=mode==='test'||act.indexOf(pc)>=0;
     if(!on)b.classList.add('locked');
     b.disabled=!on||!waiting;
     segs[pc].style.stroke=on?COLORS[pc]:'#e3e4e9';
   });
   $('otherBtn').hidden=!(mode!=='test'?(S.level<12):false);
-  $('otherBtn').className='other';$('otherBtn').disabled=!waiting;
+  $('otherBtn').className='other';$('otherBtn').removeAttribute('data-fb');$('otherBtn').disabled=!waiting;$('fb').className='fb';$('status').className='status';
 }
 
 function pickTrain(){
@@ -1000,11 +1019,14 @@ async function answer(ans){
   var hz=freq(cur.pc,cur.oct).toFixed(1),c0=cur;
   scopeColor=COLORS[c0.pc];
   if(ok){
-    btnOf(ans).classList.add('hit');
+    btnOf(ans).classList.add('hit');btnOf(ans).setAttribute('data-fb','✓');
+    $('fb').innerHTML='✓';$('fb').className='fb ok show';$('status').className='status ok';
     status(sw(c0.pc)+F(T.hit,NAMES[c0.pc]+c0.oct,hz,(rt/1000).toFixed(2)));
     kick(700);
   }else{
-    btnOf(ans).classList.add('miss');btnOf(truth).classList.add('answer');
+    btnOf(ans).classList.add('miss');btnOf(ans).setAttribute('data-fb','✕');btnOf(truth).classList.add('answer');btnOf(truth).setAttribute('data-fb',T.fbAns);
+    $('fb').innerHTML='✕<small>'+T.fbAns+' '+(truth==='other'?T.other:NAMES[truth])+'</small>';$('fb').className='fb ng show';$('status').className='status ng';
+    try{if(navigator.vibrate)navigator.vibrate(70)}catch(e){}
     var contrast=mode==='review'?(ans!=='other'?(truth!=='other'):false):false;
     if(contrast){
       status(F(T.contrast,sw(ans),NAMES[ans],sw(c0.pc),NAMES[c0.pc]));
@@ -1071,7 +1093,7 @@ function stop(msg){if(mode)roundClose('quit');idle(msg)}
 function idle(msg){
   mode=null;waiting=false;clearTimeout(timer);paintWheel();
   $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
-  $('trainBtn').textContent=S.total>0?T.cont:T.start;
+  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
   $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
   status(msg||T.paused);render();
 }
@@ -1305,7 +1327,7 @@ $('resetBtn').addEventListener('click',function(){
   idle(T.resetStatus);
 });
 if(reduce)$('ring').classList.remove('draw');
-$('trainBtn').textContent=S.total>0?T.cont:T.start;
+$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
 /* 語言切換 */
 document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'ja'},true)}catch(e){}})});
 paintWheel();render();sizeScope();

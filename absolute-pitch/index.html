@@ -129,18 +129,36 @@ p{margin:0}
 .key[disabled]{cursor:default}
 .key.locked{border:1.5px dashed #cfd1d9;color:#b3b6c1;background:transparent}
 .key.locked::after{display:none}
-.key.hit{background:var(--c);border-color:var(--c);color:#fff;transform:translate(-50%,-50%) scale(1.1)}
+.key.hit{background:var(--ok);border-color:var(--ok);color:#fff;transform:translate(-50%,-50%) scale(1.1)}
 .key.hit::after,.key.miss::after,.key.picked::after{background:#fff}
-.key.miss{background:var(--ink);color:#fff}
-.key.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--c)}
+.key.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.key.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
 .key.picked{background:var(--ink);color:#fff}
 .other{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:7px 18px;font-weight:700;font-size:.92rem;transition:background .18s,color .18s,box-shadow .25s}
 .other:hover:not([disabled]){background:var(--ink);color:#fff}
 .other[disabled]{cursor:default}
-.other.hit{background:var(--ink);color:#fff}
-.other.miss{background:var(--ink);color:#fff}
-.other.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ink)}
+.other.hit{background:var(--ok);border-color:var(--ok);color:#fff}
+.other.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.other.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
 
+/* 對錯回饋：綠 ✓、紅 ✕（不用音名色，色弱也看得出符號）；不加音效，避免給耳朵參考音 */
+:root{--ok:#2E7D4F;--ng:#C0392B}
+.key[data-fb]::before,.other[data-fb]::before{content:attr(data-fb);position:absolute;top:-10px;right:-10px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--ink);color:#fff;font:700 12px/22px var(--sans);text-align:center;white-space:nowrap;z-index:2}
+.key.hit[data-fb]::before,.other.hit[data-fb]::before,.key.answer[data-fb]::before,.other.answer[data-fb]::before{background:var(--ok)}
+.key.miss[data-fb]::before,.other.miss[data-fb]::before{background:var(--ng)}
+.other[data-fb]::before{top:-12px;right:-6px}
+.fb{position:absolute;left:50%;top:29%;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;display:grid;justify-items:center;font:800 2.6rem/1 var(--sans);transition:opacity .15s,transform .2s var(--ease);z-index:3}
+.fb small{font-size:.95rem;font-weight:700;margin-top:4px;white-space:nowrap}
+.fb.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.fb.ok{color:var(--ok)}.fb.ng{color:var(--ng)}
+.fb{background:rgba(255,255,255,.92);border-radius:18px;padding:6px 14px 8px;box-shadow:0 4px 14px rgba(22,22,26,.12)}
+.status.ok b{color:var(--ok)}.status.ng b{color:var(--ng)}
+@keyframes fbPulse{50%{box-shadow:0 0 0 4px var(--paper),0 0 0 11px var(--ok)}}
+.btn2{display:inline-grid;justify-items:center;gap:1px;padding:8px 22px;line-height:1.35}
+.btn2 small{font-size:.72rem;font-weight:500;opacity:.85}
+.btn.first{animation:firstGlow 1.6s ease-in-out infinite}
+@keyframes firstGlow{50%{box-shadow:0 0 0 6px rgba(46,125,79,.25)}}
+@media (prefers-reduced-motion:reduce){.key.answer,.other.answer,.btn.first{animation:none}.fb{transition:none}}
 .status{text-align:center;min-height:1.75em;font-size:.95rem;color:var(--ink-2)}
 .status b{color:var(--ink)}
 .status .sw{display:inline-block;width:.7em;height:.7em;border-radius:50%;vertical-align:.02em;margin-right:.35em}
@@ -490,6 +508,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="wheel" id="wheel">
         <svg class="ring draw" id="ring" viewBox="0 0 100 100" aria-hidden="true"></svg>
         <canvas id="scope" aria-hidden="true"></canvas>
+        <div class="fb" id="fb" aria-hidden="true"></div>
         <button class="other" id="otherBtn" type="button">其他</button>
       </div>
       <p class="status" id="status" aria-live="polite">戴上耳機，按「開始訓練」</p>
@@ -501,8 +520,8 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       </div>
 
       <div class="controls">
-        <button class="btn" id="trainBtn" type="button">開始訓練</button>
-        <button class="btn line" id="testBtn" type="button">驗收測驗</button>
+        <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">開始訓練</span><small>每天練，一個一個解鎖音</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>驗收測驗</span><small>每週一次，測 12 個音</small></button>
         <button class="btn line" id="reviewBtn" type="button" hidden>複習錯題</button>
         <button class="btn line" id="stopBtn" type="button" hidden>暫停</button>
       </div>
@@ -804,7 +823,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "音名 ", "other": "其他", "bankEmptyHas": "目前沒有待改正的錯題。答錯的音會自動收進這裡，最常混淆的組合排在最上面。", "bankEmptyNew": "答錯的音會自動收進這裡。練過一陣子後，最常混淆的組合會排在最上面。", "fixedN": "已改正 {0} 組。", "pair": "{0}<span class=\"as\">常被聽成</span>{1}", "worst": "整體最常答錯的音：", "sep": "、", "reviewBtn20": "複習錯題（20 題）", "bankFoot": "待改正 {0} 組{1}。答對一次，次數減 1。", "bankFootFixed": "，已改正 {0} 組", "noise": "噪音遮蔽中", "qTest": "第 <b class=\"num\">{0}</b> / 36 題", "qReview": "錯題複習　第 <b class=\"num\">{0}</b> / {1} 題", "qTrain": "這是哪個音？", "hit": "<b>答對</b>　{0}，<span class=\"num\">{1}</span> Hz，<span class=\"num\">{2}</span> 秒", "contrast": "{0}先聽你按的 {1}，再聽正解 {2}<b>{3}</b>", "miss": "<b>答錯</b>　正解是 {0}{1}，再聽一次", "missOther": "，還沒解鎖，屬於「其他」", "unlockTitle": "解鎖新音名：{0}", "unlockText": "接下來它不再是「其他」。先多聽幾次它出現的樣子。", "allTitle": "12 個音全部達標", "allText": "去做一次驗收測驗，看看是不是研究中的 AP 水準。", "modeTrain": "訓練模式", "subTrain": "聽到音之後點它的名字。還沒解鎖的音，一律按「其他」。", "modeTest": "驗收測驗", "subTest": "12 個音隨機出現，八度和音色都會換，沒有對錯提示。憑第一直覺作答。", "modeReview": "錯題複習", "subReview": "集中練你最常混淆的音。答錯時先播你按的音，再播正解，對比著聽。", "start": "開始訓練", "cont": "繼續訓練", "paused": "已暫停，今天的進度已存好", "v90": "達到研究中的絕對音感水準。過幾週再測一次，確認能保持。", "v50": "音名記憶正在成形，明顯高於亂猜。照每日目標繼續練。", "v20": "已經抓得住一部分音名。多數人都會經過這個階段，關鍵是持續練。", "v0": "目前接近亂猜的機率。這是正常的起點，研究參與者也是從這裡開始。", "rAcc": "12 音正確率", "rRt": "秒，反應中位數", "rNear": "誤差在半音內", "barsAria": "各音名正確率", "rNote": "誤差在半音內的比例高、正確率低，代表已抓到大致音區，差在精準度。下次驗收：{0}。", "shareResult": "分享這次驗收：12 音正確率 {0}%。", "testDone": "驗收完成，結果在下方", "revTitle": "錯題複習完成", "revBody": "這輪答對 {0} / {1} 題{2}。{3}", "revFixed": "，改正了 {0} 組", "revLeft": "錯題庫還有 {0} 組，明天再來複習一輪。", "revClear": "錯題庫清空了，回到一般訓練吧。", "revDone": "複習完成", "nFirst": "第一次來？從 <strong>C</strong> 這一個音開始。也可以先做一次驗收，留下起點成績。", "nRemain": "今天還差 <strong>{0} 題</strong>完成每日目標{1}。", "nStreak": "，保住 {0} 天的連續紀錄", "nDone": "今天的目標完成了。<strong>明天回來</strong>，連續紀錄就會變成 {0} 天。", "nTest": "本週的驗收已開放。", "nBank": "錯題庫有 <strong>{0} 組</strong>待改正。", "mAccN": "近 {0} 題正確率", "mAcc0": "近 20 題正確率", "mRt": "秒，反應中位數", "mRt0": "反應時間中位數", "mNext": "下一個解鎖", "mAll": "<b>全部</b>已解鎖", "heatTip": "{0}：{1} 題", "trackTip": "{0} 題", "chartEmpty": "還沒有驗收紀錄。先測一次當作起點，之後每週回來比較。", "chartAria": "驗收正確率變化", "shareGame": "我在絕對音感養成所練音感，已解鎖 {0} / 12 個音名。成人也能練絕對音感嗎？來試試", "shareRes": "我的絕對音感驗收：12 音正確率 {0}%。成人也能練絕對音感嗎？來試試", "copied": "已複製", "testAbort": "驗收已中止，這次不記錄成績", "resetArm": "再按一次確認清除，無法復原", "resetDone": "已清除", "resetStatus": "紀錄已清除，從 C 重新開始"},LANG='zh',LOC='zh-TW',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/';
+var T={"noteAria": "音名 ", "other": "其他", "bankEmptyHas": "目前沒有待改正的錯題。答錯的音會自動收進這裡，最常混淆的組合排在最上面。", "bankEmptyNew": "答錯的音會自動收進這裡。練過一陣子後，最常混淆的組合會排在最上面。", "fixedN": "已改正 {0} 組。", "pair": "{0}<span class=\"as\">常被聽成</span>{1}", "worst": "整體最常答錯的音：", "sep": "、", "reviewBtn20": "複習錯題（20 題）", "bankFoot": "待改正 {0} 組{1}。答對一次，次數減 1。", "bankFootFixed": "，已改正 {0} 組", "noise": "噪音遮蔽中", "qTest": "第 <b class=\"num\">{0}</b> / 36 題", "qReview": "錯題複習　第 <b class=\"num\">{0}</b> / {1} 題", "qTrain": "這是哪個音？", "hit": "<b>答對</b>　{0}，<span class=\"num\">{1}</span> Hz，<span class=\"num\">{2}</span> 秒", "contrast": "{0}先聽你按的 {1}，再聽正解 {2}<b>{3}</b>", "miss": "<b>答錯</b>　正解是 {0}{1}，再聽一次", "missOther": "，還沒解鎖，屬於「其他」", "unlockTitle": "解鎖新音名：{0}", "unlockText": "接下來它不再是「其他」。先多聽幾次它出現的樣子。", "allTitle": "12 個音全部達標", "allText": "去做一次驗收測驗，看看是不是研究中的 AP 水準。", "modeTrain": "訓練模式", "subTrain": "聽到音之後點它的名字。還沒解鎖的音，一律按「其他」。", "modeTest": "驗收測驗", "subTest": "12 個音隨機出現，八度和音色都會換，沒有對錯提示。憑第一直覺作答。", "modeReview": "錯題複習", "subReview": "集中練你最常混淆的音。答錯時先播你按的音，再播正解，對比著聽。", "start": "開始訓練", "cont": "繼續訓練", "paused": "已暫停，今天的進度已存好", "v90": "達到研究中的絕對音感水準。過幾週再測一次，確認能保持。", "v50": "音名記憶正在成形，明顯高於亂猜。照每日目標繼續練。", "v20": "已經抓得住一部分音名。多數人都會經過這個階段，關鍵是持續練。", "v0": "目前接近亂猜的機率。這是正常的起點，研究參與者也是從這裡開始。", "rAcc": "12 音正確率", "rRt": "秒，反應中位數", "rNear": "誤差在半音內", "barsAria": "各音名正確率", "rNote": "誤差在半音內的比例高、正確率低，代表已抓到大致音區，差在精準度。下次驗收：{0}。", "shareResult": "分享這次驗收：12 音正確率 {0}%。", "testDone": "驗收完成，結果在下方", "revTitle": "錯題複習完成", "revBody": "這輪答對 {0} / {1} 題{2}。{3}", "revFixed": "，改正了 {0} 組", "revLeft": "錯題庫還有 {0} 組，明天再來複習一輪。", "revClear": "錯題庫清空了，回到一般訓練吧。", "revDone": "複習完成", "nFirst": "第一次來？從 <strong>C</strong> 這一個音開始。也可以先做一次驗收，留下起點成績。", "nRemain": "今天還差 <strong>{0} 題</strong>完成每日目標{1}。", "nStreak": "，保住 {0} 天的連續紀錄", "nDone": "今天的目標完成了。<strong>明天回來</strong>，連續紀錄就會變成 {0} 天。", "nTest": "本週的驗收已開放。", "nBank": "錯題庫有 <strong>{0} 組</strong>待改正。", "mAccN": "近 {0} 題正確率", "mAcc0": "近 20 題正確率", "mRt": "秒，反應中位數", "mRt0": "反應時間中位數", "mNext": "下一個解鎖", "mAll": "<b>全部</b>已解鎖", "heatTip": "{0}：{1} 題", "trackTip": "{0} 題", "chartEmpty": "還沒有驗收紀錄。先測一次當作起點，之後每週回來比較。", "chartAria": "驗收正確率變化", "shareGame": "我在絕對音感養成所練音感，已解鎖 {0} / 12 個音名。成人也能練絕對音感嗎？來試試", "shareRes": "我的絕對音感驗收：12 音正確率 {0}%。成人也能練絕對音感嗎？來試試", "copied": "已複製", "testAbort": "驗收已中止，這次不記錄成績", "resetArm": "再按一次確認清除，無法復原", "resetDone": "已清除", "resetStatus": "紀錄已清除，從 C 重新開始", "trainSub": "每天練，一個一個解鎖音", "testSub": "每週一次，測 12 個音", "fbAns": "正解"},LANG='zh',LOC='zh-TW',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/';
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -950,14 +969,14 @@ function sw(pc){return '<span class="sw" style="background:'+COLORS[pc]+'"></spa
 function paintWheel(){
   var act=active();
   keys.forEach(function(b,pc){
-    b.className='key';
+    b.className='key';b.removeAttribute('data-fb');
     var on=mode==='test'||act.indexOf(pc)>=0;
     if(!on)b.classList.add('locked');
     b.disabled=!on||!waiting;
     segs[pc].style.stroke=on?COLORS[pc]:'#e3e4e9';
   });
   $('otherBtn').hidden=!(mode!=='test'?(S.level<12):false);
-  $('otherBtn').className='other';$('otherBtn').disabled=!waiting;
+  $('otherBtn').className='other';$('otherBtn').removeAttribute('data-fb');$('otherBtn').disabled=!waiting;$('fb').className='fb';$('status').className='status';
 }
 
 function pickTrain(){
@@ -1007,11 +1026,14 @@ async function answer(ans){
   var hz=freq(cur.pc,cur.oct).toFixed(1),c0=cur;
   scopeColor=COLORS[c0.pc];
   if(ok){
-    btnOf(ans).classList.add('hit');
+    btnOf(ans).classList.add('hit');btnOf(ans).setAttribute('data-fb','✓');
+    $('fb').innerHTML='✓';$('fb').className='fb ok show';$('status').className='status ok';
     status(sw(c0.pc)+F(T.hit,NAMES[c0.pc]+c0.oct,hz,(rt/1000).toFixed(2)));
     kick(700);
   }else{
-    btnOf(ans).classList.add('miss');btnOf(truth).classList.add('answer');
+    btnOf(ans).classList.add('miss');btnOf(ans).setAttribute('data-fb','✕');btnOf(truth).classList.add('answer');btnOf(truth).setAttribute('data-fb',T.fbAns);
+    $('fb').innerHTML='✕<small>'+T.fbAns+' '+(truth==='other'?T.other:NAMES[truth])+'</small>';$('fb').className='fb ng show';$('status').className='status ng';
+    try{if(navigator.vibrate)navigator.vibrate(70)}catch(e){}
     var contrast=mode==='review'?(ans!=='other'?(truth!=='other'):false):false;
     if(contrast){
       status(F(T.contrast,sw(ans),NAMES[ans],sw(c0.pc),NAMES[c0.pc]));
@@ -1078,7 +1100,7 @@ function stop(msg){if(mode)roundClose('quit');idle(msg)}
 function idle(msg){
   mode=null;waiting=false;clearTimeout(timer);paintWheel();
   $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
-  $('trainBtn').textContent=S.total>0?T.cont:T.start;
+  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
   $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
   status(msg||T.paused);render();
 }
@@ -1312,7 +1334,7 @@ $('resetBtn').addEventListener('click',function(){
   idle(T.resetStatus);
 });
 if(reduce)$('ring').classList.remove('draw');
-$('trainBtn').textContent=S.total>0?T.cont:T.start;
+$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
 /* 語言切換 */
 document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'zh-Hant'},true)}catch(e){}})});
 paintWheel();render();sizeScope();

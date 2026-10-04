@@ -128,18 +128,36 @@ p{margin:0}
 .key[disabled]{cursor:default}
 .key.locked{border:1.5px dashed #cfd1d9;color:#b3b6c1;background:transparent}
 .key.locked::after{display:none}
-.key.hit{background:var(--c);border-color:var(--c);color:#fff;transform:translate(-50%,-50%) scale(1.1)}
+.key.hit{background:var(--ok);border-color:var(--ok);color:#fff;transform:translate(-50%,-50%) scale(1.1)}
 .key.hit::after,.key.miss::after,.key.picked::after{background:#fff}
-.key.miss{background:var(--ink);color:#fff}
-.key.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--c)}
+.key.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.key.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
 .key.picked{background:var(--ink);color:#fff}
 .other{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:7px 18px;font-weight:700;font-size:.92rem;transition:background .18s,color .18s,box-shadow .25s}
 .other:hover:not([disabled]){background:var(--ink);color:#fff}
 .other[disabled]{cursor:default}
-.other.hit{background:var(--ink);color:#fff}
-.other.miss{background:var(--ink);color:#fff}
-.other.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ink)}
+.other.hit{background:var(--ok);border-color:var(--ok);color:#fff}
+.other.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.other.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
 
+/* 對錯回饋：綠 ✓、紅 ✕（不用音名色，色弱也看得出符號）；不加音效，避免給耳朵參考音 */
+:root{--ok:#2E7D4F;--ng:#C0392B}
+.key[data-fb]::before,.other[data-fb]::before{content:attr(data-fb);position:absolute;top:-10px;right:-10px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--ink);color:#fff;font:700 12px/22px var(--sans);text-align:center;white-space:nowrap;z-index:2}
+.key.hit[data-fb]::before,.other.hit[data-fb]::before,.key.answer[data-fb]::before,.other.answer[data-fb]::before{background:var(--ok)}
+.key.miss[data-fb]::before,.other.miss[data-fb]::before{background:var(--ng)}
+.other[data-fb]::before{top:-12px;right:-6px}
+.fb{position:absolute;left:50%;top:29%;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;display:grid;justify-items:center;font:800 2.6rem/1 var(--sans);transition:opacity .15s,transform .2s var(--ease);z-index:3}
+.fb small{font-size:.95rem;font-weight:700;margin-top:4px;white-space:nowrap}
+.fb.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.fb.ok{color:var(--ok)}.fb.ng{color:var(--ng)}
+.fb{background:rgba(255,255,255,.92);border-radius:18px;padding:6px 14px 8px;box-shadow:0 4px 14px rgba(22,22,26,.12)}
+.status.ok b{color:var(--ok)}.status.ng b{color:var(--ng)}
+@keyframes fbPulse{50%{box-shadow:0 0 0 4px var(--paper),0 0 0 11px var(--ok)}}
+.btn2{display:inline-grid;justify-items:center;gap:1px;padding:8px 22px;line-height:1.35}
+.btn2 small{font-size:.72rem;font-weight:500;opacity:.85}
+.btn.first{animation:firstGlow 1.6s ease-in-out infinite}
+@keyframes firstGlow{50%{box-shadow:0 0 0 6px rgba(46,125,79,.25)}}
+@media (prefers-reduced-motion:reduce){.key.answer,.other.answer,.btn.first{animation:none}.fb{transition:none}}
 .status{text-align:center;min-height:1.75em;font-size:.95rem;color:var(--ink-2)}
 .status b{color:var(--ink)}
 .status .sw{display:inline-block;width:.7em;height:.7em;border-radius:50%;vertical-align:.02em;margin-right:.35em}
@@ -482,6 +500,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="wheel" id="wheel">
         <svg class="ring draw" id="ring" viewBox="0 0 100 100" aria-hidden="true"></svg>
         <canvas id="scope" aria-hidden="true"></canvas>
+        <div class="fb" id="fb" aria-hidden="true"></div>
         <button class="other" id="otherBtn" type="button">Other</button>
       </div>
       <p class="status" id="status" aria-live="polite">Put on headphones and press Start training</p>
@@ -493,8 +512,8 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       </div>
 
       <div class="controls">
-        <button class="btn" id="trainBtn" type="button">Start training</button>
-        <button class="btn line" id="testBtn" type="button">Take the test</button>
+        <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">Start training</span><small>Daily practice, one note at a time</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>Take the test</span><small>Once a week, all 12 notes</small></button>
         <button class="btn line" id="reviewBtn" type="button" hidden>Review mistakes</button>
         <button class="btn line" id="stopBtn" type="button" hidden>Pause</button>
       </div>
@@ -787,7 +806,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "Note ", "other": "Other", "bankEmptyHas": "Nothing to fix right now. Notes you miss land here, with the pairs you mix up most at the top.", "bankEmptyNew": "Notes you miss land here automatically. After some practice, the pairs you mix up most will show at the top.", "fixedN": "{0} pairs fixed so far.", "pair": "{0}<span class=\"as\">heard as</span>{1}", "worst": "Notes you miss most overall: ", "sep": ", ", "reviewBtn20": "Review mistakes (20)", "bankFoot": "{0} pairs to fix{1}. Each correct answer takes one off the count.", "bankFootFixed": ", {0} fixed", "noise": "Noise break", "qTest": "Question <b class=\"num\">{0}</b> of 36", "qReview": "Review: question <b class=\"num\">{0}</b> of {1}", "qTrain": "Which note is this?", "hit": "<b>Correct</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}First your pick, {1}, then the answer, {2}<b>{3}</b>", "miss": "<b>Not quite</b> · It was {0}{1}. Listen again", "missOther": ", not unlocked yet, so “Other”", "unlockTitle": "New note unlocked: {0}", "unlockText": "From now on it is no longer “Other”. Listen for how it sounds over the next few rounds.", "allTitle": "All 12 notes passed", "allText": "Take the test to see whether you reach the level used in the studies.", "modeTrain": "Training", "subTrain": "Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.", "modeTest": "Test", "subTest": "All 12 notes in random order, with different octaves and sounds and no feedback. Go with your first instinct.", "modeReview": "Review", "subReview": "Focus on the notes you mix up most. When you miss, you hear your pick and then the answer, back to back.", "start": "Start training", "cont": "Continue training", "paused": "Paused. Today’s progress is saved", "v90": "You reached the absolute pitch level used in the studies. Test again in a few weeks to check it holds.", "v50": "Your note memory is taking shape, well above chance. Keep going with the daily goal.", "v20": "You can already catch some notes. Most people pass through this stage; keep practicing.", "v0": "This is close to chance. That is a normal starting point; the study participants started here too.", "rAcc": "12-note accuracy", "rRt": "s median response", "rNear": "within a semitone", "barsAria": "Accuracy by note", "rNote": "If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision. Next test: {0}.", "shareResult": "Share this test: {0}% on 12 notes.", "testDone": "Test finished. Results below", "revTitle": "Review finished", "revBody": "You got {0} of {1} right{2}. {3}", "revFixed": " and fixed {0} pairs", "revLeft": "{0} pairs left in your log. Come back tomorrow for another round.", "revClear": "Your log is clear. Back to regular training.", "revDone": "Review finished", "nFirst": "First time here? Start with a single note, <strong>C</strong>. You can also take the test first to record a starting score.", "nRemain": "<strong>{0} more</strong> to reach today’s goal{1}.", "nStreak": " and keep your {0}-day streak", "nDone": "Today’s goal is done. <strong>Come back tomorrow</strong> to make it a {0}-day streak.", "nTest": " This week’s test is ready.", "nBank": " <strong>{0} pairs</strong> in your mistake log.", "mAccN": "Last {0} accuracy", "mAcc0": "Last 20 accuracy", "mRt": "s median response", "mRt0": "Median response time", "mNext": "Next unlock", "mAll": "<b>All</b> unlocked", "heatTip": "{0}: {1}", "trackTip": "{0} answered", "chartEmpty": "No test scores yet. Take one now as your starting point and compare each week.", "chartAria": "Test accuracy over time", "shareGame": "I am training absolute pitch and have unlocked {0} of 12 notes. Can adults learn perfect pitch? Try it:", "shareRes": "My absolute pitch test: {0}% on 12 notes. Can adults learn perfect pitch? Try it:", "copied": "Copied", "testAbort": "Test stopped. This attempt is not recorded", "resetArm": "Press again to clear. This cannot be undone", "resetDone": "Cleared", "resetStatus": "Data cleared. Starting again from C"},LANG='en',LOC='en-US',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/en/';
+var T={"noteAria": "Note ", "other": "Other", "bankEmptyHas": "Nothing to fix right now. Notes you miss land here, with the pairs you mix up most at the top.", "bankEmptyNew": "Notes you miss land here automatically. After some practice, the pairs you mix up most will show at the top.", "fixedN": "{0} pairs fixed so far.", "pair": "{0}<span class=\"as\">heard as</span>{1}", "worst": "Notes you miss most overall: ", "sep": ", ", "reviewBtn20": "Review mistakes (20)", "bankFoot": "{0} pairs to fix{1}. Each correct answer takes one off the count.", "bankFootFixed": ", {0} fixed", "noise": "Noise break", "qTest": "Question <b class=\"num\">{0}</b> of 36", "qReview": "Review: question <b class=\"num\">{0}</b> of {1}", "qTrain": "Which note is this?", "hit": "<b>Correct</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}First your pick, {1}, then the answer, {2}<b>{3}</b>", "miss": "<b>Not quite</b> · It was {0}{1}. Listen again", "missOther": ", not unlocked yet, so “Other”", "unlockTitle": "New note unlocked: {0}", "unlockText": "From now on it is no longer “Other”. Listen for how it sounds over the next few rounds.", "allTitle": "All 12 notes passed", "allText": "Take the test to see whether you reach the level used in the studies.", "modeTrain": "Training", "subTrain": "Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.", "modeTest": "Test", "subTest": "All 12 notes in random order, with different octaves and sounds and no feedback. Go with your first instinct.", "modeReview": "Review", "subReview": "Focus on the notes you mix up most. When you miss, you hear your pick and then the answer, back to back.", "start": "Start training", "cont": "Continue training", "paused": "Paused. Today’s progress is saved", "v90": "You reached the absolute pitch level used in the studies. Test again in a few weeks to check it holds.", "v50": "Your note memory is taking shape, well above chance. Keep going with the daily goal.", "v20": "You can already catch some notes. Most people pass through this stage; keep practicing.", "v0": "This is close to chance. That is a normal starting point; the study participants started here too.", "rAcc": "12-note accuracy", "rRt": "s median response", "rNear": "within a semitone", "barsAria": "Accuracy by note", "rNote": "If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision. Next test: {0}.", "shareResult": "Share this test: {0}% on 12 notes.", "testDone": "Test finished. Results below", "revTitle": "Review finished", "revBody": "You got {0} of {1} right{2}. {3}", "revFixed": " and fixed {0} pairs", "revLeft": "{0} pairs left in your log. Come back tomorrow for another round.", "revClear": "Your log is clear. Back to regular training.", "revDone": "Review finished", "nFirst": "First time here? Start with a single note, <strong>C</strong>. You can also take the test first to record a starting score.", "nRemain": "<strong>{0} more</strong> to reach today’s goal{1}.", "nStreak": " and keep your {0}-day streak", "nDone": "Today’s goal is done. <strong>Come back tomorrow</strong> to make it a {0}-day streak.", "nTest": " This week’s test is ready.", "nBank": " <strong>{0} pairs</strong> in your mistake log.", "mAccN": "Last {0} accuracy", "mAcc0": "Last 20 accuracy", "mRt": "s median response", "mRt0": "Median response time", "mNext": "Next unlock", "mAll": "<b>All</b> unlocked", "heatTip": "{0}: {1}", "trackTip": "{0} answered", "chartEmpty": "No test scores yet. Take one now as your starting point and compare each week.", "chartAria": "Test accuracy over time", "shareGame": "I am training absolute pitch and have unlocked {0} of 12 notes. Can adults learn perfect pitch? Try it:", "shareRes": "My absolute pitch test: {0}% on 12 notes. Can adults learn perfect pitch? Try it:", "copied": "Copied", "testAbort": "Test stopped. This attempt is not recorded", "resetArm": "Press again to clear. This cannot be undone", "resetDone": "Cleared", "resetStatus": "Data cleared. Starting again from C", "trainSub": "Daily practice, one note at a time", "testSub": "Once a week, all 12 notes", "fbAns": "Answer"},LANG='en',LOC='en-US',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/en/';
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -933,14 +952,14 @@ function sw(pc){return '<span class="sw" style="background:'+COLORS[pc]+'"></spa
 function paintWheel(){
   var act=active();
   keys.forEach(function(b,pc){
-    b.className='key';
+    b.className='key';b.removeAttribute('data-fb');
     var on=mode==='test'||act.indexOf(pc)>=0;
     if(!on)b.classList.add('locked');
     b.disabled=!on||!waiting;
     segs[pc].style.stroke=on?COLORS[pc]:'#e3e4e9';
   });
   $('otherBtn').hidden=!(mode!=='test'?(S.level<12):false);
-  $('otherBtn').className='other';$('otherBtn').disabled=!waiting;
+  $('otherBtn').className='other';$('otherBtn').removeAttribute('data-fb');$('otherBtn').disabled=!waiting;$('fb').className='fb';$('status').className='status';
 }
 
 function pickTrain(){
@@ -990,11 +1009,14 @@ async function answer(ans){
   var hz=freq(cur.pc,cur.oct).toFixed(1),c0=cur;
   scopeColor=COLORS[c0.pc];
   if(ok){
-    btnOf(ans).classList.add('hit');
+    btnOf(ans).classList.add('hit');btnOf(ans).setAttribute('data-fb','✓');
+    $('fb').innerHTML='✓';$('fb').className='fb ok show';$('status').className='status ok';
     status(sw(c0.pc)+F(T.hit,NAMES[c0.pc]+c0.oct,hz,(rt/1000).toFixed(2)));
     kick(700);
   }else{
-    btnOf(ans).classList.add('miss');btnOf(truth).classList.add('answer');
+    btnOf(ans).classList.add('miss');btnOf(ans).setAttribute('data-fb','✕');btnOf(truth).classList.add('answer');btnOf(truth).setAttribute('data-fb',T.fbAns);
+    $('fb').innerHTML='✕<small>'+T.fbAns+' '+(truth==='other'?T.other:NAMES[truth])+'</small>';$('fb').className='fb ng show';$('status').className='status ng';
+    try{if(navigator.vibrate)navigator.vibrate(70)}catch(e){}
     var contrast=mode==='review'?(ans!=='other'?(truth!=='other'):false):false;
     if(contrast){
       status(F(T.contrast,sw(ans),NAMES[ans],sw(c0.pc),NAMES[c0.pc]));
@@ -1061,7 +1083,7 @@ function stop(msg){if(mode)roundClose('quit');idle(msg)}
 function idle(msg){
   mode=null;waiting=false;clearTimeout(timer);paintWheel();
   $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
-  $('trainBtn').textContent=S.total>0?T.cont:T.start;
+  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
   $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
   status(msg||T.paused);render();
 }
@@ -1295,7 +1317,7 @@ $('resetBtn').addEventListener('click',function(){
   idle(T.resetStatus);
 });
 if(reduce)$('ring').classList.remove('draw');
-$('trainBtn').textContent=S.total>0?T.cont:T.start;
+$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
 /* 語言切換 */
 document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'en'},true)}catch(e){}})});
 paintWheel();render();sizeScope();
