@@ -188,6 +188,13 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .card-btns{display:flex;flex-wrap:wrap;gap:10px}
 .card-btns a.btn{display:inline-flex;align-items:center;text-decoration:none}
 .card-btns .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
+.gear{border:1px solid var(--rule);border-radius:22px;padding:18px 20px;display:grid;gap:6px;margin:8px 0 28px}
+.gear-k{font-size:.78rem;font-weight:700;letter-spacing:.12em;color:var(--ink-3)}
+.gear-t{font-family:var(--serif);font-weight:700;font-size:1.15rem;line-height:1.4}
+.gear-d{font-size:.92rem;color:var(--ink-2)}
+.gear-btn{justify-self:start;display:inline-flex;align-items:center;min-height:44px;margin-top:6px;padding:10px 20px;border-radius:999px;border:1.5px solid var(--ink);color:var(--ink);text-decoration:none;font-weight:700;font-size:.95rem}
+.gear-btn:hover{background:var(--ink);color:#fff}
+.gear-disc{font-size:.75rem;color:var(--ink-3)}
 .result .small{font-size:.85rem;color:var(--ink-2)}
 
 /* 分享 */
@@ -441,7 +448,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
  }
 ]
 </script>
-<meta name="spec-version" content="core-v1.2/games-v1.4">
+<meta name="spec-version" content="core-v1.2/games-v1.5">
 </head>
 <body>
 
@@ -516,6 +523,14 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="result" id="result" hidden></div>
     </div>
   </section>
+
+  <aside class="gear" aria-label="練習用耳機">
+    <p class="gear-k">練習小建議</p>
+    <p class="gear-t">用手機戴耳機練，效果最好</p>
+    <p class="gear-d">耳機聽得比喇叭清楚，題與題之間的噪音也比較能發揮作用。手邊沒有耳機的話，這是我們挑的一款練習用耳機，可以參考。</p>
+    <a class="gear-btn" href="https://shopee.tw/product/116309859/53517708185?exp_group=rollout&amp;gads_t_sig=gqRjZGVrxHCFomtpsTE0MjUxOnRzc19zZGtfa2V5omt20QACpGFsZ2_SAAAAZKNkZWvAomN0xEAAAAAMaBRvcqdZwgRklGTWoHoxFGhRfNAexxPkhN1n8rcCO5qFEud_-aY2hsGdfUnqCpX0P0Z7lpJy6IP6_Ew8qmNpcGhlcnRleHTEkwAAAAzlzaQXsuKk1n4IK7VR7ILS83KQKLENqRpGDlwrbMmmfpmHFxlFNiLdNq3LV0tH2AildLY80GOIQ_lqQ6xMyOE9iXsHe6gunqxc8Vl18hWr7r78FA3HLpBJeFP4ke_tmQyoG3SvKw0aJqn4v0-C29y_qnKSO8E6YoVU63oO367qfZhJzciq51paQl9rzTWwTQ&amp;mmp_pid=an_16302770004&amp;uls_trackid=56pu6nva00jt&amp;utm_campaign=id_AKSiGtsuuzJ&amp;utm_content=----&amp;utm_medium=affiliates&amp;utm_source=an_16302770004&amp;utm_term=fnesr419z4he" target="_blank" rel="sponsored nofollow noopener" data-cta="below_game" data-cta-type="shopee">看練習用耳機（蝦皮）→</a>
+    <p class="gear-disc">本區含蝦皮聯盟行銷連結。透過連結購買，本站會獲得分潤，你支付的價格不變。</p>
+  </aside>
 
   <div class="share" aria-label="分享">
     <p id="shareLabel">找朋友一起練，看誰先解鎖 12 個音。</p>
@@ -593,6 +608,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
           <li><b>每天一點，連續數週</b><span>研究多是每週 2 到 4 小時、連續 8 週。每天 10 到 20 分鐘，勝過週末一次 3 小時。</span></li>
           </ul>
       </div>
+      <p class="cap" style="margin:0">想看完整說明：<a href="https://knittinghiyori.com/absolute-pitch-training-game/" data-cta="about_article" data-cta-type="article">成人可以練出絕對音感嗎？研究證實的訓練方法</a></p>
       <div class="refs">
         <a href="https://doi.org/10.1371/journal.pone.0223047" target="_blank" rel="noopener" data-cta="source_vanhedger2019" data-cta-type="other">Van Hedger, Heald, Nusbaum (2019). Absolute pitch can be learned by some adults. PLOS ONE.</a>
         <a href="https://doi.org/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
