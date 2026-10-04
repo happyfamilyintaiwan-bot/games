@@ -3,12 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- 網站 logo icon（檔案在 /icons/） -->
-<link rel="icon" href="/icons/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="spec-version" content="core-v1.2/games-v1.4">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -19,22 +14,108 @@
       document.head.appendChild(script);
   })();
 </script>
+<!-- 網站 logo icon（檔案在 /icons/） -->
+<link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2">
 <title>找不到這個頁面｜編織日和小遊戲</title>
 <meta name="robots" content="noindex">
+<!-- GA4：404 頁也記錄，報表用 page_location 找出壞掉的連結 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', { content_group: 'game', page_lang: 'zh-Hant', page_title: '遊戲|404|找不到頁面' });
+  gtag('config', 'G-ZQZHTYTRMQ');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700">
 <style>
-html,body{background:#fff;margin:0;color:#1c1c1e}
-body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;padding:16px;text-align:center}
-h1{font-size:22px;margin:8px 0}
-p{color:#6b6b70}
-a{display:inline-block;margin-top:10px;padding:10px 20px;border-radius:12px;background:#d94873;color:#fff;text-decoration:none;font-weight:700}
+:root{--ink:#1c1c1e;--mute:#5f5f66;--line:#e7e7ea;--sakura:#d94873;--sakura-soft:#fdeef3}
+*{box-sizing:border-box}
+html,body{background:#fff;margin:0;color:var(--ink)}
+body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.7;padding:0 16px 32px}
+.wrap{max-width:760px;margin:0 auto}
+/* 編織日和品牌列（所有遊戲頁共用寫法，同 absolute-pitch） */
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 0 8px;border-bottom:1px solid #e7e8ed}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#16161a;text-decoration:none;font-size:14.4px;font-weight:700;letter-spacing:.04em;line-height:1.2;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+.nf{text-align:center;padding:48px 0 36px}
+.nf .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:88px;line-height:1;margin:0;color:var(--sakura);letter-spacing:.06em}
+.nf .code span{display:inline-block;font-size:60px;vertical-align:10px;margin:0 4px}
+.nf h1{font-size:24px;margin:16px 0 8px}
+.nf p{margin:0 auto;max-width:30em;color:var(--mute)}
+.nf .alt{font-size:13px;margin-top:6px}
+.nf .btn{display:inline-flex;align-items:center;min-height:48px;margin-top:24px;padding:10px 28px;border-radius:999px;background:var(--sakura);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 6px 16px rgba(217,72,115,.25)}
+.nf .btn:hover{transform:translateY(-1px)}
+.more h2{font-size:18px;margin:0 0 14px;text-align:center}
+.more h2 small{display:block;font-size:12px;font-weight:500;color:var(--mute);letter-spacing:.2em}
+.list{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.g{display:grid;gap:4px;align-content:start;padding:14px 16px;border:1.5px solid var(--line);border-radius:16px;color:inherit;text-decoration:none;background:#fff;transition:border-color .15s,transform .15s}
+.g:hover{border-color:var(--sakura);transform:translateY(-2px)}
+.g b{font-size:15px;line-height:1.45}
+.g span{font-size:13px;color:var(--mute);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:3.2em;align-self:start}
+.kh-legal{display:block;max-width:640px;font-size:12px;line-height:1.8;color:#5f5f66;text-align:center;margin:32px auto 0;padding:0 16px}
+.kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+@media(prefers-reduced-motion:reduce){.g,.nf .btn{transition:none}.g:hover,.nf .btn:hover{transform:none}}
 </style>
 </head>
 <body>
-<div>
-  <div style="font-size:48px">🥀</div>
-  <h1>這朵花已經不在這裡了</h1>
-  <p>頁面可能已經搬家，回到遊戲列表看看吧。</p>
-  <a href="/">回到小遊戲列表</a>
+<div class="wrap">
+  <div class="kh-brand-row"><a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和・小遊戲</a></div>
+
+  <main class="nf">
+    <p class="code" aria-hidden="true">4<span>🌸</span>4</p>
+    <h1>這朵花已經不在這裡了</h1>
+    <p>你要找的頁面可能搬家了，或網址少打了一個字。回遊戲主頁，或從下面直接挑一款玩。</p>
+    <p class="alt" lang="en">Page not found. Go back to the games home, or pick a game below.</p>
+    <p class="alt" lang="ja">ページが見つかりません。ゲーム一覧に戻るか、下から選んで遊んでください。</p>
+    <a class="btn" href="https://games.knittinghiyori.com/" data-cta="notfound_hub" data-cta-type="game">回遊戲主頁 →</a>
+  </main>
+
+  <section class="more" aria-labelledby="moreH">
+    <h2 id="moreH">看看其他遊戲<small>MORE GAMES</small></h2>
+    <div class="list" id="nfList">
+      <a class="g" href="/absolute-pitch/" data-cta="notfound_game" data-cta-type="game" data-game="absolute_pitch"><b>絕對音感養成所：成人絕對音感訓練</b><span>成人也能練絕對音感嗎？照研究的方法一次練一個音，每天 10 分鐘，再用 12 音驗收與錯題庫看進步。</span></a>
+      <a class="g" href="/katsuyo-escape/" data-cta="notfound_game" data-cta-type="game" data-game="katsuyo_escape"><b>活用館脫出：日文動詞變化密室逃脫</b><span>五間密室練日文動詞變化。五段、一段、變格、て形音便、可能形，先熱身再破案，答錯即時解析。</span></a>
+      <a class="g" href="/jlpt-mishitsu/" data-cta="notfound_game" data-cta-type="game" data-game="jlpt_mishitsu"><b>JLPT 單字密室</b><span>用密室逃脫背日檢單字。N5 到 N1 共 7,790 字、五間密室，四選一、錯題本、60 秒搜查。</span></a>
+      <a class="g" href="/swiftui-detective/" data-cta="notfound_game" data-cta-type="game" data-game="swiftui_detective"><b>雨夜懷錶案：SwiftUI 偵探教學遊戲</b><span>零基礎也能玩，一章學一個 SwiftUI 概念，邊寫程式邊破案。</span></a>
+      <a class="g" href="/sql-detective/" data-cta="notfound_game" data-cta-type="game" data-game="sql_detective"><b>SQL 偵探：霞光畫廊失竊案</b><span>零基礎 SQL 入門。寫查詢、追線索，找出偷畫的犯人，第 0 關只要改一個字。</span></a>
+      <a class="g" href="/tozai-dojo/" data-cta="notfound_game" data-cta-type="game" data-game="tozai_dojo"><b>東西腔道場：日文關東腔・關西腔小遊戲</b><span>聽發音、分東西、拚連擊，10 題分辨日文標準語（關東）與關西腔，附聽力題與東西文化冷知識。</span></a>
+      <a class="g" href="/hiyori-flower-shop/" data-cta="notfound_game" data-cta-type="game" data-game="flower_shop"><b>ひより花店：日文五十音小遊戲</b><span>平假名・片假名四選一、109 種花的中日英名稱與花語，再用羅馬拼音練日文打字。</span></a>
+    </div>
+  </section>
+
+  <p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 </div>
+<script>
+/* 遊戲清單：讀遊戲主頁的卡片，主頁新增遊戲時這裡自動跟上；讀不到就用上面寫死的清單 */
+(function(){
+  var list=document.getElementById('nfList');
+  function esc(x){var d=document.createElement('div');d.textContent=x;return d.innerHTML}
+  fetch('/').then(function(r){return r.ok?r.text():null}).then(function(t){
+    if(!t)return;
+    var doc=new DOMParser().parseFromString(t,'text/html'),out=[];
+    doc.querySelectorAll('a.card').forEach(function(c){
+      var h=c.getAttribute('href'),g=c.getAttribute('data-game')||'',t3=c.querySelector('h3'),p=c.querySelector('p');
+      if(h?t3:null)out.push('<a class="g" href="'+esc(h)+'" data-cta="notfound_game" data-cta-type="game" data-game="'+esc(g)+'"><b>'+esc(t3.textContent)+'</b><span>'+esc(p?p.textContent:'')+'</span></a>');
+    });
+    if(out.length)list.innerHTML=out.join('');
+  }).catch(function(){});
+  /* 點任何 [data-cta] → cta_click（與其他遊戲頁同一個事件） */
+  document.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('[data-cta]'):null;if(!a)return;
+    var p={cta_id:a.getAttribute('data-cta'),cta_type:a.getAttribute('data-cta-type')||'other',link_url:a.href};
+    var g=a.getAttribute('data-game');if(g)p.game_id=g;
+    try{gtag('event','cta_click',p)}catch(er){}
+  });
+})();
+</script>
 </body>
 </html>
