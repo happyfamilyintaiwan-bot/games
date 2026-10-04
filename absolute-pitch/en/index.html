@@ -66,7 +66,12 @@ p{margin:0}
 @media(max-width:560px){.wrap{padding-inline:16px}}
 
 /* 頂列 */
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px 0}
+.top{display:flex;flex-direction:column;gap:12px;padding-block:10px 0}
+/* 編織日和品牌列（所有遊戲頁共用寫法） */
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.kh-brand{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--ink);text-decoration:none;font-family:var(--sans);font-size:.9rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.kh-brand img{width:28px;height:28px;border-radius:6px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
 .mark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:1.05rem}
 .mark svg{flex:none}
 .langs{display:flex;align-items:center;gap:2px;font-size:.85rem;flex-shrink:0;white-space:nowrap}
@@ -433,11 +438,14 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
 
 <div class="wrap">
   <header class="top">
+    <div class="kh-brand-row">
+      <a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/favicon-96.png" width="28" height="28" alt="">編織日和 · Games</a>
+      <nav class="langs" aria-label="Language"><a href="https://games.knittinghiyori.com/absolute-pitch/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a><a href="https://games.knittinghiyori.com/absolute-pitch/en/" hreflang="en" lang="en" data-lang-link="en" aria-current="page">EN</a><a href="https://games.knittinghiyori.com/absolute-pitch/ja/" hreflang="ja" lang="ja" data-lang-link="ja">日本語</a></nav>
+    </div>
     <div class="mark">
       <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="#16161a" stroke-width="1.6"/><circle cx="13" cy="2" r="2.2" fill="#C34F4B"/><circle cx="22.5" cy="18.5" r="2.2" fill="#33903C"/><circle cx="3.5" cy="18.5" r="2.2" fill="#4E75D2"/></svg>
       Absolute Pitch Trainer
     </div>
-    <nav class="langs" aria-label="Language"><a href="https://games.knittinghiyori.com/absolute-pitch/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a><a href="https://games.knittinghiyori.com/absolute-pitch/en/" hreflang="en" lang="en" data-lang-link="en" aria-current="page">EN</a><a href="https://games.knittinghiyori.com/absolute-pitch/ja/" hreflang="ja" lang="ja" data-lang-link="ja">日本語</a></nav>
   </header>
 
   <section class="hero">
