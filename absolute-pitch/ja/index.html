@@ -182,6 +182,11 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .bars .col i{position:absolute;left:0;right:0;bottom:0;border-radius:6px}
 .bars span{font-family:var(--num);font-weight:600;font-size:.8rem}
 .bars em{font-style:normal;font-size:.68rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.card-act{display:flex;flex-wrap:wrap;gap:10px}
+.card-out{display:grid;gap:12px;justify-items:start}
+.card-img{width:100%;max-width:360px;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(22,22,26,.12)}
+.card-btns{display:flex;flex-wrap:wrap;gap:10px}
+.card-btns a.btn{display:inline-flex;align-items:center;text-decoration:none}
 .result .small{font-size:.85rem;color:var(--ink-2)}
 
 /* 分享 */
@@ -1083,7 +1088,10 @@ function finishTest(){
   $('result').innerHTML='<p class="verdict">'+v+'</p>'+
     '<div class="meters"><div><b>'+(acc*100).toFixed(0)+'%</b>'+T.rAcc+'</div><div><b>'+(med/1000).toFixed(2)+'</b>'+T.rRt+'</div><div><b>'+(near*100).toFixed(0)+'%</b>'+T.rNear+'</div></div>'+
     '<div class="bars" role="img" aria-label="'+T.barsAria+'">'+per.map(function(p,pc){return '<div><span class="col"><i style="height:'+Math.max(p,2)+'%;background:'+COLORS[pc]+'"></i></span><span>'+NAMES[pc]+'</span><em>'+p+'%</em></div>'}).join('')+'</div>'+
-    '<p class="small">'+F(T.rNote,nextTestDate())+'</p>';
+    '<p class="small">'+F(T.rNote,nextTestDate())+'</p>'+
+    '<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
+  lastRes={acc:acc,med:med,near:near,per:per,lv:S.level,d:new Date()};
+  $('cardBtn').addEventListener('click',makeCard);
   $('result').hidden=false;
   lastShareType='result';$('shareLabel').textContent=F(T.shareResult,(acc*100).toFixed(0));
   idle(T.testDone);
@@ -1187,6 +1195,91 @@ document.querySelectorAll('[data-share]').forEach(function(b){
     try{navigator.clipboard.writeText(shareText()+' '+shareUrl()).then(done,function(){$('copyBtn').textContent=shareUrl()})}catch(e){$('copyBtn').textContent=shareUrl()}
   });
 });
+
+/* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
+var CARD={"make": "結果カードを作る", "making": "作成中…", "share": "画像をシェア", "download": "画像を保存", "hint": "スマホでは画像を長押しして保存することもできます。カードにゲームのURLが入っています。", "fail": "画像を作れませんでした。再読み込みしてもう一度お試しください。", "title": "12音テストの結果", "unlocked": "解放済み", "unit": "/ 12音", "rt": "反応の中央値", "rtUnit": "秒", "near": "半音以内の誤差", "perNote": "音ごとの正答率", "game": "絶対音感養成所", "brand": "編織日和", "wm": "編織日和", "url": "games.knittinghiyori.com/absolute-pitch/ja", "cta": "無料で遊ぶ →", "alt": "絶対音感養成所のテスト結果カード：12音の正答率{0}%、12音中{1}音を解放、音ごとの正答率とゲームのURL付き。", "tags": ["研究の絶対音感の基準に到達", "音名の記憶ができつつある", "一部の音名はもうつかめている", "スタート地点：研究の参加者もここから"]};
+var lastRes=null,cardUrl=null;
+function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function loadImg(src){return new Promise(function(ok,ng){var i=new Image();i.onload=function(){ok(i)};i.onerror=ng;i.src=src})}
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+async function drawCard(r){
+  var SANS=cssVar('--sans'),SERIF=cssVar('--serif'),NUM=cssVar('--num');
+  var TXT=[CARD.title,CARD.unlocked,CARD.unit,CARD.rt,CARD.rtUnit,CARD.near,CARD.perNote,CARD.brand,CARD.wm,CARD.url,CARD.cta].concat(CARD.tags).join('')+'0123456789.%/-',NUMT=NAMES.join('')+'0123456789.%-';
+  /* 字型最多等 1.5 秒；沒載完的字用系統字型補，避免按鈕卡太久 */
+  try{await Promise.race([new Promise(function(ok){setTimeout(ok,1500)}),Promise.all([['400 30px '+SANS,TXT],['700 40px '+SANS,TXT],['700 44px '+SERIF,CARD.game],['800 260px '+NUM,NUMT],['600 40px '+NUM,NUMT]].map(function(f){return document.fonts.load(f[0],f[1])}))])}catch(e){}
+  var logo=null;try{logo=await loadImg('/icons/logo-knitting-240.webp')}catch(e){}
+  var W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  var c=cv.getContext('2d'),CREAM='#FAF6EE',GOLD='#C9A25C',MUTE='#6b6b70';
+  c.fillStyle=CREAM;c.fillRect(0,0,W,H);
+  /* 頂端：遊戲名＋日期 */
+  c.fillStyle=INK;c.textBaseline='alphabetic';
+  c.font='700 44px '+SERIF;c.fillText(CARD.game,72,112);
+  c.font='600 30px '+NUM;c.fillStyle=MUTE;c.textAlign='right';c.fillText(dkey(r.d),W-72,110);c.textAlign='left';
+  c.font='500 34px '+SANS;c.fillStyle=MUTE;c.fillText(CARD.title,72,176);
+  /* 大字正確率 */
+  var pct=String(Math.round(r.acc*100));
+  c.fillStyle=INK;c.font='800 260px '+NUM;c.fillText(pct,64,430);
+  var pw=c.measureText(pct).width;c.font='700 110px '+NUM;c.fillText('%',64+pw+10,430);
+  c.font='700 40px '+SANS;c.fillStyle=COLORS[7];c.fillText(cardTag(r),72,508);
+  /* 三格數字 */
+  var mx=56,my=556,mw=W-112,mh=150;c.fillStyle='#fff';rr(c,mx,my,mw,mh,28);c.fill();
+  var cols=[[r.lv+'',CARD.unit,CARD.unlocked],[(r.med/1000).toFixed(2),CARD.rtUnit,CARD.rt],[Math.round(r.near*100)+'','%',CARD.near]];
+  cols.forEach(function(k,i){
+    var cx=mx+mw/6*(2*i+1);
+    c.textAlign='center';c.fillStyle=INK;c.font='700 58px '+NUM;
+    var a=k[0],b=k[1];c.font='700 58px '+NUM;var aw=c.measureText(a).width;c.font='600 28px '+SANS;var bw=c.measureText(b).width;
+    var sx=cx-(aw+8+bw)/2;c.textAlign='left';c.font='700 58px '+NUM;c.fillText(a,sx,my+82);c.font='600 28px '+SANS;c.fillStyle=MUTE;c.fillText(b,sx+aw+8,my+82);
+    c.textAlign='center';c.font='400 26px '+SANS;c.fillText(k[2],cx,my+124);
+    if(i){c.fillStyle='#e7e8ed';c.fillRect(mx+mw/3*i,my+30,2,mh-60)}
+  });
+  c.textAlign='left';
+  /* 各音正確率長條 */
+  var px=56,py=730,pw2=W-112,ph=470;c.fillStyle='#fff';rr(c,px,py,pw2,ph,28);c.fill();
+  c.fillStyle=MUTE;c.font='500 28px '+SANS;c.fillText(CARD.perNote,px+36,py+56);
+  var bx=px+36,bw2=(pw2-72-11*14)/12,by=py+92,bh=270;
+  r.per.forEach(function(p,pc){
+    var x=bx+pc*(bw2+14);c.fillStyle='#eef0f3';rr(c,x,by,bw2,bh,10);c.fill();
+    if(p>0){var h=Math.max(bh*p/100,20);c.fillStyle=COLORS[pc];rr(c,x,by+bh-h,bw2,h,10);c.fill()}
+    c.textAlign='center';c.fillStyle=INK;c.font='600 30px '+NUM;c.fillText(NAMES[pc],x+bw2/2,by+bh+44);
+    c.fillStyle=MUTE;c.font='400 22px '+SANS;c.fillText(p+'%',x+bw2/2,by+bh+76);c.textAlign='left';
+  });
+  /* 中央淡浮水印（截圖裁不掉） */
+  c.save();c.translate(W/2,(py+my)/2+200);c.rotate(-28*Math.PI/180);c.globalAlpha=0.08;c.fillStyle=INK;c.textAlign='center';
+  var wf=150;c.font='700 '+wf+'px '+SANS;var ww=c.measureText(CARD.wm).width;if(ww>760){wf=Math.floor(wf*760/ww);c.font='700 '+wf+'px '+SANS}c.fillText(CARD.wm,0,0);c.font='500 44px '+SANS;c.fillText('games.knittinghiyori.com',0,74);c.restore();
+  /* 底部金色品牌列 */
+  var barH=124;c.fillStyle=GOLD;c.fillRect(0,H-barH,W,barH);
+  var lx=56,ls=84,ly=H-barH+(barH-ls)/2;
+  if(logo){c.save();rr(c,lx,ly,ls,ls,16);c.clip();c.drawImage(logo,lx,ly,ls,ls);c.restore();c.strokeStyle='rgba(255,255,255,.9)';c.lineWidth=3;rr(c,lx,ly,ls,ls,16);c.stroke()}
+  c.fillStyle='#fff';c.textBaseline='middle';
+  var tx=lx+ls+22;c.font='700 38px '+SANS;c.fillText(CARD.brand,tx,H-barH/2-18);
+  c.font='500 26px '+SANS;c.fillText(CARD.url,tx,H-barH/2+24);
+  c.font='700 30px '+SANS;c.textAlign='right';c.fillText(CARD.cta,W-56,H-barH/2);c.textAlign='left';c.textBaseline='alphabetic';
+  return cv;
+}
+function cardFile(blob){try{return new File([blob],'absolute-pitch-'+dkey(lastRes.d)+'.png',{type:'image/png'})}catch(e){return null}}
+async function makeCard(){
+  if(!lastRes)return;
+  var btn=$('cardBtn'),out=$('cardOut');btn.disabled=true;btn.textContent=CARD.making;
+  try{
+    var cv=await drawCard(lastRes);
+    var blob=await new Promise(function(ok){cv.toBlob(ok,'image/png')});
+    if(cardUrl)URL.revokeObjectURL(cardUrl);cardUrl=URL.createObjectURL(blob);
+    var file=cardFile(blob),canShare=false;
+    try{canShare=!!(file?(navigator.canShare?navigator.canShare({files:[file]}):false):false)}catch(e){}
+    out.innerHTML='<img class="card-img" src="'+cardUrl+'" width="1080" height="1350" alt="'+F(CARD.alt,Math.round(lastRes.acc*100),lastRes.lv)+'">'+
+      '<div class="card-btns">'+(canShare?'<button type="button" class="btn" id="cardShare">'+CARD.share+'</button>':'')+
+      '<a class="btn line" id="cardDl" href="'+cardUrl+'" download="absolute-pitch-'+dkey(lastRes.d)+'.png" data-google-vignette="false">'+CARD.download+'</a></div>'+
+      '<p class="small">'+CARD.hint+'</p>';
+    out.hidden=false;
+    $('cardDl').addEventListener('click',function(){ev('export',{method:'image',content_type:'result'})});
+    if(canShare)$('cardShare').addEventListener('click',function(){
+      var h=hg();if(h)h.share('native','result');
+      navigator.share({files:[file],text:shareText()+' '+shareUrl()}).catch(function(er){if(er?er.name==='AbortError':false)ev('share_cancel',{method:'native',content_type:'result'})});
+    });
+  }catch(e){out.hidden=false;out.textContent=CARD.fail}
+  btn.disabled=false;btn.textContent=CARD.make;
+}
 
 /* ---------- 控制 ---------- */
 $('trainBtn').addEventListener('click',function(){start('train')});
