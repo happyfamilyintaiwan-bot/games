@@ -186,6 +186,7 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .card-img{width:100%;max-width:360px;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(22,22,26,.12)}
 .card-btns{display:flex;flex-wrap:wrap;gap:10px}
 .card-btns a.btn{display:inline-flex;align-items:center;text-decoration:none}
+.card-btns .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
 .result .small{font-size:.85rem;color:var(--ink-2)}
 
 /* 分享 */
@@ -439,7 +440,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
  }
 ]
 </script>
-<meta name="spec-version" content="core-v1.1/games-v1.2.1">
+<meta name="spec-version" content="core-v1.2/games-v1.3">
 </head>
 <body>
 
@@ -638,7 +639,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
-<p class="kh-legal">This site uses cookies for analytics (Google Analytics) and ads (Google AdSense), and some links are travel affiliate links.<a href="https://knittinghiyori.com/privacy-policy/">Privacy</a></p>
+<p class="kh-legal">This site uses cookies for analytics (Google Analytics) and ads (Google AdSense), and some links are affiliate links. <a href="https://knittinghiyori.com/privacy-policy/">Privacy</a></p>
 
 <script>
 /* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
@@ -1187,7 +1188,7 @@ document.querySelectorAll('[data-share]').forEach(function(b){
 });
 
 /* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
-var CARD={"make": "Make a result card", "making": "Making…", "share": "Share image", "download": "Download image", "hint": "On a phone you can also long-press the image to save it. The game link is on the card.", "fail": "Could not make the image. Please reload and try again.", "title": "My 12-note test", "unlocked": "Unlocked", "unit": "/ 12 notes", "rt": "Median response", "rtUnit": "s", "near": "Within a semitone", "perNote": "Accuracy by note", "game": "Absolute Pitch Trainer", "brand": "Knitting Hiyori", "wm": "Knitting Hiyori", "url": "games.knittinghiyori.com/absolute-pitch/en", "cta": "Play free →", "alt": "Absolute Pitch Trainer result card: {0}% on the 12-note test, {1} of 12 notes unlocked, with accuracy by note and the game link.", "tags": ["Reached the level used in the studies", "Note memory is taking shape", "Already catching some notes", "Starting point, like the study participants"]};
+var CARD={"make": "Make a result card", "making": "Making…", "share": "Share image", "download": "Download image", "hint": "After sharing the image, tap Copy link and paste it into your post or message so friends can tap through. On a phone you can also long-press the image to save it.", "fail": "Could not make the image. Please reload and try again.", "title": "My 12-note test", "unlocked": "Unlocked", "unit": "/ 12 notes", "rt": "Median response", "rtUnit": "s", "near": "Within a semitone", "perNote": "Accuracy by note", "game": "Absolute Pitch Trainer", "brand": "Knitting Hiyori", "wm": "Knitting Hiyori", "url": "games.knittinghiyori.com/absolute-pitch/en", "cta": "Play free →", "alt": "Absolute Pitch Trainer result card: {0}% on the 12-note test, {1} of 12 notes unlocked, with accuracy by note and the game link.", "tags": ["Reached the level used in the studies", "Note memory is taking shape", "Already catching some notes", "Starting point, like the study participants"], "copy": "Copy link", "copied": "Copied ✓"};
 var lastRes=null,cardUrl=null;
 function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
 function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
@@ -1247,22 +1248,27 @@ async function drawCard(r){
   c.font='700 30px '+SANS;c.textAlign='right';c.fillText(CARD.cta,W-56,H-barH/2);c.textAlign='left';c.textBaseline='alphabetic';
   return cv;
 }
-function cardFile(blob){try{return new File([blob],'absolute-pitch-'+dkey(lastRes.d)+'.png',{type:'image/png'})}catch(e){return null}}
+function cardFile(blob){try{return new File([blob],'absolute-pitch-'+dkey(lastRes.d)+'.jpg',{type:'image/jpeg'})}catch(e){return null}}
 async function makeCard(){
   if(!lastRes)return;
   var btn=$('cardBtn'),out=$('cardOut');btn.disabled=true;btn.textContent=CARD.making;
   try{
     var cv=await drawCard(lastRes);
-    var blob=await new Promise(function(ok){cv.toBlob(ok,'image/png')});
+    var blob=await new Promise(function(ok){cv.toBlob(ok,'image/jpeg',0.92)});
     if(cardUrl)URL.revokeObjectURL(cardUrl);cardUrl=URL.createObjectURL(blob);
     var file=cardFile(blob),canShare=false;
     try{canShare=!!(file?(navigator.canShare?navigator.canShare({files:[file]}):false):false)}catch(e){}
     out.innerHTML='<img class="card-img" src="'+cardUrl+'" width="1080" height="1350" alt="'+F(CARD.alt,Math.round(lastRes.acc*100),lastRes.lv)+'">'+
       '<div class="card-btns">'+(canShare?'<button type="button" class="btn" id="cardShare">'+CARD.share+'</button>':'')+
-      '<a class="btn line" id="cardDl" href="'+cardUrl+'" download="absolute-pitch-'+dkey(lastRes.d)+'.png" data-google-vignette="false">'+CARD.download+'</a></div>'+
+      '<a class="btn line" id="cardDl" href="'+cardUrl+'" download="absolute-pitch-'+dkey(lastRes.d)+'.jpg" data-google-vignette="false">'+CARD.download+'</a>'+
+      '<button type="button" class="btn line" id="cardCopy">'+CARD.copy+'</button></div>'+
       '<p class="small">'+CARD.hint+'</p>';
     out.hidden=false;
     $('cardDl').addEventListener('click',function(){ev('export',{method:'image',content_type:'result'})});
+    $('cardCopy').addEventListener('click',function(){
+      var b=$('cardCopy'),h=hg();if(h)h.share('copy_link','result');
+      try{navigator.clipboard.writeText(shareText()+' '+shareUrl()).then(function(){b.textContent=CARD.copied},function(){b.textContent=shareUrl()})}catch(e){b.textContent=shareUrl()}
+    });
     if(canShare)$('cardShare').addEventListener('click',function(){
       var h=hg();if(h)h.share('native','result');
       navigator.share({files:[file],text:shareText()+' '+shareUrl()}).catch(function(er){if(er?er.name==='AbortError':false)ev('share_cancel',{method:'native',content_type:'result'})});

@@ -187,6 +187,7 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .card-img{width:100%;max-width:360px;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(22,22,26,.12)}
 .card-btns{display:flex;flex-wrap:wrap;gap:10px}
 .card-btns a.btn{display:inline-flex;align-items:center;text-decoration:none}
+.card-btns .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
 .result .small{font-size:.85rem;color:var(--ink-2)}
 
 /* 分享 */
@@ -440,7 +441,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
  }
 ]
 </script>
-<meta name="spec-version" content="core-v1.1/games-v1.2.1">
+<meta name="spec-version" content="core-v1.2/games-v1.3">
 </head>
 <body>
 
@@ -640,7 +641,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
-<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為旅遊聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 
 <script>
 /* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
@@ -1189,7 +1190,7 @@ document.querySelectorAll('[data-share]').forEach(function(b){
 });
 
 /* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
-var CARD={"make": "做成績卡圖片", "making": "產生中…", "share": "分享圖片", "download": "下載圖片", "hint": "手機也可以長按圖片存到相簿。圖上有遊戲網址，朋友看到就能來玩。", "fail": "圖片產生失敗，請重新整理後再試一次。", "title": "我的 12 音驗收", "unlocked": "已解鎖", "unit": "/ 12 音", "rt": "反應中位數", "rtUnit": "秒", "near": "誤差半音內", "perNote": "各音正確率", "game": "絕對音感養成所", "brand": "編織日和", "wm": "編織日和", "url": "games.knittinghiyori.com/absolute-pitch", "cta": "免費玩 →", "alt": "絕對音感養成所驗收成績卡：12 音正確率 {0}%，已解鎖 {1} / 12 個音名，附各音正確率與遊戲網址。", "tags": ["達到研究中的絕對音感水準", "音名記憶正在成形", "已經抓得住一部分音名", "起點：研究參與者也從這裡開始"]};
+var CARD={"make": "做成績卡圖片", "making": "產生中…", "share": "分享圖片", "download": "下載圖片", "hint": "分享圖片後，按「複製連結」貼進貼文或訊息，朋友就能直接點進來玩。手機也可以長按圖片存到相簿。", "fail": "圖片產生失敗，請重新整理後再試一次。", "title": "我的 12 音驗收", "unlocked": "已解鎖", "unit": "/ 12 音", "rt": "反應中位數", "rtUnit": "秒", "near": "誤差半音內", "perNote": "各音正確率", "game": "絕對音感養成所", "brand": "編織日和", "wm": "編織日和", "url": "games.knittinghiyori.com/absolute-pitch", "cta": "免費玩 →", "alt": "絕對音感養成所驗收成績卡：12 音正確率 {0}%，已解鎖 {1} / 12 個音名，附各音正確率與遊戲網址。", "tags": ["達到研究中的絕對音感水準", "音名記憶正在成形", "已經抓得住一部分音名", "起點：研究參與者也從這裡開始"], "copy": "複製連結", "copied": "已複製 ✓"};
 var lastRes=null,cardUrl=null;
 function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
 function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
@@ -1249,22 +1250,27 @@ async function drawCard(r){
   c.font='700 30px '+SANS;c.textAlign='right';c.fillText(CARD.cta,W-56,H-barH/2);c.textAlign='left';c.textBaseline='alphabetic';
   return cv;
 }
-function cardFile(blob){try{return new File([blob],'absolute-pitch-'+dkey(lastRes.d)+'.png',{type:'image/png'})}catch(e){return null}}
+function cardFile(blob){try{return new File([blob],'absolute-pitch-'+dkey(lastRes.d)+'.jpg',{type:'image/jpeg'})}catch(e){return null}}
 async function makeCard(){
   if(!lastRes)return;
   var btn=$('cardBtn'),out=$('cardOut');btn.disabled=true;btn.textContent=CARD.making;
   try{
     var cv=await drawCard(lastRes);
-    var blob=await new Promise(function(ok){cv.toBlob(ok,'image/png')});
+    var blob=await new Promise(function(ok){cv.toBlob(ok,'image/jpeg',0.92)});
     if(cardUrl)URL.revokeObjectURL(cardUrl);cardUrl=URL.createObjectURL(blob);
     var file=cardFile(blob),canShare=false;
     try{canShare=!!(file?(navigator.canShare?navigator.canShare({files:[file]}):false):false)}catch(e){}
     out.innerHTML='<img class="card-img" src="'+cardUrl+'" width="1080" height="1350" alt="'+F(CARD.alt,Math.round(lastRes.acc*100),lastRes.lv)+'">'+
       '<div class="card-btns">'+(canShare?'<button type="button" class="btn" id="cardShare">'+CARD.share+'</button>':'')+
-      '<a class="btn line" id="cardDl" href="'+cardUrl+'" download="absolute-pitch-'+dkey(lastRes.d)+'.png" data-google-vignette="false">'+CARD.download+'</a></div>'+
+      '<a class="btn line" id="cardDl" href="'+cardUrl+'" download="absolute-pitch-'+dkey(lastRes.d)+'.jpg" data-google-vignette="false">'+CARD.download+'</a>'+
+      '<button type="button" class="btn line" id="cardCopy">'+CARD.copy+'</button></div>'+
       '<p class="small">'+CARD.hint+'</p>';
     out.hidden=false;
     $('cardDl').addEventListener('click',function(){ev('export',{method:'image',content_type:'result'})});
+    $('cardCopy').addEventListener('click',function(){
+      var b=$('cardCopy'),h=hg();if(h)h.share('copy_link','result');
+      try{navigator.clipboard.writeText(shareText()+' '+shareUrl()).then(function(){b.textContent=CARD.copied},function(){b.textContent=shareUrl()})}catch(e){b.textContent=shareUrl()}
+    });
     if(canShare)$('cardShare').addEventListener('click',function(){
       var h=hg();if(h)h.share('native','result');
       navigator.share({files:[file],text:shareText()+' '+shareUrl()}).catch(function(er){if(er?er.name==='AbortError':false)ev('share_cancel',{method:'native',content_type:'result'})});
