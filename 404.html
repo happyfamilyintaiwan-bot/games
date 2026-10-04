@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="spec-version" content="core-v1.2/games-v1.4">
+<meta name="spec-version" content="core-v1.2/games-v1.4.1">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -49,7 +49,8 @@ body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,san
 .nf{text-align:center;padding:48px 0 36px}
 .nf .code{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:88px;line-height:1;margin:0;color:var(--sakura);letter-spacing:.06em}
 .nf .code span{display:inline-block;font-size:60px;vertical-align:10px;margin:0 4px}
-.nf h1{font-size:24px;margin:16px 0 8px}
+.nf h1{font-size:24px;margin:16px 0 8px;text-wrap:balance}
+html[lang=ja] body{font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",Meiryo,system-ui,sans-serif}
 .nf p{margin:0 auto;max-width:30em;color:var(--mute)}
 .nf .alt{font-size:13px;margin-top:6px}
 .nf .btn{display:inline-flex;align-items:center;min-height:48px;margin-top:24px;padding:10px 28px;border-radius:999px;background:var(--sakura);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 6px 16px rgba(217,72,115,.25)}
@@ -60,6 +61,7 @@ body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,san
 .g{display:grid;gap:4px;align-content:start;padding:14px 16px;border:1.5px solid var(--line);border-radius:16px;color:inherit;text-decoration:none;background:#fff;transition:border-color .15s,transform .15s}
 .g:hover{border-color:var(--sakura);transform:translateY(-2px)}
 .g b{font-size:15px;line-height:1.45}
+.g b em{font-style:normal;font-size:11px;font-weight:500;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:4px;vertical-align:2px;white-space:nowrap}
 .g span{font-size:13px;color:var(--mute);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:3.2em;align-self:start}
 .kh-legal{display:block;max-width:640px;font-size:12px;line-height:1.8;color:#5f5f66;text-align:center;margin:32px auto 0;padding:0 16px}
 .kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
@@ -73,7 +75,7 @@ body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,san
   <main class="nf">
     <p class="code" aria-hidden="true">4<span>🌸</span>4</p>
     <h1>這朵花已經不在這裡了</h1>
-    <p>你要找的頁面可能搬家了，或網址少打了一個字。回遊戲主頁，或從下面直接挑一款玩。</p>
+    <p class="lead">你要找的頁面可能搬家了，或網址少打了一個字。回遊戲主頁，或從下面直接挑一款玩。</p>
     <p class="alt" lang="en">Page not found. Go back to the games home, or pick a game below.</p>
     <p class="alt" lang="ja">ページが見つかりません。ゲーム一覧に戻るか、下から選んで遊んでください。</p>
     <a class="btn" href="https://games.knittinghiyori.com/" data-cta="notfound_hub" data-cta-type="game">回遊戲主頁 →</a>
@@ -95,23 +97,51 @@ body{font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,san
   <p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 </div>
 <script>
-/* 遊戲清單：讀遊戲主頁的卡片，主頁新增遊戲時這裡自動跟上；讀不到就用上面寫死的清單 */
+/* 404 依語言切換：網址含 /ja/、/en/ 優先，其次看瀏覽器語言；中文以外沒有對應時用英文 */
 (function(){
+  var path=location.pathname,lang=null;
+  if(/\/ja(\/|$)/.test(path))lang='ja';else if(/\/en(\/|$)/.test(path))lang='en';
+  if(!lang){var nl=(navigator.language||'').toLowerCase();lang=nl.indexOf('zh')===0?'zh':nl.indexOf('ja')===0?'ja':'en'}
+  var PAGE_LANG={zh:'zh-Hant',en:'en',ja:'ja'}[lang];
+  /* 有多語版的遊戲：新增多語遊戲時在這裡加一筆（game_id 對應主頁卡片的 data-game） */
+  var LANG_GAMES={
+    absolute_pitch:{
+      en:{url:'/absolute-pitch/en/',name:'Absolute Pitch Trainer',desc:'Can adults learn perfect pitch? Train one note at a time, 10 minutes a day, with a 12-note test and your own mistake log.'},
+      ja:{url:'/absolute-pitch/ja/',name:'絶対音感養成所',desc:'大人でも絶対音感は身につく？研究と同じ方法で1音ずつ、1日10分。12音の判定テストと苦手リスト付き。'}
+    }
+  };
+  var TX={
+    en:{title:'Page not found | Knitting Hiyori Games',brand:'編織日和 · Games',h1:'This flower is no longer here',lead:'The page may have moved, or the link has a typo. Go back to the games home, or pick a game below.',btn:'Games home →',more:'More games',zhTag:'Chinese'},
+    ja:{title:'ページが見つかりません｜編織日和ミニゲーム',brand:'編織日和・ミニゲーム',h1:'この花はもうここにありません',lead:'ページが移動したか、URLが間違っているかもしれません。ゲーム一覧に戻るか、下から選んで遊んでください。',btn:'ゲーム一覧へ →',more:'ほかのゲーム',zhTag:'中国語'}
+  }[lang];
+  function $(q){return document.querySelector(q)}
+  if(TX){
+    document.documentElement.lang=PAGE_LANG;document.title=TX.title;
+    $('.kh-brand').lastChild.textContent=TX.brand;
+    $('.nf h1').textContent=TX.h1;$('.nf p.lead').textContent=TX.lead;
+    document.querySelectorAll('.nf .alt').forEach(function(x){x.hidden=true});
+    $('.nf .btn').textContent=TX.btn;$('#moreH').firstChild.textContent=TX.more;
+  }
   var list=document.getElementById('nfList');
   function esc(x){var d=document.createElement('div');d.textContent=x;return d.innerHTML}
+  function card(h,g,name,desc,tag){return '<a class="g" href="'+esc(h)+'" data-cta="notfound_game" data-cta-type="game" data-game="'+esc(g)+'"><b>'+esc(name)+(tag?' <em>'+esc(tag)+'</em>':'')+'</b><span>'+esc(desc)+'</span></a>'}
+  /* 遊戲清單：讀遊戲主頁的卡片，主頁新增遊戲時這裡自動跟上；讀不到就用頁面裡寫死的清單 */
   fetch('/').then(function(r){return r.ok?r.text():null}).then(function(t){
     if(!t)return;
-    var doc=new DOMParser().parseFromString(t,'text/html'),out=[];
+    var doc=new DOMParser().parseFromString(t,'text/html'),first=[],rest=[];
     doc.querySelectorAll('a.card').forEach(function(c){
       var h=c.getAttribute('href'),g=c.getAttribute('data-game')||'',t3=c.querySelector('h3'),p=c.querySelector('p');
-      if(h?t3:null)out.push('<a class="g" href="'+esc(h)+'" data-cta="notfound_game" data-cta-type="game" data-game="'+esc(g)+'"><b>'+esc(t3.textContent)+'</b><span>'+esc(p?p.textContent:'')+'</span></a>');
+      if(!(h?t3:null))return;
+      var L=TX?(LANG_GAMES[g]||{})[lang]:null;
+      if(L)first.push(card(L.url,g,L.name,L.desc,''));
+      else rest.push(card(h,g,t3.textContent,p?p.textContent:'',TX?TX.zhTag:''));
     });
-    if(out.length)list.innerHTML=out.join('');
+    var out=first.concat(rest);if(out.length)list.innerHTML=out.join('');
   }).catch(function(){});
   /* 點任何 [data-cta] → cta_click（與其他遊戲頁同一個事件） */
   document.addEventListener('click',function(e){
     var a=e.target.closest?e.target.closest('[data-cta]'):null;if(!a)return;
-    var p={cta_id:a.getAttribute('data-cta'),cta_type:a.getAttribute('data-cta-type')||'other',link_url:a.href};
+    var p={cta_id:a.getAttribute('data-cta'),cta_type:a.getAttribute('data-cta-type')||'other',link_url:a.href,page_lang:PAGE_LANG};
     var g=a.getAttribute('data-game');if(g)p.game_id=g;
     try{gtag('event','cta_click',p)}catch(er){}
   });
