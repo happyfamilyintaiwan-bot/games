@@ -145,6 +145,19 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .hp-move textarea{display:block;width:100%;box-sizing:border-box;min-height:84px;margin-top:8px;font:12px/1.5 ui-monospace,Menlo,monospace;padding:8px;border:2px solid #efe3d3;border-radius:10px;background:#fff;color:inherit;word-break:break-all}
 .hp-move__msg{margin-top:8px;font-size:13px;min-height:1.4em}
 .hp-move__msg.is-err{color:#c0392b}
+.hp-walkbar{margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.hp-walkbar button,.hp-block button{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border:0;border-radius:12px;background:#d94873;color:#fff;cursor:pointer}
+.hp-walkbar button.is-quiet,.hp-block button.is-quiet{background:#efe3d3;color:#5b4636}
+.hp-block{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;box-sizing:border-box;background:rgba(47,51,82,.93);color:#fff;text-align:center}
+.hp-block[hidden]{display:none}
+.hp-block canvas{width:144px;height:144px;image-rendering:pixelated;image-rendering:crisp-edges;animation:hp-hop 1.1s steps(2) infinite}
+@keyframes hp-hop{0%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hp-block__title{margin:0;font-size:22px;font-weight:700}
+.hp-block__text{margin:0;width:100%;max-width:22em;line-height:1.7;overflow-wrap:anywhere}
+.hp-block__btns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.hp-walkset label{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px}
+.hp-walkset select{font:inherit;padding:4px 6px;border:2px solid #efe3d3;border-radius:8px;background:#fff;color:inherit}
+.hp-walkset__row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:#8a6d4b}
 .hp-debug{margin-top:16px;padding:12px;border:2px dashed #c9b8a6;border-radius:14px;font-size:13px;color:#6b6b70}
 .hp-debug[hidden]{display:none}
 .hp-debug__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -171,6 +184,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
     <div class="hp-screen" id="hp-screen">
       <div class="hp-stage"><canvas class="hp-pet" id="hp-pet" width="32" height="32" role="img" aria-label="你的毛孩"></canvas><div class="hp-poops" id="hp-poops"></div></div>
       <div class="hp-status" id="hp-status" aria-live="polite"></div>
+      <div class="hp-walkbar" id="hp-walkbar" hidden></div>
       <button type="button" class="hp-home" id="hp-home" hidden>找牠回來</button>
       <div class="hp-disc" id="hp-disc" hidden></div>
     </div>
@@ -199,12 +213,31 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
   <div class="hp-tools" id="hp-tools">
     <button type="button" id="hp-pip-btn" hidden>放到桌面</button>
     <button type="button" id="hp-install-btn" hidden>加到主畫面</button>
+    <button type="button" id="hp-walk-btn" aria-pressed="false">走動提醒</button>
     <button type="button" id="hp-move-btn" aria-pressed="false">搬家碼</button>
   </div>
   <p class="hp-tools__hint" id="hp-pip-hint" hidden>毛孩在小窗陪你了。這個分頁可以縮小，但不要關掉喔。</p>
   <div class="hp-tip" id="hp-ios-tip" hidden>
     <b>小提醒：</b>在 iPhone 上把日和毛孩「加入主畫面」，毛孩比較不會不見。點 Safari 下方的分享按鈕，選「加入主畫面」就好。
     <div><button type="button" class="hp-newegg" id="hp-ios-ok">知道了</button></div>
+  </div>
+  <div class="hp-panel hp-walkset" id="hp-walk" hidden>
+    <p class="hp-panel__sum">上班坐太久，毛孩會提醒你起來走走。走完回來跟牠說，牠會很開心。</p>
+    <label><input type="checkbox" id="hp-walk-on"> 開啟走動提醒</label>
+    <label>每 <select id="hp-walk-every"><option value="30">30</option><option value="45">45</option><option value="50">50</option><option value="60">60</option><option value="90">90</option></select> 分鐘提醒一次</label>
+    <label><input type="checkbox" id="hp-walk-work"> 只在平日 9:00～18:00 提醒</label>
+    <p class="hp-panel__title">讓提醒更明顯（選用）</p>
+    <div class="hp-walkset__row"><button type="button" class="hp-newegg is-quiet" id="hp-walk-notify">開啟系統通知</button><span id="hp-walk-notify-state"></span></div>
+    <div class="hp-walkset__row"><button type="button" class="hp-newegg is-quiet" id="hp-walk-idle">鎖螢幕自動算散步</button><span id="hp-walk-idle-state"></span></div>
+    <p class="hp-empty" style="margin-top:6px">鎖螢幕自動算散步只有電腦版 Chrome、Edge 可以用：你鎖螢幕或 5 分鐘沒碰電腦，回來就自動算走了一次。</p>
+    <p class="hp-panel__title">散步紀錄</p>
+    <p id="hp-walk-stats"></p>
+  </div>
+  <div class="hp-block" id="hp-block" role="dialog" aria-modal="true" aria-labelledby="hp-block-title" hidden>
+    <canvas id="hp-block-pet" width="32" height="32" aria-hidden="true"></canvas>
+    <p class="hp-block__title" id="hp-block-title">坐好久了，休息一下！</p>
+    <p class="hp-block__text" id="hp-block-text"></p>
+    <div class="hp-block__btns"><button type="button" data-walk="go">我去走走</button><button type="button" class="is-quiet" data-walk="later">10 分鐘後</button></div>
   </div>
   <div class="hp-panel hp-move" id="hp-move" hidden>
     <p class="hp-panel__sum">換手機或電腦時，用搬家碼把毛孩、圖鑑、明信片和點心櫃一起帶走。</p>
@@ -229,6 +262,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
       <button type="button" data-skip="6">+6 小時</button>
       <button type="button" data-skip="24">+1 天</button>
       <button type="button" data-dbg="trip">讓牠去旅行</button>
+      <button type="button" data-dbg="walk">立刻走動提醒</button>
       <button type="button" id="hp-dbg-reset">重置測試存檔</button>
     </div>
   </div>
@@ -610,6 +644,12 @@ var HP_DATA = {
     adultUp: ['我長大了\n可是被你摸頭的時候\n我還是\n那個愛賴皮的我'],
     trip: ['{city}很好玩\n可是走了好多路\n最想回去的地方\n還是我們家'],
     home: ['我去朋友家住了幾天\n他們都對我很好\n可是沒有人\n像你一樣'],
+    /* 散步信（2026-10-09 草稿，待 Zoe 看）：一天第 3 次散步回來時寄 */
+    walk: [
+      '你出去走走的時候\n我在窗邊數你的腳步聲\n數到一百\n你就回來了',
+      '今天陪你起來走了三次\n我覺得\n我們兩個都長高了一點點',
+      '坐太久的話\n椅子會記住你的形狀\n所以要常常站起來\n讓它忘記一下'
+    ],
     streak7: ['你連續來看我七天了\n我在牆上偷偷畫了七條線\n明天\n會有第八條嗎'],
     /* 幼年（第 1～2 天） */
     baby: [
@@ -1073,9 +1113,17 @@ var HP_PC = (function(){
   var state = upgrade(load(SAVE_KEY));
   var flash = { text: '', until: 0 };
   var game = null;
-  function newBook(){ return { v: 1, dex: {}, album: [], postcards: [], snacks: [], giftDay: 0 }; }
+  function newBook(){ return fillWalk({ v: 1, dex: {}, album: [], postcards: [], snacks: [], giftDay: 0 }); }
+  /* 走動提醒的設定與紀錄放在收藏本裡：換一隻毛孩還在，搬家碼也會一起帶走 */
+  function fillWalk(b){
+    var d = { on: true, every: 50, work: true, notify: false, idle: false, stage: '', sitAt: 0, seenAt: 0, noticeAt: 0, walkAt: 0,
+      snoozeUntil: 0, offDay: 0, total: 0, day: 0, today: 0, streak: 0 };
+    b.walk = b.walk || {};
+    for (var k in d) if (!(k in b.walk)) b.walk[k] = d[k];
+    return b;
+  }
   var book = load(BOOK_KEY);
-  if (!book || book.v !== 1) book = newBook();
+  if (!book || book.v !== 1) book = newBook(); else fillWalk(book);
   function saveBook(){ store(BOOK_KEY, book); }
   /* 每日禮物：每天第一次打開送 1 種還沒有的點心 */
   function giveGift(t){
@@ -1126,6 +1174,11 @@ var HP_PC = (function(){
     if (pipEls) {
       if (petGone) pipEls.cv.getContext('2d').clearRect(0, 0, pipEls.cv.width, pipEls.cv.height);
       else HP_PX.draw(pipEls.cv, petSp, petForm, petExpr, petFrame);
+    }
+    if (!$('hp-block').hidden) {
+      var bc = $('hp-block-pet');
+      if (petGone) bc.getContext('2d').clearRect(0, 0, bc.width, bc.height);
+      else HP_PX.draw(bc, petSp, petForm, 'bored', petFrame);
     }
   }
 
@@ -1192,10 +1245,12 @@ var HP_PC = (function(){
     }
     $('hp-screen').classList.toggle('is-night', isAsleep(t));
     var ft = petAway ? '' : flashText();   /* 離家出走時一律顯示紙條 */
-    $('hp-status').textContent = game ? game.text : (ft || m.text);
+    walkTick(t);
+    $('hp-status').textContent = game ? game.text : (ft || walkText(t) || m.text);
     petSp = dbgSp === 'cat' || dbgSp === 'dog' ? dbgSp : state.sp;
     petForm = HP_PX.FORMS.indexOf(dbgForm) >= 0 ? dbgForm : form;
     petExpr = game ? 'happy' : (LOOK[m.key] || m.key);
+    if (book.walk.stage === 'notice' || book.walk.stage === 'block') petExpr = 'bored';   /* 叫你起來走走時，牠一定是醒著、想跟你玩 */
     drawPet();
     setBar('full', state.full);
     setBar('mood', state.mood);
@@ -1210,6 +1265,7 @@ var HP_PC = (function(){
     var btns = document.querySelectorAll('#hp-actions button');
     for (var j = 0; j < btns.length; j++) btns[j].disabled = lock;
     renderPip($('hp-status').textContent, lock, NEED.indexOf(m.key) >= 0, isAsleep(t));
+    renderWalk(t);
     var unread = state.letters.filter(function(L){ return !L.read; }).length;
     $('hp-unread').hidden = !unread;
     $('hp-unread').textContent = unread;
@@ -1507,7 +1563,12 @@ var HP_PC = (function(){
     + '.s{font-size:13px;font-weight:700;min-height:2.6em;padding:0 10px;line-height:1.3}'
     + '.b{display:flex;gap:4px}'
     + 'button{font:inherit;font-size:12px;font-weight:700;padding:6px 9px;border:0;border-radius:10px;background:#d94873;color:#fff;cursor:pointer}'
-    + 'button:disabled{background:#cfc6bd;cursor:default}';
+    + 'button:disabled{background:#cfc6bd;cursor:default}'
+    + '.sign{display:none;padding:2px 10px;border-radius:8px;background:#fff;border:2px solid #4a3226;color:#4a3226;font-size:13px;font-weight:700}'
+    + '.w{display:none;gap:4px}button.q{background:#efe3d3;color:#5b4636}'
+    + 'body.is-walk .b{display:none}body.is-walk .w{display:flex}'
+    + 'body.is-notice .sign,body.is-block .sign{display:inline-block}'
+    + 'body.is-block{background:#fde3ea;color:#5b4636}body.is-block canvas{width:128px;height:128px;animation:hop 1.1s steps(2) infinite}';
   function openPip(){
     if (!canPip || pipWin || !state) return;
     window.documentPictureInPicture.requestWindow({ width: 220, height: 260 }).then(function(w){
@@ -1526,8 +1587,14 @@ var HP_PC = (function(){
         if (!x || x.disabled) return;
         doAct(x.getAttribute('data-act'), 'pip');
       });
-      d.body.appendChild(cv); d.body.appendChild(tx); d.body.appendChild(row);
-      pipEls = { cv: cv, tx: tx, btns: row.querySelectorAll('button') };
+      var sign = d.createElement('div'); sign.className = 'sign'; sign.textContent = '走走？';
+      var wrow = d.createElement('div'); wrow.className = 'w';
+      [['go', '我去走走', ''], ['later', '10 分鐘後', 'q'], ['back', '我回來了', '']].forEach(function(a){
+        var x = d.createElement('button'); x.type = 'button'; x.textContent = a[1]; x.className = a[2]; x.setAttribute('data-walk', a[0]); wrow.appendChild(x);
+      });
+      wrow.addEventListener('click', function(e){ var x = e.target.closest('[data-walk]'); if (x) walkAction(x.getAttribute('data-walk')); });
+      d.body.appendChild(sign); d.body.appendChild(cv); d.body.appendChild(tx); d.body.appendChild(row); d.body.appendChild(wrow);
+      pipEls = { cv: cv, tx: tx, btns: row.querySelectorAll('button'), wbtns: wrow.querySelectorAll('button') };
       w.addEventListener('pagehide', function(){ pipWin = null; pipEls = null; updateTools(); });
       track('pet_pip_open', {});
       render();
@@ -1543,6 +1610,14 @@ var HP_PC = (function(){
     pipEls.cv.classList.toggle('is-need', need ? !lock : false);
     pipWin.document.body.classList.toggle('is-night', night);
     for (var i = 0; i < pipEls.btns.length; i++) pipEls.btns[i].disabled = lock;
+    var st = book.walk.stage, body = pipWin.document.body;
+    body.classList.toggle('is-walk', st !== '');
+    body.classList.toggle('is-notice', st === 'notice');
+    body.classList.toggle('is-block', st === 'block');
+    for (var j = 0; j < pipEls.wbtns.length; j++) {
+      var k = pipEls.wbtns[j].getAttribute('data-walk');
+      pipEls.wbtns[j].hidden = st === 'walking' ? k !== 'back' : k === 'back';
+    }
   }
   $('hp-pip-btn').addEventListener('click', function(){ if (pipWin) pipWin.close(); else openPip(); });
 
@@ -1573,6 +1648,182 @@ var HP_PC = (function(){
     updateTools();
   });
   if ('serviceWorker' in navigator) { try { navigator.serviceWorker.register('sw.js').catch(function(){}); } catch(e) {} }
+
+  /* ---- 走動提醒 ----
+     坐滿 N 分鐘 → 提醒（notice）→ 10 分鐘沒去 → 擋路（block）→ 我去走走（walking）→ 我回來了 → 獎勵
+     「坐了多久」只在頁面開著時算；頁面關掉超過 15 分鐘，代表人不在，重新計時 */
+  var WALK = { from: 9, to: 18, blockMin: 10, gapMin: 15, walkMin: 5, minMin: 3, maxMin: 60, mood: 20, letterAt: 3 };
+  function inWorkTime(w, t){
+    if (DEBUG ? params.get('walkany') === '1' : false) return true;
+    if (!w.work) return true;
+    var d = new Date(t), wd = d.getDay(), h = d.getHours();
+    if (wd === 0 || wd === 6) return false;
+    return h >= WALK.from ? h < WALK.to : false;
+  }
+  function prevWorkDay(t){ var wd = new Date(t).getDay(); return dayKey(t - (wd === 1 ? 3 : 1) * DAY); }
+  function walkTick(t){
+    var w = book.walk;
+    if (w.stage === 'walking') {
+      if (t - w.walkAt > WALK.maxMin * MIN) { w.stage = ''; w.sitAt = t; saveBook(); }   /* 走了一小時都沒回報，就當作下班了 */
+      w.seenAt = t;
+      return;
+    }
+    if (!state || !w.on || w.offDay === dayKey(t) || !inWorkTime(w, t)) {
+      if (w.stage) { w.stage = ''; saveBook(); }
+      w.sitAt = t; w.seenAt = t;
+      return;
+    }
+    if (!w.sitAt || t - w.seenAt > WALK.gapMin * MIN) w.sitAt = t;
+    w.seenAt = t;
+    if (w.stage === '') {
+      if (t - w.sitAt >= w.every * MIN ? t >= w.snoozeUntil : false) { w.stage = 'notice'; w.noticeAt = t; walkRemind('notice', t); saveBook(); }
+    } else if (w.stage === 'notice') {
+      if (t - w.noticeAt >= WALK.blockMin * MIN) { w.stage = 'block'; walkRemind('block', t); saveBook(); }
+    }
+  }
+  function sitMinutes(t){ return Math.max(1, Math.round((t - book.walk.sitAt) / MIN)); }
+  function sitText(t){
+    var m = sitMinutes(t);
+    return m >= 60 ? Math.floor(m / 60) + ' 小時' + (m % 60 ? ' ' + (m % 60) + ' 分鐘' : '') : m + ' 分鐘';
+  }
+  function walkRemind(level, t){
+    var who = state ? state.name : '毛孩';
+    walkNotify(level === 'block' ? who + '：已經坐 ' + sitText(t) + '了，休息一下好不好？' : who + '：坐好久了，陪我走走？');
+    track('pet_walk_remind', { option: level });
+  }
+  function walkNotify(body){
+    var w = book.walk;
+    if (!w.notify || !('Notification' in window)) return;
+    if (Notification.permission !== 'granted') return;
+    var opt = { body: body, icon: '/icons/icon-192.png', tag: 'hiyori-pet-walk', renotify: true };
+    var plain = function(){ try { var n = new Notification('日和毛孩', opt); n.onclick = function(){ window.focus(); n.close(); }; } catch(e) {} };
+    try {
+      if (navigator.serviceWorker) navigator.serviceWorker.getRegistration().then(function(r){ if (r) r.showNotification('日和毛孩', opt); else plain(); }).catch(plain);
+      else plain();
+    } catch(e) { plain(); }
+  }
+  function walkText(t){
+    var w = book.walk;
+    if (!state) return '';
+    if (w.stage === 'notice' || w.stage === 'block') return '坐好久了，陪我走走？';
+    if (w.stage !== 'walking') return '';
+    var left = Math.ceil((w.walkAt + WALK.walkMin * MIN - t) / 1000);
+    if (left <= 0) return '散步時間到了，回來了嗎？';
+    var p = function(n){ return (n < 10 ? '0' : '') + n; };
+    return '散步中 ' + Math.floor(left / 60) + ':' + p(left % 60) + '，我在這裡等你';
+  }
+  function walkDone(option, t){
+    var w = book.walk, k = dayKey(t);
+    w.stage = ''; w.sitAt = t; w.snoozeUntil = 0;
+    if (w.day !== k) { w.streak = w.day === prevWorkDay(t) ? w.streak + 1 : 1; w.day = k; w.today = 0; }
+    w.today += 1; w.total += 1;
+    var gone = state ? (state.awayAt || state.tripAt) : true;
+    if (!gone) {
+      simulate(state, t);
+      state.mood = clamp(state.mood + WALK.mood);
+      if (w.today === WALK.letterAt) deliver(state, ['walk'], t);
+      save();
+    }
+    saveBook();
+    track('pet_walk_done', { option: option });
+    return gone;
+  }
+  function walkAction(kind){
+    var w = book.walk, t = now();
+    if (kind === 'go') { w.stage = 'walking'; w.walkAt = t; say('去吧！我在這裡等你回來', 4000, true); }
+    else if (kind === 'later') { w.stage = ''; w.snoozeUntil = t + WALK.blockMin * MIN; say('好，10 分鐘後再叫你', 3000, true); track('pet_walk_snooze', { option: 'later' }); }
+    else if (kind === 'today') { w.stage = ''; w.offDay = dayKey(t); say('好，今天不吵你了', 3000, true); track('pet_walk_snooze', { option: 'today' }); }
+    else if (kind === 'back') {
+      if (t - w.walkAt < WALK.minMin * MIN) {
+        w.stage = ''; w.sitAt = t - (w.every - WALK.blockMin) * MIN;   /* 太快回來不算，10 分鐘後再提醒一次 */
+        say('這麼快就回來了？下次多走一下下', 4000, true);
+      } else {
+        var gone = walkDone('manual', t);
+        say(gone ? '歡迎回來！今天走了 ' + w.today + ' 次' : state.name + '好開心！今天走了 ' + w.today + ' 次，心情 +' + WALK.mood, 5000, true);
+      }
+    }
+    saveBook();
+    render();
+  }
+  var walkSig = '';
+  function renderWalk(t){
+    var w = book.walk, st = state ? w.stage : '';
+    var bar = $('hp-walkbar');
+    if (st !== walkSig) {
+      walkSig = st;
+      bar.innerHTML = '';
+      var btns = st === 'walking' ? [['back', '我回來了', '']] : (st ? [['go', '我去走走', ''], ['later', '10 分鐘後', 'is-quiet'], ['today', '今天先不要', 'is-quiet']] : []);
+      btns.forEach(function(a){ var b = el('button', a[2], a[1]); b.type = 'button'; b.setAttribute('data-walk', a[0]); bar.appendChild(b); });
+      bar.hidden = !btns.length;
+    }
+    var blk = $('hp-block');
+    blk.hidden = st !== 'block';
+    if (st === 'block') $('hp-block-text').textContent = (state ? state.name : '毛孩') + '說：你已經坐 ' + sitText(t) + '了。站起來走 5 分鐘，我在這裡等你。';
+    $('hp-walk-btn').textContent = w.on ? '走動提醒' : '走動提醒（關）';
+    if (!$('hp-walk').hidden) renderWalkSet();
+  }
+  function renderWalkSet(){
+    var w = book.walk;
+    $('hp-walk-on').checked = w.on;
+    $('hp-walk-every').value = String(w.every);
+    $('hp-walk-work').checked = w.work;
+    var np = 'Notification' in window ? Notification.permission : 'none';
+    $('hp-walk-notify').hidden = np === 'none' ? true : (w.notify ? np === 'granted' : false);
+    $('hp-walk-notify-state').textContent = np === 'none' ? '這個瀏覽器不支援系統通知' : (np === 'denied' ? '通知被瀏覽器封鎖了，要到網址列左邊的設定打開' : (w.notify ? (np === 'granted' ? '系統通知已開啟' : '') : ''));
+    var ip = 'IdleDetector' in window;
+    $('hp-walk-idle').hidden = !ip || (w.idle ? !!idleDet : false);
+    $('hp-walk-idle-state').textContent = !ip ? '這個瀏覽器不支援（電腦版 Chrome、Edge 才有）' : (w.idle ? (idleDet ? '已開啟' : '') : '');
+    var today = w.day === dayKey(now()) ? w.today : 0;
+    $('hp-walk-stats').textContent = '今天走了 ' + today + ' 次｜連續 ' + (w.day === dayKey(now()) || w.day === prevWorkDay(now()) ? w.streak : 0) + ' 個工作天｜總共 ' + w.total + ' 次';
+  }
+  /* 鎖螢幕或 5 分鐘沒碰電腦 → 自動算散步（需要玩家允許；只在上班時間、提醒開著時算） */
+  var idleDet = null, idleAwayAt = 0;
+  function startIdle(){
+    if (!('IdleDetector' in window) || idleDet) return;
+    try {
+      var det = new window.IdleDetector();
+      det.addEventListener('change', function(){
+        var away = det.userState === 'idle' || det.screenState === 'locked';
+        if (away) { if (!idleAwayAt) idleAwayAt = Date.now() - 60000; return; }
+        if (!idleAwayAt) return;
+        var mins = Math.round((Date.now() - idleAwayAt) / MIN);
+        idleAwayAt = 0;
+        var w = book.walk, t = now();
+        if (mins < WALK.walkMin || !state || !w.on || !inWorkTime(w, t)) return;
+        var gone = walkDone('idle', t);
+        say('歡迎回來！你離開了 ' + mins + ' 分鐘，算你去走走了' + (gone ? '' : '，心情 +' + WALK.mood), 6000, true);
+        render();
+      });
+      det.start({ threshold: 60000 }).then(function(){ idleDet = det; if (!$('hp-walk').hidden) renderWalkSet(); }).catch(function(){ idleDet = null; });
+    } catch(e) {}
+  }
+  if (book.walk.idle ? ('IdleDetector' in window) : false) {
+    try { navigator.permissions.query({ name: 'idle-detection' }).then(function(r){ if (r.state === 'granted') startIdle(); }).catch(function(){}); } catch(e) {}
+  }
+  $('hp-walkbar').addEventListener('click', function(e){ var b = e.target.closest('[data-walk]'); if (b) walkAction(b.getAttribute('data-walk')); });
+  $('hp-block').addEventListener('click', function(e){ var b = e.target.closest('[data-walk]'); if (b) walkAction(b.getAttribute('data-walk')); });
+  $('hp-walk-btn').addEventListener('click', function(){
+    var box = $('hp-walk');
+    box.hidden = !box.hidden;
+    $('hp-walk-btn').setAttribute('aria-pressed', box.hidden ? 'false' : 'true');
+    if (!box.hidden) renderWalkSet();
+  });
+  $('hp-walk-on').addEventListener('change', function(){ book.walk.on = this.checked; book.walk.stage = ''; book.walk.sitAt = now(); saveBook(); render(); renderWalkSet(); });
+  $('hp-walk-every').addEventListener('change', function(){ book.walk.every = Number(this.value) || 50; saveBook(); renderWalkSet(); });
+  $('hp-walk-work').addEventListener('change', function(){ book.walk.work = this.checked; saveBook(); render(); renderWalkSet(); });
+  $('hp-walk-notify').addEventListener('click', function(){
+    if (!('Notification' in window)) return;
+    Notification.requestPermission().then(function(p){ book.walk.notify = p === 'granted'; saveBook(); renderWalkSet(); }).catch(function(){});
+  });
+  $('hp-walk-idle').addEventListener('click', function(){
+    if (!('IdleDetector' in window)) return;
+    window.IdleDetector.requestPermission().then(function(p){
+      book.walk.idle = p === 'granted';
+      saveBook();
+      if (book.walk.idle) startIdle(); else $('hp-walk-idle-state').textContent = '沒有允許，還是可以自己按「我回來了」';
+      renderWalkSet();
+    }).catch(function(){ $('hp-walk-idle-state').textContent = '開不起來，還是可以自己按「我回來了」'; });
+  });
 
   function updateTools(){
     var pb = $('hp-pip-btn');
@@ -1625,7 +1876,7 @@ var HP_PC = (function(){
   function moveMsg(text, err){ var m = $('hp-move-msg'); m.textContent = text; m.classList.toggle('is-err', !!err); }
   function applyMove(){
     state = moveData.save;
-    book = moveData.book;
+    book = fillWalk(moveData.book);
     moveData = null;
     if (state) store(SAVE_KEY, state); else { try { localStorage.removeItem(SAVE_KEY); } catch(e) {} }
     saveBook();
@@ -1674,6 +1925,14 @@ var HP_PC = (function(){
   if (DEBUG) {
     $('hp-debug').hidden = false;
     $('hp-debug').addEventListener('click', function(e){
+      if (e.target.closest('[data-dbg="walk"]')) {
+        var tw = now();
+        book.walk.on = true; book.walk.stage = ''; book.walk.offDay = 0; book.walk.snoozeUntil = 0;
+        book.walk.seenAt = tw; book.walk.sitAt = tw - book.walk.every * MIN;
+        saveBook();
+        render();
+        return;
+      }
       if (e.target.closest('[data-dbg="trip"]')) {
         if (!state) return;
         var t = now();
@@ -1701,7 +1960,7 @@ var HP_PC = (function(){
     window.hpCore = { simulate: simulate, adopt: adopt, formAt: formAt, decide: decide, mood: mood, act: act, played: played,
       fetchHome: fetchHome, upgrade: upgrade, dayKey: dayKey, startTrip: startTrip, deliver: deliver, dailyCats: dailyCats,
       letterText: letterText, giveGift: giveGift, markCareDay: markCareDay, streakNow: streakNow, retire: retire,
-      getBook: function(){ return book; }, isAsleep: isAsleep, makeMoveCode: makeMoveCode, readMoveCode: readMoveCode, openPip: openPip, getPip: function(){ return pipWin; }, CARE: CARE, PLAY: PLAY, RATE: RATE,
+      getBook: function(){ return book; }, walkTick: walkTick, walkAction: walkAction, walkDone: walkDone, inWorkTime: inWorkTime, prevWorkDay: prevWorkDay, WALK: WALK, isAsleep: isAsleep, makeMoveCode: makeMoveCode, readMoveCode: readMoveCode, openPip: openPip, getPip: function(){ return pipWin; }, CARE: CARE, PLAY: PLAY, RATE: RATE,
       getState: function(){ return state; }, getGame: function(){ return game; }, setState: function(s){ state = s; save(); render(); } };
   }
 
