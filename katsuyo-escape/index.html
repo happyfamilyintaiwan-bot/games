@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="spec-version" content="core-v1.1/games-v1.4">
+<meta name="spec-version" content="core-v1.3/games-v1.6">
 <!-- 網站 logo icon（檔案在 /icons/） -->
 <link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
@@ -49,8 +49,13 @@
 <meta property="og:title" content="活用館脫出｜你能逃出日文動詞變化的五間密室嗎？">
 <meta property="og:description" content="五段、一段、變格、て形音便、可能形。答對轉動密碼鎖，三根蠟燭熄滅就重來。免費、手機可玩。">
 <meta property="og:url" content="https://games.knittinghiyori.com/katsuyo-escape/">
-<meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Game", "LearningResource"], "name": "活用館脫出：日文動詞變化密室逃脫", "alternateName": "活用館からの脱出", "url": "https://games.knittinghiyori.com/katsuyo-escape/", "description": "免費日文動詞變化遊戲！五間密室依序考動詞分類、ない形、ます形、て形音便、ば形、命令形與可能形，先熱身再破案，答錯即時解析。免註冊，手機電腦都能玩。", "inLanguage": "zh-Hant", "isAccessibleForFree": true, "educationalLevel": "JLPT N5–N4", "learningResourceType": "Game", "teaches": ["日文動詞分類（五段・上一段・下一段・サ変・カ変）", "六大活用形", "て形・た形音便", "ない形・ます形・ば形・命令形・可能形"], "genre": "Educational", "audience": {"@type": "EducationalAudience", "educationalRole": "student"}, "publisher": {"@type": "Organization", "name": "編織日和", "url": "https://knittinghiyori.com/"}}</script>
+<meta property="og:image" content="https://games.knittinghiyori.com/katsuyo-escape/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="編織日和・小遊戲｜活用館からの脱出：日文動詞變化密室逃脫，五段、一段、變格、て形音便、可能形，附遊戲網址">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/katsuyo-escape/og.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Game", "LearningResource"], "name": "活用館脫出：日文動詞變化密室逃脫", "alternateName": "活用館からの脱出", "url": "https://games.knittinghiyori.com/katsuyo-escape/", "image": "https://games.knittinghiyori.com/katsuyo-escape/og.png", "description": "免費日文動詞變化遊戲！五間密室依序考動詞分類、ない形、ます形、て形音便、ば形、命令形與可能形，先熱身再破案，答錯即時解析。免註冊，手機電腦都能玩。", "inLanguage": "zh-Hant", "isAccessibleForFree": true, "educationalLevel": "JLPT N5–N4", "learningResourceType": "Game", "teaches": ["日文動詞分類（五段・上一段・下一段・サ変・カ変）", "六大活用形", "て形・た形音便", "ない形・ます形・ば形・命令形・可能形"], "genre": "Educational", "audience": {"@type": "EducationalAudience", "educationalRole": "student"}, "publisher": {"@type": "Organization", "name": "編織日和", "url": "https://knittinghiyori.com/"}}</script>
 <style>
 *{box-sizing:border-box}
 html{color-scheme:light;-webkit-text-size-adjust:100%}
@@ -68,7 +73,7 @@ body{margin:0}
 <style>
 :root{
   --bg:#FFFFFF; --ink:#111413; --muted:#5B6661; --line:#DCE4DF; --soft:#F3F7F5;
-  --exit:#00925A; --exit-dark:#006B42; --exit-ink:#FFFFFF;
+  --exit:#007D4B; --exit-dark:#006B42; --exit-ink:#FFFFFF;
   --amber:#E8A317; --amber-soft:#FFF6E0; --wrong:#C62828; --wrong-soft:#FDECEC;
   --ok-soft:#E6F5EE;
   --jp:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
@@ -143,7 +148,7 @@ button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 .shackle::after{content:"";position:absolute;bottom:0;left:0;width:30px;height:20px;background:var(--ink);border-radius:3px}
 .lock.open .shackle::before{transform:translateY(-8px) translateX(8px)}
 .dials{display:flex;gap:6px}
-.dial{width:34px;height:42px;border:2px solid var(--ink);border-radius:4px;background:var(--bg);display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:20px;color:#B5C1BB}
+.dial{width:34px;height:42px;border:2px solid var(--ink);border-radius:4px;background:var(--bg);display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:20px;color:#66706B}
 .dial.set{color:var(--ink);background:var(--amber-soft);animation:flip .35s ease}
 .lock.open .dial{background:var(--ok-soft);border-color:var(--exit)}
 @keyframes flip{0%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
@@ -229,7 +234,7 @@ button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 .choice button b{font-size:16px}
 .choice button span{font-size:13px;color:var(--muted)}
 .choice button.primary{background:var(--exit);border-color:var(--exit-dark);color:var(--exit-ink)}
-.choice button.primary span{color:#DDF3E8}
+.choice button.primary span{color:#EEF9F3}
 @media (max-width:460px){.choice{grid-template-columns:1fr}}
 .roomrow.warm .no{color:var(--exit)}
 
@@ -252,7 +257,7 @@ button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
 
 /* hub CTA */
 .hubcta{display:flex;flex-direction:column;gap:12px;align-items:flex-start;background:var(--exit);color:var(--exit-ink);border-radius:10px;padding:22px;box-shadow:inset 0 0 0 3px var(--exit-dark)}
-.hubcta .eyebrow{color:#DDF3E8}
+.hubcta .eyebrow{color:#EEF9F3}
 .hubcta h2{margin:0;font-size:22px;font-weight:900;line-height:1.3}
 .hubcta p{margin:0;font-size:15px;color:#EAF7F0}
 .hubbtn{display:inline-flex;align-items:center;gap:10px;background:#FFFFFF;color:var(--ink);border:2px solid var(--ink);border-radius:8px;padding:14px 24px;font-size:17px;font-weight:900;text-decoration:none}
@@ -281,7 +286,7 @@ button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
     <span class="eyebrow">解完文法密室，換一間真的</span>
     <h3>找一間實體密室逃脫，約朋友一起解謎</h3>
     <p>台灣各地的主題密室與實境解謎都整理在這裡，看評價、選場次、線上預訂。</p>
-    <a class="affbtn" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="below_game" data-cta-type="affiliate">看密室逃脫・實境解謎推薦 →</a>
+    <a class="affbtn" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored nofollow noopener" data-cta="below_game" data-cta-type="klook">看密室逃脫・實境解謎推薦 →</a>
     <span class="disc">本區含 Klook 聯盟行銷連結。透過連結預訂，本站會獲得分潤，你支付的價格不變。</span>
   </aside>
   <section id="shareSec"></section>
@@ -305,7 +310,7 @@ button:focus-visible{outline:3px solid var(--exit);outline-offset:2px}
   </section>
 </div>
 
-<p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 
 <script>
 /* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
@@ -854,7 +859,7 @@ function renderRoom(msg){
   if(msg==="win"){
     body=`<div class="banner win"><h3>喀嚓，鎖開了</h3><p>密碼 <b style="font-family:var(--mono)">${code.join("")}</b>。${R.i<ROOMS.length-1?"下一間是「"+ROOMS[R.i+1].title+"」。":"門後透出綠色的光。"}</p>
       <div class="btnrow"><button class="btn go" id="next">${R.i<ROOMS.length-1?"進入"+ROOMS[R.i+1].zh:"走向出口"}</button><button class="btn ghost" id="map">看平面圖</button></div>
-      <p class="inlineaff">休息一下：想挑戰真的密室？<a href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="room_clear" data-cta-type="affiliate">看密室逃脫・實境解謎推薦</a>（聯盟連結）</p></div>`;
+      <p class="inlineaff">休息一下：想挑戰真的密室？<a href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored nofollow noopener" data-cta="room_clear" data-cta-type="klook">看密室逃脫・實境解謎推薦</a>（聯盟連結）</p></div>`;
   }else if(msg==="fail"){
     body=`<div class="banner fail"><h3>三根蠟燭都熄了</h3><p>房間一片漆黑。題目會重新洗牌，計時繼續。</p>
       <div class="btnrow"><button class="btn" id="retry">點燈重來</button><button class="btn ghost" id="map">看平面圖</button></div></div>`;
@@ -898,7 +903,7 @@ function answer(btn){
   if(!ok){btn.classList.add("wrong");R.lives--;S.mistakes++;}
   else{R.solved++;R.correct++;}
   R.items++;answeredTotal++;
-  if(MILESTONES.includes(answeredTotal))track("game_milestone",{item_count:answeredTotal});
+  if(MILESTONES.includes(answeredTotal))track("game_milestone",{milestone:answeredTotal});
   const last=R.q===R.qs.length-1;
   document.getElementById("fb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"轉盤轉到了":"答錯，蠟燭熄了一根"}</b>
     <span class="ex">${esc(q.ex)}</span><span>${esc(q.why)}</span>
