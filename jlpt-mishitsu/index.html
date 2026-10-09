@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="spec-version" content="core-v1.1/games-v1.4">
+<meta name="spec-version" content="core-v1.3.1/games-v1.6.1">
 <!-- 網站 logo icon（檔案在 /icons/） -->
 <link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
@@ -22,7 +22,7 @@
 </script>
 <!-- Google AdSense（只有手動廣告，不跑 Auto ads，不會有插頁式廣告） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
-<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})});</script>
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
 <style>
 .kh-ad{display:block;width:100%;max-width:728px;margin:48px auto;padding:0 16px;text-align:center;clear:both;box-sizing:border-box}
 .kh-ad--game{margin-top:150px}
@@ -50,8 +50,13 @@
 <meta property="og:title" content="JLPT 單字密室｜背日文單字逃出五間密室">
 <meta property="og:description" content="N5～N1 共 7,790 字，用密室逃脫的方式背 JLPT 單字。">
 <meta property="og:url" content="https://games.knittinghiyori.com/jlpt-mishitsu/">
+<meta property="og:image" content="https://games.knittinghiyori.com/jlpt-mishitsu/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="編織日和・小遊戲｜JLPT 單字密室：日檢單字密室逃脫，N5～N1 共 7,790 字、五間密室，附遊戲網址">
 <meta property="og:locale" content="zh_TW">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/jlpt-mishitsu/og.png">
 <!-- GA4：放在 <head>，game_id 與 page_lang 依遊戲修改 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
 <script>
@@ -70,12 +75,15 @@
 .kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
 .kh-brand-row{max-width:760px;margin:0 auto;padding-inline:16px;border-bottom:0}
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Game", "LearningResource"], "name": "JLPT 單字密室", "url": "https://games.knittinghiyori.com/jlpt-mishitsu/", "image": "https://games.knittinghiyori.com/jlpt-mishitsu/og.png", "description": "用密室逃脫背日文單字！N5 到 N1 共 7,790 個常考單字，分成五間密室、主題機關鎖，四選一題型、錯題本、60 秒搜查，免安裝、手機也能玩。", "inLanguage": "zh-Hant", "isAccessibleForFree": true, "educationalLevel": "JLPT N5–N1", "learningResourceType": "Game", "teaches": ["日文單字", "JLPT N5～N1 常考字"], "genre": "Educational", "publisher": {"@type": "Organization", "name": "編織日和", "url": "https://knittinghiyori.com/"}}</script>
 </head>
 <body>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=M+PLUS+Rounded+1c:wght@500;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900">
 <style>
 :root{
   color-scheme:light;
@@ -113,7 +121,7 @@ button:focus-visible{outline:3px solid #4CB8FF;outline-offset:3px}
 .lv i{background:var(--ink);color:#fff}
 .xpbar{width:60px;height:8px;border-radius:9px;background:var(--soft);border:1.5px solid var(--ink);overflow:hidden}
 .xpbar span{display:block;height:100%;background:var(--gold)}
-.streak i{background:var(--fire);color:#fff}
+.streak i{background:var(--fire);color:var(--ink)}
 .mast i{background:var(--ok);color:var(--ink)}
 .mute{border:2px solid var(--ink);background:var(--bg);border-radius:10px;width:32px;height:30px;display:grid;place-items:center;padding:0}
 @media (max-width:560px){.hud-stats .xpbar{display:none}.logo span{display:none}}
@@ -297,7 +305,7 @@ td.r{color:var(--sub);font-size:13px}
 .rsub{font-size:12.5px;color:var(--sub);margin-top:2px}
 .tag{border:2px solid var(--ink);border-radius:999px;padding:1px 10px;font-size:12px;font-weight:800;background:var(--gold);white-space:nowrap}
 .tag.ok{background:var(--ok)}
-.tag.mute{background:var(--soft);border-color:#A6A7B5;color:#8A8B99}
+.tag.mute{background:var(--soft);border-color:#A6A7B5;color:#62637A}
 @media (max-width:520px){.room-card{grid-template-columns:auto 1fr}.room-card .tag{grid-column:2;justify-self:start}}
 .quick.two{grid-template-columns:1fr 1fr;margin-top:18px}
 .howto{margin-top:30px;border:2.5px solid var(--ink);border-radius:18px;padding:14px 18px;background:#FFFCEB}
@@ -383,7 +391,7 @@ td.r{color:var(--sub);font-size:13px}
 
 <canvas id="confetti" hidden></canvas>
 
-<p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 
 
 <script>
@@ -552,7 +560,7 @@ const ROOMS=[
 ];
 const TRIP_URL='https://trip.tpk.ro/BzycmIUG';
 const TRIP_CTX={hall:'學日文是為了去日本玩？',n5:'單字背起來了，第一次去日本要準備什麼？',n4:'搭車的單字都會了，下一步是真的去日本搭電車？',n3:'看得懂招牌和菜單了，該安排一趟日本旅行了？',n2:'讀得懂新聞了，來一趟深度日本旅行？',n1:'逃出言の葉館了！是時候去日本看真正的星空。'};
-function tripCard(ctx){return`<div class="trip-wrap"><a class="trip" href="${TRIP_URL}" target="_blank" rel="sponsored noopener" data-cta="${ctx==='hall'?'trip_hall':'trip_result'}" data-cta-type="affiliate"><span class="trip-tag">日本旅遊攻略</span><b>${TRIP_CTX[ctx]||TRIP_CTX.hall}</b><span class="trip-sub">機票、飯店、門票最新優惠 →</span></a><p class="aff">含聯盟連結：透過連結訂購不會多付錢，本站會獲得少量分潤。</p></div>`}
+function tripCard(ctx){return`<div class="trip-wrap"><a class="trip" href="${TRIP_URL}" target="_blank" rel="sponsored nofollow noopener" data-cta="${ctx==='hall'?'trip_hall':'trip_result'}" data-cta-type="trip"><span class="trip-tag">日本旅遊攻略</span><b>${TRIP_CTX[ctx]||TRIP_CTX.hall}</b><span class="trip-sub">機票、飯店、門票最新優惠 →</span></a><p class="aff">含聯盟連結：透過連結訂購不會多付錢，本站會獲得少量分潤。</p></div>`}
 const DOOR_Q=20,DOOR_TIME=240,HINT_MAX=5;
 
 /* ---------- chapters (locks) ---------- */
@@ -616,7 +624,7 @@ const T={
   roundEnd(g,result){try{if(!T.ok())return;const d=g.qs.filter(q=>q.pick!==undefined);window.hyGame.roundEnd({result:result,score:g.score,item_count:d.length,correct_count:d.filter(q=>q.ok).length})}catch(e){}},
   share(method,type){try{if(T.ok())window.hyGame.share(method,type)}catch(e){}},
   answered:0,
-  milestone(){T.answered++;if([1,10,50,100].includes(T.answered))T.ev('game_milestone',{item_count:T.answered})}
+  milestone(){T.answered++;if([1,10,50,100].includes(T.answered))T.ev('game_milestone',{milestone:T.answered})}
 };
 const speakOK=('speechSynthesis' in window)&&typeof SpeechSynthesisUtterance!=='undefined';
 function say(t){if(!speakOK)return;try{const u=new SpeechSynthesisUtterance(t.replace(/～/g,'').split('・')[0]);u.lang='ja-JP';u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
@@ -648,7 +656,7 @@ function doorSVG(R,state,size){
   return`<svg viewBox="0 0 80 110" width="${size||64}" height="${(size||64)*110/80}" aria-hidden="true">
    <rect x="4" y="4" width="72" height="102" rx="6" fill="#fff" stroke="${ink}" stroke-width="4"/>
    ${open?`<path d="M10 10 L50 18 L50 102 L10 100 Z" fill="${fill}" stroke="${ink}" stroke-width="4" stroke-linejoin="round"/><circle cx="42" cy="60" r="3.5" fill="${ink}"/><path d="M54 20h16v80H54" fill="#FFF8DD"/>`
-   :`<rect x="10" y="10" width="60" height="92" rx="4" fill="${fill}" stroke="${ink}" stroke-width="4"/><rect x="24" y="22" width="32" height="18" rx="3" fill="#fff" stroke="${ink}" stroke-width="3"/><text x="40" y="36" text-anchor="middle" font-family="M PLUS Rounded 1c,sans-serif" font-weight="800" font-size="14" fill="${ink}">${R.no}</text>
+   :`<rect x="10" y="10" width="60" height="92" rx="4" fill="${fill}" stroke="${ink}" stroke-width="4"/><rect x="24" y="22" width="32" height="18" rx="3" fill="#fff" stroke="${ink}" stroke-width="3"/><text x="40" y="36" text-anchor="middle" font-family="M PLUS Rounded 1c,sans-serif" font-weight="800" font-size="14" fill="${locked?'#62637A':ink}">${R.no}</text>
    ${locked?`<rect x="30" y="58" width="20" height="16" rx="3" fill="${ink}"/><path d="M34 58v-5a6 6 0 0112 0v5" fill="none" stroke="${ink}" stroke-width="3.5"/>`:`<circle cx="60" cy="62" r="4" fill="${ink}"/><path d="M60 62v8" stroke="${ink}" stroke-width="3"/>`}`}
   </svg>`;
 }
@@ -692,8 +700,9 @@ function roomState(R){if(!R.ready)return'soon';if(!roomOpen(R))return'locked';if
 function shareBlock(text,type){
   type=type||'game';
   const u=encodeURIComponent(SHARE_LINK),t=encodeURIComponent(text);
-  const items=[['Facebook','facebook','#1877F2',`https://www.facebook.com/sharer/sharer.php?u=${u}`],['LINE','line','#06C755',`https://social-plugins.line.me/lineit/share?url=${u}&text=${t}`],['Threads','threads','#16161D',`https://www.threads.net/intent/post?text=${t}%20${u}`],['X','x','#16161D',`https://twitter.com/intent/tweet?text=${t}&url=${u}`],['Telegram','telegram','#2AABEE',`https://t.me/share/url?url=${u}&text=${t}`]];
-  return`<div class="share-row">${items.map(([n,m,bg,h])=>`<a class="btn share" style="background:${bg};color:#fff" href="${h}" target="_blank" rel="noopener" onclick="T.share('${m}','${type}')">${n}</a>`).join('')}
+  const AMP=String.fromCharCode(38);
+  const items=[['Facebook','facebook','#1669DB',`https://www.facebook.com/sharer/sharer.php?u=${u}`],['LINE','line','#06C755',`https://social-plugins.line.me/lineit/share?url=${u}${AMP}text=${t}`],['Threads','threads','#16161D',`https://www.threads.net/intent/post?text=${t}%20${u}`],['X','x','#16161D',`https://twitter.com/intent/tweet?text=${t}${AMP}url=${u}`],['Telegram','telegram','#2AABEE',`https://t.me/share/url?url=${u}${AMP}text=${t}`]];
+  return`<div class="share-row">${items.map(([n,m,bg,h])=>`<a class="btn share" style="background:${bg};color:${m==='line'||m==='telegram'?'#16161D':'#fff'}" href="${h}" target="_blank" rel="noopener" onclick="T.share('${m}','${type}')">${n}</a>`).join('')}
    <button class="btn share copy" onclick="copyLink(this,'${type}')">複製連結</button></div>
    <div class="linkbox" hidden><input readonly value="${SHARE_LINK}" aria-label="分享連結"></div>`;
 }
@@ -735,8 +744,9 @@ function renderHall(){
    ${shareBlock('我在玩「JLPT 單字密室」，背日文單字逃出五間密室，N5 到 N1 共 7,790 字，一起來！','game')}
   </section>
   <section class="sources"><h2>單字來源與說明</h2><ul>
+   <li><b>完整說明：</b><a href="https://knittinghiyori.com/jlpt-vocab-game/" data-cta="about_article" data-cta-type="article">JLPT 單字遊戲：用密室逃脫背日檢單字</a></li>
    <li><b>日文單字與讀音：</b><a href="https://github.com/jamsinclair/open-anki-jlpt-decks" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other">Open Anki JLPT Decks</a>（Jamie Sinclair，MIT 授權）的 N5～N1 清單。</li>
-   <li><b>原始清單：</b>上述資料整理自 <a href="http://www.tanos.co.uk/jlpt/" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other">tanos.co.uk</a> 的 JLPT 單字表（Jonathan Waller）。</li>
+   <li><b>原始清單：</b>上述資料整理自 <a href="https://web.archive.org/web/20260101025018/https://www.tanos.co.uk/jlpt/" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other">tanos.co.uk</a>（原站目前連不上，連結為網頁時光機的存檔） 的 JLPT 單字表（Jonathan Waller）。</li>
    <li><b>字數參考：</b><a href="https://www.mlcjapanese.co.jp/n5_04_01.html" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other">MLC Meguro Language Center N5 單字表</a>（802 字）、<a href="https://jlptsensei.com/jlpt-n5-vocabulary-list/" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other">JLPT Sensei</a>。</li>
    <li><b>本站整理：</b>中文解釋、主題分類、關卡切分；刪除過時字與重複讀音，並補上常見寒暄語與外來語。高一級不重複收錄低一級已出現的字。</li>
    <li><b>聯盟連結：</b>頁面中的「日本旅遊攻略」為 Trip.com 聯盟連結，透過連結訂購不會多付錢，本站會獲得少量分潤。</li>

@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700">
 <!-- Google AdSense（games 不開自動廣告：載入碼不帶 client 參數） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
-<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})});</script>
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
 <!-- GA4（全站共用 G-ZQZHTYTRMQ） -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
 <script>
