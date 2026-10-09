@@ -180,6 +180,7 @@ p{margin:0}
 .btn.text{border-color:transparent;background:transparent;color:var(--ink-2);padding-inline:14px;text-decoration:underline;text-underline-offset:4px}
 .btn[disabled]{opacity:.35;cursor:not-allowed}
 
+.sound-tip{text-align:center;font-size:.8rem;color:var(--ink-2);margin:-4px 0 0}
 .toggles{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:center;font-size:.84rem;color:var(--ink-2)}
 .toggles label{display:flex;gap:7px;align-items:center;cursor:pointer}
 .toggles input{accent-color:var(--ink);width:15px;height:15px;margin:0}
@@ -538,6 +539,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
           </select>
         </label>
       </div>
+      <p class="sound-tip">音を出して、イヤホンがおすすめです。iPhoneは消音モードをオフにしてください。</p>
 
       <div class="banner" id="banner" hidden></div>
       <div class="result" id="result" hidden></div>
@@ -841,7 +843,7 @@ try{if(/[?\x26]ref=share/.test(location.search)){var h0=hg();if(h0)h0.start('sha
 /* ---------- 音訊 ---------- */
 var ctx=null,master=null,an=null,buf=null;
 function audio(){
-  if(!ctx){var A=window.AudioContext||window.webkitAudioContext;ctx=new A();
+  if(!ctx){try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){} /* iOS 16.4+：靜音鍵打開也照樣出聲 */var A=window.AudioContext||window.webkitAudioContext;ctx=new A();
     master=ctx.createGain();an=ctx.createAnalyser();an.fftSize=2048;buf=new Float32Array(an.fftSize);
     master.connect(an);an.connect(ctx.destination)}
   if(ctx.state==='suspended')ctx.resume();return ctx;

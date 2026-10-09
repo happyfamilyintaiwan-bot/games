@@ -41,6 +41,7 @@
   }
   Player.prototype.ensure = function () {
     if (!this.ctx) {
+      try { if (root.navigator ? root.navigator.audioSession : null) root.navigator.audioSession.type = 'playback'; } catch (e) {} /* iOS 16.4+：靜音鍵打開也照樣出聲 */
       var AC = root.AudioContext || root.webkitAudioContext;
       if (!AC) return null;
       this.ctx = new AC();
