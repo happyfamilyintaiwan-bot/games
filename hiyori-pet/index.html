@@ -145,6 +145,11 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .hp-move textarea{display:block;width:100%;box-sizing:border-box;min-height:84px;margin-top:8px;font:12px/1.5 ui-monospace,Menlo,monospace;padding:8px;border:2px solid #efe3d3;border-radius:10px;background:#fff;color:inherit;word-break:break-all}
 .hp-move__msg{margin-top:8px;font-size:13px;min-height:1.4em}
 .hp-move__msg.is-err{color:#c0392b}
+.hp-guest{display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;font-size:12px;color:#8a6d4b;background:none;border:0;padding:0;cursor:pointer}
+.hp-guest canvas{width:64px;height:64px;image-rendering:pixelated;image-rendering:crisp-edges}
+.hp-screen.is-night .hp-guest{color:#c9c6ef}
+.hp-invite{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;border-radius:16px;background:#fff;border:2px dashed #e8b9c7;font-size:14px;line-height:1.6;text-align:left}
+.hp-invite canvas{flex:none;width:64px;height:64px;image-rendering:pixelated;image-rendering:crisp-edges}
 .hp-walkbar{margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .hp-walkbar button,.hp-block button{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border:0;border-radius:12px;background:#d94873;color:#fff;cursor:pointer}
 .hp-walkbar button.is-quiet,.hp-block button.is-quiet{background:#efe3d3;color:#5b4636}
@@ -172,6 +177,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 <!-- 遊戲本體 -->
 <div id="hiyori-pet">
   <div class="hp-adopt" id="hp-adopt" hidden>
+    <div class="hp-invite" id="hp-invite" hidden><canvas id="hp-invite-pet" width="32" height="32" aria-hidden="true"></canvas><p id="hp-invite-text"></p></div>
     <p class="hp-adopt__title">想養哪一隻？</p>
     <div class="hp-adopt__pick">
       <button type="button" data-sp="cat" aria-pressed="true"><canvas id="hp-pick-cat" width="32" height="32"></canvas>曼基貓</button>
@@ -182,7 +188,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
   </div>
   <div id="hp-main" hidden>
     <div class="hp-screen" id="hp-screen">
-      <div class="hp-stage"><canvas class="hp-pet" id="hp-pet" width="32" height="32" role="img" aria-label="你的毛孩"></canvas><div class="hp-poops" id="hp-poops"></div></div>
+      <div class="hp-stage"><button type="button" class="hp-guest" id="hp-guest" hidden aria-label="來玩的毛孩，點一下讓你的毛孩也去他家玩"><canvas id="hp-guest-pet" width="32" height="32"></canvas><span id="hp-guest-name"></span></button><canvas class="hp-pet" id="hp-pet" width="32" height="32" role="img" aria-label="你的毛孩"></canvas><div class="hp-poops" id="hp-poops"></div></div>
       <div class="hp-status" id="hp-status" aria-live="polite"></div>
       <div class="hp-walkbar" id="hp-walkbar" hidden></div>
       <button type="button" class="hp-home" id="hp-home" hidden>找牠回來</button>
@@ -213,6 +219,7 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
   <div class="hp-tools" id="hp-tools">
     <button type="button" id="hp-pip-btn" hidden>放到桌面</button>
     <button type="button" id="hp-install-btn" hidden>加到主畫面</button>
+    <button type="button" id="hp-visit-btn" aria-pressed="false" hidden>去朋友家玩</button>
     <button type="button" id="hp-walk-btn" aria-pressed="false">走動提醒</button>
     <button type="button" id="hp-move-btn" aria-pressed="false">搬家碼</button>
   </div>
@@ -220,6 +227,14 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
   <div class="hp-tip" id="hp-ios-tip" hidden>
     <b>小提醒：</b>在 iPhone 上把日和毛孩「加入主畫面」，毛孩比較不會不見。點 Safari 下方的分享按鈕，選「加入主畫面」就好。
     <div><button type="button" class="hp-newegg" id="hp-ios-ok">知道了</button></div>
+  </div>
+  <div class="hp-panel hp-move" id="hp-visit" hidden>
+    <p class="hp-panel__sum">產生一個連結傳給朋友，你的毛孩會去他家玩一天，還會帶一份點心給他。朋友還沒養的話，也可以從這裡開始養。</p>
+    <label class="hp-adopt__name" for="hp-visit-msg">想說的話<input id="hp-visit-msg" maxlength="20" placeholder="來找你玩了！" autocomplete="off"></label>
+    <button type="button" class="hp-newegg" id="hp-visit-make">產生串門子連結</button>
+    <textarea id="hp-visit-link" readonly hidden aria-label="串門子連結"></textarea>
+    <button type="button" class="hp-newegg" id="hp-visit-share" hidden>傳給朋友</button>
+    <p class="hp-move__msg" id="hp-visit-tip" aria-live="polite"></p>
   </div>
   <div class="hp-panel hp-walkset" id="hp-walk" hidden>
     <p class="hp-panel__sum">上班坐太久，毛孩會提醒你起來走走。走完回來跟牠說，牠會很開心。</p>
@@ -1155,7 +1170,16 @@ var HP_PC = (function(){
     }
     return flash.until > r ? flash.text : '';
   }
-  function track(name, p){ try { if (window.hyGame) window.hyGame.event(name, p); } catch(e) {} }
+  /* GA4 事件：共用追蹤碼在本段程式之後才載入，打開頁面當下送的事件（例：朋友打開串門子連結）先排隊，載入完再送 */
+  var trackQ = [];
+  function track(name, p){
+    if (!window.hyGame) { trackQ.push([name, p]); return; }
+    try { window.hyGame.event(name, p); } catch(e) {}
+  }
+  window.addEventListener('load', function(){
+    var q = trackQ; trackQ = [];
+    for (var i = 0; i < q.length; i++) track(q[i][0], q[i][1]);
+  });
 
   /* ---- 像素寵物：心情決定表情 ----
      測試模式可用網址只換外觀（不改存檔）：pet=cat／dog、form=egg／baby／teen／round／active／elegant */
@@ -1166,6 +1190,8 @@ var HP_PC = (function(){
     if (!state) {
       HP_PX.draw($('hp-pick-cat'), 'cat', 'baby', 'happy', petFrame);
       HP_PX.draw($('hp-pick-dog'), 'dog', 'baby', 'happy', petFrame);
+      var gi = guestNow();
+      if (gi) HP_PX.draw($('hp-invite-pet'), gi.sp, gi.form, 'happy', petFrame);
       return;
     }
     var c = $('hp-pet');
@@ -1174,6 +1200,12 @@ var HP_PC = (function(){
     if (pipEls) {
       if (petGone) pipEls.cv.getContext('2d').clearRect(0, 0, pipEls.cv.width, pipEls.cv.height);
       else HP_PX.draw(pipEls.cv, petSp, petForm, petExpr, petFrame);
+    }
+    var gv = guestNow();
+    if (gv) {
+      HP_PX.draw($('hp-guest-pet'), gv.sp, gv.form, 'happy', petFrame);
+      HP_PX.draw($('hp-invite-pet'), gv.sp, gv.form, 'happy', petFrame);
+      if (pipEls) HP_PX.draw(pipEls.gv, gv.sp, gv.form, 'happy', petFrame);
     }
     if (!$('hp-block').hidden) {
       var bc = $('hp-block-pet');
@@ -1564,6 +1596,7 @@ var HP_PC = (function(){
     + '.b{display:flex;gap:4px}'
     + 'button{font:inherit;font-size:12px;font-weight:700;padding:6px 9px;border:0;border-radius:10px;background:#d94873;color:#fff;cursor:pointer}'
     + 'button:disabled{background:#cfc6bd;cursor:default}'
+    + '.v{position:fixed;left:6px;bottom:6px;width:40px;height:40px;image-rendering:pixelated;image-rendering:crisp-edges}.v[hidden]{display:none}'
     + '.sign{display:none;padding:2px 10px;border-radius:8px;background:#fff;border:2px solid #4a3226;color:#4a3226;font-size:13px;font-weight:700}'
     + '.w{display:none;gap:4px}button.q{background:#efe3d3;color:#5b4636}'
     + 'body.is-walk .b{display:none}body.is-walk .w{display:flex}'
@@ -1593,8 +1626,10 @@ var HP_PC = (function(){
         var x = d.createElement('button'); x.type = 'button'; x.textContent = a[1]; x.className = a[2]; x.setAttribute('data-walk', a[0]); wrow.appendChild(x);
       });
       wrow.addEventListener('click', function(e){ var x = e.target.closest('[data-walk]'); if (x) walkAction(x.getAttribute('data-walk')); });
+      var gcv = d.createElement('canvas'); gcv.className = 'v'; gcv.width = HP_PX.W; gcv.height = HP_PX.H; gcv.hidden = true;
+      d.body.appendChild(gcv);
       d.body.appendChild(sign); d.body.appendChild(cv); d.body.appendChild(tx); d.body.appendChild(row); d.body.appendChild(wrow);
-      pipEls = { cv: cv, tx: tx, btns: row.querySelectorAll('button'), wbtns: wrow.querySelectorAll('button') };
+      pipEls = { cv: cv, tx: tx, gv: gcv, btns: row.querySelectorAll('button'), wbtns: wrow.querySelectorAll('button') };
       w.addEventListener('pagehide', function(){ pipWin = null; pipEls = null; updateTools(); });
       track('pet_pip_open', {});
       render();
@@ -1610,6 +1645,7 @@ var HP_PC = (function(){
     pipEls.cv.classList.toggle('is-need', need ? !lock : false);
     pipWin.document.body.classList.toggle('is-night', night);
     for (var i = 0; i < pipEls.btns.length; i++) pipEls.btns[i].disabled = lock;
+    pipEls.gv.hidden = !guestNow();
     var st = book.walk.stage, body = pipWin.document.body;
     body.classList.toggle('is-walk', st !== '');
     body.classList.toggle('is-notice', st === 'notice');
@@ -1832,6 +1868,8 @@ var HP_PC = (function(){
     pb.setAttribute('aria-pressed', pipWin ? 'true' : 'false');
     $('hp-pip-hint').hidden = !pipWin;
     $('hp-install-btn').hidden = !installEvt;
+    $('hp-visit-btn').hidden = !state;
+    renderGuest();
     $('hp-ios-tip').hidden = !(state ? (isIOS() ? !(isStandalone() || tipDone) : false) : false);
   }
 
@@ -1921,6 +1959,122 @@ var HP_PC = (function(){
   $('hp-move-yes').addEventListener('click', function(){ if (moveData) applyMove(); });
   $('hp-move-no').addEventListener('click', function(){ moveData = null; $('hp-move-ask').hidden = true; });
 
+  /* ---- 串門子連結：毛孩的樣子放在網址 # 後面（不會傳到伺服器，也不含個人資料），朋友打開就來玩 1 天 ---- */
+  var VISIT_H = 24;
+  function b64url(str){ return toB64(str).split('+').join('-').split('/').join('_').replace(/=+$/, ''); }
+  function unb64url(x){ x = x.split('-').join('+').split('_').join('/'); while (x.length % 4) x += '='; return fromB64(x); }
+  function makeVisitLink(msg){
+    var data = { v: 1, sp: state.sp, form: formAt(state, now()), name: state.name, msg: msg, id: Math.random().toString(36).slice(2, 10) };
+    return location.origin + location.pathname + '?ref=share#visit=' + b64url(JSON.stringify(data));
+  }
+  function readVisit(hash){
+    var m = /#visit=([A-Za-z0-9_-]+)/.exec(hash || '');
+    if (!m) return null;
+    var d = null;
+    try { d = JSON.parse(unb64url(m[1])); } catch(e) { return null; }
+    if (!d || d.v !== 1) return null;
+    if (d.sp !== 'cat' ? d.sp !== 'dog' : false) return null;
+    if (HP_PX.FORMS.indexOf(d.form) < 0) return null;
+    return { sp: d.sp, form: d.form, name: String(d.name || '').slice(0, 10) || NAMES[d.sp], msg: String(d.msg || '').slice(0, 20), id: String(d.id || '').slice(0, 12) };
+  }
+  function guestNow(){
+    var v = book.visitor;
+    return v ? (v.until > now() ? v : null) : null;
+  }
+  function visitGift(){
+    var left = [];
+    for (var i = 0; i < HP_DATA.SNACKS.length; i++) if (book.snacks.indexOf(i) < 0) left.push(i);
+    if (!left.length) return '';
+    var id = left[Math.floor(Math.random() * left.length)];
+    book.snacks.push(id);
+    return HP_DATA.SNACKS[id][0];
+  }
+  /* 打開朋友傳來的連結 */
+  function acceptVisit(v){
+    var t = now();
+    if (book.visitor ? book.visitor.id !== v.id : true) {
+      v.at = t; v.until = t + VISIT_H * HOUR; v.gift = visitGift(); v.bye = false;
+      book.visitor = v;
+      saveBook();
+      say(v.name + '來找你玩了！' + (v.msg ? '牠說：「' + v.msg + '」' : ''), 7000);
+      if (v.gift) say(v.name + '帶了' + v.gift + '給你，收進點心櫃了', 6000);
+    }
+    track('pet_visit_open', { has_pet: !!state });
+  }
+  var guestSig = '';
+  function renderGuest(){
+    var v = book.visitor, t = now();
+    if (v ? (v.until <= t ? !v.bye : false) : false) {
+      v.bye = true; saveBook();
+      if (state) say(v.name + '回家了，下次再來玩', 5000);
+    }
+    var g = guestNow();
+    var sig = g ? g.id + '|' + !!state : '';
+    if (sig === guestSig) return;
+    guestSig = sig;
+    $('hp-guest').hidden = !(g ? !!state : false);
+    $('hp-invite').hidden = !(g ? !state : false);
+    if (g) {
+      $('hp-guest-name').textContent = g.name;
+      $('hp-invite-text').textContent = g.name + '從朋友家來找你玩了！' + (g.msg ? '牠說：「' + g.msg + '」' : '') + '你也想養一隻嗎？選一隻、取個名字就可以開始。';
+    }
+  }
+  function visitTip(text){ $('hp-visit-tip').textContent = text; }
+  $('hp-visit-btn').addEventListener('click', function(){
+    var box = $('hp-visit');
+    box.hidden = !box.hidden;
+    $('hp-visit-btn').setAttribute('aria-pressed', box.hidden ? 'false' : 'true');
+    if (!box.hidden) visitTip('');
+  });
+  $('hp-guest').addEventListener('click', function(){
+    var box = $('hp-visit');
+    box.hidden = false;
+    $('hp-visit-btn').setAttribute('aria-pressed', 'true');
+    visitTip('也讓' + (state ? state.name : '你的毛孩') + '去朋友家玩吧！');
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+  $('hp-visit-make').addEventListener('click', function(){
+    if (!state) return;
+    var ta = $('hp-visit-link');
+    ta.value = makeVisitLink($('hp-visit-msg').value.trim().slice(0, 20));
+    ta.hidden = false;
+    $('hp-visit-share').hidden = false;
+    $('hp-visit-share').textContent = navigator.share ? '傳給朋友' : '複製連結';
+    visitTip('連結好了！傳給朋友，' + state.name + '就會去他家玩一天。');
+  });
+  $('hp-visit-share').addEventListener('click', function(){
+    var url = $('hp-visit-link').value, ta = $('hp-visit-link');
+    var sent = function(method){ track('pet_visit_share', { method: method }); try { if (window.hyGame) window.hyGame.share(method, 'game'); } catch(e) {} };
+    var copy = function(){
+      var done = function(){ visitTip('已複製！貼到 LINE 傳給朋友就好。'); sent('copy_link'); };
+      var fallback = function(){ ta.focus(); ta.select(); try { document.execCommand('copy'); done(); } catch(e) { visitTip('請長按連結，全選後複製。'); } };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done).catch(fallback); else fallback();
+    };
+    if (navigator.share) {
+      navigator.share({ title: '日和毛孩', text: state.name + '想去你家玩！', url: url }).then(function(){ sent('native'); }).catch(function(err){ if (err ? err.name !== 'AbortError' : true) copy(); });
+    } else copy();
+  });
+
+  /* 進來的方式（給 GA4 game_start）：分享連結 → shared；已有存檔 → saved；其他 → direct。
+     搶在共用追蹤碼的自動 game_start 之前送出 */
+  var ENTRY = params.get('ref') === 'share' ? 'shared' : (state ? 'saved' : 'direct');
+  document.addEventListener('click', function(e){
+    var tg = e.target;
+    if (!tg.closest) return;
+    if (!tg.closest('#hiyori-pet')) return;
+    if (tg.closest('[data-cta]')) return;
+    try { if (window.hyGame) window.hyGame.start(ENTRY); } catch(err) {}
+  }, true);
+
+  /* 打開頁面時：網址有串門子資料就接待，接著把 # 後面清掉（重新整理不會再送一次禮物） */
+  function checkVisitHash(){
+    var v = readVisit(location.hash);
+    if (location.hash.indexOf('#visit=') === 0) { try { history.replaceState(null, '', location.pathname + location.search); } catch(e) {} }
+    if (v) { acceptVisit(v); render(); }
+  }
+  checkVisitHash();
+  window.addEventListener('hashchange', checkVisitHash);   /* 頁面已經開著時又點了串門子連結 */
+
   /* ---- 測試模式 ---- */
   if (DEBUG) {
     $('hp-debug').hidden = false;
@@ -1960,7 +2114,7 @@ var HP_PC = (function(){
     window.hpCore = { simulate: simulate, adopt: adopt, formAt: formAt, decide: decide, mood: mood, act: act, played: played,
       fetchHome: fetchHome, upgrade: upgrade, dayKey: dayKey, startTrip: startTrip, deliver: deliver, dailyCats: dailyCats,
       letterText: letterText, giveGift: giveGift, markCareDay: markCareDay, streakNow: streakNow, retire: retire,
-      getBook: function(){ return book; }, walkTick: walkTick, walkAction: walkAction, walkDone: walkDone, inWorkTime: inWorkTime, prevWorkDay: prevWorkDay, WALK: WALK, isAsleep: isAsleep, makeMoveCode: makeMoveCode, readMoveCode: readMoveCode, openPip: openPip, getPip: function(){ return pipWin; }, CARE: CARE, PLAY: PLAY, RATE: RATE,
+      getBook: function(){ return book; }, makeVisitLink: makeVisitLink, readVisit: readVisit, acceptVisit: acceptVisit, guestNow: guestNow, walkTick: walkTick, walkAction: walkAction, walkDone: walkDone, inWorkTime: inWorkTime, prevWorkDay: prevWorkDay, WALK: WALK, isAsleep: isAsleep, makeMoveCode: makeMoveCode, readMoveCode: readMoveCode, openPip: openPip, getPip: function(){ return pipWin; }, CARE: CARE, PLAY: PLAY, RATE: RATE,
       getState: function(){ return state; }, getGame: function(){ return game; }, setState: function(s){ state = s; save(); render(); } };
   }
 
