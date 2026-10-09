@@ -256,6 +256,13 @@ p{margin:0}
 .unlock .glyph{width:64px;height:64px;font-size:2rem}
 .diary-q{font-family:var(--serif);font-size:1.08rem;line-height:1.9;border-left:3px solid var(--lamp);padding-left:14px;color:var(--ink)}
 
+/* 進度圖卡 */
+.cardbox{display:grid;gap:12px;justify-items:start}
+.cardbox[hidden]{display:none}
+.card-img{display:block;width:100%;max-width:360px;height:auto;border-radius:18px;box-shadow:0 1px 0 rgba(27,36,48,.06),0 18px 40px -18px rgba(27,36,48,.35)}
+.card-btns{display:flex;flex-wrap:wrap;gap:10px}
+.card-btns .btn{min-height:46px;padding:0 18px;font-size:.95rem}
+.card-hint{font-size:.85rem;color:var(--ink-3);max-width:34em}
 /* 其他區塊 */
 .sec{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding-block:52px;border-top:1px solid var(--rule)}
 @media(min-width:960px){.sec{grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);column-gap:48px}}
@@ -549,9 +556,10 @@ p{margin:0}
         <p class="d" id="rMsg"></p>
         <div class="btns">
           <button class="btn" type="button" id="rNext">再值一班</button>
-          <button class="btn line" type="button" id="rShare">分享進度</button>
+          <button class="btn line" type="button" id="rShare">做進度圖卡</button>
           <button class="btn quiet" type="button" id="rRest">今天先到這裡</button>
         </div>
+        <div class="cardbox" id="rCard" hidden></div>
       </div>
     </div>
   </section>
@@ -584,6 +592,12 @@ p{margin:0}
       <div>
         <h3>常聽錯的字</h3>
         <ul class="conf" id="confList"></ul>
+      </div>
+      <div>
+        <h3>進度圖卡</h3>
+        <p class="cap" id="logCardNote" style="margin:0 0 12px">點亮 3 盞燈後，就能做進度圖卡。</p>
+        <div class="btns"><button class="btn line" type="button" id="logCardBtn" hidden>做進度圖卡</button></div>
+        <div class="cardbox" id="logCard" hidden style="margin-top:14px"></div>
       </div>
       <div>
         <h3>老守燈人的日誌</h3>
@@ -626,7 +640,6 @@ p{margin:0}
       </div>
       <p class="caveat">要說清楚的一點：Koch 的實驗是 1930 年代對受訓報務員做的，樣本與控制條件和今天的研究不同。長島 CW 俱樂部（LICW）2026 年的方法指南重新檢視了這份報告，建議部分實驗結論要謹慎看待。不過「用接近正式速度、一次加一個字、只用耳朵」這套做法，至今仍是 LCWO 等主流線上課程的基礎。</p>
       <p class="cap" style="margin:0">字元順序：取自 LCWO 原始碼的 Koch 課程順序，共 41 個字元（26 個字母、10 個數字、5 個標點）。</p>
-      <p class="cap" style="margin:0">想看完整說明：<a href="https://knittinghiyori.com/morse-code-training-game/" data-cta="about_article" data-cta-type="article">摩斯密碼怎麼學最快？Koch 法只用耳朵學</a></p>
       <div class="refs">
         <a href="https://longislandcwclub.org/wp-content/uploads/2022/11/KOCH-1936.pdf" target="_blank" rel="noopener" data-cta="source_koch1936" data-cta-type="other">Koch, L. (1936). Berufspsychologische Untersuchung der Tätigkeit des Morseschreibens. Zeitschrift für angewandte Psychologie, 50（英譯全文，LICW 提供）</a>
         <a href="https://zerobeat.net/tasrt/c29.htm" target="_blank" rel="noopener" data-cta="source_pierpont" data-cta-type="other">Pierpont, W. G. (N0HFF). The Art and Skill of Radio-Telegraphy, 第 29 章 The Koch Researches</a>

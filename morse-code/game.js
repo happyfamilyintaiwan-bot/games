@@ -530,6 +530,7 @@
       msg.textContent = F(T.resultMiss, group ? 27 : 25, Math.ceil((group ? 27 : 25) * 0.9));
     }
     $('rShare').hidden = tr.unlockedCount() < 3;
+    $('rCard').hidden = true; $('rCard').innerHTML = '';
     show('result', true);
     paintAll();
   }
@@ -538,18 +539,178 @@
     welcome();
     $('wD').textContent = T.restMsg;
   });
-  $('rShare').addEventListener('click', function () {
-    shareType = 'result';
-    var native = navigator.share ? true : false;
-    if (native) {
-      var h = hg(); if (h) h.share('native', 'result');
-      navigator.share({ text: shareText(), url: shareUrl() }).catch(function (er) {
-        if (er) { if (er.name === 'AbortError') ev('share_cancel', { method: 'native', content_type: 'result' }); }
+  $('rShare').addEventListener('click', function () { makeCard($('rShare'), $('rCard')); });
+
+  /* =====================================================================
+     進度圖卡（games §6-1）：1080×1350 直式、中央淡浮水印、底部金色品牌列
+     ===================================================================== */
+  var C = T.card, cardUrls = {};
+  function cssVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function loadImg(src) { return new Promise(function (ok, ng) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = ng; i.src = src; }); }
+  function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  function tierText(n) { for (var i = 0; i < C.tiers.length; i++) { if (n >= C.tiers[i][0]) return C.tiers[i][1]; } return C.tiers[C.tiers.length - 1][1]; }
+  function cardStats() {
+    var t = tr.totals();
+    return { n: tr.unlockedCount(), streak: tr.streak(), total: t.n, acc: t.n ? pct(t.c / t.n) : 0, d: tr.dayKey() };
+  }
+
+  /* 把頁面上的海岸插畫轉成圖片（樣式寫進屬性，才不依賴外部 CSS）；失敗時回傳 null，改畫簡化版 */
+  async function sceneImage() {
+    try {
+      var src = $('scene').querySelector('svg'), svg = src.cloneNode(true), n = tr.unlockedCount();
+      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      svg.setAttribute('width', '1200'); svg.setAttribute('height', '600');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.querySelectorAll('.lamp').forEach(function (g, i) {
+        var lit = i < n, halo = g.querySelector('.halo'), core = g.querySelector('.core');
+        if (halo) halo.setAttribute('opacity', lit ? '0.85' : '0');
+        if (core) { core.setAttribute('fill', lit ? '#F2A31B' : '#ffffff'); core.setAttribute('stroke', lit ? '#ffffff' : '#8E93B8'); core.setAttribute('stroke-width', '1.2'); }
       });
-    } else {
-      document.querySelector('.share').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-    }
-  });
+      svg.querySelectorAll('.glow').forEach(function (e) { e.setAttribute('opacity', '1'); });
+      svg.querySelectorAll('.beam').forEach(function (e) { e.setAttribute('opacity', '0.45'); });
+      var xml = new XMLSerializer().serializeToString(svg);
+      var img = await loadImg('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml));
+      /* 先畫在暫存畫布，確認沒有被瀏覽器標成不可輸出 */
+      var tmp = document.createElement('canvas'); tmp.width = 1200; tmp.height = 600;
+      var tc = tmp.getContext('2d'); tc.drawImage(img, 0, 0, 1200, 600); tc.getImageData(0, 0, 1, 1);
+      return tmp;
+    } catch (e) { return null; }
+  }
+  function sceneFallback(c, x, y, w, h) {
+    var g = c.createLinearGradient(0, y, 0, y + h);
+    g.addColorStop(0, '#C6DCF2'); g.addColorStop(0.55, '#FBE7D2'); g.addColorStop(0.56, '#E3EAF5'); g.addColorStop(1, '#F3D2DB');
+    c.fillStyle = g; c.fillRect(x, y, w, h);
+    var tx = x + w * 0.78, ty = y + h * 0.18;
+    c.fillStyle = '#ffffff'; c.fillRect(tx, ty + 40, 34, h * 0.5);
+    c.fillStyle = '#C8102E'; c.fillRect(tx, ty + 70, 34, 18); c.fillRect(tx, ty + 120, 34, 18);
+    c.fillStyle = '#F2A31B'; c.beginPath(); c.arc(tx + 17, ty + 26, 14, 0, 7); c.fill();
+  }
+
+  async function drawCard(st) {
+    var SANS = cssVar('--sans'), SERIF = cssVar('--serif'), TYPE = cssVar('--type');
+    var lit = M.KOCH.slice(0, st.n).join('');
+    var TXT = [C.game, C.title, C.lit, C.unit, C.streak, C.dayUnit, C.total, C.charUnit, C.acc, C.lamps, C.brand, C.wm, C.url, C.cta, tierText(st.n)].join('') + '0123456789%／-';
+    /* 字型最多等 1.5 秒；沒載完的字用系統字型補 */
+    try {
+      await Promise.race([new Promise(function (ok) { setTimeout(ok, 1500); }), Promise.all([
+        ['400 30px ' + SANS, TXT], ['700 40px ' + SANS, TXT], ['700 46px ' + SERIF, TXT],
+        ['700 200px ' + TYPE, '0123456789' + lit + st.d]
+      ].map(function (f) { return document.fonts.load(f[0], f[1]); }))]);
+    } catch (e) {}
+    var logo = null; try { logo = await loadImg('/icons/logo-knitting-240.webp'); } catch (e) {}
+    var scene = await sceneImage();
+
+    var W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    var c = cv.getContext('2d'), INK = '#1B2430', MUTE = '#5E6676', SIG = '#C8102E', LAMP = '#F2A31B', RULE = '#E4E7EE', GOLD = '#C9A25C';
+    var X = 72, IW = W - 2 * X;
+    c.fillStyle = '#ffffff'; c.fillRect(0, 0, W, H);
+    c.textBaseline = 'alphabetic';
+
+    /* 頂端：遊戲名＋日期 */
+    c.fillStyle = INK; c.font = '700 46px ' + SERIF; c.fillText(C.game, X, 112);
+    c.fillStyle = MUTE; c.font = '700 30px ' + TYPE; c.textAlign = 'right'; c.fillText(st.d.replace(/-/g, '.'), W - X, 110); c.textAlign = 'left';
+    c.font = '500 30px ' + SANS; c.fillText(C.title, X, 162);
+
+    /* 海岸插畫 */
+    var sy = 196, sh = 326;
+    c.save(); rr(c, X, sy, IW, sh, 32); c.clip();
+    if (scene) { var crop = 1200 * sh / IW; c.drawImage(scene, 0, 360 - crop / 2 - 40, 1200, crop, X, sy, IW, sh); }
+    else sceneFallback(c, X, sy, IW, sh);
+    c.restore();
+
+    /* 大字：已點亮 N／41 盞燈 */
+    var by = 736;
+    c.fillStyle = MUTE; c.font = '500 32px ' + SANS; c.fillText(C.lit, X, 590);
+    c.fillStyle = INK; c.font = '700 200px ' + TYPE; var num = String(st.n); c.fillText(num, X - 8, by);
+    var nw = c.measureText(num).width;
+    c.font = '700 52px ' + SANS; c.fillText(C.unit, X + nw + 10, by - 12);
+    c.fillStyle = SIG; c.font = '700 40px ' + SERIF; c.fillText(tierText(st.n), X, by + 72);
+
+    /* 三格數字 */
+    var my = 836, mh = 120;
+    c.strokeStyle = RULE; c.lineWidth = 2; rr(c, X, my, IW, mh, 24); c.stroke();
+    [[String(st.streak), C.dayUnit, C.streak], [String(st.total), C.charUnit, C.total], [String(st.acc), '%', C.acc]].forEach(function (k, i) {
+      var cx = X + IW / 6 * (2 * i + 1);
+      c.font = '700 54px ' + TYPE; var aw = c.measureText(k[0]).width;
+      c.font = '500 26px ' + SANS; var bw = c.measureText(k[1]).width;
+      var sx = cx - (aw + 6 + bw) / 2;
+      c.fillStyle = INK; c.font = '700 54px ' + TYPE; c.fillText(k[0], sx, my + 62);
+      c.fillStyle = MUTE; c.font = '500 26px ' + SANS; c.fillText(k[1], sx + aw + 6, my + 62);
+      c.textAlign = 'center'; c.font = '400 25px ' + SANS; c.fillText(k[2], cx, my + 98); c.textAlign = 'left';
+      if (i) { c.fillStyle = RULE; c.fillRect(X + IW / 3 * i - 1, my + 24, 2, mh - 48); }
+    });
+
+    /* 41 盞燈：已點亮的顯示字元 */
+    var gy = 990, cols = 14, gap = 8, d = (IW - (cols - 1) * gap) / cols;
+    M.KOCH.forEach(function (ch, i) {
+      var r = i % cols, row = Math.floor(i / cols), cx = X + r * (d + gap) + d / 2, cy = gy + row * (d + gap) + d / 2;
+      if (i < st.n) {
+        var g = c.createRadialGradient(cx, cy, 2, cx, cy, d / 2);
+        g.addColorStop(0, '#FFD27A'); g.addColorStop(0.75, LAMP); g.addColorStop(1, '#E99A12');
+        c.fillStyle = g; c.beginPath(); c.arc(cx, cy, d / 2, 0, 7); c.fill();
+        c.fillStyle = INK; c.font = '700 30px ' + TYPE; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(ch, cx, cy + 2);
+        c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+      } else {
+        c.setLineDash([5, 5]); c.strokeStyle = '#C3C8DA'; c.lineWidth = 2; c.beginPath(); c.arc(cx, cy, d / 2 - 1, 0, 7); c.stroke(); c.setLineDash([]);
+      }
+    });
+
+    /* 中央淡浮水印 */
+    c.save(); c.translate(W / 2, 720); c.rotate(-24 * Math.PI / 180); c.globalAlpha = 0.08; c.fillStyle = INK; c.textAlign = 'center';
+    var wf = 160; c.font = '700 ' + wf + 'px ' + SANS; var ww = c.measureText(C.wm).width; if (ww > 780) { wf = Math.floor(wf * 780 / ww); c.font = '700 ' + wf + 'px ' + SANS; }
+    c.fillText(C.wm, 0, 0); c.font = '500 46px ' + SANS; c.fillText('games.knittinghiyori.com', 0, 80); c.restore();
+
+    /* 底部金色品牌列 */
+    var barH = 124; c.fillStyle = GOLD; c.fillRect(0, H - barH, W, barH);
+    var lx = 56, ls = 84, ly = H - barH + (barH - ls) / 2;
+    if (logo) { c.save(); rr(c, lx, ly, ls, ls, 16); c.clip(); c.drawImage(logo, lx, ly, ls, ls); c.restore(); c.strokeStyle = 'rgba(255,255,255,.9)'; c.lineWidth = 3; rr(c, lx, ly, ls, ls, 16); c.stroke(); }
+    c.fillStyle = '#ffffff'; c.textBaseline = 'middle';
+    var tx = lx + ls + 22; c.font = '700 38px ' + SANS; c.fillText(C.brand, tx, H - barH / 2 - 18);
+    c.font = '500 26px ' + SANS; c.fillText(C.url, tx, H - barH / 2 + 24);
+    c.font = '700 30px ' + SANS; c.textAlign = 'right'; c.fillText(C.cta, W - 56, H - barH / 2); c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+    return cv;
+  }
+
+  async function makeCard(btn, out) {
+    if (tr.unlockedCount() < 3) return;
+    var label = btn.textContent;
+    btn.disabled = true; btn.textContent = C.making;
+    var key = out.id, st = cardStats();
+    try {
+      var cv = await drawCard(st);
+      var blob = await new Promise(function (ok) { cv.toBlob(ok, 'image/jpeg', 0.92); });
+      if (cardUrls[key]) URL.revokeObjectURL(cardUrls[key]);
+      var url = cardUrls[key] = URL.createObjectURL(blob), name = 'morse-code-' + st.d + '.jpg';
+      var file = null, canShare = false;
+      try { file = new File([blob], name, { type: 'image/jpeg' }); } catch (e) {}
+      try { canShare = file ? (navigator.canShare ? navigator.canShare({ files: [file] }) : false) : false; } catch (e) {}
+      out.innerHTML = '<img class="card-img" src="' + url + '" width="1080" height="1350" alt="' + F(C.alt, st.n, st.streak, st.total, st.acc) + '">' +
+        '<div class="card-btns">' + (canShare ? '<button type="button" class="btn" data-card="share">' + C.share + '</button>' : '') +
+        '<a class="btn line" data-card="dl" href="' + url + '" download="' + name + '" data-google-vignette="false">' + C.download + '</a>' +
+        '<button type="button" class="btn line" data-card="copy">' + C.copy + '</button></div>' +
+        '<p class="card-hint">' + C.hint + '</p>';
+      out.hidden = false;
+      out.querySelector('[data-card=dl]').addEventListener('click', function () { ev('export', { method: 'image', content_type: 'result' }); });
+      out.querySelector('[data-card=copy]').addEventListener('click', function () {
+        var b = this, h = hg(); if (h) h.share('copy_link', 'result');
+        try { navigator.clipboard.writeText(shareText() + ' ' + shareUrl()).then(function () { b.textContent = C.copied; }, function () { b.textContent = shareUrl(); }); }
+        catch (e) { b.textContent = shareUrl(); }
+      });
+      if (canShare) out.querySelector('[data-card=share]').addEventListener('click', function () {
+        var h = hg(); if (h) h.share('native', 'result');
+        navigator.share({ files: [file], text: shareText() + ' ' + shareUrl() }).catch(function (er) {
+          if (er) { if (er.name === 'AbortError') ev('share_cancel', { method: 'native', content_type: 'result' }); }
+        });
+      });
+    } catch (e) { out.hidden = false; out.textContent = C.fail; }
+    btn.disabled = false; btn.textContent = label;
+  }
+  $('logCardBtn').addEventListener('click', function () { makeCard($('logCardBtn'), $('logCard')); });
+  function paintCardEntry() {
+    var ok = tr.unlockedCount() >= 3;
+    $('logCardBtn').hidden = !ok;
+    $('logCardNote').hidden = ok;
+  }
 
   /* ---------- 鍵盤 ---------- */
   document.addEventListener('keydown', function (e) {
@@ -678,6 +839,7 @@
     paintChart();
     paintConf();
     paintDiary();
+    paintCardEntry();
     renderModeSeg();
   }
 
@@ -724,7 +886,6 @@
   tr.on('goal', function (streak) { ev('morse_daily_goal', { streak: streak }); });
 
   /* ---------- 分享 ---------- */
-  var shareType = 'game';
   function shareUrl() { return PAGE_URL + '?ref=share'; }
   function shareText() { return tr.unlockedCount() > 2 ? F(T.share, tr.unlockedCount()) : T.shareNew; }
   document.querySelectorAll('[data-share]').forEach(function (b) {
