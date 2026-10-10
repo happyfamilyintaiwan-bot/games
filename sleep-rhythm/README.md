@@ -32,7 +32,11 @@
 - 燈環（在「航海日誌」分頁）：一圈一天、最外圈今天；圓圈＝起床、菱形＝就寢、琥珀色區＝準時區。
 - 日出日落：依城市（台灣 20 縣市＋21 個海外城市，`CITIES`）用 NOAA 簡化公式算當天日出日落，換算成裝置當地時間。燈環外框＝白天（淡金）與黑夜（深藍），現在時間夜裡是光束、白天是太陽。極區沒有日出或日落時整圈同色。
 - 成績卡上方放當下的港口畫面。
-- 守燈人手記（「航海日誌」分頁底部，`DIARY`）：11 頁，達成條件就翻開一頁並自動跳出（故事＋一則作息小訣竅）。條件：第一次打卡、第一次準時、連續 3／7／14／30 天、第一次晨光任務、第一座朋友燈塔、準時 14／30／100 次。已翻開的存在 `diary`。
+- 守燈人手記（「航海日誌」分頁底部，`DIARY`）：33 頁，翻開時自動跳出，每頁有故事、作息小訣竅和一個小互動（選項回覆、替燈靈或聯盟取名、打燈號）。
+  - 打底期：守燈第 1～21 天每天一頁（守燈天數＝有任一次打卡的日數）。
+  - 遠航：第 30、40…100 天各一頁。
+  - 燈塔聯盟的信：朋友燈塔 1／3／5／10 座各一封。
+  - 回覆只存在裝置上（`ans`），GA4 只記「回覆了哪一頁」。
 - 晨光任務：起床打卡後 3 小時內出現，按「曬到了」記在當天（`log.l`），燈靈旁出現閃光；**不計分**。
 
 ## 一局定義
@@ -50,8 +54,10 @@
 | `sleep_skip_intro` | 交接信按「直接開始」 |
 | `round_start`／`round_end` | `option`：wake／sleep；`level`：燈靈階段 l01–l06；`round_end` 加 `result=complete`、`item_count=1` |
 | `sleep_backfill` | 補登，`option`：wake／sleep（同時也送 round_start／round_end） |
-| `game_unlock` | `unlock_id`：`spirit_l02`…`spirit_l06`（帶 `level`）；手記 `diary_01`…`diary_11` |
+| `game_unlock` | `unlock_id`：`spirit_l02`…`spirit_l06`（帶 `level`）；手記 `diary_d01`…`diary_d21`、`diary_d30`…`diary_d100`、`diary_f01`／`f03`／`f05`／`f10` |
 | `sleep_diary_open` | 從手記列表翻開某一頁 |
+| `sleep_diary_answer` | 回覆手記的小互動；`option`＝頁 id（d01…d100、f01…f10），不送回覆內容 |
+| `sleep_signal_send` | 打燈號；`option`：gm／gn／tg／ch；`method`：native／copy_link |
 | `game_milestone` | `milestone`：連續 3／7／14／30／60／100 天；`option=streak` |
 | `game_settings` | `setting`：`target_wake`／`target_sleep`／`name`／`city`（不送城市值） |
 | `sleep_morning_light` | 完成晨光任務 |
@@ -68,13 +74,16 @@
 
 ## 好友（燈塔聯盟）
 
+- 朋友越多解鎖越多：1 座＝打燈號（4 種固定訊息：早安、晚安、明天一起準時、辛苦了）；3 座＝朋友燈塔出現在主視覺遠方山頭（最多 10 座，3 天內有更新才亮）；5 座＝碼頭聯盟旗＋聯盟同步率（你和朋友的平均）；10 座＝夜晚港口煙火。
+- 燈號是邀請連結多帶一個代碼 `m`，朋友打開後在海圖上看到「燈號：…」，沒有自由輸入的文字。
+
 - 邀請連結：`/sleep-rhythm/?ref=share#f=<代碼>`，代碼是燈塔卡片的 base64url JSON：燈塔 id、燈塔名（12 字內）、同步率、連續天數、燈靈階段、日期。**沒有任何時間紀錄。**
 - 代碼放在 `#` 片段，`<head>` 在 GA4 載入前讀出並用 `history.replaceState` 從網址移除，所以 GA4 的 page_location 只會是 `?ref=share`，不會帶到讀者輸入的燈塔名。
 - 沒有伺服器；朋友資料存在各自的 localStorage，最多 30 座。3 天沒更新的燈塔變暗。
 
 ## 存檔
 
-- localStorage key：`hy_sleep_v1`。欄位：start、diary（已翻開的手記頁）、city（城市代碼）、wake、sleep（分鐘）、name、log（日期→{w,s,l}）、friends、ms（已送里程碑）、stage、tut、id。
+- localStorage key：`hy_sleep_v1`。欄位：start、pages（已翻開的手記頁 id）、ans（手記回覆）、spirit（燈靈名字）、ally（聯盟名字）、city（城市代碼）、wake、sleep（分鐘）、name、log（日期→{w,s,l}）、friends、ms（已送里程碑）、stage、tut、id。
 - 就寢在凌晨時存成 24 點之後的分鐘數（例 00:30 → 1470）。
 
 ## 聯盟連結
