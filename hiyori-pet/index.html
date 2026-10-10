@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="spec-version" content="core-v1.1/games-v1.1">
+<meta name="spec-version" content="core-v1.4/games-v1.8.1">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -16,12 +16,18 @@
 </script>
 <!-- Google AdSense（只有手動廣告，不跑 Auto ads，不會有插頁式廣告） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
-<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})});</script>
-<!-- 網站 icon（檔案在 repo 的 /icons/） -->
-<link rel="icon" href="/icons/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
+<!-- 網站 logo icon（檔案在 /icons/） -->
+<link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2">
+<!-- 字體：標題與按鈕用圓體（和遊戲主頁同一個），內文用黑體；每個字體一個 link，網址不含和號 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700">
 <!-- 加到主畫面（PWA） -->
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-title" content="日和毛孩">
@@ -52,19 +58,53 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"日和毛孩","url":"https://games.knittinghiyori.com/hiyori-pet/","applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":"zh-Hant","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"description":"免費網頁電子寵物：選一隻像素貓或狗，從蛋開始照顧，每天回來讀牠寫給你的信。","publisher":{"@type":"Organization","name":"編織日和 Knitting Hiyori","url":"https://knittinghiyori.com/"}}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"日和毛孩要下載或註冊嗎？資料存在哪裡？","acceptedAnswer":{"@type":"Answer","text":"都不用。打開網頁就能玩，毛孩的資料只存在你這台裝置的瀏覽器裡，不會上傳。"}},{"@type":"Question","name":"忘記照顧，毛孩會死掉嗎？","acceptedAnswer":{"@type":"Answer","text":"不會。太久沒照顧，牠會留一張紙條離家出走，按「找牠回來」就會回家。"}},{"@type":"Question","name":"換手機或電腦，毛孩怎麼帶走？","acceptedAnswer":{"@type":"Answer","text":"按「搬家碼」產生一串文字，到新裝置貼上，毛孩、圖鑑、明信片和點心櫃都會一起搬過去。"}},{"@type":"Question","name":"怎麼讓毛孩待在電腦桌面上？","acceptedAnswer":{"@type":"Answer","text":"用電腦版 Chrome 或 Edge 打開，按「放到桌面」，牠會變成一個浮在最上層的小窗。原本的分頁可以縮小，但不要關掉。"}},{"@type":"Question","name":"iPhone 上毛孩不見了怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"Safari 會清掉一陣子沒開的網站資料。把日和毛孩「加入主畫面」就不會被清；也建議偶爾產生一次搬家碼存起來。"}}]}
+</script>
 <style>
 html,body{background:#fff;margin:0;color:#1c1c1e}
 body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.7}
 .page-h1{max-width:760px;margin:12px auto 0;font-size:20px;line-height:1.4}
 .page-lead{max-width:760px;margin:6px auto 0;color:#6b6b70;font-size:15px}
-.page-about{max-width:760px;margin:28px auto 0;font-size:15px}
+.page-about{max-width:420px;margin:28px auto 0;font-size:15px}
 .page-about h2{font-size:18px;margin:22px 0 6px;border-left:4px solid #d94873;padding-left:10px}
 .page-about a{color:#d94873}
+.page-about details{border-bottom:1px dashed #e6d6c3;padding:8px 0}
+.page-about summary{cursor:pointer;font-weight:700}
+.page-about details p{margin:6px 0 2px;color:#5b4636}
 .kh-ad{display:block;width:100%;max-width:728px;margin:48px auto;padding:0 16px;text-align:center;clear:both;box-sizing:border-box}
 .kh-ad__label{display:block;font-size:12px;letter-spacing:.08em;opacity:.6;margin-bottom:6px;line-height:1.4}
 .kh-legal{display:block;max-width:640px;font-size:12px;line-height:1.8;opacity:.7;text-align:center;margin:16px auto 24px;padding:0 16px;box-sizing:border-box}
 .kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+/* 編織日和品牌列（所有遊戲頁共用寫法，同 absolute-pitch）；max-width 對齊遊戲本體寬度 */
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;box-sizing:border-box;padding:4px 0 8px;border-bottom:1px solid #e7e8ed;max-width:420px;margin:0 auto}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#16161a;text-decoration:none;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:14.4px;font-weight:700;letter-spacing:.04em;line-height:1.2;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+.kh-brand-sub{display:inline}
+@media (max-width:400px){.kh-brand-sub{display:none}}
+.kh-ad--game{margin-top:150px}
+.kh-ad ins[data-ad-status="unfilled"]{display:none}
+.kh-ad:has(ins[data-ad-status="unfilled"]){display:none}
 /* ===== 日和毛孩 ===== */
+:root{--hp-accent:#d94873;--hp-round:"Zen Maru Gothic","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+.page-h1,.page-lead{max-width:420px}
+.page-h1,.page-about h2,#hiyori-pet button,.hp-name b,.hp-panel__title,.hp-block__title,.hp-below h2,.hp-below a.hp-btn,.hp-below button,.hp-hub{font-family:var(--hp-round)}
+.hp-below{max-width:420px;margin:28px auto 0;font-size:15px;color:#5b4636}
+.hp-below h2{font-size:18px;margin:0 0 6px;border-left:4px solid var(--hp-accent);padding-left:10px;color:#1c1c1e}
+.hp-below__row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.hp-below a.hp-btn,.hp-below button{font-size:14px;font-weight:700;padding:10px 14px;border-radius:12px;border:2px solid var(--hp-accent);background:var(--hp-accent);color:#fff;text-decoration:none;cursor:pointer;line-height:1.3}
+.hp-below a.hp-btn.is-ghost,.hp-below button.is-ghost{background:#fff;color:var(--hp-accent)}
+.hp-disclose{margin:8px 0 0;font-size:12px;line-height:1.7;color:#8a6d4b}
+.hp-hub{display:block;max-width:420px;box-sizing:border-box;margin:28px auto 0;padding:16px 18px;border-radius:16px;background:var(--hp-accent);color:#fff;text-align:center;text-decoration:none;font-size:17px;font-weight:700}
+.hp-hub:hover{filter:brightness(1.06)}
+.hp-kitbar{margin-top:10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:14px}
+.hp-kitbar__btns{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.hp-kitbar a,.hp-kitbar button{font:inherit;font-family:var(--hp-round);font-size:13px;font-weight:700;padding:7px 12px;border:0;border-radius:12px;background:var(--hp-accent);color:#fff;text-decoration:none;cursor:pointer}
+.hp-kitbar button{background:#efe3d3;color:#5b4636}
+.hp-cardbox{display:flex;flex-direction:column;gap:4px;min-width:0}
+a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underline;text-underline-offset:3px}
+.hp-card__note{font-size:11px;color:#8a6d4b;text-align:center;line-height:1.5}
 #hiyori-pet{max-width:420px;margin:20px auto 0;color:#5b4636;font-size:15px}
 #hiyori-pet [hidden]{display:none}
 .hp-screen{position:relative;overflow:hidden;border-radius:24px;background:#fff4e6;padding:16px;text-align:center;transition:background .6s;touch-action:manipulation;-webkit-user-select:none;user-select:none}
@@ -167,10 +207,12 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .hp-debug[hidden]{display:none}
 .hp-debug__btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .hp-debug button{font:inherit;padding:6px 10px;border:1px solid #c9b8a6;border-radius:10px;background:#fff;cursor:pointer}
-.page-foot{max-width:760px;margin:28px auto 0;font-size:13px;color:#6b6b70;border-top:1px solid #e7e7ea;padding-top:12px}
+.page-foot{max-width:420px;margin:28px auto 0;font-size:13px;color:#6b6b70;border-top:1px solid #e7e7ea;padding-top:12px}
 </style>
 </head>
 <body>
+<!-- 編織日和品牌列（每款遊戲必有，點了回遊戲主頁；cta_click：brand_hub／game） -->
+<div class="kh-brand-row"><a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和<span class="kh-brand-sub">・小遊戲</span></a></div>
 <h1 class="page-h1">日和毛孩：免費網頁電子寵物，養一隻像素貓狗</h1>
 <p class="page-lead">選一隻貓或狗，從蛋開始照顧。一天來看 1～2 次，牠就會好好長大。</p>
 
@@ -191,6 +233,10 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
       <div class="hp-stage"><button type="button" class="hp-guest" id="hp-guest" hidden aria-label="來玩的毛孩，點一下讓你的毛孩也去他家玩"><canvas id="hp-guest-pet" width="32" height="32"></canvas><span id="hp-guest-name"></span></button><canvas class="hp-pet" id="hp-pet" width="32" height="32" role="img" aria-label="你的毛孩"></canvas><div class="hp-poops" id="hp-poops"></div></div>
       <div class="hp-status" id="hp-status" aria-live="polite"></div>
       <div class="hp-walkbar" id="hp-walkbar" hidden></div>
+      <div class="hp-kitbar" id="hp-kitbar" hidden>
+        <span>想知道圖鑑什麼時候出新朋友嗎？</span>
+        <div class="hp-kitbar__btns"><a href="#" data-aff="kit" data-cta="newsletter_teen" data-cta-type="newsletter" target="_blank" rel="noopener" id="hp-kit-yes">好，訂閱電子報</a><button type="button" id="hp-kit-no">不用了</button></div>
+      </div>
       <button type="button" class="hp-home" id="hp-home" hidden>找牠回來</button>
       <div class="hp-disc" id="hp-disc" hidden></div>
     </div>
@@ -285,19 +331,62 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 
 <section class="page-about">
   <h2>玩法</h2>
-  <ul><li>選曼基貓或邊境牧羊犬，從蛋開始養，約 7 天長大，照顧方式不同會長成不同樣子</li><li>餵正餐和點心、陪牠玩接飛盤、清便便和洗澡，晚上牠會自己睡覺</li><li>每天打開信箱，讀牠寫給你的信</li><li>電腦版 Chrome 可以把牠放到桌面上，邊工作邊陪你</li></ul>
+  <ul><li>選曼基貓或邊境牧羊犬，從蛋開始養，約 7 天長大，照顧方式不同會長成不同樣子</li><li>餵正餐和點心、陪牠玩接飛盤、清便便和洗澡，晚上牠會自己睡覺</li><li>每天打開信箱，讀牠寫給你的信；心情好牠會自己去旅行，帶明信片回來</li><li>電腦版 Chrome 可以把牠放到桌面上；上班坐太久，牠會提醒你起來走走</li><li>產生串門子連結傳給朋友，牠會去朋友家玩一天</li></ul>
   <h2>適合誰？</h2>
-  <ul><li>小時候養過電子雞、想再養一次的人</li><li>想養寵物但現在沒辦法養的人</li><li>工作時想要一個小夥伴陪在桌面上的人</li></ul>
-  <!-- 連到部落格的介紹文章（文章寫好再打開） -->
-  <!-- <p>延伸閱讀：<a href="https://knittinghiyori.com/" data-cta="article_link" data-cta-type="article">問句型的文章標題？</a></p> -->
+  <ul><li>小時候養過電子雞、想再養一次的人</li><li>想養寵物但現在沒辦法養的人</li><li>工作時想要一個小夥伴陪在桌面上、提醒自己起來動一動的人</li></ul>
+  <h2>常見問題</h2>
+  <details><summary>要下載或註冊嗎？資料存在哪裡？</summary><p>都不用。打開網頁就能玩，毛孩的資料只存在你這台裝置的瀏覽器裡，不會上傳。</p></details>
+  <details><summary>忘記照顧，毛孩會死掉嗎？</summary><p>不會。太久沒照顧，牠會留一張紙條離家出走，按「找牠回來」就會回家。</p></details>
+  <details><summary>換手機或電腦，毛孩怎麼帶走？</summary><p>按「搬家碼」產生一串文字，到新裝置貼上，毛孩、圖鑑、明信片和點心櫃都會一起搬過去。</p></details>
+  <details><summary>怎麼讓毛孩待在電腦桌面上？</summary><p>用電腦版 Chrome 或 Edge 打開，按「放到桌面」，牠會變成一個浮在最上層的小窗。原本的分頁可以縮小，但不要關掉。</p></details>
+  <details><summary>iPhone 上毛孩不見了怎麼辦？</summary><p>Safari 會清掉一陣子沒開的網站資料。把日和毛孩「加入主畫面」就不會被清；也建議偶爾產生一次搬家碼存起來。</p></details>
+  <p style="margin-top:14px">想知道圖鑑什麼時候出新朋友？<a href="#" data-aff="kit" data-cta="newsletter_below" data-cta-type="newsletter" target="_blank" rel="noopener">訂閱編織日和電子報</a></p>
+  <!-- 連到部落格的介紹文章（文章發布後打開，cta：about_article／article） -->
+  <!-- <p><a href="https://knittinghiyori.com/" data-cta="about_article" data-cta-type="article">看完整玩法說明 →</a></p> -->
 </section>
-<div class="kh-ad" aria-label="贊助內容">
+
+<!-- 聯盟區（常駐、在遊戲區外；cta_click：below_game／shopee） -->
+<section class="hp-below" id="hp-aff" hidden>
+  <h2>把你家的毛孩也畫下來</h2>
+  <p style="margin:0">日和毛孩的作者也接寵物似顏繪，有兩種畫風可以選。</p>
+  <div class="hp-below__row">
+    <a class="hp-btn" href="#" data-aff="portrait_simple" data-cta="below_game" data-cta-type="shopee" target="_blank" rel="sponsored nofollow noopener">歐美簡約大方風</a>
+    <a class="hp-btn is-ghost" href="#" data-aff="portrait_pencil" data-cta="below_game" data-cta-type="shopee" target="_blank" rel="sponsored nofollow noopener">色鉛筆文青風</a>
+  </div>
+  <p class="hp-disclose">以上是編織日和自己的蝦皮賣場，連結同時是蝦皮聯盟連結：透過連結下單，我們會另外獲得小額回饋，價格不會因此變貴。</p>
+</section>
+
+<!-- 分享列（最後一顆「加到我的最愛」由 /lib/hy-fav.js 自動補在複製連結後面） -->
+<section class="hp-below">
+  <h2>分享給也想養一隻的朋友</h2>
+  <div class="hp-below__row" id="hp-share">
+    <button type="button" data-share="native" hidden>分享這個遊戲</button>
+    <button type="button" class="is-ghost" data-share="line">傳到 LINE</button>
+    <button type="button" class="is-ghost" data-share="copy_link">複製連結</button>
+  </div>
+  <p class="hp-disclose" id="hp-share-tip" aria-live="polite"></p>
+</section>
+
+<!-- 回遊戲主頁大按鈕（cta_click：about_hub／game） -->
+<a class="hp-hub" href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">探索更多互動遊戲 →</a>
+
+<!-- Google AdSense 手動廣告單元（整頁只有這 1 格） -->
+<div class="kh-ad kh-ad--game" aria-label="贊助內容">
   <span class="kh-ad__label">贊助內容</span>
   <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2022028565680247" data-ad-slot="5316670118" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
-<footer class="page-foot"><a href="/" style="color:inherit" data-cta="more_games" data-cta-type="hub">← 更多小遊戲</a>｜© 編織日和 Knitting Hiyori｜<a href="https://knittinghiyori.com/" style="color:inherit" data-cta="footer" data-cta-type="mainsite">回到部落格</a></footer>
-<p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<footer class="page-foot"><a href="https://games.knittinghiyori.com/" style="color:inherit" data-cta="footer_hub" data-cta-type="game">← 更多小遊戲</a>｜© 編織日和 Knitting Hiyori｜<a href="https://knittinghiyori.com/" style="color:inherit" data-cta="footer_main" data-cta-type="article">回到部落格</a></footer>
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<script>
+/* 聯盟與外部連結設定：全部集中在這裡；空字串時，對應的按鈕（和整個聯盟區）會自動藏起來。網址不可含和號 */
+window.PET_LINKS = {
+  klook_pet_hotel: 'https://klook.tpk.ro/wIqx0vY8',
+  portrait_simple: 'https://s.shopee.tw/AUuRXTcxjF',
+  portrait_pencil: 'https://s.shopee.tw/20vtPvXU8g',
+  kit: 'https://knittinghiyori.kit.com/9a62213d22'
+};
+</script>
 <script>
 /* ===== 日和毛孩｜像素圖引擎 v1（T1-2）=====
    預覽頁（全部 124 張）：my-agent 的 100_Todo/projects/hiyori-pet/sprites-preview.html
@@ -1298,6 +1387,7 @@ var HP_PC = (function(){
     for (var j = 0; j < btns.length; j++) btns[j].disabled = lock;
     renderPip($('hp-status').textContent, lock, NEED.indexOf(m.key) >= 0, isAsleep(t));
     renderWalk(t);
+    renderKit(form);
     var unread = state.letters.filter(function(L){ return !L.read; }).length;
     $('hp-unread').hidden = !unread;
     $('hp-unread').textContent = unread;
@@ -1384,12 +1474,20 @@ var HP_PC = (function(){
       back.hidden = true;
       lines(back, C.text);
       back.appendChild(el('p', 'hp-mail__sign', pc.name));
-      back.appendChild(el('p', 'hp-card__trip', '想帶毛孩一起去旅行嗎？'));
       card.appendChild(cv);
       card.appendChild(back);
       card.appendChild(el('span', 'hp-card__cap', C.name + '｜' + pc.name + '｜' + fmtDay(pc.at)));
-      card.addEventListener('click', function(){ cv.hidden = !cv.hidden; back.hidden = !back.hidden; });
-      grid.appendChild(card);
+      var wrap = el('div', 'hp-cardbox');
+      wrap.appendChild(card);
+      /* 旅行回來的獎勵畫面才放聯盟連結（cta：trip_result／klook） */
+      var trip = affLink('klook_pet_hotel', 'trip_result', 'klook', '想帶毛孩一起去旅行嗎？', 'hp-card__trip');
+      var note = el('span', 'hp-card__note', 'Klook 聯盟連結：透過連結預訂，編織日和會獲得小額回饋，價格不會變貴。');
+      if (trip) { trip.hidden = true; note.hidden = true; wrap.appendChild(trip); wrap.appendChild(note); }
+      card.addEventListener('click', function(){
+        cv.hidden = !cv.hidden; back.hidden = !back.hidden;
+        if (trip) { trip.hidden = back.hidden; note.hidden = back.hidden; }
+      });
+      grid.appendChild(wrap);
     });
     box.appendChild(grid);
   }
@@ -2044,7 +2142,7 @@ var HP_PC = (function(){
   });
   $('hp-visit-share').addEventListener('click', function(){
     var url = $('hp-visit-link').value, ta = $('hp-visit-link');
-    var sent = function(method){ track('pet_visit_share', { method: method }); try { if (window.hyGame) window.hyGame.share(method, 'game'); } catch(e) {} };
+    var sent = function(method){ track('pet_visit_share', { method: method }); try { if (window.hyGame) window.hyGame.share(method, 'invite'); } catch(e) {} };
     var copy = function(){
       var done = function(){ visitTip('已複製！貼到 LINE 傳給朋友就好。'); sent('copy_link'); };
       var fallback = function(){ ta.focus(); ta.select(); try { document.execCommand('copy'); done(); } catch(e) { visitTip('請長按連結，全選後複製。'); } };
@@ -2074,6 +2172,63 @@ var HP_PC = (function(){
   }
   checkVisitHash();
   window.addEventListener('hashchange', checkVisitHash);   /* 頁面已經開著時又點了串門子連結 */
+
+  /* ---- 外部連結：網址都從 PET_LINKS 拿；沒有設定就把按鈕藏起來 ---- */
+  var LINKS = window.PET_LINKS || {};
+  function affLink(key, ctaId, ctaType, text, cls){
+    if (!LINKS[key]) return null;
+    var a = el('a', cls, text);
+    a.href = LINKS[key]; a.target = '_blank'; a.rel = 'sponsored nofollow noopener';
+    a.setAttribute('data-cta', ctaId); a.setAttribute('data-cta-type', ctaType); a.setAttribute('data-google-vignette', 'false');
+    return a;
+  }
+  (function(){
+    var all = document.querySelectorAll('[data-aff]'), shown = 0;
+    for (var i = 0; i < all.length; i++) {
+      var url = LINKS[all[i].getAttribute('data-aff')];
+      if (url) { all[i].href = url; if (all[i].closest('#hp-aff')) shown += 1; }
+      else all[i].hidden = true;
+    }
+    $('hp-aff').hidden = !shown;
+  })();
+
+  /* ---- Kit 電子報：長到少年期問一次，按哪一個都不再問（下方另有一行常駐小連結） ---- */
+  function renderKit(form){
+    var ask = LINKS.kit ? (!book.kitAsked ? (form === 'teen' || isAdult(form)) : false) : false;
+    $('hp-kitbar').hidden = !(ask ? (!book.walk.stage ? !game : false) : false);
+  }
+  function kitDone(){ book.kitAsked = true; saveBook(); $('hp-kitbar').hidden = true; }
+  $('hp-kit-yes').addEventListener('click', function(){ kitDone(); });
+  $('hp-kit-no').addEventListener('click', function(){ kitDone(); say('好，想訂的時候下面也有連結', 3000, true); render(); });
+
+  /* ---- 分享列（規範 games §2-3）：分享網址帶 ?ref=share ---- */
+  var SHARE_URL = 'https://games.knittinghiyori.com/hiyori-pet/?ref=share';
+  var SHARE_TEXT = '我在養一隻像素毛孩「日和毛孩」，一起來養：';
+  function shareSent(method){ try { if (window.hyGame) window.hyGame.share(method, 'game'); } catch(e) {} }
+  (function(){
+    var row = $('hp-share'), tip = $('hp-share-tip');
+    var nb = row.querySelector('[data-share="native"]');
+    nb.hidden = !navigator.share;
+    row.addEventListener('click', function(e){
+      var b = e.target.closest('[data-share]');
+      if (!b) return;
+      var m = b.getAttribute('data-share');
+      if (m === 'native') {
+        navigator.share({ title: '日和毛孩', text: SHARE_TEXT, url: SHARE_URL }).then(function(){ shareSent('native'); }, function(){ track('share_cancel', { method: 'native', content_type: 'game' }); });
+      } else if (m === 'line') {
+        var a = document.createElement('a');
+        a.href = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(SHARE_URL);
+        a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-google-vignette', 'false');
+        document.body.appendChild(a); a.click(); a.parentNode.removeChild(a);
+        shareSent('line');
+      } else if (m === 'copy_link') {
+        var done = function(){ tip.textContent = '已複製連結！'; shareSent('copy_link'); };
+        var manual = function(){ tip.textContent = '這個瀏覽器不能自動複製，請長按這串網址複製：' + SHARE_URL; };
+        if (navigator.clipboard) navigator.clipboard.writeText(SHARE_URL).then(done).catch(manual);
+        else manual();
+      }
+    });
+  })();
 
   /* ---- 測試模式 ---- */
   if (DEBUG) {
@@ -2269,5 +2424,6 @@ var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目�
 })();
 /* ===== /GA4 統一追蹤 ===== */
 </script>
+<script src="/lib/hy-fav.js" defer></script>
 </body>
 </html>
