@@ -270,6 +270,24 @@ dialog::backdrop{background:rgba(20,32,46,.45)}
 .sec h2{font-family:var(--serif);font-size:24px;margin:0 0 10px;font-weight:700;line-height:1.4}
 .sec h3{font-size:17px;margin:18px 0 4px}
 .sec p{margin:0 0 12px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.stat{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:1.5px solid var(--ink);border-radius:14px;text-decoration:none;color:var(--ink)}
+.stat b{font-family:var(--serif);font-size:26px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;line-height:1.5}
+.stat i{font-style:normal;font-size:12px;color:var(--sea);margin-top:auto;text-decoration:underline;text-underline-offset:2px}
+.weeks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 4px}
+.wk{display:block;width:100%;height:auto}
+.wk .wt{font:700 14px var(--sans);fill:var(--ink)}
+.wk .wd{font:12px var(--sans);fill:var(--sea)}
+.wk .wx{font:11px var(--sans);fill:var(--sea)}
+.cap{font-size:14px;color:var(--sea);margin:4px 0 0}
+.h2b{margin-top:30px!important}
+.gallery{display:grid;grid-template-columns:1fr;gap:18px}
+.gallery figure{margin:0}
+.gallery img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--rule)}
+.gallery figcaption{font-size:14px;margin-top:6px;font-weight:500}
+.readmore{display:flex;align-items:center;justify-content:center;min-height:52px;margin-top:18px;border:2px solid var(--harbor);border-radius:14px;color:var(--harbor);font-weight:700;text-decoration:none}
+@media (max-width:560px){.weeks{grid-template-columns:1fr}}
 .study{list-style:none;padding:0;margin:0}
 .study li{padding:12px 0;border-bottom:1px solid var(--rule)}
 .study .n{font-family:var(--serif);font-size:22px;font-weight:700;display:block;line-height:1.3}
@@ -458,20 +476,28 @@ details p{margin:0 0 14px;color:#33465a}
 
   <div class="below">
     <section class="sec" id="why">
-      <h2>為什麼要每天同一個時間睡、同一個時間起？</h2>
-      <p>近幾年用手環客觀測量睡眠的大型研究發現：作息越不規律的人，健康風險越高；而且「規不規律」可能比「睡多久」更重要。</p>
-      <ul class="study">
-        <li><span class="n">88,975 人</span>英國生物銀行（UK Biobank）研究：作息越不規律，全因死亡風險越高，心血管與癌症死亡也有類似趨勢。<br><a class="src" href="https://elifesciences.org/articles/88359" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false">eLife，2023</a></li>
-        <li><span class="n">60,977 人</span>同一批資料比較兩個指標：睡眠規律程度比睡眠時長更能預測死亡風險。<br><a class="src" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10782501/" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false">Sleep，2024</a></li>
-        <li><span class="n">72,000 人以上</span>作息最不規律的人，約 8 年內發生心臟病、中風等重大心血管事件的風險高 26%；就算睡滿建議時數，也抵銷不了。<br><a class="src" href="https://sleepreviewmag.com/?p=414451" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false">Sleep Review 報導，2024</a></li>
-        <li><span class="n">8 人・1 週</span>只靠日光和營火露營一週後，身體的「夜晚」提前約 2 小時，從日落附近開始、在日出附近結束。光線是調整生理時鐘最主要的訊號。<br><a class="src" href="https://sciencedaily.com/releases/2013/08/130801125601.htm" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false">Current Biology，2013（ScienceDaily 報導）</a></li>
-        <li><span class="n">1,978 人</span>美國 MESA 研究：作息越不規律，肥胖、高血壓、血糖偏高與糖尿病的比例越高。<br><a class="src" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6154967" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false">Scientific Reports，2018</a></li>
-      </ul>
-      <h3>要注意的地方</h3>
-      <p class="caveat">這些都是觀察性研究，只能證明「有關聯」，還不能確定是作息不規律造成疾病，或是健康狀況先影響了睡眠。研究者推測的機制是作息亂掉會打亂生理時鐘。研究對象多為中高齡英國人與美國人。</p>
-      <h3>遊戲怎麼用這些研究</h3>
-      <p>研究使用的指標叫「睡眠規律指數」：比較你每天同一時刻是醒著還是睡著。遊戲把它簡化成「每次打卡和目標時間差多少」，所以只獎勵時間穩定，不獎勵越早越好。</p>
-      <p>畫面的天色跟著你所在城市的日出日落變化；航海日誌的燈環外框也標出今天的白天與黑夜，方便對照你的作息和太陽。起床後的「晨光任務」不計分，只是提醒你用陽光幫生理時鐘對時。</p>
+      <h2>為什麼要固定時間睡覺？</h2>
+      <p>大型研究發現：作息越規律，健康風險越低；規律程度甚至比睡多久更能預測風險。</p>
+      <div class="stats">
+        <a class="stat" href="https://elifesciences.org/articles/88359" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false"><b>88,975 人</b><span>作息越不規律，死亡風險越高</span><i>eLife 2023</i></a>
+        <a class="stat" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10782501/" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false"><b>60,977 人</b><span>規律比睡多久更能預測風險</span><i>Sleep 2024</i></a>
+        <a class="stat" href="https://sleepreviewmag.com/?p=414451" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false"><b>＋26%</b><span>最不規律者的重大心血管事件風險</span><i>72,000 人以上・2024</i></a>
+        <a class="stat" href="https://sciencedaily.com/releases/2013/08/130801125601.htm" target="_blank" rel="noopener" data-cta="source_link" data-cta-type="other" data-google-vignette="false"><b>約 2 小時</b><span>只靠日光露營一週，身體的夜晚提前</span><i>Current Biology 2013</i></a>
+      </div>
+      <div class="weeks">
+        <svg class="wk" viewBox="0 0 320 196" role="img" aria-label="不規律的一週：每天睡覺起床時間差很多"><text x="0" y="14" class="wt">不規律的一週</text><text x="0" y="37" class="wd">週一</text><rect x="107.5" y="28" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="57" class="wd">週二</text><rect x="136.4" y="48" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="77" class="wd">週三</text><rect x="97.9" y="68" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="97" class="wd">週四</text><rect x="126.8" y="88" width="135.0" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="117" class="wd">週五</text><rect x="155.7" y="108" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="137" class="wd">週六</text><rect x="165.4" y="128" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="157" class="wd">週日</text><rect x="146.1" y="148" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><line x1="78.6" y1="168" x2="78.6" y2="172" stroke="#4f6b7d"/><text x="78.6" y="186" class="wx" text-anchor="middle">22</text><line x1="117.1" y1="168" x2="117.1" y2="172" stroke="#4f6b7d"/><text x="117.1" y="186" class="wx" text-anchor="middle">0</text><line x1="155.7" y1="168" x2="155.7" y2="172" stroke="#4f6b7d"/><text x="155.7" y="186" class="wx" text-anchor="middle">2</text><line x1="194.3" y1="168" x2="194.3" y2="172" stroke="#4f6b7d"/><text x="194.3" y="186" class="wx" text-anchor="middle">4</text><line x1="232.9" y1="168" x2="232.9" y2="172" stroke="#4f6b7d"/><text x="232.9" y="186" class="wx" text-anchor="middle">6</text><line x1="271.4" y1="168" x2="271.4" y2="172" stroke="#4f6b7d"/><text x="271.4" y="186" class="wx" text-anchor="middle">8</text><line x1="310.0" y1="168" x2="310.0" y2="172" stroke="#4f6b7d"/><text x="310.0" y="186" class="wx" text-anchor="middle">10</text><line x1="40" y1="168" x2="310" y2="168" stroke="#aebbc6"/></svg>
+        <svg class="wk" viewBox="0 0 320 196" role="img" aria-label="規律的一週：每天落在同一個時間"><text x="0" y="14" class="wt">規律的一週</text><rect x="97.9" y="22" width="19.3" height="146" fill="#fbecd2"/><rect x="242.5" y="22" width="19.3" height="146" fill="#fbecd2"/><text x="0" y="37" class="wd">週一</text><rect x="107.5" y="28" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="57" class="wd">週二</text><rect x="105.6" y="48" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="77" class="wd">週三</text><rect x="109.4" y="68" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="97" class="wd">週四</text><rect x="107.5" y="88" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="117" class="wd">週五</text><rect x="111.4" y="108" width="144.6" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="137" class="wd">週六</text><rect x="109.4" y="128" width="148.5" height="11" rx="5.5" fill="#1e3a5c"/><text x="0" y="157" class="wd">週日</text><rect x="107.5" y="148" width="146.6" height="11" rx="5.5" fill="#1e3a5c"/><line x1="78.6" y1="168" x2="78.6" y2="172" stroke="#4f6b7d"/><text x="78.6" y="186" class="wx" text-anchor="middle">22</text><line x1="117.1" y1="168" x2="117.1" y2="172" stroke="#4f6b7d"/><text x="117.1" y="186" class="wx" text-anchor="middle">0</text><line x1="155.7" y1="168" x2="155.7" y2="172" stroke="#4f6b7d"/><text x="155.7" y="186" class="wx" text-anchor="middle">2</text><line x1="194.3" y1="168" x2="194.3" y2="172" stroke="#4f6b7d"/><text x="194.3" y="186" class="wx" text-anchor="middle">4</text><line x1="232.9" y1="168" x2="232.9" y2="172" stroke="#4f6b7d"/><text x="232.9" y="186" class="wx" text-anchor="middle">6</text><line x1="271.4" y1="168" x2="271.4" y2="172" stroke="#4f6b7d"/><text x="271.4" y="186" class="wx" text-anchor="middle">8</text><line x1="310.0" y1="168" x2="310.0" y2="172" stroke="#4f6b7d"/><text x="310.0" y="186" class="wx" text-anchor="middle">10</text><line x1="40" y1="168" x2="310" y2="168" stroke="#aebbc6"/></svg>
+      </div>
+      <p class="cap">遊戲只看你和自己設定的時間差多少，不是越早越好。觀察性研究只能證明有關聯，詳細說明請看完整文章。</p>
+
+      <h2 class="h2b">玩法一覽</h2>
+      <div class="gallery">
+        <figure><img src="img/harbor-growth.webp" width="800" height="213" loading="lazy" alt="港口變化：準時 5 次出現木箱，30 次多了路燈和彩旗，100 次掛滿燈籠串"><figcaption>越準時，港口越熱鬧</figcaption></figure>
+        <figure><img src="img/sky-4-times.webp" width="800" height="547" loading="lazy" alt="四種天色：清晨、白天、黃昏、夜晚，依所在城市的日出日落變化"><figcaption>天色跟著你的城市日出日落</figcaption></figure>
+        <figure><img src="img/diary.webp" width="800" height="659" loading="lazy" alt="守燈人手記畫面：每頁有一個小問題和一則作息訣竅"><figcaption>前 21 天每天一頁守燈人手記</figcaption></figure>
+        <figure><img src="img/alliance.webp" width="800" height="340" loading="lazy" alt="燈塔聯盟：夜晚港口遠方亮著朋友的燈塔，碼頭有聯盟旗，天空有煙火"><figcaption>朋友越多，解鎖燈號、聯盟旗和煙火</figcaption></figure>
+      </div>
+      <a class="readmore" href="https://knittinghiyori.com/sleep-schedule-habit-game/" data-cta="about_article" data-cta-type="article" data-google-vignette="false">看完整研究與玩法說明 →</a>
     </section>
 
     <section class="sec" id="faq">

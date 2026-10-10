@@ -11,6 +11,7 @@
 |---|---|
 | `index.html` | 全部（靜態文字、CSS、遊戲程式、追蹤、聯盟設定 `SLEEP_LINKS`） |
 | `og.png` | 分享圖 1200×630（左上品牌列、網址寫到 /sleep-rhythm） |
+| `img/` | 遊戲頁「玩法一覽」用的 4 張圖（800px WebP）：harbor-growth、sky-4-times、diary、alliance |
 | `README.md` | 本檔 |
 
 不使用 `/lib/hy-trainer/`（這款是每日打卡，不是訓練關卡）。
@@ -67,7 +68,7 @@
 | `sleep_progress_reset` | 清除全部紀錄 |
 | `share`／`share_cancel` | 遊戲分享列：`content_type` 有準時打卡前 `game`、之後 `result`；邀請朋友：`content_type=invite`；成績卡：`result` |
 | `export` | 下載成績卡 `method=image`、`content_type=result` |
-| `cta_click` | `brand_hub`、`about_hub`（game）、`lighthouse_trip`（klook）、`source_link`（other） |
+| `cta_click` | `brand_hub`、`about_hub`（game）、`about_article`（article，連到 knittinghiyori.com/sleep-schedule-habit-game/）、`lighthouse_trip`（klook）、`source_link`（other） |
 | `game_exit` | 離開頁面 |
 
 註：追蹤函式是頁面內建的 `track()`（try/catch、沒有 gtag 時排進 dataLayer、`?hy_debug=1` 印 `[hy-game]`），已設 `HY_GAME_ID`、`HY_GAME_ROOT`、`HY_GAME_LANG`。若上架時要改用標準 hyGame 追蹤碼，請刪掉頁面自己送的 `game_start`／`game_exit`，避免重複。
