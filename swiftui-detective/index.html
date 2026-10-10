@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="spec-version" content="core-v1.4/games-v1.8">
+<!-- 網站 logo icon（檔案在 /icons/） -->
+<link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -15,7 +22,7 @@
 </script>
 <!-- Google AdSense（只有手動廣告，不跑 Auto ads，不會有插頁式廣告） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
-<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})});</script>
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
 <style>
 .kh-ad{display:block;width:100%;max-width:728px;margin:48px auto;padding:0 16px;text-align:center;clear:both;box-sizing:border-box}
 .kh-ad--game{margin-top:150px}
@@ -30,7 +37,16 @@
 <meta property="og:title" content="雨夜懷錶案｜用偵探故事學 SwiftUI">
 <meta property="og:description" content="零基礎也能玩：寫一段 SwiftUI，拿一條線索，最後指認犯人。">
 <meta property="og:url" content="https://games.knittinghiyori.com/swiftui-detective/">
-<meta name="twitter:card" content="summary">
+<meta property="og:site_name" content="編織日和 小遊戲">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://games.knittinghiyori.com/swiftui-detective/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="編織日和・小遊戲｜雨夜懷錶案：用偵探故事學 SwiftUI 的零基礎教學遊戲，寫程式拿線索、指認犯人，附遊戲網址">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="雨夜懷錶案｜用偵探故事學 SwiftUI">
+<meta name="twitter:description" content="零基礎也能玩：寫一段 SwiftUI，拿一條線索，最後指認犯人。">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/swiftui-detective/og.png">
 <!-- GA4（依《編織日和・遊戲｜GA4 統一追蹤規範 v1.0》） -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
 <script>
@@ -41,15 +57,19 @@ gtag('set', { content_group: 'game', game_id: 'swiftui_detective', page_lang: 'z
 gtag('config', 'G-ZQZHTYTRMQ');
 </script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>雨夜懷錶案</title>
+<title>雨夜懷錶案｜用偵探故事學 SwiftUI 的零基礎教學遊戲</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=Special+Elite&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite">
 <style>
 :root{
   color-scheme: light;
   --ink:#ffffff; --ink2:#f6f7f9; --ink3:#f1f3f6; --line:#dde2e8; --line2:#c3cbd5;
-  --fog:#111418; --soft:#3a424d; --mute:#5f6977; --amber:#a86200; --lamp:#f0a93b; --amber-soft:rgba(240,169,59,.15);
+  --fog:#111418; --soft:#3a424d; --mute:#5f6977; --amber:#8f5300; --lamp:#f0a93b; --amber-soft:rgba(240,169,59,.15);
   --rain:#2f6f9a; --red:#c7372c; --red-soft:rgba(199,55,44,.07); --green:#1d7f4e; --green-soft:rgba(29,127,78,.08);
   --paper:#ffffff; --paper2:#fcfbf8; --paper-ink:#111418;
   --code:#fbfcfd;
@@ -82,7 +102,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(42px,7.4vw,80px);lin
 h1 .lamp{color:var(--amber)}
 .lede{max-width:62ch;color:var(--soft);margin:0 0 22px}
 .chapters{display:flex;flex-wrap:wrap;gap:8px}
-.chap{display:flex;align-items:center;gap:8px;background:var(--ink2);border:1px solid var(--line);border-radius:4px;padding:7px 12px;font-size:13px;line-height:1.3}
+.chap{display:flex;align-items:center;gap:8px;background:var(--ink2);border:1px solid var(--line);border-radius:4px;padding:9px 12px;min-height:40px;font-size:13px;line-height:1.3}
 .chap .n{font-family:var(--type);color:var(--mute)}
 .chap .k{font-family:var(--mono);font-size:11px;color:var(--mute)}
 .chap:hover:not(:disabled){border-color:var(--line2)}
@@ -117,7 +137,7 @@ h1 .lamp{color:var(--amber)}
 .ed-file{font-family:var(--mono);color:var(--fog);display:flex;align-items:center;gap:8px}
 .ed-file::before{content:"";width:8px;height:8px;border-radius:2px;background:#f05138}
 .ed-body{position:relative;display:grid;grid-template-columns:40px 1fr;height:420px}
-.gutter{margin:0;padding:14px 8px 14px 0;text-align:right;font:13px/22px var(--mono);color:#9aa5b3;overflow:hidden;user-select:none;border-right:1px solid var(--line)}
+.gutter{margin:0;padding:14px 8px 14px 0;text-align:right;font:13px/22px var(--mono);color:#66707c;overflow:hidden;user-select:none;border-right:1px solid var(--line)}
 .gutter span{display:block}
 .gutter span.bad{color:var(--red);background:var(--red-soft)}
 .code-area{position:relative;overflow:hidden}
@@ -125,7 +145,7 @@ h1 .lamp{color:var(--amber)}
 .code-area pre{color:#1d232b;overflow:hidden;pointer-events:none}
 .code-area textarea{background:transparent;color:transparent;caret-color:#111418;resize:none;outline:none;overflow:auto}
 .code-area textarea::selection{background:rgba(47,111,154,.18);color:transparent}
-.hl-kw{color:#b0156f;font-weight:500}.hl-at{color:#8a4a00}.hl-str{color:#c41a16}.hl-ty{color:#1f5f8b}.hl-md{color:#5b2ea8}.hl-cm{color:#707b88;font-style:italic}.hl-nu{color:#1c00cf}.hl-bd{color:#8a4a00}
+.hl-kw{color:#b0156f;font-weight:500}.hl-at{color:#8a4a00}.hl-str{color:#c41a16}.hl-ty{color:#1f5f8b}.hl-md{color:#5b2ea8}.hl-cm{color:#5f6977;font-style:italic}.hl-nu{color:#1c00cf}.hl-bd{color:#8a4a00}
 .err{display:flex;gap:10px;align-items:flex-start;padding:9px 14px;border-top:1px solid rgba(199,55,44,.35);background:var(--red-soft);color:#8f2119;font:12.5px/1.6 var(--mono)}
 .err b{color:var(--red);font-weight:500;white-space:nowrap}
 .tools{display:flex;flex-wrap:wrap;gap:8px}
@@ -246,17 +266,29 @@ h1 .lamp{color:var(--amber)}
 .share-btns{display:flex;flex-wrap:wrap;gap:8px}
 .sbtn{display:inline-flex;align-items:center;justify-content:center;min-width:92px;padding:10px 16px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;border:1px solid transparent;color:#fff;cursor:pointer}
 .sbtn:hover{filter:brightness(1.08)}
-.sbtn.line{background:#06c755}.sbtn.fb{background:#1877f2}.sbtn.threads,.sbtn.x{background:#111418}
+.sbtn.line{background:#06c755;color:#111418}.sbtn.fb{background:#1669db}.sbtn.threads,.sbtn.x{background:#111418}
 .sbtn.copy{background:var(--ink);color:var(--fog);border-color:var(--line2)}
 .share-url{grid-column:1 / -1;width:100%;font:12.5px var(--mono);color:var(--mute);background:var(--ink2);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
 @media (max-width:740px){.share{grid-template-columns:minmax(0,1fr);padding:18px}}
-.foot{margin-top:40px;font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
-.linkbtn{background:none;border:0;color:var(--mute);text-decoration:underline;padding:0;font-size:13px}
+.about{margin:40px 0 0;font-size:14px;color:var(--fog)}
+.about a{color:var(--fog);font-weight:700;text-decoration:underline;text-decoration-color:var(--lamp);text-decoration-thickness:2px;text-underline-offset:3px}
+.foot{margin-top:14px;font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+.linkbtn{background:none;border:0;color:var(--mute);text-decoration:underline;padding:8px 0;min-height:36px;font-size:13px}
 </style>
 
+<style>
+/* 編織日和品牌列（所有遊戲頁共用寫法，同 absolute-pitch） */
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;box-sizing:border-box;padding:4px 0 8px;border-bottom:1px solid #e7e8ed}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#16161a;text-decoration:none;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:14.4px;font-weight:700;letter-spacing:.04em;line-height:1.2;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+.kh-brand-row{margin-bottom:8px}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Game", "LearningResource"], "name": "雨夜懷錶案：SwiftUI 偵探教學遊戲", "url": "https://games.knittinghiyori.com/swiftui-detective/", "image": "https://games.knittinghiyori.com/swiftui-detective/og.png", "description": "零基礎也能玩的 SwiftUI 教學遊戲。跟著偵探故事，一章學一個概念：Text、VStack、@State、ForEach、Binding，邊寫程式邊破案。", "inLanguage": "zh-Hant", "isAccessibleForFree": true, "educationalLevel": "Beginner", "learningResourceType": "Game", "teaches": ["SwiftUI 入門", "Text", "VStack", "@State", "ForEach", "Binding"], "genre": "Educational", "publisher": {"@type": "Organization", "name": "編織日和", "url": "https://knittinghiyori.com/"}}</script>
 </head>
 <body>
 <div class="wrap">
+  <div class="kh-brand-row"><a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和・小遊戲</a></div>
   <header class="hero">
     <div class="case-meta"><span class="stamp">CASE 0926</span><span>大稻埕 · 霧港咖啡 · 21:47 停電</span></div>
     <h1>雨夜<span class="lamp">懷錶</span>案</h1>
@@ -308,23 +340,6 @@ h1 .lamp{color:var(--amber)}
     <div class="board-grid" id="board"></div>
   </section>
 
-  <!-- Google AdSense 手動廣告單元 -->
-<div class="kh-ad kh-ad--game" aria-label="贊助內容">
-  <span class="kh-ad__label">贊助內容</span>
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2022028565680247" data-ad-slot="5316670118" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-
-<section class="hub" aria-labelledby="hubTitle">
-    <div>
-      <span class="tag">MORE CASES</span>
-      <h2 id="hubTitle">還想玩？到遊戲大廳找下一個挑戰</h2>
-      <p>編織日和小遊戲還有 SQL 偵探、日文單字密室、動詞變化逃脫等互動遊戲，都是從零開始、邊玩邊學。</p>
-      <div class="chips"><span>程式入門</span><span>日文學習</span><span>解謎</span></div>
-    </div>
-    <a href="https://games.knittinghiyori.com/" data-cta="hub_more_games" data-cta-type="game">探索更多互動遊戲 →</a>
-  </section>
-
   <section class="share" aria-labelledby="shareTitle">
     <div class="share-copy">
       <span class="tag">CALL FOR BACKUP</span>
@@ -341,10 +356,28 @@ h1 .lamp{color:var(--amber)}
     <input class="share-url" id="shUrl" readonly aria-label="遊戲連結">
   </section>
 
+  <section class="hub" aria-labelledby="hubTitle">
+    <div>
+      <span class="tag">MORE CASES</span>
+      <h2 id="hubTitle">還想玩？到遊戲大廳找下一個挑戰</h2>
+      <p>編織日和小遊戲還有 SQL 偵探、日文單字密室、動詞變化逃脫等互動遊戲，都是從零開始、邊玩邊學。</p>
+      <div class="chips"><span>程式入門</span><span>日文學習</span><span>解謎</span></div>
+    </div>
+    <a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">探索更多互動遊戲 →</a>
+  </section>
+
+  <!-- Google AdSense 手動廣告單元 -->
+<div class="kh-ad kh-ad--game" aria-label="贊助內容">
+  <span class="kh-ad__label">贊助內容</span>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2022028565680247" data-ad-slot="5316670118" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+  <p class="about">每一章學什麼、玩法與常見問題：<a href="https://knittinghiyori.com/swiftui-tutorial-detective-game/" data-cta="about_article" data-cta-type="article">SwiftUI 教學遊戲｜用偵探故事學寫 iPhone App 介紹文</a></p>
   <div class="foot"><span>預覽是在瀏覽器裡模擬的 SwiftUI 子集，語法與 Xcode 相同，可以直接貼進 Xcode 的 Preview 驗證。</span><button class="linkbtn" id="wipe" type="button">清除進度重新開始</button></div>
 </div>
 
-<p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 
 
 <script>
@@ -1298,13 +1331,13 @@ function renderFinale(){
         <div><span class="tag">FIELD TRIP</span><h3 id="visitTitle">走進真實的案發現場：大稻埕</h3>
           <p>霧港咖啡是虛構的，大稻埕是真的。破案之後，去故事的舞台走一趟：</p>
           <ul><li>迪化街的老街屋與南北貨</li><li>老茶行、布市和手作體驗</li><li>傍晚的大稻埕碼頭看夕陽</li></ul></div>
-        <a class="go" id="visitLink" href="https://klook.tpk.ro/WFgInpKd" target="_blank" rel="sponsored noopener" data-cta="dadaocheng_result" data-cta-type="affiliate">看大稻埕導覽與體驗 →</a>
+        <a class="go" id="visitLink" href="https://klook.tpk.ro/WFgInpKd" target="_blank" rel="sponsored nofollow noopener" data-cta="dadaocheng_result" data-cta-type="klook">看大稻埕導覽與體驗 →</a>
       </aside>
       <aside class="visit" aria-labelledby="escapeTitle">
         <div><span class="tag">NEXT CASE</span><h3 id="escapeTitle">意猶未盡？換你親自走進密室</h3>
           <p>找線索、對證詞、解密碼，你剛剛在程式裡做的事，真人密室逃脫要你用眼睛和雙手再做一次。</p>
           <ul><li>適合 2–6 人，朋友或同事一起組隊</li><li>有劇情、有機關，也有限時壓力</li></ul></div>
-        <a class="go" id="escapeLink" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="escape_room_result" data-cta-type="affiliate">看密室逃脫與實境解謎 →</a>
+        <a class="go" id="escapeLink" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored nofollow noopener" data-cta="escape_room_result" data-cta-type="klook">看密室逃脫與實境解謎 →</a>
       </aside>
       <p class="disclose">以上兩個是聯盟連結：透過連結預訂，我會獲得少量分潤，你付的價格不變。</p>`
       :`<div class="verdict fail"><span class="tag" style="color:var(--red)">不是 ${pick.name}</span><p>${pick.verdict}</p><p>再看一次證物板，找出說謊的人。</p></div>`):''}`;
@@ -1366,12 +1399,13 @@ function shareText(){
   if(n>0)return `我在「雨夜懷錶案」拿到 ${n}/${LEVELS.length} 條線索，一起用 SwiftUI 破案吧！`;
   return '一款用 SwiftUI 破案的偵探遊戲：雨夜懷錶案';
 }
+const AMP=String.fromCharCode(38);
 function updateShare(){
   const t=shareText(),u=encodeURIComponent(SHARE_URL),tx=encodeURIComponent(t);
-  $('shLine').href=`https://social-plugins.line.me/lineit/share?url=${u}&text=${tx}`;
+  $('shLine').href=`https://social-plugins.line.me/lineit/share?url=${u}${AMP}text=${tx}`;
   $('shFb').href=`https://www.facebook.com/sharer/sharer.php?u=${u}`;
   $('shThreads').href=`https://www.threads.net/intent/post?text=${encodeURIComponent(t+' '+SHARE_URL)}`;
-  $('shX').href=`https://twitter.com/intent/tweet?text=${tx}&url=${u}`;
+  $('shX').href=`https://twitter.com/intent/tweet?text=${tx}${AMP}url=${u}`;
   $('shUrl').value=SHARE_URL;
 }
 $('shCopy').onclick=()=>{const b=$('shCopy');const done=()=>{b.textContent='已複製';setTimeout(()=>b.textContent='複製連結',1800)};
@@ -1388,5 +1422,6 @@ go(Math.min(S.cur||0,LEVELS.length));
 if(!unlocked(S.cur))go(0);
 </script>
 
+<script src="/lib/hy-fav.js" defer></script>
 </body>
 </html>

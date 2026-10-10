@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Travelpayouts Drive（games；head 第一個 script） -->
+<script data-cfasync="false">(function(){var s=document.createElement("script");s.async=1;s.setAttribute("data-cmp-ab","2");s.src="https://emrld.ltd/NTc4NjIz.js?t=578623";document.head.appendChild(s);})();</script>
+<title>守燈人摩斯日誌｜摩斯密碼學習遊戲，用耳朵學會摩斯電碼（Koch 法）</title>
+<meta name="description" content="摩斯密碼怎麼學最快？依 Koch 法設計的免費網頁遊戲：先花 5 分鐘認識點與劃，接著只用耳朵練，從 K、M 兩個字開始，正確率 90% 才點亮下一盞燈，共 41 個字元。附 Farnsworth 間距、間隔複習與每日值班紀錄。">
+<link rel="canonical" href="https://games.knittinghiyori.com/morse-code/">
+<link rel="alternate" hreflang="zh-Hant" href="https://games.knittinghiyori.com/morse-code/">
+<link rel="alternate" hreflang="x-default" href="https://games.knittinghiyori.com/morse-code/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="編織日和小遊戲">
+<meta property="og:title" content="守燈人摩斯日誌｜只用耳朵學會摩斯密碼">
+<meta property="og:description" content="霧季來了，老守燈人只留下一句話：別看，用聽的。每天值一班，看你能點亮幾盞燈。">
+<meta property="og:url" content="https://games.knittinghiyori.com/morse-code/">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://games.knittinghiyori.com/morse-code/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="編織日和・小遊戲｜守燈人摩斯日誌：黎明海岸的紅白燈塔，岸邊一串燈火，附遊戲網址">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/morse-code/og.png">
+<meta name="author" content="編織日和">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#ffffff">
+<!-- 網站 logo icon（檔案在 /icons/） -->
+<link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700">
+<!-- Google AdSense（games 不開自動廣告：載入碼不帶 client 參數） -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
+<!-- GA4（全站共用 G-ZQZHTYTRMQ） -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', { content_group: 'game', game_id: 'morse_code', page_lang: 'zh-Hant', page_title: '遊戲|守燈人摩斯日誌|摩斯密碼聽力訓練' });
+  gtag('config', 'G-ZQZHTYTRMQ');
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","name":"守燈人摩斯日誌","url":"https://games.knittinghiyori.com/morse-code/","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"zh-Hant","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"description":"依 Koch 法設計的摩斯密碼聽力訓練遊戲：只用耳朵練，從 K、M 開始，正確率 90% 才解鎖下一個字元，共 41 個字元。","publisher":{"@type":"Organization","name":"編織日和 Knitting Hiyori","url":"https://knittinghiyori.com/"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"摩斯密碼怎麼學最快？","acceptedAnswer":{"@type":"Answer","text":"目前最多人推薦的是 Koch 法：一開始就用正式速度播放，只學 2 個字元，正確率達到約 90% 再加入下一個，而且全程只用耳朵、不看對照表。這個遊戲照這套方法設計，每天練 10 到 30 分鐘，效果比偶爾練很久好。"}},
+{"@type":"Question","name":"為什麼不建議背摩斯密碼對照表？","acceptedAnswer":{"@type":"Answer","text":"看表學會的人，聽到聲音時常會先在腦中數有幾個點和劃，再去對照表找字母。Koch 在 1936 年的研究發現，這種方法在慢速時可行，但到了每分鐘 10 字左右就會卡住。直接把整個字當成一個聲音記住，才跟得上正式速度。"}},
+{"@type":"Question","name":"什麼是 Koch 法？","acceptedAnswer":{"@type":"Answer","text":"Koch 法是德國心理學家 Ludwig Koch 在 1936 年提出的摩斯碼訓練方式：從 K、M 這種聲音差異大的兩個字開始，用接近正式的速度練，正確率約 90% 才加入下一個字元。今天 LCWO 等線上課程都採用這個方法，本遊戲的 41 個字元順序也取自 LCWO。"}},
+{"@type":"Question","name":"什麼是 Farnsworth 間距？","acceptedAnswer":{"@type":"Answer","text":"Farnsworth 間距是讓每個字元維持正式速度，只把字元和字元之間的空白拉長，讓新手有時間反應。本遊戲預設字元速度每分鐘 20 字、有效速度每分鐘 12 字，在設定裡可以調整；字元速度越快，越接近實際收報。"}},
+{"@type":"Question","name":"每天要練多久？","acceptedAnswer":{"@type":"Answer","text":"Koch 的研究認為連續練半小時最有效，早上和下午各練一次更好；間隔分散的練習也比集中一次練很久記得牢。遊戲把每天的目標設為 10 分鐘，大約是 3 到 4 班。"}},
+{"@type":"Question","name":"我的練習紀錄存在哪裡？","acceptedAnswer":{"@type":"Answer","text":"紀錄只存在這台裝置的瀏覽器裡，不會上傳。換手機或清除瀏覽器資料後，會從第一盞燈重新開始；在日誌最下方也可以自己清除紀錄。"}}
+]}]}
+</script>
+<meta name="spec-version" content="core-v1.4/games-v1.8">
+<style>
+/* 版面概念：黎明的燈塔海岸。白底黑字；顏色只屬於三件事：
+   紅（訊號、燈塔紅條、主要按鈕）、琥珀（點亮的燈）、天藍（入門頁的「噠」）。
+   第二階段起畫面上不出現任何點劃，聲音只化成燈光。 */
+:root{
+  --paper:#ffffff; --ink:#1B2430; --ink-2:#465061; --ink-3:#5E6676; --rule:#E4E7EE; --well:#F4F6F9;
+  --signal:#C8102E; --signal-ink:#A80D26; --signal-wash:#FDECEF;
+  --dit:#E0294B; --dah:#1E9BE0; --dah-ink:#0A6699;
+  --lamp:#F2A31B; --lamp-hi:#FFD27A; --lamp-wash:#FFF4DC;
+  --lav:#A9AED0;
+  --serif:"LXGW WenKai TC","Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --type:"Courier Prime","Courier New",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{background:var(--paper);color:var(--ink)}
+body{margin:0;font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2.5px solid var(--ink);outline-offset:3px}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+.type{font-family:var(--type);font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:24px}
+@media(max-width:560px){.wrap{padding-inline:16px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* 品牌列 */
+.top{padding-top:10px}
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--ink);text-decoration:none;font-family:var(--sans);font-size:.9rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+.today-pill{font-size:.85rem;color:var(--ink-2);white-space:nowrap}
+.today-pill b{font-family:var(--type);color:var(--ink);font-size:1rem}
+
+/* 首屏 */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding-block:22px 56px}
+.title{display:grid;gap:8px}
+.mark{font-family:var(--serif);font-weight:700;font-size:clamp(2rem,1.4rem + 2.6vw,3.25rem);line-height:1.15;letter-spacing:.04em}
+.hero>.lede{order:4}
+.title h1{font-size:1rem;font-weight:700;color:var(--ink-2);line-height:1.6}
+.lede{font-family:var(--serif);font-size:1.12rem;line-height:1.9;color:var(--ink);max-width:34em}
+.lede q{quotes:"「" "」"}
+@media(min-width:960px){
+  .hero{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-areas:"title console" "scene console" "lede console";grid-template-rows:auto auto 1fr;column-gap:48px;row-gap:22px;padding-top:34px}
+  .title{grid-area:title}.scene{grid-area:scene}.lede{grid-area:lede}.console{grid-area:console;align-self:start}
+}
+
+/* 場景 */
+.scene{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:16/9;background:#DCE8F5;isolation:isolate}
+@media(min-width:960px){.scene{aspect-ratio:4/3}}
+.scene svg{display:block;width:100%;height:100%}
+.scene-chip{position:absolute;left:12px;top:12px;display:inline-flex;align-items:baseline;gap:6px;background:rgba(255,255,255,.92);color:var(--ink);border-radius:999px;padding:6px 14px 6px 12px;font-size:.88rem;font-weight:500;box-shadow:0 1px 0 rgba(27,36,48,.06)}
+.scene-chip b{font-family:var(--type);font-size:1.15rem;font-weight:700}
+.beam{opacity:.38;transform-origin:920px 228px;animation:beam 9s ease-in-out infinite alternate}
+@keyframes beam{from{transform:rotate(-3deg);opacity:.32}to{transform:rotate(4deg);opacity:.5}}
+.fog{animation:fog 26s ease-in-out infinite alternate}
+.fog.f2{animation-duration:34s;animation-direction:alternate-reverse}
+@keyframes fog{from{transform:translateX(-50px)}to{transform:translateX(50px)}}
+.boat{animation:bob 5s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+@keyframes bob{from{transform:translateY(-1.5px) rotate(-1deg)}to{transform:translateY(1.5px) rotate(1deg)}}
+.glow{opacity:.35;transition:opacity .05s linear}
+.scene.on .glow{opacity:1}
+.lamp .halo{opacity:0;transition:opacity .9s var(--ease)}
+.lamp .core{fill:#fff;stroke:#8E93B8;stroke-width:1.2;transition:fill .6s}
+.lamp.lit .halo{opacity:.85}
+.lamp.lit .core{fill:var(--lamp);stroke:#fff}
+.lamp.newest .halo{animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.45}}
+.lamp.pop .core{animation:pop .9s var(--ease)}
+@keyframes pop{0%{transform:scale(.2)}60%{transform:scale(1.8)}100%{transform:scale(1)}}
+.lamp .core{transform-box:fill-box;transform-origin:center}
+@media(prefers-reduced-motion:reduce){.boat,.beam,.fog,.lamp.newest .halo,.lamp.pop .core{animation:none}}
+
+/* 控制台 */
+.console{border:1.5px solid var(--ink);border-radius:24px;background:var(--paper);padding:20px;display:grid;gap:16px;scroll-margin-top:12px}
+@media(min-width:560px){.console{padding:24px 26px 26px}}
+.c-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px}
+.c-label{font-family:var(--serif);font-weight:700;font-size:1.15rem}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:none;border-radius:999px;min-height:36px;padding:0 14px;font-size:.9rem;font-weight:700;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.seg button:disabled{color:#9AA0AC;cursor:not-allowed}
+.v{display:grid;gap:16px}
+.v h2{font-family:var(--serif);font-size:1.6rem;line-height:1.35;font-weight:700}
+.v .d{color:var(--ink-2)}
+.note{font-size:.88rem;color:var(--ink-3)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:999px;border:1.5px solid var(--signal);background:var(--signal);color:#fff;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .12s var(--ease),background .2s}
+.btn:hover{background:var(--signal-ink)}
+.btn:active{transform:translateY(2px)}
+.btn.line{background:#fff;color:var(--ink);border-color:var(--ink)}
+.btn.line:hover{background:var(--well)}
+.btn.quiet{background:none;border-color:transparent;color:var(--ink-2);padding:0 10px;text-decoration:underline;text-underline-offset:4px;min-height:44px}
+.btn.quiet:hover{color:var(--ink);background:none}
+.btn[disabled]{opacity:.4;pointer-events:none}
+
+/* 第一頁：步驟條 */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0;padding:0;list-style:none}
+.steps li{height:4px;border-radius:2px;background:var(--rule)}
+.steps li.on{background:var(--ink)}
+.step-k{font-size:.85rem;color:var(--ink-3);font-weight:500}
+.how{display:grid;gap:12px;margin:0;padding:0;list-style:none;counter-reset:how}
+.how li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;counter-increment:how}
+.how li::before{content:counter(how);width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-family:var(--type);font-weight:700}
+.how b{display:block;font-weight:700;line-height:1.5}
+.how span{color:var(--ink-2);font-size:.92rem;line-height:1.6;display:block}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0}
+.mini div{border-top:2px solid var(--ink);padding-top:8px}
+.mini dt{font-size:.8rem;color:var(--ink-3)}
+.mini dd{margin:0;font-family:var(--type);font-weight:700;font-size:1.6rem;line-height:1.3}
+.mini dd small{font-family:var(--sans);font-size:.75rem;font-weight:500;color:var(--ink-3);margin-left:3px}
+
+/* 嘀噠示範鍵 */
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dd button{border:1.5px solid var(--ink);background:#fff;border-radius:18px;min-height:116px;display:grid;place-items:center;gap:6px;padding:14px;transition:transform .12s var(--ease)}
+.dd button:active{transform:translateY(2px)}
+.dd .nm{font-family:var(--serif);font-size:1.5rem;font-weight:700;line-height:1}
+.dd .sub{font-size:.8rem;color:var(--ink-3)}
+.dd button.heard{border-width:2.5px}
+/* 點與劃的圖形（只在第一頁出現） */
+.pat{display:flex;align-items:center;justify-content:center;gap:8px;height:22px}
+.pat i{display:block;height:14px;border-radius:7px;opacity:.3;transition:opacity .04s,transform .04s}
+.pat i.dot{width:14px;background:var(--dit)}
+.pat i.dash{width:44px;background:var(--dah)}
+.pat i.on,.pat.solid i{opacity:1}
+.pat i.on{transform:scaleY(1.25)}
+
+/* 四張字卡 */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card{border:1.5px solid var(--ink);background:#fff;border-radius:16px;padding:14px 6px 12px;display:grid;justify-items:center;gap:10px;min-height:112px;transition:transform .12s var(--ease)}
+.card:active{transform:translateY(2px)}
+.card b{font-family:var(--type);font-size:2rem;line-height:1}
+.card .pat{gap:5px;height:16px}
+.card .pat i{height:10px}
+.card .pat i.dot{width:10px}
+.card .pat i.dash{width:28px}
+.card.heard{background:var(--well)}
+@media(max-width:400px){.card .pat i.dash{width:22px}.card .pat{gap:4px}}
+
+/* 聽音盤 */
+.listen{display:grid;justify-items:center;gap:10px;padding-block:6px}
+.disc{position:relative;width:132px;height:132px;border-radius:50%;border:2px solid var(--ink);background:#fff;display:grid;place-items:center;transition:transform .12s var(--ease)}
+.disc:active{transform:scale(.97)}
+.disc::before{content:"";position:absolute;inset:16px;border-radius:50%;background:radial-gradient(circle,var(--lamp-hi) 0,var(--lamp) 55%,rgba(242,163,27,0) 72%);opacity:.18;transition:opacity .04s linear}
+.disc.on::before{opacity:1}
+.disc svg{position:relative}
+.disc-lbl{font-size:.85rem;color:var(--ink-3)}
+.status{min-height:1.75em;text-align:center;font-weight:500}
+.status.ok{color:var(--ink)}
+.status.no{color:var(--signal-ink)}
+.status b{font-family:var(--type);font-size:1.25em}
+.ticks{display:flex;gap:3px;align-items:center}
+.ticks i{flex:1;height:6px;border-radius:3px;background:var(--rule)}
+.ticks i.ok{background:var(--ink)}
+.ticks i.no{background:var(--signal)}
+.ticks i.now{background:var(--lav)}
+
+/* 鍵盤 */
+.keys{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px}
+.keys.few{grid-template-columns:repeat(var(--n,4),minmax(0,1fr))}
+.key{position:relative;min-height:58px;border:1.5px solid var(--ink);border-radius:14px;background:#fff;font-family:var(--type);font-weight:700;font-size:1.6rem;line-height:1;box-shadow:0 3px 0 var(--ink);transition:transform .08s,box-shadow .08s,background .2s}
+.keys.few .key{min-height:76px;font-size:2.2rem}
+.key:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
+.key.ok{background:var(--lamp)}
+.key.no{background:var(--signal-wash);border-color:var(--signal);box-shadow:0 3px 0 var(--signal)}
+.key.ans{outline:3px solid var(--lamp);outline-offset:2px}
+.key.fresh::after{content:"";position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--lamp)}
+.keys[aria-disabled="true"] .key{pointer-events:none}
+
+/* 連發的三格 */
+.slots{display:flex;justify-content:center;gap:10px}
+.slots span{width:56px;height:64px;border-bottom:2.5px solid var(--ink);display:grid;place-items:center;font-family:var(--type);font-weight:700;font-size:2rem}
+.slots span.no{color:var(--signal-ink);border-color:var(--signal)}
+.slots span.cur{border-color:var(--lamp)}
+
+/* 新的燈 */
+.newlamp{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.glyph{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;font-family:var(--type);font-weight:700;font-size:3.4rem;background:radial-gradient(circle,var(--lamp-hi) 0,var(--lamp) 58%,#E08E0B 100%);color:var(--ink);transition:box-shadow .05s}
+.glyph.on{box-shadow:0 0 0 10px rgba(242,163,27,.28),0 0 40px 10px rgba(255,210,122,.8)}
+.glyph.pair{font-size:2.4rem;letter-spacing:.06em}
+
+/* 結算 */
+.res-big{font-family:var(--serif);font-size:2.4rem;font-weight:700;line-height:1.2}
+.res-big .type{font-size:.95em}
+.res-row{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--ink-2)}
+.res-row b{font-family:var(--type);color:var(--ink);font-size:1.1rem}
+.unlock{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;background:var(--lamp-wash);border-radius:18px;padding:14px 16px}
+.unlock .glyph{width:64px;height:64px;font-size:2rem}
+.diary-q{font-family:var(--serif);font-size:1.08rem;line-height:1.9;border-left:3px solid var(--lamp);padding-left:14px;color:var(--ink)}
+
+/* 進度圖卡 */
+.cardbox{display:grid;gap:12px;justify-items:start}
+.cardbox[hidden]{display:none}
+.card-img{display:block;width:100%;max-width:360px;height:auto;border-radius:18px;box-shadow:0 1px 0 rgba(27,36,48,.06),0 18px 40px -18px rgba(27,36,48,.35)}
+.card-btns{display:flex;flex-wrap:wrap;gap:10px}
+.card-btns .btn{min-height:46px;padding:0 18px;font-size:.95rem}
+.card-hint{font-size:.85rem;color:var(--ink-3);max-width:34em}
+/* 其他區塊 */
+.sec{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding-block:52px;border-top:1px solid var(--rule)}
+@media(min-width:960px){.sec{grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);column-gap:48px}}
+.sec-head h2{font-family:var(--serif);font-weight:700;font-size:clamp(1.6rem,1.3rem + 1vw,1.85rem);line-height:1.3;margin-bottom:10px}
+.sec-head p{color:var(--ink-2)}
+.sec-body{display:grid;gap:30px;min-width:0}
+.sec-body h3{font-family:var(--serif);font-size:1.25rem;font-weight:700;margin-bottom:10px}
+
+/* 燈陣 */
+.lamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:10px 6px;margin:0;padding:0;list-style:none}
+.lamps li{display:grid;justify-items:center;gap:4px}
+.lamps button{width:44px;height:44px;border-radius:50%;border:1.5px dashed #CDD1E1;background:#fff;font-family:var(--type);font-weight:700;font-size:1.15rem;color:#8A90A6;display:grid;place-items:center;padding:0}
+.lamps button.lit{border:0;background:radial-gradient(circle,var(--lamp-hi) 0,var(--lamp) 70%);color:var(--ink);box-shadow:0 0 0 4px var(--lamp-wash)}
+.lamps .n{font-size:.7rem;color:var(--ink-3);font-family:var(--type)}
+.lamps button:disabled{cursor:default}
+.pips{display:flex;gap:2px}
+.pips i{width:6px;height:3px;border-radius:2px;background:var(--rule)}
+.pips i.on{background:var(--ink)}
+
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin:0}
+@media(min-width:720px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stats div{background:#fff;padding:14px 16px}
+.stats dt{font-size:.82rem;color:var(--ink-3)}
+.stats dd{margin:0;font-family:var(--type);font-weight:700;font-size:1.7rem;line-height:1.3}
+.stats dd small{font-family:var(--sans);font-size:.8rem;font-weight:500;color:var(--ink-3);margin-left:4px}
+.goal{height:6px;border-radius:3px;background:var(--rule);margin-top:6px;overflow:hidden}
+.goal i{display:block;height:100%;width:0;background:var(--lamp);border-radius:3px;transition:width .6s var(--ease)}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font-family:var(--sans);font-size:11px;fill:var(--ink-3)}
+.chart .bar{fill:var(--ink)}
+.chart .bar.zero{fill:var(--rule)}
+.chart .hit{fill:transparent;cursor:default}
+.chart .hit:hover+.bar,.chart .hit:focus+.bar{fill:var(--signal)}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;font-size:.8rem;padding:6px 10px;border-radius:8px;white-space:nowrap;transform:translate(-50%,-110%)}
+.cap{font-size:.85rem;color:var(--ink-3);margin-top:8px}
+.conf{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.conf li{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--rule);padding-block:6px}
+.conf b{font-family:var(--type);font-size:1.3rem}
+.conf .as{color:var(--ink-3);font-size:.85rem;margin-inline:8px}
+.conf button{border:1.5px solid var(--ink);background:#fff;border-radius:999px;min-height:40px;padding:0 14px;font-size:.85rem;font-weight:700}
+.diary{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.diary li{display:grid;grid-template-columns:3.2em 1fr;gap:12px;align-items:baseline}
+.diary .no{font-family:var(--type);font-weight:700;color:var(--ink-3);font-size:.9rem}
+.diary p{font-family:var(--serif);font-size:1.05rem;line-height:1.85}
+.diary li.locked p{color:var(--ink-3);font-family:var(--sans);font-size:.9rem}
+.set{border:1.5px solid var(--ink);border-radius:18px;padding:4px 18px}
+.set summary{min-height:52px;display:flex;align-items:center;font-weight:700;cursor:pointer}
+.set .grid{display:grid;gap:18px;padding:6px 0 18px}
+.set label{display:grid;gap:6px;font-size:.92rem;font-weight:500}
+.set .val{font-family:var(--type);font-weight:700}
+.set input[type=range]{width:100%;accent-color:var(--signal);height:28px}
+.set .chk{display:flex;align-items:center;gap:10px;min-height:44px}
+.set .chk input{width:20px;height:20px;accent-color:var(--signal)}
+.reset{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:.88rem;color:var(--ink-3)}
+.reset button{border:0;background:none;color:var(--ink-2);text-decoration:underline;text-underline-offset:4px;min-height:44px;padding:0}
+
+/* 研究 */
+.answer{font-family:var(--serif);font-size:1.15rem;line-height:1.95}
+.methods{display:grid;gap:18px;margin:0;padding:0;list-style:none}
+@media(min-width:720px){.methods{grid-template-columns:1fr 1fr;column-gap:28px}}
+.methods li{display:grid;gap:4px;padding-top:12px;border-top:2px solid var(--ink)}
+.methods b{font-weight:700}
+.methods span{color:var(--ink-2);font-size:.95rem}
+.caveat{background:var(--well);border-radius:16px;padding:16px 18px;font-size:.95rem;color:var(--ink-2)}
+.refs{display:grid;gap:8px;font-size:.88rem}
+.refs a{color:var(--dah-ink);text-underline-offset:3px}
+.refs a:hover{color:var(--ink)}
+.refs span{color:var(--ink-3)}
+.sec a.inl{color:var(--signal-ink);text-underline-offset:3px}
+
+/* FAQ */
+.faq{margin:0;display:grid;gap:0}
+.faq div{border-top:1px solid var(--rule);padding-block:16px}
+.faq dt{font-weight:700;font-size:1.05rem;margin-bottom:6px}
+.faq dd{margin:0;color:var(--ink-2)}
+
+/* 燈塔（聯盟，遊戲區外） */
+.lights{display:grid;gap:16px}
+@media(min-width:720px){.lights{grid-template-columns:1fr 1fr}}
+.light{border:1.5px solid var(--ink);border-radius:20px;padding:18px 18px 20px;display:grid;gap:10px;align-content:start}
+.light h3{font-family:var(--serif);font-size:1.3rem;margin:0}
+.light .where{font-size:.85rem;color:var(--ink-3)}
+.light p{color:var(--ink-2);font-size:.95rem}
+.disc-txt{font-size:.82rem;color:var(--ink-3)}
+
+/* 分享 */
+.share{display:grid;gap:12px;justify-items:center;text-align:center;padding-block:44px 8px;border-top:1px solid var(--rule)}
+.share p{font-family:var(--serif);font-size:1.2rem}
+.share-row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.share-row button{border:1.5px solid var(--ink);background:#fff;border-radius:999px;min-height:44px;padding:0 16px;font-weight:700;font-size:.9rem}
+.share-row button:hover{background:var(--well)}
+
+/* 回遊戲主頁（遊戲強調色：訊號紅） */
+.kh-hub{display:block;max-width:560px;margin:36px auto 0;padding:0 16px}
+.kh-hub a{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff;background:var(--signal);border:2px solid var(--ink);border-radius:22px;padding:16px 20px;box-shadow:0 6px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.kh-hub a:hover{transform:translateY(-2px);box-shadow:0 8px 0 var(--ink)}
+.kh-hub a:active{transform:translateY(4px);box-shadow:0 2px 0 var(--ink)}
+.kh-hub__icon{flex:none;width:52px;height:52px;border-radius:14px;background:#fff;display:grid;place-items:center}
+.kh-hub__txt{display:grid;gap:2px;flex:1;min-width:0}
+.kh-hub__kicker{font-size:.85rem;font-weight:700}
+.kh-hub__title{font-size:1.25rem;font-weight:900;line-height:1.35}
+.kh-hub__sub{font-size:.88rem;font-weight:500}
+
+/* 廣告與頁尾（core §4、§6） */
+.kh-ad{display:block;width:100%;max-width:728px;margin:48px auto;padding:0 16px;text-align:center;clear:both}
+.kh-ad--game{margin-top:150px}
+.kh-ad__label{display:block;font-size:12px;letter-spacing:.08em;color:var(--ink-3);margin-bottom:6px;line-height:1.4}
+.kh-ad ins[data-ad-status="unfilled"]{display:none!important}
+.kh-ad:has(ins[data-ad-status="unfilled"]){display:none}
+.kh-legal{display:block;max-width:640px;font-size:12px;line-height:1.8;color:var(--ink-3);text-align:center;margin:16px auto 24px;padding:0 16px}
+.kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="kh-brand-row">
+      <a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和・小遊戲</a>
+      <span class="today-pill" id="todayPill" hidden>今日 <b id="todayMin">0</b> 分</span>
+    </div>
+  </header>
+
+  <div id="app">
+  <section class="hero">
+    <div class="title">
+      <p class="mark">守燈人摩斯日誌</p>
+      <h1>摩斯密碼學習遊戲：只用耳朵，學會聽懂摩斯電碼</h1>
+    </div>
+
+    <figure class="scene" id="scene" aria-label="黎明的海岸，紅白相間的燈塔，岸邊有 41 盞燈，點亮的數量就是你學會的字元數">
+      <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C6DCF2"/><stop offset=".42" stop-color="#E3EDF8"/><stop offset=".56" stop-color="#FBE7D2"/><stop offset=".6" stop-color="#F9DCC6"/></linearGradient>
+          <radialGradient id="gSun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF8E6"/><stop offset=".25" stop-color="#FFEBC4" stop-opacity=".95"/><stop offset="1" stop-color="#FFE2B5" stop-opacity="0"/></radialGradient>
+          <linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF0F8"/><stop offset=".5" stop-color="#D3DEEE"/><stop offset="1" stop-color="#B9C7E0"/></linearGradient>
+          <linearGradient id="gLand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAEE"/><stop offset=".35" stop-color="#F3D2DB"/><stop offset="1" stop-color="#E3B9C8"/></linearGradient>
+          <linearGradient id="gCliff" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A6AACB"/><stop offset="1" stop-color="#7A7FA6"/></linearGradient>
+          <linearGradient id="gCap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCEFF2"/><stop offset="1" stop-color="#F1CCD7"/></linearGradient>
+          <linearGradient id="gBeam" gradientUnits="userSpaceOnUse" x1="920" y1="228" x2="240" y2="228"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".95"/><stop offset="1" stop-color="#FFF4D6" stop-opacity="0"/></linearGradient>
+          <radialGradient id="gHalo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE4A3"/><stop offset=".4" stop-color="#FFC861" stop-opacity=".55"/><stop offset="1" stop-color="#FFC861" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gFog" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset=".6" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+          <clipPath id="cTower"><path d="M892 398 L900 252 L940 252 L948 398 Z"/></clipPath>
+        </defs>
+        <rect width="1200" height="600" fill="url(#gSky)"/>
+        <circle cx="470" cy="352" r="190" fill="url(#gSun)"/>
+        <path d="M0 352 L0 296 C70 286 120 246 196 258 C258 268 286 228 348 234 C414 240 440 296 524 302 C600 308 646 286 712 298 L782 352 Z" fill="#C3C7E0" opacity=".85"/>
+        <path d="M0 352 L0 318 C64 312 138 292 214 308 C266 318 306 330 368 340 L430 352 Z" fill="#AEB3D3"/>
+        <rect y="352" width="1200" height="248" fill="url(#gSea)"/>
+                <g stroke="#FFF7E8" stroke-linecap="round" opacity=".8"><path d="M420 372 H520" stroke-width="2"/><path d="M440 388 H500" stroke-width="2"/><path d="M400 410 H540" stroke-width="1.5" opacity=".6"/><path d="M450 428 H492" stroke-width="1.5"/></g>
+        <g class="fog"><ellipse cx="300" cy="346" rx="320" ry="26" fill="url(#gFog)"/><ellipse cx="660" cy="338" rx="220" ry="18" fill="url(#gFog)" opacity=".8"/></g>
+        <g class="boat"><path d="M592 388 L640 388 L632 397 L600 397 Z" fill="#6E7397"/><path d="M612 388 V366" stroke="#6E7397" stroke-width="2"/><path d="M614 368 L630 386 L614 386 Z" fill="#fff" opacity=".9"/><circle class="glow" cx="612" cy="365" r="9" fill="url(#gHalo)"/></g>
+        <polygon class="beam" points="920,220 920,236 230,330 250,110" fill="url(#gBeam)"/>
+        <path d="M0 600 L0 488 C120 470 250 452 370 452 C480 452 586 468 690 474 C724 476 748 468 770 452 L820 600 Z" fill="url(#gLand)"/>
+        <path d="M694 600 C700 530 722 470 764 438 C806 406 852 396 904 396 C990 396 1076 404 1200 414 L1200 600 Z" fill="url(#gCliff)"/>
+        <path d="M748 452 C786 418 836 402 904 400 C990 398 1080 406 1200 416 L1200 428 C1080 420 990 414 910 416 C850 418 800 432 760 458 Z" fill="url(#gCap)"/>
+        <g>
+          <rect x="986" y="374" width="58" height="28" fill="#fff"/>
+          <path d="M980 376 L1015 356 L1050 376 Z" fill="#C8102E"/>
+          <rect x="1006" y="384" width="12" height="18" fill="#7A7FA6"/>
+        </g>
+        <g>
+          <path d="M892 398 L900 252 L940 252 L948 398 Z" fill="#fff"/>
+          <g clip-path="url(#cTower)" fill="#C8102E"><rect x="880" y="276" width="80" height="24"/><rect x="880" y="324" width="80" height="24"/><rect x="880" y="372" width="80" height="26"/></g>
+          <path d="M911 398 V384 A9 9 0 0 1 929 384 V398 Z" fill="#1B2430"/>
+          <rect x="890" y="244" width="60" height="8" rx="2" fill="#1B2430"/>
+          <rect x="902" y="212" width="36" height="32" fill="#FFE3A1"/>
+          <circle class="glow" cx="920" cy="228" r="74" fill="url(#gHalo)"/>
+          <g stroke="#1B2430" stroke-width="2"><path d="M902 212 V244 M914 212 V244 M926 212 V244 M938 212 V244"/></g>
+          <path d="M897 213 Q920 186 943 213 Z" fill="#1B2430"/>
+          <path d="M920 194 V182" stroke="#1B2430" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <g class="fog f2"><ellipse cx="420" cy="470" rx="360" ry="22" fill="url(#gFog)" opacity=".75"/></g>
+        <g id="lampLayer"></g>
+        <path id="coast" d="M790 448 C700 474 600 470 500 460 C420 452 350 446 290 432 C262 424 244 414 232 404" fill="none"/>
+      </svg>
+      <figcaption class="scene-chip"><span>已點亮</span><b id="litCount" class="type">2</b><span>／41 盞燈</span></figcaption>
+    </figure>
+
+    <p class="lede">霧季來了。老守燈人把電報機和一本日誌留給你，第一頁只寫了一句：<q>別看，用聽的。</q>每學會一個字元，海岸就多亮一盞燈，總共 41 盞。</p>
+
+    <div class="console" id="console">
+      <div class="c-bar">
+        <p class="c-label" id="cLabel">值班台</p>
+        <div class="seg" id="modeSeg" role="group" aria-label="練習方式">
+          <button type="button" data-mode="koch" aria-pressed="true">單字</button>
+          <button type="button" data-mode="group" aria-pressed="false" title="點亮 5 盞後開放連發">連發</button>
+        </div>
+      </div>
+
+      <!-- 歡迎 -->
+      <div class="v" data-view="welcome">
+        <h2 id="wT">第一次值班？</h2>
+        <p class="d" id="wD">先花 5 分鐘讀日誌第一頁：認識點與劃，再練只用耳朵聽。</p>
+        <div class="btns">
+          <button class="btn" type="button" id="wBtn">翻開第一頁</button>
+          <button class="btn quiet" type="button" id="wSkip">我會摩斯碼了，直接值班</button>
+        </div>
+        <ol class="how" id="wHow">
+          <li><div><b>讀日誌第一頁</b><span>5 分鐘認識嘀與噠，最後一步就只用耳朵。</span></div></li>
+          <li><div><b>每天值幾班</b><span>一班 25 個字，約 2 分鐘。聽到聲音，選出字母。</span></div></li>
+          <li><div><b>答對九成，點亮一盞燈</b><span>每點亮一盞就多學一個字，41 盞燈全亮就學會全部字元。</span></div></li>
+        </ol>
+        <dl class="mini" id="wMini" hidden>
+          <div><dt>已點亮</dt><dd><span id="mLit">2</span><small>／41</small></dd></div>
+          <div><dt>今日值班</dt><dd><span id="mToday">0</span><small>分</small></dd></div>
+          <div><dt>連續</dt><dd><span id="mStreak">0</span><small>天</small></dd></div>
+        </dl>
+        <p class="note">請打開聲音，戴耳機更清楚；iPhone 請關閉靜音鍵。</p>
+      </div>
+
+      <!-- 第一頁（入門：看） -->
+      <div class="v" data-view="s1a" hidden>
+        <ol class="steps" aria-hidden="true"><li class="on"></li><li></li><li></li></ol>
+        <p class="step-k">第一頁 1／3</p>
+        <h2>摩斯碼只有兩種聲音</h2>
+        <p class="d">短的叫「嘀」，長的叫「噠」，噠是嘀的三倍長。兩個都按按看。</p>
+        <div class="dd">
+          <button type="button" id="ddDit"><span class="pat"><i class="dot"></i></span><span class="nm">嘀</span><span class="sub">短</span></button>
+          <button type="button" id="ddDah"><span class="pat"><i class="dash"></i></span><span class="nm">噠</span><span class="sub">長</span></button>
+        </div>
+        <div class="btns"><button class="btn" type="button" id="s1aNext" disabled>下一步</button></div>
+      </div>
+
+      <div class="v" data-view="s1b" hidden>
+        <ol class="steps" aria-hidden="true"><li class="on"></li><li class="on"></li><li></li></ol>
+        <p class="step-k">第一頁 2／3</p>
+        <h2>看著聽：四個字母</h2>
+        <p class="d" id="s1bD">點卡片聽聲音，圖案會跟著聲音亮起來。四張都聽過，就來小考。</p>
+        <div class="cards" id="s1Cards"></div>
+        <div class="btns"><button class="btn" type="button" id="s1bNext" disabled>開始小考</button></div>
+      </div>
+
+      <div class="v" data-view="s1q" hidden>
+        <ol class="steps" aria-hidden="true" id="s1qSteps"><li class="on"></li><li class="on"></li><li></li></ol>
+        <p class="step-k" id="s1qK">第一頁 2／3</p>
+        <h2 id="s1qT">看著聽：四個字母</h2>
+        <p class="d" id="s1qD"></p>
+        <div class="listen">
+          <button class="disc" type="button" id="s1Disc" aria-label="再聽一次"><span class="pat solid" id="s1Pat"></span></button>
+          <span class="disc-lbl" id="s1Count">第 1／4 題</span>
+        </div>
+        <p class="status" id="s1Status" aria-live="polite"></p>
+        <div class="keys few" id="s1Keys"></div>
+      </div>
+
+      <div class="v" data-view="s1done" hidden>
+        <ol class="steps" aria-hidden="true"><li class="on"></li><li class="on"></li><li class="on"></li></ol>
+        <h2>第一頁讀完了</h2>
+        <p class="d">最後 6 題，你靠的是聲音的節奏，不是圖案。接下來就一直這樣練：速度調到正式的每分鐘 20 字，點劃不再出現。</p>
+        <p class="diary-q">為什麼？1936 年，心理學家 Koch 發現先看表、再在腦中數點劃的人，大多卡在每分鐘 10 字左右；一開始就用全速、把整個字當成一個聲音來聽的人，學得更快。</p>
+        <div class="btns"><button class="btn" type="button" id="s1Done">接下第一班：K 與 M</button></div>
+      </div>
+
+      <!-- 新的燈 -->
+      <div class="v" data-view="intro" hidden>
+        <div class="newlamp">
+          <div class="glyph" id="introGlyph" aria-hidden="true">K</div>
+          <div>
+            <h2 id="introT">新的燈</h2>
+            <p class="d" id="introD">聽三次，記住它的節奏。不用數有幾個嘀噠。</p>
+          </div>
+        </div>
+        <div class="btns">
+          <button class="btn" type="button" id="introGo">開始值班</button>
+          <button class="btn line" type="button" id="introAgain">再聽一次</button>
+        </div>
+      </div>
+
+      <!-- 值班中 -->
+      <div class="v" data-view="play" hidden>
+        <div class="ticks" id="ticks" aria-hidden="true"></div>
+        <div class="listen">
+          <button class="disc" type="button" id="disc" aria-label="再聽一次（空白鍵）">
+            <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 15 H14 L22 8 V32 L14 25 H8 Z" fill="#1B2430"/><path d="M27 13 C31 17 31 23 27 27" stroke="#1B2430" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M31 9 C38 15 38 25 31 31" stroke="#1B2430" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>
+          </button>
+          <span class="disc-lbl">再聽一次（空白鍵）</span>
+        </div>
+        <div class="slots" id="slots" hidden><span></span><span></span><span></span></div>
+        <p class="status" id="status" aria-live="polite">聽到了嗎？選出字母</p>
+        <div class="keys" id="keys"></div>
+        <div class="btns" style="justify-content:center"><button class="btn quiet" type="button" id="quitBtn">先休息</button></div>
+      </div>
+
+      <!-- 結算 -->
+      <div class="v" data-view="result" hidden>
+        <p class="res-big" id="rBig">這一班：<span class="type">23／25</span></p>
+        <div class="res-row" id="rRow"></div>
+        <div id="rUnlock"></div>
+        <p class="d" id="rMsg"></p>
+        <div class="btns">
+          <button class="btn" type="button" id="rNext">再值一班</button>
+          <button class="btn line" type="button" id="rShare">做進度圖卡</button>
+          <button class="btn quiet" type="button" id="rRest">今天先到這裡</button>
+        </div>
+        <div class="cardbox" id="rCard" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="logH">
+    <div class="sec-head">
+      <h2 id="logH">守燈日誌</h2>
+      <p>每盞燈是一個字元，順序照 LCWO 的 Koch 課程。點亮的燈按一下就能再聽。紀錄只存在這台裝置的瀏覽器。</p>
+    </div>
+    <div class="sec-body">
+      <div>
+        <h3>海岸的 41 盞燈</h3>
+        <ol class="lamps" id="lampGrid"></ol>
+        <p class="cap">燈下的短線是熟練度：連續答對會升一格，答錯回到第一格，格數低的字會多出現。</p>
+      </div>
+      <div>
+        <h3>值班紀錄</h3>
+        <dl class="stats">
+          <div><dt>今日值班</dt><dd><span id="stToday">0</span><small>／10 分鐘</small></dd><div class="goal"><i id="stGoal"></i></div></div>
+          <div><dt>連續天數</dt><dd><span id="stStreak">0</span><small>天</small></dd></div>
+          <div><dt>累積聽辨</dt><dd><span id="stTotal">0</span><small>個字</small></dd></div>
+          <div><dt>整體正確率</dt><dd><span id="stAcc">—</span></dd></div>
+        </dl>
+      </div>
+      <div>
+        <h3>最近 14 天</h3>
+        <div class="chart" id="chart"></div>
+        <p class="cap">每天的值班分鐘數。Koch 建議分散練習：每天一點，比週末一次練很久有效。</p>
+      </div>
+      <div>
+        <h3>常聽錯的字</h3>
+        <ul class="conf" id="confList"></ul>
+      </div>
+      <div>
+        <h3>進度圖卡</h3>
+        <p class="cap" id="logCardNote" style="margin:0 0 12px">點亮 3 盞燈後，就能做進度圖卡。</p>
+        <div class="btns"><button class="btn line" type="button" id="logCardBtn" hidden>做進度圖卡</button></div>
+        <div class="cardbox" id="logCard" hidden style="margin-top:14px"></div>
+      </div>
+      <div>
+        <h3>老守燈人的日誌</h3>
+        <ol class="diary" id="diaryList"></ol>
+      </div>
+      <details class="set" id="settings">
+        <summary>聲音與速度設定</summary>
+        <div class="grid">
+          <label>字元速度：每分鐘 <span class="val" id="vWpm">20</span> 字<input type="range" id="sWpm" min="12" max="35" step="1" value="20"></label>
+          <label>有效速度（Farnsworth）：每分鐘 <span class="val" id="vEff">12</span> 字<input type="range" id="sEff" min="5" max="35" step="1" value="12"></label>
+          <label>音高：<span class="val" id="vFreq">600</span> Hz<input type="range" id="sFreq" min="400" max="900" step="10" value="600"></label>
+          <label>音量：<span class="val" id="vVol">60</span>%<input type="range" id="sVol" min="10" max="100" step="5" value="60"></label>
+          <label class="chk"><input type="checkbox" id="sFlash" checked>燈光跟著聲音閃（只亮燈，不顯示點劃）</label>
+          <div class="btns"><button class="btn line" type="button" id="sTest">試聽 K M</button></div>
+          <p class="note">有效速度不能超過字元速度。字元速度建議維持 20 以上；跟不上時先調低有效速度，讓字和字之間的空白變長。</p>
+        </div>
+      </details>
+      <div class="reset"><button type="button" id="resetBtn">清除我的紀錄</button><span id="resetMsg" aria-live="polite"></span></div>
+    </div>
+  </section>
+  </div>
+
+  <section class="sec" aria-labelledby="gearH">
+    <div class="sec-head">
+      <h2 id="gearH">練習小建議</h2>
+      <p>用手機戴耳機練，聽得最清楚。</p>
+    </div>
+    <div class="sec-body">
+      <article class="light">
+        <h3>戴耳機，嘀和噠更分明</h3>
+        <p>耳機能把長短音的差別聽得更清楚，也不會被周圍的聲音蓋過。手邊沒有耳機的話，我們用的是 Apple AirPods 5，可以參考。</p>
+        <a class="btn line" href="https://s.shopee.tw/1LgH1Ug79D" target="_blank" rel="sponsored nofollow noopener" data-cta="gear_card" data-cta-type="shopee" style="justify-self:start">看 AirPods 5（蝦皮）→</a>
+      </article>
+      <p class="disc-txt">本區含蝦皮聯盟行銷連結。透過連結購買，本站會獲得分潤，你支付的價格不變。</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="sciH">
+    <div class="sec-head">
+      <h2 id="sciH">摩斯密碼怎麼學最快？<br>為什麼只用耳朵</h2>
+      <p>整理 Koch（1936）原始研究與現行線上課程的做法。編織日和整理，最後更新：2026 年 10 月 7 日。</p>
+    </div>
+    <div class="sec-body">
+      <p class="answer">先別背對照表。看表學的人，聽到聲音會先在腦中數點劃、再查表，慢速時還行，到每分鐘 10 字左右就卡住。Koch 的做法是一開始就用接近正式的速度，只學兩個字，答對九成再加一個，把每個字當成一整個聲音記住。</p>
+      <div>
+        <h3>這個遊戲照研究做的 6 件事</h3>
+        <ul class="methods">
+          <li><b>全速聽，不慢慢來</b><span>字元以每分鐘 20 字播放。Koch 發現低於 10 字，聽的人會把一個字拆成零散的嘀噠，反而學不到完整的聲音。</span></li>
+          <li><b>從兩個字開始</b><span>第一班只有 K 和 M，兩個聲音差很多。一班 25 題正確率達 90%，才點亮下一盞燈。</span></li>
+          <li><b>第二階段不顯示點劃</b><span>入門頁只用 5 分鐘介紹點劃，之後畫面上沒有任何圖案，避免養成「數點劃再查表」的習慣。</span></li>
+          <li><b>可以拉長字間空白</b><span>Farnsworth 間距：字元本身維持全速，只拉長字和字之間的空白。跟不上時調低有效速度，而不是放慢整個字。</span></li>
+          <li><b>舊字混著考</b><span>新字一出現就和已學的字交錯出題，逼耳朵分辨，而不是只聽最新的那一個。</span></li>
+          <li><b>錯的字多出幾次</b><span>每個字有自己的熟練度：答錯的字、很久沒練的字、常和別的字搞混的字，會更常出現。</span></li>
+        </ul>
+      </div>
+      <p class="caveat">要說清楚的一點：Koch 的實驗是 1930 年代對受訓報務員做的，樣本與控制條件和今天的研究不同。長島 CW 俱樂部（LICW）2026 年的方法指南重新檢視了這份報告，建議部分實驗結論要謹慎看待。不過「用接近正式速度、一次加一個字、只用耳朵」這套做法，至今仍是 LCWO 等主流線上課程的基礎。</p>
+      <p class="cap" style="margin:0">字元順序：取自 LCWO 原始碼的 Koch 課程順序，共 41 個字元（26 個字母、10 個數字、5 個標點）。</p>
+      <p class="cap" style="margin:0">想看完整說明：<a href="https://knittinghiyori.com/morse-code-training-game/" data-cta="about_article" data-cta-type="article">摩斯密碼怎麼學最快？Koch 法只用耳朵學</a></p>
+      <div class="refs">
+        <a href="https://longislandcwclub.org/wp-content/uploads/2022/11/KOCH-1936.pdf" target="_blank" rel="noopener" data-cta="source_koch1936" data-cta-type="other">Koch, L. (1936). Berufspsychologische Untersuchung der Tätigkeit des Morseschreibens. Zeitschrift für angewandte Psychologie, 50（英譯全文，LICW 提供）</a>
+        <a href="https://zerobeat.net/tasrt/c29.htm" target="_blank" rel="noopener" data-cta="source_pierpont" data-cta-type="other">Pierpont, W. G. (N0HFF). The Art and Skill of Radio-Telegraphy, 第 29 章 The Koch Researches</a>
+        <a href="https://github.com/dj1yfk/lcwo" target="_blank" rel="noopener" data-cta="source_lcwo" data-cta-type="other">LCWO（Learn CW Online）原始碼：Koch 課程字元順序</a>
+        <a href="https://morsecode.world/international/timing/farnsworth.html" target="_blank" rel="noopener" data-cta="source_farnsworth" data-cta-type="other">Farnsworth 間距的計算（依 Bloom, J., KE3Z. A Standard for Morse Timing Using the Farnsworth Technique. QEX, ARRL）</a>
+        <a href="https://longislandcwclub.org/wp-content/uploads/2026/08/THE-LICW-METHOD-GUIDE-2.2.pdf" target="_blank" rel="noopener" data-cta="source_licw" data-cta-type="other">Long Island CW Club (2026). The LICW Method Guide 2.2：對 Koch 1936 報告的重新檢視</a>
+        <a href="https://doi.org/10.1037/0033-2909.132.3.354" target="_blank" rel="noopener" data-cta="source_cepeda2006" data-cta-type="other">Cepeda, N. J. 等 (2006). Distributed practice in verbal recall tasks. Psychological Bulletin, 132(3)（分散練習）</a>
+        <a href="https://doi.org/10.1007/s11251-007-9015-8" target="_blank" rel="noopener" data-cta="source_rohrer2007" data-cta-type="other">Rohrer, D. ＆ Taylor, K. (2007). The shuffling of mathematics problems improves learning. Instructional Science, 35（交錯練習）</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="faqH">
+    <div class="sec-head">
+      <h2 id="faqH">摩斯密碼學習常見問題</h2>
+      <p>開始值班前，最多人想知道的幾件事。</p>
+    </div>
+    <div class="sec-body">
+      <dl class="faq">
+        <div><dt>摩斯密碼怎麼學最快？</dt><dd>目前最多人推薦的是 Koch 法：一開始就用正式速度播放，只學 2 個字元，正確率達到約 90% 再加入下一個，而且全程只用耳朵、不看對照表。這個遊戲照這套方法設計，每天練 10 到 30 分鐘，效果比偶爾練很久好。</dd></div>
+        <div><dt>為什麼不建議背摩斯密碼對照表？</dt><dd>看表學會的人，聽到聲音時常會先在腦中數有幾個點和劃，再去對照表找字母。Koch 在 1936 年的研究發現，這種方法在慢速時可行，但到了每分鐘 10 字左右就會卡住。直接把整個字當成一個聲音記住，才跟得上正式速度。</dd></div>
+        <div><dt>什麼是 Koch 法？</dt><dd>Koch 法是德國心理學家 Ludwig Koch 在 1936 年提出的摩斯碼訓練方式：從 K、M 這種聲音差異大的兩個字開始，用接近正式的速度練，正確率約 90% 才加入下一個字元。今天 LCWO 等線上課程都採用這個方法，本遊戲的 41 個字元順序也取自 LCWO。</dd></div>
+        <div><dt>什麼是 Farnsworth 間距？</dt><dd>Farnsworth 間距是讓每個字元維持正式速度，只把字元和字元之間的空白拉長，讓新手有時間反應。本遊戲預設字元速度每分鐘 20 字、有效速度每分鐘 12 字，在設定裡可以調整；字元速度越快，越接近實際收報。</dd></div>
+        <div><dt>每天要練多久？</dt><dd>Koch 的研究認為連續練半小時最有效，早上和下午各練一次更好；間隔分散的練習也比集中一次練很久記得牢。遊戲把每天的目標設為 10 分鐘，大約是 3 到 4 班。</dd></div>
+        <div><dt>我的練習紀錄存在哪裡？</dt><dd>紀錄只存在這台裝置的瀏覽器裡，不會上傳。換手機或清除瀏覽器資料後，會從第一盞燈重新開始；在日誌最下方也可以自己清除紀錄。</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 聯盟區（遊戲區外；連結集中在 MORSE_LINKS，沒填的按鈕自動隱藏） -->
+  <section class="sec" aria-labelledby="lightH">
+    <div class="sec-head">
+      <h2 id="lightH">下班後，去看真的燈塔</h2>
+      <p>台灣本島最南和最北的兩座燈塔，都還在亮。</p>
+    </div>
+    <div class="sec-body">
+      <div class="lights">
+        <article class="light">
+          <h3>鵝鑾鼻燈塔</h3>
+          <p class="where">屏東縣恆春鎮・台灣本島最南端</p>
+          <p>1883 年點燈，是台灣光度最強的燈塔，有「東亞之光」之稱。早年為了防禦而建成堡壘式，四周如今是鵝鑾鼻公園，全年開放參觀。</p>
+          <a class="btn line" data-aff="eluanbi" href="#" target="_blank" rel="sponsored nofollow noopener" data-cta="lighthouse_trip" data-cta-type="klook" hidden>查看鵝鑾鼻燈塔周邊行程</a>
+        </article>
+        <article class="light">
+          <h3>富貴角燈塔</h3>
+          <p class="where">新北市石門區・台灣本島最北端</p>
+          <p>黑白相間的八角形塔身，是為了在秋冬濃霧裡也看得見；它也是台灣第一座配有霧笛的燈塔，霧笛每 30 秒響一次。</p>
+          <a class="btn line" data-aff="fuguijiao" href="#" target="_blank" rel="sponsored nofollow noopener" data-cta="lighthouse_trip" data-cta-type="klook" hidden>查看台灣燈塔之旅</a>
+        </article>
+      </div>
+      <p class="disc-txt" id="affDisc" hidden>本區含 Klook 聯盟行銷連結。透過連結訂購，本站會獲得分潤，你支付的價格不變；本站與商家沒有審稿關係，價格與優惠以頁面為準。</p>
+    </div>
+  </section>
+
+  <div class="share" aria-label="分享">
+    <p id="shareLabel">一起來守燈：看誰先點亮 41 盞。</p>
+    <div class="share-row">
+      <button type="button" data-share="line">LINE</button>
+      <button type="button" data-share="facebook">Facebook</button>
+      <button type="button" data-share="threads">Threads</button>
+      <button type="button" data-share="x">X</button>
+      <button type="button" data-share="telegram">Telegram</button>
+      <button type="button" data-share="copy_link" id="copyBtn">複製連結</button>
+    </div>
+  </div>
+</div>
+
+<!-- 回遊戲主頁（GA4 cta_click：about_hub／game） -->
+<nav class="kh-hub" aria-label="更多遊戲">
+  <a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">
+    <span class="kh-hub__icon" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M11 27 L13 9 H17 L19 27 Z" fill="#C8102E"/><rect x="10" y="6" width="10" height="4" rx="1" fill="#1B2430"/><path d="M11 6 Q15 0 19 6 Z" fill="#1B2430"/><circle cx="15" cy="8" r="2" fill="#F2A31B"/></svg></span>
+    <span class="kh-hub__txt">
+      <span class="kh-hub__kicker">還想玩別的？</span>
+      <span class="kh-hub__title">探索更多互動遊戲 →</span>
+      <span class="kh-hub__sub">日文、程式、音感、摩斯學習小遊戲都在這裡</span>
+    </span>
+  </a>
+</nav>
+
+<!-- Google AdSense 手動廣告單元（games slot，每頁 1 個） -->
+<div class="kh-ad kh-ad--game" aria-label="廣告">
+  <span class="kh-ad__label">廣告</span>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2022028565680247" data-ad-slot="5316670118" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+
+<script>
+/* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
+   各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
+   注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
+var HY_GAME_ID = 'morse_code';  /* 遊戲登記表的 game_id */
+var HY_GAME_ROOT = '#app';  /* 遊戲最外層的選擇器 */
+var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目前語言變數 */
+
+(function(){
+  var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
+  var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
+  var sent = {};
+  var playMs = 0, visibleAt = 0;        /* 實際遊玩時間：只算分頁在前景的時間 */
+  var rounds = 0, roundAt = 0, roundOpen = null;
+
+  function lang(){ try { return LANG_MAP[HY_GAME_LANG()] || 'zh-Hant'; } catch(e){ return 'zh-Hant'; } }
+  function now(){ return Date.now(); }
+  function secs(ms){ return Math.round(ms / 1000); }
+
+  function send(name, params, beacon){
+    try {
+      var p = {}, k, v;
+      params = params || {};
+      for (k in params) {
+        v = params[k];
+        if (v === undefined || v === null || v === '') continue;
+        if (typeof v === 'boolean') v = v ? 'yes' : 'no';
+        if (typeof v === 'string') v = v.slice(0, 100);   /* GA4 參數值上限 100 字元 */
+        p[k] = v;
+      }
+      p.game_id = HY_GAME_ID;
+      p.page_lang = lang();
+      p.content_group = 'game';
+      if (beacon) p.transport_type = 'beacon';
+      if (DEBUG) { p.debug_mode = true; if (window.console) console.log('[hy-game]', name, p); }
+      if (typeof window.gtag === 'function') { window.gtag('event', name, p); return; }
+      window.dataLayer = window.dataLayer || [];
+      (function(){ window.dataLayer.push(arguments); })('event', name, p);
+    } catch(e) {}
+  }
+
+  function playedMs(){ return playMs + (visibleAt ? now() - visibleAt : 0); }
+
+  var api = window.hyGame = {
+    /* 任何事件 */
+    event: send,
+    /* 每次載入頁面只送一次 */
+    once: function(name, params){ if (sent[name]) return; sent[name] = 1; send(name, params); },
+    /* 開始玩：entry = direct／shared／saved */
+    start: function(entry){
+      if (sent.game_start) return;
+      if (!document.hidden) visibleAt = now();
+      api.once('game_start', { entry_point: entry || 'direct' });
+    },
+    /* 一局開始：option＝模式、level＝難度 */
+    roundStart: function(params){
+      api.start('direct');
+      if (roundOpen) api.roundEnd({ result: 'quit' });   /* 上一局沒結束就開新局 → 記為放棄 */
+      params = params || {};
+      roundAt = playedMs();   /* 局的秒數同樣只算前景 */
+      roundOpen = { option: params.option, level: params.level };
+      send('round_start', params);
+    },
+    /* 一局結束：result＝complete／fail／quit／timeout，另帶 score、item_count、correct_count */
+    roundEnd: function(params, beacon){
+      if (!roundOpen) return;
+      var p = {}, k;
+      params = params || {};
+      for (k in roundOpen) p[k] = roundOpen[k];
+      for (k in params) p[k] = params[k];
+      p.duration_sec = secs(playedMs() - roundAt);
+      p.result = p.result || 'complete';
+      if (p.result !== 'quit') rounds = rounds + 1;
+      p.round_count = rounds;
+      roundOpen = null;
+      send('round_end', p, beacon);
+    },
+    /* 分享：method 見值域表，type = result／game */
+    share: function(method, type, extra){
+      var p = {}, k; extra = extra || {};
+      for (k in extra) p[k] = extra[k];
+      p.method = method; p.content_type = type;
+      send('share', p);
+    },
+    /* 選填：遊戲可覆寫，替 cta_click 補參數 */
+    ctaExtra: null
+  };
+
+  function inRoot(t){ if (!t || !t.closest) return null; return t.closest(HY_GAME_ROOT); }
+
+  /* 第一次在遊戲區點擊、輸入或按鍵 → 自動 game_start（點 CTA 不算；只捲動不算） */
+  function autoStart(e){
+    if (sent.game_start) return;
+    var t = e.target;
+    if (!inRoot(t)) return;
+    if (t.closest('[data-cta]')) return;
+    api.start('direct');
+  }
+  document.addEventListener('click', autoStart, true);
+  document.addEventListener('input', autoStart, true);
+  document.addEventListener('keydown', autoStart, true);
+
+  /* 點任何 [data-cta] → cta_click（與故事、工具同一個事件） */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('[data-cta]');
+    if (!a) return;
+    var p = {}, ex = {}, k;
+    try { if (typeof api.ctaExtra === 'function') ex = api.ctaExtra(a) || {}; } catch(err) {}
+    for (k in ex) p[k] = ex[k];
+    p.cta_id = a.getAttribute('data-cta');
+    p.cta_type = a.getAttribute('data-cta-type') || 'other';
+    p.link_url = a.href || '';
+    send('cta_click', p);
+  }, true);
+
+  /* 遊玩計時：切到背景暫停，回來繼續 */
+  document.addEventListener('visibilitychange', function(){
+    if (!sent.game_start) return;
+    if (document.hidden) {
+      if (visibleAt) { playMs = playMs + now() - visibleAt; visibleAt = 0; }
+    } else if (!sent.game_exit) {
+      visibleAt = now();
+    }
+  });
+
+  /* 離開頁面 → game_exit（每次載入只送一次；沒開始玩就不送） */
+  function exit(){
+    if (!sent.game_start || sent.game_exit) return;
+    if (roundOpen) api.roundEnd({ result: 'quit' }, true);
+    sent.game_exit = 1;
+    send('game_exit', { duration_sec: secs(playedMs()), round_count: rounds }, true);
+  }
+  window.addEventListener('pagehide', exit);
+})();
+/* ===== /GA4 統一追蹤 ===== */
+</script>
+<script>
+/* 聯盟連結集中在這裡（games §5）。填入 Travelpayouts／Klook 後台產生的連結；空字串＝按鈕不顯示。網址不可含和號。 */
+window.MORSE_LINKS = { eluanbi: 'https://klook.tpk.ro/6eB8W3S8', fuguijiao: 'https://klook.tpk.ro/AFEYvT5T' };
+</script>
+<script src="/lib/hy-trainer/hy-trainer.js"></script>
+<script src="morse.js"></script>
+<script src="lang-zh.js"></script>
+<script src="game.js"></script>
+<script src="/lib/hy-fav.js" defer></script>
+</body>
+</html>

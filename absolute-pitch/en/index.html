@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Travelpayouts Drive（games；head 第一個 script） -->
+<script data-cfasync="false">(function(){var s=document.createElement("script");s.async=1;s.setAttribute("data-cmp-ab","2");s.src="https://emrld.ltd/NTc4NjIz.js?t=578623";document.head.appendChild(s);})();</script>
+<title>Absolute Pitch Trainer | Can Adults Learn Perfect Pitch? Free Ear Training Game</title>
+<meta name="description" content="Can adults learn absolute pitch? A free ear training game built on 2019–2025 adult training studies: unlock one note at a time, noise between notes, three octaves and sounds, a 12-note test and your own mistake log.">
+<link rel="canonical" href="https://games.knittinghiyori.com/absolute-pitch/en/">
+<link rel="alternate" hreflang="zh-Hant" href="https://games.knittinghiyori.com/absolute-pitch/">
+<link rel="alternate" hreflang="en" href="https://games.knittinghiyori.com/absolute-pitch/en/">
+<link rel="alternate" hreflang="ja" href="https://games.knittinghiyori.com/absolute-pitch/ja/">
+<link rel="alternate" hreflang="x-default" href="https://games.knittinghiyori.com/absolute-pitch/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Knitting Hiyori Games">
+<meta property="og:title" content="Absolute Pitch Trainer | Can adults learn perfect pitch?">
+<meta property="og:description" content="Train the way the studies did: one note at a time, noise between notes, a 12-note test. Ten minutes a day.">
+<meta property="og:url" content="https://games.knittinghiyori.com/absolute-pitch/en/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:image" content="https://games.knittinghiyori.com/absolute-pitch/en/og-2.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Knitting Hiyori Games | Absolute Pitch Trainer: a 12-color note wheel with the game link">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/absolute-pitch/en/og-2.png">
+<meta name="author" content="編織日和">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<!-- 網站 logo icon（檔案在 /icons/） -->
+<link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;700">
+<style>
+:root{--serif:"Fraunces","Iowan Old Style","Georgia",serif;--sans:"Instrument Sans","Helvetica Neue",Arial,system-ui,sans-serif}
+
+/* 版面概念：首屏就是「調音盤」── 12 色音名輪盤 + 圓形示波器；白底黑字，色彩只屬於 12 個音名。 */
+:root{
+  --paper:#ffffff; --ink:#16161a; --ink-2:#4b4d57; --ink-3:#676a76; --rule:#e7e8ed; --well:#f5f6f8;
+  --num:"Fraunces","Iowan Old Style","Georgia",serif;
+  --n0:#C34F4B; --n1:#BB5D00; --n2:#A27000; --n3:#798300; --n4:#33903C; --n5:#009575;
+  --n6:#0091A4; --n7:#0085C5; --n8:#4E75D2; --n9:#8264C8; --n10:#A557AA; --n11:#BB4E7F;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{background:var(--paper);color:var(--ink)}
+body{margin:0;font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--ink);outline-offset:3px}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:700;text-wrap:balance;letter-spacing:.01em}
+p{margin:0}
+.num{font-family:var(--num);font-variant-numeric:lining-nums tabular-nums;font-optical-sizing:auto}
+
+.wrap{max-width:1120px;margin:0 auto;padding-inline:24px}
+@media(max-width:560px){.wrap{padding-inline:16px}}
+
+/* 頂列 */
+.top{display:flex;flex-direction:column;gap:12px;padding-block:10px 0}
+/* 編織日和品牌列（所有遊戲頁共用寫法） */
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--ink);text-decoration:none;font-family:var(--sans);font-size:.9rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+/* 窄螢幕：品牌列右邊有語言切換，藏掉「・小遊戲」只留 logo＋編織日和，避免橫向溢出 */
+@media(max-width:400px){.kh-brand-sub{display:none}}
+.mark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:1.05rem}
+.mark svg{flex:none}
+.langs{display:flex;align-items:center;gap:2px;font-size:.85rem;flex-shrink:0;white-space:nowrap}
+.langs a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:var(--ink-2);text-decoration:none;border-radius:999px}
+.langs a:hover{color:var(--ink);background:var(--well)}
+.langs a[aria-current="page"]{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+
+/* 首屏 */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-areas:"intro room" "stats room";grid-template-rows:1fr 1fr;column-gap:56px;row-gap:30px;padding-block:52px 80px}
+@media(max-width:900px){.hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "room" "stats";grid-template-rows:auto;row-gap:26px;padding-block:24px 56px}}
+.intro{grid-area:intro;display:grid;gap:22px;align-self:end}
+.room{grid-area:room}
+.side{grid-area:stats;display:grid;gap:16px;align-content:start}
+.kicker{font-family:var(--sans);font-size:.95rem;font-weight:700;color:var(--ink-2);letter-spacing:.02em}
+.display{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.7rem);line-height:1.16;font-weight:900;letter-spacing:-.005em;margin-top:-10px}
+.display span{display:block;white-space:nowrap}
+@media(max-width:900px){.display{font-size:min(3.4rem,10.4vw)}}
+.lede{font-size:1.06rem;color:var(--ink-2);max-width:34em}
+.lede b{color:var(--ink);font-weight:700}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;border-top:1.5px solid var(--ink)}
+.stats>div{padding:14px 14px 0 0;display:grid;gap:4px;align-content:start}
+.stats>div+div{padding-left:14px;border-left:1px solid var(--rule)}
+.stats dt{font-size:.8rem;color:var(--ink-3);order:2}
+.stats dd{margin:0;font-family:var(--num);font-weight:600;font-size:2.1rem;line-height:1;font-variant-numeric:lining-nums tabular-nums;order:1}
+.stats dd small{font-size:.9rem;font-weight:400;color:var(--ink-3)}
+.pips{display:flex;gap:3px;order:3;margin-top:4px}
+.pips i{width:9px;height:9px;border-radius:50%;background:var(--rule)}
+.daybar{order:3;height:3px;background:var(--rule);border-radius:2px;overflow:hidden;margin-top:6px}
+.daybar i{display:block;height:100%;width:0;background:var(--ink);transition:width .5s var(--ease)}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stats>div:nth-child(3){padding-left:0;border-left:0}.stats>div:nth-child(n+3){padding-top:18px}}
+.nudge{font-size:.95rem;color:var(--ink-2)}
+.nudge strong{color:var(--ink)}
+
+/* 調音盤 */
+.room{position:relative;background:var(--well);border-radius:32px;padding:28px 28px 26px;display:grid;gap:14px}
+@media(max-width:560px){.room{padding:20px 14px 20px;border-radius:24px}}
+.room-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mode{font-family:var(--serif);font-weight:700;font-size:1.25rem}
+.room-sub{color:var(--ink-2);font-size:.88rem;flex-basis:100%}
+
+.wheel{position:relative;width:min(400px,100%);aspect-ratio:1;max-width:100%;margin:6px auto 0}
+.ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ring path{fill:none;stroke-width:1.1;stroke-linecap:round;transition:stroke .4s}
+.ring.draw path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .7s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+#scope{position:absolute;left:50%;top:50%;width:64%;height:64%;transform:translate(-50%,-50%)}
+.key{position:absolute;width:15.5%;font-feature-settings:"lnum";aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--ink);background:var(--paper);display:grid;place-items:center;padding:0;font-family:var(--num),"Noto Sans","Segoe UI Symbol",sans-serif;font-weight:700;font-size:clamp(1.17rem,4.4vw,1.4rem);line-height:1;transition:transform .18s var(--ease),background .18s,color .18s,border-color .18s,box-shadow .25s}
+.key::after{content:"";position:absolute;bottom:16%;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--c)}
+.key:hover:not([disabled]){transform:translate(-50%,-50%) scale(1.07)}
+.key:active:not([disabled]){transform:translate(-50%,-50%) scale(.96)}
+.key[disabled]{cursor:default}
+.key.locked{border:1.5px dashed #cfd1d9;color:#b3b6c1;background:transparent}
+.key.locked::after{display:none}
+.key.hit{background:var(--ok);border-color:var(--ok);color:#fff;transform:translate(-50%,-50%) scale(1.1)}
+.key.hit::after,.key.miss::after,.key.picked::after{background:#fff}
+.key.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.key.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
+.key.picked{background:var(--ink);color:#fff}
+.other{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:7px 18px;font-weight:700;font-size:.92rem;transition:background .18s,color .18s,box-shadow .25s}
+.other:hover:not([disabled]){background:var(--ink);color:#fff}
+.other[disabled]{cursor:default}
+.other.hit{background:var(--ok);border-color:var(--ok);color:#fff}
+.other.miss{background:var(--ng);border-color:var(--ng);color:#fff}
+.other.answer{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--ok);animation:fbPulse .7s ease-in-out 3}
+
+/* 對錯回饋：綠 ✓、紅 ✕（不用音名色，色弱也看得出符號）；不加音效，避免給耳朵參考音 */
+:root{--ok:#2E7D4F;--ng:#C0392B}
+.key[data-fb]::before,.other[data-fb]::before{content:attr(data-fb);position:absolute;top:-10px;right:-10px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--ink);color:#fff;font:700 12px/22px var(--sans);text-align:center;white-space:nowrap;z-index:2}
+.key.hit[data-fb]::before,.other.hit[data-fb]::before,.key.answer[data-fb]::before,.other.answer[data-fb]::before{background:var(--ok)}
+.key.miss[data-fb]::before,.other.miss[data-fb]::before{background:var(--ng)}
+.other[data-fb]::before{top:-12px;right:-6px}
+.fb{position:absolute;left:50%;top:29%;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;display:grid;justify-items:center;font:800 2.6rem/1 var(--sans);transition:opacity .15s,transform .2s var(--ease);z-index:3}
+.fb small{font-size:.95rem;font-weight:700;margin-top:4px;white-space:nowrap}
+.fb.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.fb.ok{color:var(--ok)}.fb.ng{color:var(--ng)}
+.fb{background:rgba(255,255,255,.92);border-radius:18px;padding:6px 14px 8px;box-shadow:0 4px 14px rgba(22,22,26,.12)}
+.status.ok b{color:var(--ok)}.status.ng b{color:var(--ng)}
+@keyframes fbPulse{50%{box-shadow:0 0 0 4px var(--paper),0 0 0 11px var(--ok)}}
+.btn2{display:inline-grid;justify-items:center;gap:1px;padding:8px 22px;line-height:1.35}
+.btn2 small{font-size:.72rem;font-weight:500;opacity:.85}
+.btn.first{animation:firstGlow 1.6s ease-in-out infinite}
+@keyframes firstGlow{50%{box-shadow:0 0 0 6px rgba(46,125,79,.25)}}
+@media (prefers-reduced-motion:reduce){.key.answer,.other.answer,.btn.first{animation:none}.fb{transition:none}}
+.status{text-align:center;min-height:1.75em;font-size:.95rem;color:var(--ink-2)}
+.status b{color:var(--ink)}
+.status .sw{display:inline-block;width:.7em;height:.7em;border-radius:50%;vertical-align:.02em;margin-right:.35em}
+
+.meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--rule);padding-top:14px}
+.meters>div{display:grid;gap:2px;justify-items:center;text-align:center;font-size:.78rem;color:var(--ink-3)}
+.meters>div+div{border-left:1px solid var(--rule)}
+.meters b{font-family:var(--num);font-weight:700;font-size:1.55rem;line-height:1.1;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.meters .ok b{color:var(--n4)}
+.meters .next b{display:flex;align-items:center;gap:6px}
+.meters .next i{width:10px;height:10px;border-radius:50%}
+
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:4px}
+.btn{min-height:44px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;border-radius:999px;padding:12px 26px;font-weight:700;font-size:1rem;transition:transform .15s var(--ease),background .15s,color .15s}
+.btn:hover:not([disabled]){transform:translateY(-1px)}
+.btn:active:not([disabled]){transform:translateY(1px)}
+.btn.line{background:transparent;color:var(--ink)}
+.btn.line:hover:not([disabled]){background:var(--ink);color:#fff}
+.btn.text{border-color:transparent;background:transparent;color:var(--ink-2);padding-inline:14px;text-decoration:underline;text-underline-offset:4px}
+.btn[disabled]{opacity:.35;cursor:not-allowed}
+
+.sound-tip{text-align:center;font-size:.8rem;color:var(--ink-2);margin:-4px 0 0}
+.toggles{display:flex;flex-wrap:wrap;gap:6px 20px;justify-content:center;font-size:.84rem;color:var(--ink-2)}
+.toggles label{display:flex;gap:7px;align-items:center;cursor:pointer}
+.toggles input{accent-color:var(--ink);width:15px;height:15px;margin:0}
+select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px solid #d6d8df;border-radius:8px;background:var(--paper);color:var(--ink)}
+
+.banner{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;background:var(--paper);border-radius:18px;padding:14px 16px}
+.banner .big{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--num);font-weight:800;font-size:1.4rem}
+.banner p{font-size:.93rem;color:var(--ink-2)}
+.banner p b{color:var(--ink);display:block;font-size:1rem}
+
+.result{background:var(--paper);border-radius:22px;padding:20px 18px;display:grid;gap:14px}
+.verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
+.result .meters{border-top:0;padding-top:0}
+.bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:124px;gap:14px 6px;padding-top:8px}
+@media(max-width:560px){.bars{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:104px}}
+.bars div{display:grid;grid-template-rows:1fr auto auto;height:100%;gap:3px;text-align:center}
+.bars .col{position:relative;background:var(--well);border-radius:6px;overflow:hidden}
+.bars .col i{position:absolute;left:0;right:0;bottom:0;border-radius:6px}
+.bars span{font-family:var(--num);font-weight:600;font-size:.8rem}
+.bars em{font-style:normal;font-size:.68rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.card-act{display:flex;flex-wrap:wrap;gap:10px}
+.card-out{display:grid;gap:12px;justify-items:start}
+.card-img{width:100%;max-width:360px;height:auto;border-radius:14px;box-shadow:0 6px 24px rgba(22,22,26,.12)}
+.card-btns{display:flex;flex-wrap:wrap;gap:10px}
+.card-btns a.btn{display:inline-flex;align-items:center;text-decoration:none}
+.card-btns .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
+.result .small{font-size:.85rem;color:var(--ink-2)}
+
+/* 分享 */
+.share{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:22px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.share p{font-size:.92rem;color:var(--ink-2);flex:1 1 260px}
+.share-row{display:flex;flex-wrap:wrap;gap:6px}
+.share-row button{border:1px solid #c7c9d1;background:var(--paper);border-radius:999px;padding:6px 16px;min-height:44px;font-size:.85rem;font-weight:500;transition:border-color .15s,background .15s}
+.share-row button:hover{border-color:var(--ink)}
+
+/* 區段 */
+.sec{padding-block:88px 0;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:48px}
+@media(max-width:900px){.sec{grid-template-columns:minmax(0,1fr);gap:24px;padding-block:64px 0}}
+.sec-head{display:grid;gap:12px;align-content:start}
+.sec-head h2{font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.2;font-weight:900}
+.sec-head p{color:var(--ink-2);font-size:.95rem}
+@media(min-width:901px){.sec-head{position:sticky;top:calc(24px + env(safe-area-inset-top,0px))}}
+.sec-body{display:grid;gap:44px;min-width:0}
+.sec-body h3{font-size:1.2rem;margin-bottom:12px}
+.cap{font-size:.84rem;color:var(--ink-3);margin-top:10px}
+
+/* 紀錄 */
+.heatwrap{display:flex;gap:10px}
+.wk{display:grid;grid-template-rows:repeat(7,18px);gap:5px;font-size:.7rem;color:var(--ink-3);line-height:1}
+.wk span{display:flex;align-items:center}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,18px);grid-auto-columns:18px;gap:5px}
+.heat i{border-radius:5px;background:#eef0f3}
+.heat i.l1{background:#cdd0d8}
+.heat i.l2{background:#8b8f9c}
+.heat i.l3{background:var(--ink)}
+.heat i.today{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--ink)}
+.heat i.future{background:transparent}
+.legend{display:flex;gap:5px;align-items:center;font-size:.76rem;color:var(--ink-3);margin-top:10px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+.track{position:relative;height:2px;background:var(--rule);margin:30px 10px 40px}
+.track .fill{position:absolute;left:0;top:-1px;height:4px;background:var(--ink);border-radius:2px}
+.track .now{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--paper);border:2.5px solid var(--ink)}
+.track .mark{position:absolute;top:-5px;width:1px;height:12px;background:var(--ink-3)}
+.track .mark span{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-family:var(--num);font-size:.78rem;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+.track .mark:last-of-type span{left:auto;right:0;transform:none}
+.track .mark.got{background:var(--ink)}
+.track .mark.got span{color:var(--ink);font-weight:600}
+
+.chart{width:100%;max-width:560px;height:auto;display:block;overflow:visible}
+.chart text{font-family:var(--sans);font-size:11px;fill:var(--ink-3)}
+.chart .lab{fill:var(--ink);font-family:var(--num);font-weight:600;font-size:15px}
+.empty{color:var(--ink-3);font-size:.92rem;border:1px dashed #d6d8df;border-radius:16px;padding:22px;text-align:center}
+
+/* 研究 */
+.answer{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.55rem);line-height:1.65;font-weight:400}
+.answer b{font-weight:900}
+.tablebox{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem}
+th{font-weight:500;color:var(--ink-3);text-align:left;font-size:.8rem;padding:0 12px 10px 0;border-bottom:1.5px solid var(--ink)}
+td{padding:14px 12px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td:first-child{font-weight:700;white-space:nowrap}
+td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap}
+.facts{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.facts li{padding-left:22px;position:relative;color:var(--ink-2)}
+.facts li::before{content:"";position:absolute;left:0;top:.72em;width:10px;height:1.5px;background:var(--ink)}
+.methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px;list-style:none;padding:0;margin:0}
+@media(max-width:640px){.methods{grid-template-columns:minmax(0,1fr)}}
+.methods li{display:grid;gap:6px;border-top:1.5px solid var(--ink);padding-top:14px}
+.methods b{font-family:var(--serif);font-weight:700;font-size:1.08rem}
+.methods span{color:var(--ink-2);font-size:.93rem}
+.refs{display:grid;gap:6px;font-size:.82rem;color:var(--ink-3)}
+.refs a{color:var(--ink-2);text-underline-offset:3px;text-decoration-color:#c5c8d0}
+.refs a:hover{color:var(--ink);text-decoration-color:var(--ink)}
+.reset{padding-block:56px 0;font-size:.8rem;color:var(--ink-3);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.reset button{background:none;border:0;padding:0;min-height:44px;color:var(--ink-3);text-decoration:underline;text-underline-offset:3px;font-size:.8rem}
+
+/* 錯題庫 */
+.pairs{list-style:none;margin:0;padding:0;display:grid;gap:10px;max-width:560px}
+.pairs li{display:grid;grid-template-columns:minmax(0,1fr) 120px 2.6em;gap:14px;align-items:center;font-size:.92rem}
+.pairs .who{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);border-radius:999px;padding:2px 11px 2px 8px;font-family:var(--num);font-weight:600;font-size:.95rem;line-height:1.5;white-space:nowrap}
+.chip i{width:9px;height:9px;border-radius:50%}
+.chip.o{font-family:var(--sans);font-size:.85rem;border-style:dashed}
+.pairs .as{color:var(--ink-3);font-size:.82rem}
+.pairs .cnt{height:6px;background:var(--well);border-radius:3px;overflow:hidden}
+.pairs .cnt i{display:block;height:100%;background:var(--ink);border-radius:3px}
+.pairs b{font-family:var(--num);font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:560px){.pairs li{grid-template-columns:minmax(0,1fr) 2.6em}.pairs .cnt{display:none}}
+.bank-foot{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-top:18px}
+.bank-foot .cap{margin:0}
+.worst{font-size:.88rem;color:var(--ink-2);margin-top:12px}
+.worst b{font-family:var(--num);color:var(--ink)}
+
+/* 常見問題 */
+.faq{margin:0;display:grid;gap:0;border-top:1.5px solid var(--ink)}
+.faq>div{padding:20px 0;border-bottom:1px solid var(--rule);display:grid;gap:8px}
+.faq dt{font-family:var(--serif);font-weight:700;font-size:1.15rem}
+.faq dd{margin:0;color:var(--ink-2);max-width:42em}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.ring.draw path{stroke-dashoffset:0}}
+
+.cap a{color:var(--ink);text-underline-offset:3px}
+
+/* 共用 class（core §4）：廣告、法律聲明；回主頁大按鈕用本遊戲的黑＋12 色 */
+.kh-ad{display:block;width:100%;max-width:728px;margin:48px auto;padding:0 16px;text-align:center;clear:both;box-sizing:border-box}
+.kh-ad--game{margin-top:150px}
+.kh-lift{position:relative;z-index:6}
+.kh-ad__label{display:block;font-size:12px;letter-spacing:.08em;color:var(--ink-3);margin-bottom:6px;line-height:1.4}
+.kh-ad ins[data-ad-status="unfilled"]{display:none!important}
+.kh-ad:has(ins[data-ad-status="unfilled"]){display:none}
+.kh-legal{display:block;max-width:640px;font-size:12px;line-height:1.8;color:var(--ink-3);text-align:center;margin:16px auto 24px;padding:0 16px;box-sizing:border-box}
+.kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.kh-hub{display:block;max-width:560px;margin:72px auto 0;padding:0 16px;box-sizing:border-box}
+.kh-hub a{display:flex;align-items:center;gap:16px;text-decoration:none;color:#fff;background:var(--ink);border-radius:24px;padding:18px 22px;transition:transform .15s var(--ease)}
+.kh-hub a:hover{transform:translateY(-2px)}
+.kh-hub a:active{transform:translateY(1px)}
+.kh-hub a:focus-visible{outline:3px solid var(--n7);outline-offset:3px}
+.kh-hub__icon{flex:none;width:52px;height:52px;border-radius:50%;background:conic-gradient(from -15deg,var(--n0),var(--n1),var(--n2),var(--n3),var(--n4),var(--n5),var(--n6),var(--n7),var(--n8),var(--n9),var(--n10),var(--n11),var(--n0));display:grid;place-items:center}
+.kh-hub__icon::after{content:"";width:30px;height:30px;border-radius:50%;background:var(--ink)}
+.kh-hub__txt{display:grid;gap:2px;flex:1;min-width:0}
+.kh-hub__kicker{font-size:13px;font-weight:700;color:#c9cbd3}
+.kh-hub__title{font-family:var(--serif);font-size:20px;font-weight:700;line-height:1.35}
+.kh-hub__sub{font-size:14px;color:#c9cbd3}
+:lang(ja) h1,:lang(ja) h2,:lang(ja) h3,:lang(ja) .display,:lang(ja) .faq dt,:lang(ja) .verdict{word-break:auto-phrase}
+</style>
+<!-- Google AdSense（只有手動廣告：不帶 ?client=，不跑自動廣告） -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', { content_group: 'game', game_id: 'absolute_pitch', page_lang: 'en', page_title: '遊戲|絕對音感養成所|成人絕對音感訓練' });
+  gtag('config', 'G-ZQZHTYTRMQ');
+</script>
+<script type="application/ld+json">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Absolute Pitch Trainer",
+  "alternateName": "Absolute pitch training game for adults",
+  "url": "https://games.knittinghiyori.com/absolute-pitch/en/",
+  "description": "A free browser game based on 2019–2025 adult absolute pitch training studies: unlock one note at a time, noise masking between notes, several octaves and timbres, a 12-note test and a personal mistake log.",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web browser",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "offers": {
+   "@type": "Offer",
+   "price": "0",
+   "priceCurrency": "USD"
+  },
+  "image": "https://games.knittinghiyori.com/absolute-pitch/en/og-2.png",
+  "datePublished": "2026-10-03",
+  "dateModified": "2026-10-04",
+  "author": {
+   "@type": "Organization",
+   "name": "編織日和",
+   "url": "https://knittinghiyori.com/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "編織日和",
+   "url": "https://knittinghiyori.com/"
+  },
+  "about": [
+   {
+    "@type": "Thing",
+    "name": "Absolute pitch"
+   },
+   {
+    "@type": "Thing",
+    "name": "Ear training"
+   }
+  ],
+  "citation": [
+   "https://doi.org/10.1371/journal.pone.0223047",
+   "https://doi.org/10.1177/1747021820935776",
+   "https://doi.org/10.3758/s13414-019-01869-3"
+  ]
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+   {
+    "@type": "Question",
+    "name": "What is absolute pitch?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Absolute pitch, also called perfect pitch, is the ability to name a note without any reference note, for example knowing a sound is F♯ the moment you hear it. A common estimate is about 1 in 10,000 people, with higher rates among music students."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "How is absolute pitch different from relative pitch?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Relative pitch needs a known reference note and works out other notes from the distance; absolute pitch names the note directly, with no reference. Most trained musicians have relative pitch, while absolute pitch is much rarer."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Can adults learn absolute pitch?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Some can. In training studies by Van Hedger et al. (2019) and Wong et al. (2020, 2025), some adults reached the same test standard as people born with absolute pitch after about 20 to 32 hours of training. Most learned only some of the notes, and about one in seven learned all 12."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "How long does it take to learn absolute pitch?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "The studies mostly used 2 to 4 hours a week for about 8 weeks, 20 to 32 hours in total, around 15,000 trials on average. This game splits that into 100 trials a day, about 10 minutes."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "How do I know if I have learned it?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Use the test: each of the 12 notes plays 3 times, with no feedback and noise between notes. The standard in the studies is roughly 90% accuracy across 12 notes, answering within 2 seconds; guessing gets about 8%."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "What is the mistake log for?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Everyone confuses different notes. The game records which note you most often hear as which, and Review mistakes focuses on those notes. When you miss, it plays the note you chose and then the right one so you can compare them. After you get a pair right a few times, it leaves the log."
+    }
+   }
+  ]
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Knitting Hiyori Games",
+    "item": "https://games.knittinghiyori.com/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Absolute Pitch Trainer",
+    "item": "https://games.knittinghiyori.com/absolute-pitch/en/"
+   }
+  ]
+ }
+]
+</script>
+<meta name="spec-version" content="core-v1.4/games-v1.8">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="kh-brand-row">
+      <a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt=""><span>編織日和<span class="kh-brand-sub"> · Games</span></span></a>
+      <nav class="langs" aria-label="Language"><a href="https://games.knittinghiyori.com/absolute-pitch/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a><a href="https://games.knittinghiyori.com/absolute-pitch/en/" hreflang="en" lang="en" data-lang-link="en" aria-current="page">EN</a><a href="https://games.knittinghiyori.com/absolute-pitch/ja/" hreflang="ja" lang="ja" data-lang-link="ja">日本語</a></nav>
+    </div>
+    <div class="mark">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="#16161a" stroke-width="1.6"/><circle cx="13" cy="2" r="2.2" fill="#C34F4B"/><circle cx="22.5" cy="18.5" r="2.2" fill="#33903C"/><circle cx="3.5" cy="18.5" r="2.2" fill="#4E75D2"/></svg>
+      Absolute Pitch Trainer
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="intro">
+      <h1 class="kicker">Absolute pitch training game: learn to name all 12 notes as an adult</h1>
+      <p class="display"><span>Hear one note.</span><span>Name it.</span></p>
+      <p class="lede">No reference note, just your ear telling C from F♯. Studies have found that <b>some adults, after 20-odd hours of structured training</b>, reach the level of people born with absolute pitch. This game follows the same method: one note at a time.</p>
+    </div>
+
+    <div class="side">
+      <dl class="stats" aria-label="Your progress">
+        <div><dt>Day streak</dt><dd id="sStreak">0</dd></div>
+        <div><dt>Today</dt><dd><span id="sToday">0</span><small> / 100</small></dd><div class="daybar"><i id="sTodayBar"></i></div></div>
+        <div><dt>Notes unlocked</dt><dd><span id="sLevel">1</span><small> / 12</small></dd><div class="pips" id="pips"></div></div>
+        <div><dt>Total answered</dt><dd id="sTotal">0</dd></div>
+      </dl>
+      <p class="nudge" id="nudge"></p>
+    </div>
+
+    <div class="room" id="room">
+      <div class="room-head">
+        <span class="mode" id="modeLabel">Training</span>
+        <span class="room-sub" id="roomSub">Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.</span>
+      </div>
+
+      <div class="wheel" id="wheel">
+        <svg class="ring draw" id="ring" viewBox="0 0 100 100" aria-hidden="true"></svg>
+        <canvas id="scope" aria-hidden="true"></canvas>
+        <div class="fb" id="fb" aria-hidden="true"></div>
+        <button class="other" id="otherBtn" type="button">Other</button>
+      </div>
+      <p class="status" id="status" aria-live="polite">Put on headphones and press Start training</p>
+
+      <div class="meters" id="meters">
+        <div id="mAcc"><b>—</b>Last 20 accuracy</div>
+        <div id="mRt"><b>—</b>Median response time</div>
+        <div class="next" id="mNext"><b>G</b>Next unlock</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">Start training</span><small>Daily practice, one note at a time</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>Take the test</span><small>Once a week, all 12 notes</small></button>
+        <button class="btn line" id="reviewBtn" type="button" hidden>Review mistakes</button>
+        <button class="btn line" id="stopBtn" type="button" hidden>Pause</button>
+      </div>
+
+      <div class="toggles">
+        <label><input type="checkbox" id="noiseOpt" checked> Noise between notes</label>
+        <label>Sound
+          <select id="timbreOpt">
+            <option value="mix">Mixed</option>
+            <option value="piano">Piano-like</option>
+            <option value="triangle">Soft</option>
+            <option value="sine">Pure tone</option>
+          </select>
+        </label>
+      </div>
+      <p class="sound-tip">Turn your sound on; headphones work best. On iPhone, turn off Silent mode.</p>
+
+      <div class="banner" id="banner" hidden></div>
+      <div class="result" id="result" hidden></div>
+    </div>
+  </section>
+
+  <div class="share" aria-label="Share">
+    <p id="shareLabel">Train with a friend and see who unlocks all 12 notes first.</p>
+    <div class="share-row">
+      <button type="button" data-share="line">LINE</button>
+      <button type="button" data-share="facebook">Facebook</button>
+      <button type="button" data-share="threads">Threads</button>
+      <button type="button" data-share="x">X</button>
+      <button type="button" data-share="telegram">Telegram</button>
+      <button type="button" data-share="copy_link" id="copyBtn">Copy link</button>
+    </div>
+  </div>
+
+  <section class="sec" aria-labelledby="recH">
+    <div class="sec-head">
+      <h2 id="recH">Your practice log</h2>
+      <p>In the studies, progress took weeks to show. Come back for 10 minutes a day and this page keeps track; notes you miss go straight into your mistake log. Your data stays in this browser on this device.</p>
+    </div>
+    <div class="sec-body">
+      <div id="bank">
+        <h3>Your mistake log</h3>
+        <div id="bankBox"></div>
+      </div>
+      <div>
+        <h3>Last 8 weeks</h3>
+        <div class="heatwrap">
+          <div class="wk" aria-hidden="true"><span>M</span><span></span><span>W</span><span></span><span>F</span><span></span><span>S</span></div>
+          <div class="heat" id="heat" aria-label="Answers per day over the last 8 weeks"></div>
+        </div>
+        <div class="legend">Less <i style="background:#eef0f3"></i><i style="background:#cdd0d8"></i><i style="background:#8b8f9c"></i><i style="background:#16161a"></i> More (100+)</div>
+      </div>
+      <div>
+        <h3>Total answered</h3>
+        <div class="track" id="track"></div>
+        <p class="cap">Participants in the 2025 study answered 15,327 trials on average, about 21 hours. The far right is where they finished.</p>
+      </div>
+      <div>
+        <h3>Test scores</h3>
+        <div id="chartBox"></div>
+        <p class="cap">Take the test every 7 days. The dashed line is the absolute pitch level used in the studies (90%); the dotted line is chance (about 8%).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="sciH">
+    <div class="sec-head">
+      <h2 id="sciH">Can adults learn absolute pitch?</h2>
+      <p>A summary of three adult training studies from 2019 to 2025. Compiled by Knitting Hiyori. Last updated October 4, 2026.</p>
+    </div>
+    <div class="sec-body">
+      <p class="answer"><b>Some adults can.</b> Absolute pitch was long thought to develop only during a critical period in early childhood, but in recent training studies some adults reached the same test standard as people born with it in about 8 weeks. It takes a lot of structured practice, and not everyone gets all 12 notes.</p>
+      <div class="tablebox">
+        <table>
+          <thead><tr><th>Study</th><th>Participants</th><th>Training</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Van Hedger et al. 2019</td><td>6 adults, selected for auditory working memory</td><td class="n">8 weeks, about 32 hours</td><td>The best learner passed every AP test and kept the skill 4 months later</td></tr>
+            <tr><td>Wong et al. 2020</td><td>13 speakers of non-tonal languages</td><td class="n">About 20 hours</td><td>2 could name all 12 notes with accuracy and speed close to people born with AP</td></tr>
+            <tr><td>Wong et al. 2025</td><td>12 musicians, online training</td><td class="n">8 weeks, 21.4 hours on average</td><td>Learned 7 notes on average at 90% accuracy; some learned all 12</td></tr>
+            </tbody>
+        </table>
+      </div>
+      <ul class="facts">
+        <li>Most people improve clearly, but only about one in seven gets all 12 notes.</li>
+        <li>The skill behaves like other perceptual learning: it is most accurate for the sounds and octaves you trained on, and it lasts 1 to 3 months after training.</li>
+        <li>You do not need a tonal-language background; people with better auditory working memory learn faster.</li>
+        </ul>
+      <div>
+        <h3>Six things this game takes from the studies</h3>
+        <ul class="methods">
+          <li><b>One more note at a time</b><span>Start with a single note and answer “Other” for everything else. A new note unlocks only after 90% accuracy over 20 trials with a fast enough response.</span></li>
+          <li><b>Learn note names, not keys</b><span>Each note appears in three random octaves, so your ear locks onto the color of the note rather than its height.</span></li>
+          <li><b>Cut out relative pitch</b><span>A second of noise between notes stops you from working out the answer from the previous note.</span></li>
+          <li><b>Fast and accurate</b><span>Absolute pitch means knowing instantly, not calculating, so response time has to pass too.</span></li>
+          <li><b>Change the sound</b><span>Train only on piano and other instruments will trip you up. Mixed sounds help the skill transfer.</span></li>
+          <li><b>A little every day, for weeks</b><span>Most studies used 2 to 4 hours a week for 8 weeks. Ten to twenty minutes a day beats three hours once a week.</span></li>
+          </ul>
+      </div>
+      <div class="refs">
+        <a href="https://doi.org/10.1371/journal.pone.0223047" target="_blank" rel="noopener" data-cta="source_vanhedger2019" data-cta-type="other">Van Hedger, Heald, Nusbaum (2019). Absolute pitch can be learned by some adults. PLOS ONE.</a>
+        <a href="https://doi.org/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
+        <a href="https://doi.org/10.3758/s13414-019-01869-3" target="_blank" rel="noopener" data-cta="source_wong2020app" data-cta-type="other">Wong et al. (2020). Is it impossible to acquire absolute pitch in adulthood? APP.</a>
+        <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Neuroscience News coverage.</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="faqH">
+    <div class="sec-head">
+      <h2 id="faqH">Absolute pitch FAQ</h2>
+      <p>What people most often ask before they start.</p>
+    </div>
+    <div class="sec-body">
+      <dl class="faq">
+        <div><dt>What is absolute pitch?</dt><dd>Absolute pitch, also called perfect pitch, is the ability to name a note without any reference note, for example knowing a sound is F♯ the moment you hear it. A common estimate is about 1 in 10,000 people, with higher rates among music students.</dd></div>
+        <div><dt>How is absolute pitch different from relative pitch?</dt><dd>Relative pitch needs a known reference note and works out other notes from the distance; absolute pitch names the note directly, with no reference. Most trained musicians have relative pitch, while absolute pitch is much rarer.</dd></div>
+        <div><dt>Can adults learn absolute pitch?</dt><dd>Some can. In training studies by Van Hedger et al. (2019) and Wong et al. (2020, 2025), some adults reached the same test standard as people born with absolute pitch after about 20 to 32 hours of training. Most learned only some of the notes, and about one in seven learned all 12.</dd></div>
+        <div><dt>How long does it take to learn absolute pitch?</dt><dd>The studies mostly used 2 to 4 hours a week for about 8 weeks, 20 to 32 hours in total, around 15,000 trials on average. This game splits that into 100 trials a day, about 10 minutes.</dd></div>
+        <div><dt>How do I know if I have learned it?</dt><dd>Use the test: each of the 12 notes plays 3 times, with no feedback and noise between notes. The standard in the studies is roughly 90% accuracy across 12 notes, answering within 2 seconds; guessing gets about 8%.</dd></div>
+        <div><dt>What is the mistake log for?</dt><dd>Everyone confuses different notes. The game records which note you most often hear as which, and Review mistakes focuses on those notes. When you miss, it plays the note you chose and then the right one so you can compare them. After you get a pair right a few times, it leaves the log.</dd></div>
+        </dl>
+    </div>
+  </section>
+
+  <div class="reset"><button id="resetBtn" type="button">Clear my data</button><span id="resetMsg"></span></div>
+</div>
+
+<!-- 回遊戲主頁（GA4 cta_click：about_hub／game） -->
+<nav class="kh-hub" aria-label="More games">
+  <a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">
+    <span class="kh-hub__icon" aria-hidden="true"></span>
+    <span class="kh-hub__txt">
+      <span class="kh-hub__kicker">Want to play something else?</span>
+      <span class="kh-hub__title">Explore more interactive games →</span>
+      <span class="kh-hub__sub">Japanese, coding and ear training mini-games (site in Chinese)</span>
+    </span>
+  </a>
+</nav>
+<!-- Google AdSense 手動廣告單元（games slot，每頁 1 個） -->
+<div class="kh-ad kh-ad--game" aria-label="Advertisement">
+  <span class="kh-ad__label">Advertisement</span>
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2022028565680247" data-ad-slot="5316670118" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<p class="kh-legal">This site uses cookies for analytics (Google Analytics) and ads (Google AdSense), and some links are affiliate links. <a href="https://knittinghiyori.com/privacy-policy/">Privacy</a></p>
+
+<script>
+/* ===== 編織日和遊戲｜GA4 統一追蹤 v1.0 =====
+   各遊戲完全相同，只改最上面三行。規範：games-ga4-guideline
+   注意：整段不含「和號」字元與雙斜線註解，新增程式時請維持 */
+var HY_GAME_ID = 'absolute_pitch';  /* 遊戲登記表的 game_id */
+var HY_GAME_ROOT = '#room';  /* 遊戲最外層的選擇器 */
+var HY_GAME_LANG = function(){ return 'en'; };  /* 多語遊戲改成回傳目前語言變數 */
+
+(function(){
+  var LANG_MAP = { zh:'zh-Hant', 'zh-Hant':'zh-Hant', en:'en', ja:'ja' };
+  var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
+  var sent = {};
+  var playMs = 0, visibleAt = 0;        /* 實際遊玩時間：只算分頁在前景的時間 */
+  var rounds = 0, roundAt = 0, roundOpen = null;
+
+  function lang(){ try { return LANG_MAP[HY_GAME_LANG()] || 'zh-Hant'; } catch(e){ return 'zh-Hant'; } }
+  function now(){ return Date.now(); }
+  function secs(ms){ return Math.round(ms / 1000); }
+
+  function send(name, params, beacon){
+    try {
+      var p = {}, k, v;
+      params = params || {};
+      for (k in params) {
+        v = params[k];
+        if (v === undefined || v === null || v === '') continue;
+        if (typeof v === 'boolean') v = v ? 'yes' : 'no';
+        if (typeof v === 'string') v = v.slice(0, 100);   /* GA4 參數值上限 100 字元 */
+        p[k] = v;
+      }
+      p.game_id = HY_GAME_ID;
+      p.page_lang = lang();
+      p.content_group = 'game';
+      if (beacon) p.transport_type = 'beacon';
+      if (DEBUG) { p.debug_mode = true; if (window.console) console.log('[hy-game]', name, p); }
+      if (typeof window.gtag === 'function') { window.gtag('event', name, p); return; }
+      window.dataLayer = window.dataLayer || [];
+      (function(){ window.dataLayer.push(arguments); })('event', name, p);
+    } catch(e) {}
+  }
+
+  function playedMs(){ return playMs + (visibleAt ? now() - visibleAt : 0); }
+
+  var api = window.hyGame = {
+    /* 任何事件 */
+    event: send,
+    /* 每次載入頁面只送一次 */
+    once: function(name, params){ if (sent[name]) return; sent[name] = 1; send(name, params); },
+    /* 開始玩：entry = direct／shared／saved */
+    start: function(entry){
+      if (sent.game_start) return;
+      if (!document.hidden) visibleAt = now();
+      api.once('game_start', { entry_point: entry || 'direct' });
+    },
+    /* 一局開始：option＝模式、level＝難度 */
+    roundStart: function(params){
+      api.start('direct');
+      if (roundOpen) api.roundEnd({ result: 'quit' });   /* 上一局沒結束就開新局 → 記為放棄 */
+      params = params || {};
+      roundAt = playedMs();   /* 局的秒數同樣只算前景 */
+      roundOpen = { option: params.option, level: params.level };
+      send('round_start', params);
+    },
+    /* 一局結束：result＝complete／fail／quit／timeout，另帶 score、item_count、correct_count */
+    roundEnd: function(params, beacon){
+      if (!roundOpen) return;
+      var p = {}, k;
+      params = params || {};
+      for (k in roundOpen) p[k] = roundOpen[k];
+      for (k in params) p[k] = params[k];
+      p.duration_sec = secs(playedMs() - roundAt);
+      p.result = p.result || 'complete';
+      if (p.result !== 'quit') rounds = rounds + 1;
+      p.round_count = rounds;
+      roundOpen = null;
+      send('round_end', p, beacon);
+    },
+    /* 分享：method 見值域表，type = result／game */
+    share: function(method, type, extra){
+      var p = {}, k; extra = extra || {};
+      for (k in extra) p[k] = extra[k];
+      p.method = method; p.content_type = type;
+      send('share', p);
+    },
+    /* 選填：遊戲可覆寫，替 cta_click 補參數 */
+    ctaExtra: null
+  };
+
+  function inRoot(t){ if (!t || !t.closest) return null; return t.closest(HY_GAME_ROOT); }
+
+  /* 第一次在遊戲區點擊、輸入或按鍵 → 自動 game_start（點 CTA 不算；只捲動不算） */
+  function autoStart(e){
+    if (sent.game_start) return;
+    var t = e.target;
+    if (!inRoot(t)) return;
+    if (t.closest('[data-cta]')) return;
+    api.start('direct');
+  }
+  document.addEventListener('click', autoStart, true);
+  document.addEventListener('input', autoStart, true);
+  document.addEventListener('keydown', autoStart, true);
+
+  /* 點任何 [data-cta] → cta_click（與故事、工具同一個事件） */
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('[data-cta]');
+    if (!a) return;
+    var p = {}, ex = {}, k;
+    try { if (typeof api.ctaExtra === 'function') ex = api.ctaExtra(a) || {}; } catch(err) {}
+    for (k in ex) p[k] = ex[k];
+    p.cta_id = a.getAttribute('data-cta');
+    p.cta_type = a.getAttribute('data-cta-type') || 'other';
+    p.link_url = a.href || '';
+    send('cta_click', p);
+  }, true);
+
+  /* 遊玩計時：切到背景暫停，回來繼續 */
+  document.addEventListener('visibilitychange', function(){
+    if (!sent.game_start) return;
+    if (document.hidden) {
+      if (visibleAt) { playMs = playMs + now() - visibleAt; visibleAt = 0; }
+    } else if (!sent.game_exit) {
+      visibleAt = now();
+    }
+  });
+
+  /* 離開頁面 → game_exit（每次載入只送一次；沒開始玩就不送） */
+  function exit(){
+    if (!sent.game_start || sent.game_exit) return;
+    if (roundOpen) api.roundEnd({ result: 'quit' }, true);
+    sent.game_exit = 1;
+    send('game_exit', { duration_sec: secs(playedMs()), round_count: rounds }, true);
+  }
+  window.addEventListener('pagehide', exit);
+})();
+/* ===== /GA4 統一追蹤 ===== */
+</script>
+<script>
+(function(){
+var NAMES=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+var CODES=['c','cs','d','ds','e','f','fs','g','gs','a','as','b'];
+var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4','#0085C5','#4E75D2','#8264C8','#A557AA','#BB4E7F'];
+var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
+var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
+var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
+var T={"noteAria": "Note ", "other": "Other", "bankEmptyHas": "Nothing to fix right now. Notes you miss land here, with the pairs you mix up most at the top.", "bankEmptyNew": "Notes you miss land here automatically. After some practice, the pairs you mix up most will show at the top.", "fixedN": "{0} pairs fixed so far.", "pair": "{0}<span class=\"as\">heard as</span>{1}", "worst": "Notes you miss most overall: ", "sep": ", ", "reviewBtn20": "Review mistakes (20)", "bankFoot": "{0} pairs to fix{1}. Each correct answer takes one off the count.", "bankFootFixed": ", {0} fixed", "noise": "Noise break", "qTest": "Question <b class=\"num\">{0}</b> of 36", "qReview": "Review: question <b class=\"num\">{0}</b> of {1}", "qTrain": "Which note is this?", "hit": "<b>Correct</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}First your pick, {1}, then the answer, {2}<b>{3}</b>", "miss": "<b>Not quite</b> · It was {0}{1}. Listen again", "missOther": ", not unlocked yet, so “Other”", "unlockTitle": "New note unlocked: {0}", "unlockText": "From now on it is no longer “Other”. Listen for how it sounds over the next few rounds.", "allTitle": "All 12 notes passed", "allText": "Take the test to see whether you reach the level used in the studies.", "modeTrain": "Training", "subTrain": "Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.", "modeTest": "Test", "subTest": "All 12 notes in random order, with different octaves and sounds and no feedback. Go with your first instinct.", "modeReview": "Review", "subReview": "Focus on the notes you mix up most. When you miss, you hear your pick and then the answer, back to back.", "start": "Start training", "cont": "Continue training", "paused": "Paused. Today’s progress is saved", "v90": "You reached the absolute pitch level used in the studies. Test again in a few weeks to check it holds.", "v50": "Your note memory is taking shape, well above chance. Keep going with the daily goal.", "v20": "You can already catch some notes. Most people pass through this stage; keep practicing.", "v0": "This is close to chance. That is a normal starting point; the study participants started here too.", "rAcc": "12-note accuracy", "rRt": "s median response", "rNear": "within a semitone", "barsAria": "Accuracy by note", "rNote": "If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision. Next test: {0}.", "shareResult": "Share this test: {0}% on 12 notes.", "testDone": "Test finished. Results below", "revTitle": "Review finished", "revBody": "You got {0} of {1} right{2}. {3}", "revFixed": " and fixed {0} pairs", "revLeft": "{0} pairs left in your log. Come back tomorrow for another round.", "revClear": "Your log is clear. Back to regular training.", "revDone": "Review finished", "nFirst": "First time here? Start with a single note, <strong>C</strong>. You can also take the test first to record a starting score.", "nRemain": "<strong>{0} more</strong> to reach today’s goal{1}.", "nStreak": " and keep your {0}-day streak", "nDone": "Today’s goal is done. <strong>Come back tomorrow</strong> to make it a {0}-day streak.", "nTest": " This week’s test is ready.", "nBank": " <strong>{0} pairs</strong> in your mistake log.", "mAccN": "Last {0} accuracy", "mAcc0": "Last 20 accuracy", "mRt": "s median response", "mRt0": "Median response time", "mNext": "Next unlock", "mAll": "<b>All</b> unlocked", "heatTip": "{0}: {1}", "trackTip": "{0} answered", "chartEmpty": "No test scores yet. Take one now as your starting point and compare each week.", "chartAria": "Test accuracy over time", "shareGame": "I am training absolute pitch and have unlocked {0} of 12 notes. Can adults learn perfect pitch? Try it:", "shareRes": "My absolute pitch test: {0}% on 12 notes. Can adults learn perfect pitch? Try it:", "copied": "Copied", "testAbort": "Test stopped. This attempt is not recorded", "resetArm": "Press again to clear. This cannot be undone", "resetDone": "Cleared", "resetStatus": "Data cleared. Starting again from C", "trainSub": "Daily practice, one note at a time", "testSub": "Once a week, all 12 notes", "fbAns": "Answer"},LANG='en',LOC='en-US',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/en/';
+function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
+var INK='#16161a', IDLE='#c9ccd5';
+
+function $(id){return document.getElementById(id)}
+function ev(name,p){try{if(window.hyGame)window.hyGame.event(name,p)}catch(e){}}
+function hg(){return window.hyGame||null}
+function pad2(n){return String(n).padStart(2,'0')}
+function dkey(d){d=d||new Date();return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate())}
+function lv(){return 'l'+pad2(S.level)}
+function fresh(){return{level:1,total:0,correct:0,days:{},tests:[],recent:[],noise:true,timbre:'mix',err:{},conf:{},fixed:0}}
+var S=fresh();
+try{var raw=localStorage.getItem(KEY);if(raw)S=Object.assign(fresh(),JSON.parse(raw))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var reduce=false;try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+
+/* 舊玩家回來：第一次點遊戲區記為 saved（在共用追蹤碼的 document 監聽之前觸發） */
+window.addEventListener('click',function(e){
+  if(S.total>0 ? (e.target.closest ? e.target.closest('#room') : null) : null){var h=hg();if(h)h.start('saved')}
+},true);
+try{if(/[?\x26]ref=share/.test(location.search)){var h0=hg();if(h0)h0.start('shared')}}catch(e){}
+
+/* ---------- 音訊 ---------- */
+var ctx=null,master=null,an=null,buf=null;
+function audio(){
+  if(!ctx){try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){} /* iOS 16.4+：靜音鍵打開也照樣出聲 */var A=window.AudioContext||window.webkitAudioContext;ctx=new A();
+    master=ctx.createGain();an=ctx.createAnalyser();an.fftSize=2048;buf=new Float32Array(an.fftSize);
+    master.connect(an);an.connect(ctx.destination)}
+  if(ctx.state==='suspended')ctx.resume();return ctx;
+}
+function freq(pc,oct){var midi=12*(oct+1)+pc;return 440*Math.pow(2,(midi-69)/12)}
+function tone(f,timbre,dur){
+  var c=audio(),t=c.currentTime+0.03,out=c.createGain();out.connect(master);
+  if(timbre==='mix')timbre=['piano','triangle','sine'][Math.floor(Math.random()*3)];
+  if(timbre==='piano'){
+    out.gain.setValueAtTime(0.0001,t);out.gain.exponentialRampToValueAtTime(0.32,t+0.01);out.gain.exponentialRampToValueAtTime(0.0008,t+dur+0.4);
+    for(var n=1;n<=6;n++){var o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.value=f*n*(1+0.0004*n*n);g.gain.value=1/Math.pow(n,1.6);o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+0.5)}
+  }else{
+    var os=c.createOscillator();os.type=timbre;os.frequency.value=f;os.connect(out);
+    if(f<350){for(var h=2;h<=3;h++){var oh=c.createOscillator(),gh=c.createGain();oh.type='sine';oh.frequency.value=f*h;gh.gain.value=h===2?0.35:0.2;oh.connect(gh);gh.connect(out);oh.start(t);oh.stop(t+dur+0.2)}} /* 350 Hz 以下補一點泛音：小喇叭放不出基頻時，耳朵仍能從泛音聽出音高 */
+    var peak=timbre==='sine'?0.3:0.28;
+    out.gain.setValueAtTime(0.0001,t);out.gain.exponentialRampToValueAtTime(peak,t+0.03);out.gain.setValueAtTime(peak,t+dur-0.15);out.gain.exponentialRampToValueAtTime(0.0008,t+dur+0.1);
+    os.start(t);os.stop(t+dur+0.2);
+  }
+  kick((dur+0.5)*1000);
+}
+function noise(sec){
+  var c=audio(),len=Math.floor(c.sampleRate*sec),b=c.createBuffer(1,len,c.sampleRate),d=b.getChannelData(0);
+  for(var i=0;i<len;i++)d[i]=Math.random()*2-1;
+  var s=c.createBufferSource(),g=c.createGain(),t=c.currentTime;s.buffer=b;
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.07,t+0.05);g.gain.setValueAtTime(0.07,t+sec-0.1);g.gain.exponentialRampToValueAtTime(0.0001,t+sec);
+  s.connect(g);g.connect(master);s.start(t);
+  kick(sec*1000+100);
+}
+
+/* ---------- 圓形示波器 ---------- */
+var cv=$('scope'),cx2=cv.getContext('2d'),dpr=1,raf=0,liveUntil=0,scopeColor=INK,scopeW=2;
+function sizeScope(){dpr=Math.min(window.devicePixelRatio||1,2);var r=cv.getBoundingClientRect();cv.width=Math.max(1,Math.round(r.width*dpr));cv.height=Math.max(1,Math.round(r.height*dpr));drawScope(false)}
+function drawScope(live){
+  var w=cv.width,h=cv.height,R=Math.min(w,h)*0.40,N=360;
+  cx2.clearRect(0,0,w,h);
+  cx2.lineWidth=scopeW*dpr;cx2.lineJoin='round';
+  cx2.strokeStyle=live?scopeColor:IDLE;
+  cx2.beginPath();
+  if(live?an:null){an.getFloatTimeDomainData(buf)}
+  for(var i=0;i<=N;i++){
+    var th=i/N*Math.PI*2-Math.PI/2,v=0;
+    if(live?an:null)v=buf[Math.floor(i/N*900)%buf.length]*0.6;
+    var rr=R*(1+Math.max(-0.3,Math.min(0.3,v)));
+    var x=w/2+rr*Math.cos(th),y=h/2+rr*Math.sin(th);
+    if(i)cx2.lineTo(x,y);else cx2.moveTo(x,y);
+  }
+  cx2.stroke();
+}
+function loop(){if(performance.now()<liveUntil){drawScope(true);raf=requestAnimationFrame(loop)}else{raf=0;drawScope(false)}}
+function kick(ms){liveUntil=Math.max(liveUntil,performance.now()+ms);if(!raf)raf=requestAnimationFrame(loop)}
+window.addEventListener('resize',function(){sizeScope();if(typeof drawChart==='function')drawChart()});
+
+/* ---------- 輪盤 ---------- */
+var keys=[],segs=[];
+(function buildRing(){
+  var svg=$('ring'),NS='http://www.w3.org/2000/svg',R=30.5;
+  for(var pc=0;pc<12;pc++){
+    var a0=(pc-0.5)/12*2*Math.PI-Math.PI/2+0.06,a1=(pc+0.5)/12*2*Math.PI-Math.PI/2-0.06;
+    var p=document.createElementNS(NS,'path');
+    p.setAttribute('d','M'+(50+R*Math.cos(a0)).toFixed(2)+' '+(50+R*Math.sin(a0)).toFixed(2)+' A'+R+' '+R+' 0 0 1 '+(50+R*Math.cos(a1)).toFixed(2)+' '+(50+R*Math.sin(a1)).toFixed(2));
+    p.setAttribute('pathLength','30');p.style.animationDelay=(pc*45)+'ms';
+    svg.appendChild(p);segs.push(p);
+  }
+})();
+NAMES.forEach(function(n,pc){
+  var b=document.createElement('button');b.type='button';b.className='key';b.textContent=n;
+  var a=(pc/12)*2*Math.PI-Math.PI/2;b.style.left=(50+41.5*Math.cos(a))+'%';b.style.top=(50+41.5*Math.sin(a))+'%';
+  b.style.setProperty('--c',COLORS[pc]);
+  b.setAttribute('aria-label',T.noteAria+n);b.addEventListener('click',function(){answer(pc)});
+  $('wheel').appendChild(b);keys.push(b);
+});
+$('otherBtn').addEventListener('click',function(){answer('other')});
+function active(){return ORDER.slice(0,S.level)}
+
+var mode=null,waiting=false,cur=null,t0=0,queue=[],testLog=[],timer=null,rItems=0,rCorrect=0,lastShareType='game',reviewLeft=0,rFixed=0;
+var REVIEW_N=20;
+
+/* ---------- 錯題庫：記下「把哪個音聽成哪個音」，答對就把那組次數減 1，減到 0 算改正 ---------- */
+function pairId(k){var p=k.split('>');return CODES[+p[0]]+'_'+(p[1]==='o'?'other':CODES[+p[1]])}
+function bank(){
+  return Object.keys(S.conf).map(function(k){var p=k.split('>');return{k:k,t:+p[0],a:p[1]==='o'?'o':+p[1],c:S.conf[k]}})
+    .filter(function(x){return x.c>0}).sort(function(x,y){return y.c-x.c});
+}
+function track(pc,ans,ok){
+  var e=S.err[pc]||(S.err[pc]={n:0,w:0});e.n++;
+  if(!ok){e.w++;var k=pc+'>'+(ans==='other'?'o':ans);S.conf[k]=(S.conf[k]||0)+1;return}
+  var best=null,bv=0;
+  for(var k2 in S.conf){if(k2.split('>')[0]===String(pc)){if(S.conf[k2]>bv){bv=S.conf[k2];best=k2}}}
+  if(best){S.conf[best]--;if(S.conf[best]<=0){delete S.conf[best];S.fixed=(S.fixed||0)+1;rFixed++;ev('ap_pair_fixed',{pair:pairId(best)})}}
+}
+function pickReview(){
+  var B=bank(),act=active();
+  if(!B.length||Math.random()<0.2)return act[Math.floor(Math.random()*act.length)];
+  var tot=0;B.forEach(function(b){tot+=b.c});var r=Math.random()*tot;
+  for(var i=0;i<B.length;i++){r-=B[i].c;if(r<=0){var b=B[i];return (b.a==='o'||Math.random()<0.7)?b.t:b.a}}
+  return B[0].t;
+}
+function chip(x){return x==='o'?'<span class="chip o">'+T.other+'</span>':'<span class="chip"><i style="background:'+COLORS[x]+'"></i>'+NAMES[x]+'</span>'}
+function renderBank(){
+  var box=$('bankBox'),B=bank();
+  if(!B.length){
+    box.innerHTML='<div class="empty">'+(S.total?T.bankEmptyHas:T.bankEmptyNew)+'</div>'+(S.fixed?'<p class="cap">'+F(T.fixedN,S.fixed)+'</p>':'');
+    return;
+  }
+  var top=B.slice(0,6),mx=top[0].c;
+  var rows=top.map(function(b){return '<li><span class="who">'+F(T.pair,chip(b.t),chip(b.a))+'</span><span class="cnt"><i style="width:'+Math.round(b.c/mx*100)+'%"></i></span><b>'+b.c+'</b></li>'}).join('');
+  var worst=[];for(var pc=0;pc<12;pc++){var e=S.err[pc];if(e){if(e.n>=5)worst.push({pc:pc,r:e.w/e.n})}}
+  worst.sort(function(x,y){return y.r-x.r});worst=worst.filter(function(x){return x.r>0}).slice(0,3);
+  box.innerHTML='<ul class="pairs">'+rows+'</ul>'+
+    (worst.length?'<p class="worst">'+T.worst+worst.map(function(w){return NAMES[w.pc]+' <b>'+Math.round(w.r*100)+'%</b>'}).join(T.sep)+'</p>':'')+
+    '<div class="bank-foot"><button class="btn" type="button" id="bankReview">'+T.reviewBtn20+'</button><p class="cap">'+F(T.bankFoot,B.length,S.fixed?F(T.bankFootFixed,S.fixed):'')+'</p></div>';
+  $('bankReview').addEventListener('click',function(){if(mode)return;$('room').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});start('review')});
+}
+function sleep(ms){return new Promise(function(r){timer=setTimeout(r,ms)})}
+function status(html){$('status').innerHTML=html}
+function sw(pc){return '<span class="sw" style="background:'+COLORS[pc]+'"></span>'}
+
+function paintWheel(){
+  var act=active();
+  keys.forEach(function(b,pc){
+    b.className='key';b.removeAttribute('data-fb');
+    var on=mode==='test'||act.indexOf(pc)>=0;
+    if(!on)b.classList.add('locked');
+    b.disabled=!on||!waiting;
+    segs[pc].style.stroke=on?COLORS[pc]:'#e3e4e9';
+  });
+  $('otherBtn').hidden=!(mode!=='test'?(S.level<12):false);
+  $('otherBtn').className='other';$('otherBtn').removeAttribute('data-fb');$('otherBtn').disabled=!waiting;$('fb').className='fb';$('status').className='status';
+}
+
+function pickTrain(){
+  var act=active(),others=[];
+  for(var p=0;p<12;p++)if(act.indexOf(p)<0)others.push(p);
+  var useOther=others.length?(Math.random()<(S.level<4?0.45:0.3)):false;
+  var pool=useOther?others:act;return pool[Math.floor(Math.random()*pool.length)];
+}
+async function nextTrial(){
+  if(!mode)return;
+  waiting=false;paintWheel();
+  if(mode==='test'?!queue.length:false)return finishTest();
+  if(mode==='review'?reviewLeft<=0:false)return finishReview();
+  scopeColor=IDLE;scopeW=1.5;
+  if(S.noise){status(T.noise);noise(1);await sleep(1300)}else{await sleep(500)}
+  if(!mode)return;
+  var pc=mode==='test'?queue.pop():(mode==='review'?pickReview():pickTrain());
+  var oct=4+Math.floor(Math.random()*3); /* C4–B6（262–1976 Hz）：C3 在手機喇叭幾乎發不出聲 */
+  cur={pc:pc,oct:oct};scopeColor=INK;scopeW=2.2;tone(freq(pc,oct),S.timbre,1);t0=performance.now();
+  waiting=true;paintWheel();
+  if(mode==='review')reviewLeft--;
+  status(mode==='test'?F(T.qTest,36-queue.length):(mode==='review'?F(T.qReview,REVIEW_N-reviewLeft,REVIEW_N):T.qTrain));
+}
+function bump(){
+  var k=dkey(),before=S.days[k]||0;S.days[k]=before+1;S.total++;
+  if(MILESTONE_EVENTS.indexOf(S.total)>=0)ev('game_milestone',{milestone:S.total});
+  if(before<GOAL?(before+1>=GOAL):false)ev('ap_daily_goal',{streak:streak()});
+}
+
+async function answer(ans){
+  if(!waiting||!cur)return;
+  waiting=false;var rt=performance.now()-t0;
+  var inSet=active().indexOf(cur.pc)>=0;
+  var truth=(mode==='test'||inSet)?cur.pc:'other';
+  var ok=ans===truth;
+  bump();rItems++;if(ok)rCorrect++;
+  track(cur.pc,ans,ok);
+  function btnOf(x){return x==='other'?$('otherBtn'):keys[x]}
+  keys.forEach(function(k){k.disabled=true});$('otherBtn').disabled=true;
+  if(mode==='test'){
+    testLog.push({pc:cur.pc,ans:ans,ok:ok,rt:rt});
+    btnOf(ans).classList.add('picked');save();render();
+    await sleep(350);return nextTrial();
+  }
+  if(ok)S.correct++;
+  if(mode==='train'){S.recent.push({ok:ok,rt:Math.round(rt)});if(S.recent.length>BLOCK)S.recent.shift()}
+  var hz=freq(cur.pc,cur.oct).toFixed(1),c0=cur;
+  scopeColor=COLORS[c0.pc];
+  if(ok){
+    btnOf(ans).classList.add('hit');btnOf(ans).setAttribute('data-fb','✓');
+    $('fb').innerHTML='✓';$('fb').className='fb ok show';$('status').className='status ok';
+    status(sw(c0.pc)+F(T.hit,NAMES[c0.pc]+c0.oct,hz,(rt/1000).toFixed(2)));
+    kick(700);
+  }else{
+    btnOf(ans).classList.add('miss');btnOf(ans).setAttribute('data-fb','✕');btnOf(truth).classList.add('answer');btnOf(truth).setAttribute('data-fb',T.fbAns);
+    $('fb').innerHTML='✕<small>'+T.fbAns+' '+(truth==='other'?T.other:NAMES[truth])+'</small>';$('fb').className='fb ng show';$('status').className='status ng';
+    try{if(navigator.vibrate)navigator.vibrate(70)}catch(e){}
+    var contrast=mode==='review'?(ans!=='other'?(truth!=='other'):false):false;
+    if(contrast){
+      status(F(T.contrast,sw(ans),NAMES[ans],sw(c0.pc),NAMES[c0.pc]));
+      setTimeout(function(){scopeColor=COLORS[ans];tone(freq(ans,c0.oct),S.timbre,0.9)},350);
+      setTimeout(function(){scopeColor=COLORS[c0.pc];tone(freq(c0.pc,c0.oct),S.timbre,0.9)},1650);
+    }else{
+      status(sw(c0.pc)+F(T.miss,NAMES[c0.pc]+c0.oct,truth==='other'?T.missOther:''));
+      setTimeout(function(){tone(freq(c0.pc,c0.oct),S.timbre,1)},350);
+    }
+  }
+  if(mode==='train')checkLevel();
+  save();render();
+  await sleep(ok?800:(contrast?3200:2200));nextTrial();
+}
+function median(a){if(!a.length)return 0;var s=a.slice().sort(function(x,y){return x-y}),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2}
+function roundOpen(opt){rItems=0;rCorrect=0;var h=hg();if(h)h.roundStart({option:opt,level:lv()})}
+function roundClose(result,extra){var h=hg();if(!h)return;var p={result:result,item_count:rItems,correct_count:rCorrect};if(extra)for(var k in extra)p[k]=extra[k];h.roundEnd(p)}
+function checkLevel(){
+  if(S.recent.length<BLOCK)return;
+  var acc=S.recent.filter(function(r){return r.ok}).length/BLOCK,med=median(S.recent.map(function(r){return r.rt}));
+  if(acc<0.9||med>RT_MAX)return;
+  if(S.level<12){
+    var pc=ORDER[S.level];
+    roundClose('complete');
+    S.level++;S.recent=[];
+    ev('game_unlock',{unlock_id:'note_'+CODES[pc],level:lv()});
+    showBanner(pc,F(T.unlockTitle,NAMES[pc]),T.unlockText);
+    roundOpen('train');
+  }else if(!S.mastered){
+    S.mastered=true;
+    roundClose('complete');
+    ev('game_unlock',{unlock_id:'all_notes',level:lv()});
+    showBanner(null,T.allTitle,T.allText);
+    roundOpen('train');
+  }
+}
+function showBanner(pc,title,text){
+  var b=$('banner');
+  var dot=pc===null?'<div class="big" style="background:conic-gradient('+COLORS.join(',')+','+COLORS[0]+')"></div>':'<div class="big" style="background:'+COLORS[pc]+'">'+NAMES[pc]+'</div>';
+  b.innerHTML=dot+'<p><b>'+title+'</b>'+text+'</p>';b.hidden=false;
+}
+
+function start(m){
+  audio();clearTimeout(timer);mode=m;$('result').hidden=true;$('banner').hidden=true;
+  $('trainBtn').hidden=true;$('testBtn').hidden=true;$('reviewBtn').hidden=true;$('stopBtn').hidden=false;$('stopBtn').disabled=false;
+  $('noiseOpt').disabled=m==='test';
+  if(m==='test'){
+    queue=[];for(var r=0;r<3;r++)for(var p=0;p<12;p++)queue.push(p);
+    for(var i=queue.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),tmp=queue[i];queue[i]=queue[j];queue[j]=tmp}
+    testLog=[];S.noise=true;$('noiseOpt').checked=true;
+    $('modeLabel').textContent=T.modeTest;$('roomSub').textContent=T.subTest;
+    $('meters').hidden=true;
+  }else if(m==='review'){
+    reviewLeft=REVIEW_N;rFixed=0;
+    $('modeLabel').textContent=T.modeReview;$('roomSub').textContent=T.subReview;
+    $('meters').hidden=true;
+  }else{
+    $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
+  }
+  roundOpen(m);
+  nextTrial();
+}
+function stop(msg){if(mode)roundClose('quit');idle(msg)}
+function idle(msg){
+  mode=null;waiting=false;clearTimeout(timer);paintWheel();
+  $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
+  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+  $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
+  status(msg||T.paused);render();
+}
+function finishTest(){
+  var n=testLog.length,c=testLog.filter(function(r){return r.ok}).length,acc=c/n;
+  var near=testLog.filter(function(r){var d=Math.abs(r.ans-r.pc)%12;return Math.min(d,12-d)<=1}).length/n;
+  var med=median(testLog.map(function(r){return r.rt}));
+  S.tests.push({d:dkey(),acc:Math.round(acc*1000)/10,rt:Math.round(med),near:Math.round(near*1000)/10});save();
+  roundClose('complete',{score:Math.round(acc*100)});
+  var v;
+  if(acc>=0.9?(med<=2000):false)v=T.v90;
+  else if(acc>=0.5)v=T.v50;
+  else if(acc>=0.2)v=T.v20;
+  else v=T.v0;
+  var per=NAMES.map(function(nm,pc){var rs=testLog.filter(function(r){return r.pc===pc});return Math.round(rs.filter(function(r){return r.ok}).length/rs.length*100)});
+  $('result').innerHTML='<p class="verdict">'+v+'</p>'+
+    '<div class="meters"><div><b>'+(acc*100).toFixed(0)+'%</b>'+T.rAcc+'</div><div><b>'+(med/1000).toFixed(2)+'</b>'+T.rRt+'</div><div><b>'+(near*100).toFixed(0)+'%</b>'+T.rNear+'</div></div>'+
+    '<div class="bars" role="img" aria-label="'+T.barsAria+'">'+per.map(function(p,pc){return '<div><span class="col"><i style="height:'+Math.max(p,2)+'%;background:'+COLORS[pc]+'"></i></span><span>'+NAMES[pc]+'</span><em>'+p+'%</em></div>'}).join('')+'</div>'+
+    '<p class="small">'+F(T.rNote,nextTestDate())+'</p>'+
+    '<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
+  lastRes={acc:acc,med:med,near:near,per:per,lv:S.level,d:new Date()};
+  $('cardBtn').addEventListener('click',makeCard);
+  $('result').hidden=false;
+  lastShareType='result';$('shareLabel').textContent=F(T.shareResult,(acc*100).toFixed(0));
+  idle(T.testDone);
+}
+function finishReview(){
+  roundClose('complete');
+  var acc=rItems?Math.round(rCorrect/rItems*100):0,left=bank().length;
+  var b=$('banner');
+  b.innerHTML='<div class="big" style="background:#16161a">'+acc+'%</div><p><b>'+T.revTitle+'</b>'+F(T.revBody,rCorrect,rItems,rFixed?F(T.revFixed,rFixed):'',left?F(T.revLeft,left):T.revClear)+'</p>';
+  b.hidden=false;
+  idle(T.revDone);
+}
+function nextTestDate(){var d=new Date();d.setDate(d.getDate()+7);try{return d.toLocaleDateString(LOC,{month:'long',day:'numeric'})}catch(e){return dkey(d)}}
+
+/* ---------- 畫面 ---------- */
+function streak(){
+  var d=new Date(),n=0;
+  if(!S.days[dkey(d)])d.setDate(d.getDate()-1);
+  while(S.days[dkey(d)]){n++;d.setDate(d.getDate()-1)}
+  return n;
+}
+function render(){
+  var today=S.days[dkey()]||0,st=streak();
+  $('sStreak').textContent=st;$('sToday').textContent=today;$('sTodayBar').style.width=Math.min(100,today/GOAL*100)+'%';
+  $('sLevel').textContent=S.level;$('sTotal').textContent=S.total.toLocaleString();
+  $('pips').innerHTML=ORDER.map(function(pc,i){return '<i title="'+NAMES[pc]+'"'+(i<S.level?' style="background:'+COLORS[pc]+'"':'')+'></i>'}).join('');
+  var last=S.tests[S.tests.length-1],since=null;
+  if(last)since=Math.round((new Date(dkey())-new Date(last.d))/864e5);
+  var msg;
+  if(S.total===0)msg=T.nFirst;
+  else if(today<GOAL)msg=F(T.nRemain,GOAL-today,st?F(T.nStreak,st):'');
+  else msg=F(T.nDone,st+1);
+  if(S.total>0?(since===null||since>=7):false)msg+=T.nTest;
+  var nb=bank().length;if(nb)msg+=F(T.nBank,nb);
+  $('nudge').innerHTML=msg;
+
+  var r=S.recent;
+  if(r.length){
+    var acc=r.filter(function(x){return x.ok}).length/r.length,med=median(r.map(function(x){return x.rt}));
+    $('mAcc').innerHTML='<b>'+Math.round(acc*100)+'%</b>'+F(T.mAccN,r.length);$('mAcc').className=(acc>=0.9?(r.length>=BLOCK):false)?'ok':'';
+    $('mRt').innerHTML='<b>'+(med/1000).toFixed(2)+'</b>'+T.mRt;$('mRt').className=med<=RT_MAX?'ok':'';
+  }else{
+    $('mAcc').innerHTML='<b>—</b>'+T.mAcc0;$('mAcc').className='';
+    $('mRt').innerHTML='<b>—</b>'+T.mRt0;$('mRt').className='';
+  }
+  $('mNext').className='next';
+  $('mNext').innerHTML=S.level<12?'<b><i style="background:'+COLORS[ORDER[S.level]]+'"></i>'+NAMES[ORDER[S.level]]+'</b>'+T.mNext:T.mAll;
+
+  /* 8 週日曆：欄＝週（週一開始），列＝星期 */
+  var hm=$('heat'),today0=new Date(),dow=(today0.getDay()+6)%7,d=new Date(),html='';
+  d.setDate(d.getDate()-dow-49);
+  for(var i=0;i<56;i++){var k=dkey(d),v=S.days[k]||0,cls=v>=100?'l3':v>=50?'l2':v>0?'l1':'';
+    if(d>today0)cls='future';else if(k===dkey())cls+=' today';
+    html+='<i class="'+cls+'" title="'+(d>today0?'':F(T.heatTip,k,v))+'"></i>';d.setDate(d.getDate()+1)}
+  hm.innerHTML=html;
+
+  function pos(x){return Math.log10(Math.max(x,1))/Math.log10(15327)*100}
+  var p=Math.min(100,pos(S.total));
+  $('track').innerHTML='<div class="fill" style="width:'+p+'%"></div>'+MILES.map(function(m){return '<div class="mark'+(S.total>=m?' got':'')+'" style="left:'+pos(m)+'%"><span>'+m.toLocaleString()+'</span></div>'}).join('')+'<div class="now" style="left:'+p+'%" title="'+F(T.trackTip,S.total)+'"></div>';
+
+  drawChart();renderBank();
+  if(!mode)$('reviewBtn').hidden=!bank().length;
+}
+function drawChart(){
+  var box=$('chartBox'),TS=S.tests.slice(-10); /* 不能叫 T：會蓋掉文字表 T（chartEmpty、chartAria） */
+  if(!TS.length){box.innerHTML='<div class="empty">'+T.chartEmpty+'</div>';return}
+  var W=Math.max(280,Math.min(560,box.clientWidth||520)),H=200,L=30,Rm=10,Tp=16,B=26,iw=W-L-Rm,ih=H-Tp-B;
+  function X(i){return TS.length===1?L+iw/2:L+i*iw/(TS.length-1)}
+  function Y(v){return Tp+ih-(v/100)*ih}
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+T.chartAria+'">';
+  [0,50,100].forEach(function(v){s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#eceef2" stroke-width="1"/><text x="'+(L-6)+'" y="'+(Y(v)+3)+'" text-anchor="end">'+v+'</text>'});
+  s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+Y(90)+'" y2="'+Y(90)+'" stroke="#16161a" stroke-width="1" stroke-dasharray="4 3"/>';
+  s+='<line x1="'+L+'" x2="'+(W-Rm)+'" y1="'+Y(8.3)+'" y2="'+Y(8.3)+'" stroke="#8a8d99" stroke-width="1" stroke-dasharray="1 3"/>';
+  var path=TS.map(function(t,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(t.acc).toFixed(1)}).join(' ');
+  if(TS.length>1)s+='<path d="'+path+'" fill="none" stroke="#16161a" stroke-width="1.8" stroke-linejoin="round"/>';
+  TS.forEach(function(t,i){var lastPt=i===TS.length-1;s+='<circle cx="'+X(i)+'" cy="'+Y(t.acc)+'" r="'+(lastPt?4:2.6)+'" fill="'+(lastPt?'#16161a':'#ffffff')+'" stroke="#16161a" stroke-width="1.5"/>'});
+  var lt=TS[TS.length-1],lx=X(TS.length-1),ly=Y(lt.acc);
+  s+='<text class="lab" x="'+(TS.length===1?lx+8:lx-8)+'" y="'+(ly<Tp+14?ly+16:ly-9)+'" text-anchor="'+(TS.length===1?'start':'end')+'">'+lt.acc+'%</text>';
+  s+='<text x="'+L+'" y="'+(H-4)+'">'+TS[0].d.slice(5).replace('-','/')+'</text>';
+  if(TS.length>1)s+='<text x="'+(W-Rm)+'" y="'+(H-4)+'" text-anchor="end">'+lt.d.slice(5).replace('-','/')+'</text>';
+  box.innerHTML=s+'</svg>';
+}
+
+/* ---------- 分享 ---------- */
+function shareUrl(){return PAGE_URL+'?ref=share'}
+function shareText(){
+  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc)}
+  return F(T.shareGame,S.level)
+}
+document.querySelectorAll('[data-share]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var m=b.getAttribute('data-share'),u=encodeURIComponent(shareUrl()),tx=encodeURIComponent(shareText()+' '+shareUrl()),link='';
+    var h=hg();if(h)h.share(m,lastShareType);
+    if(m==='line')link='https://social-plugins.line.me/lineit/share?url='+u;
+    else if(m==='facebook')link='https://www.facebook.com/sharer/sharer.php?u='+u;
+    else if(m==='threads')link='https://www.threads.net/intent/post?text='+tx;
+    else if(m==='x')link='https://twitter.com/intent/tweet?text='+tx;
+    else if(m==='telegram')link='https://t.me/share/url?url='+u;
+    if(link){window.open(link,'_blank','noopener');return}
+    var done=function(){$('copyBtn').textContent=T.copied};
+    try{navigator.clipboard.writeText(shareText()+' '+shareUrl()).then(done,function(){$('copyBtn').textContent=shareUrl()})}catch(e){$('copyBtn').textContent=shareUrl()}
+  });
+});
+
+/* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
+var CARD={"make": "Make a result card", "making": "Making…", "share": "Share image", "download": "Download image", "hint": "After sharing the image, tap Copy link and paste it into your post or message so friends can tap through. On a phone you can also long-press the image to save it.", "fail": "Could not make the image. Please reload and try again.", "title": "My 12-note test", "unlocked": "Unlocked", "unit": "/ 12 notes", "rt": "Median response", "rtUnit": "s", "near": "Within a semitone", "perNote": "Accuracy by note", "game": "Absolute Pitch Trainer", "brand": "Knitting Hiyori", "wm": "Knitting Hiyori", "url": "games.knittinghiyori.com/absolute-pitch/en", "cta": "Play free →", "alt": "Absolute Pitch Trainer result card: {0}% on the 12-note test, {1} of 12 notes unlocked, with accuracy by note and the game link.", "tags": ["Reached the level used in the studies", "Note memory is taking shape", "Already catching some notes", "Starting point, like the study participants"], "copy": "Copy link", "copied": "Copied ✓"};
+var lastRes=null,cardUrl=null;
+function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function loadImg(src){return new Promise(function(ok,ng){var i=new Image();i.onload=function(){ok(i)};i.onerror=ng;i.src=src})}
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+async function drawCard(r){
+  var SANS=cssVar('--sans'),SERIF=cssVar('--serif'),NUM=cssVar('--num');
+  var TXT=[CARD.title,CARD.unlocked,CARD.unit,CARD.rt,CARD.rtUnit,CARD.near,CARD.perNote,CARD.brand,CARD.wm,CARD.url,CARD.cta].concat(CARD.tags).join('')+'0123456789.%/-',NUMT=NAMES.join('')+'0123456789.%-';
+  /* 字型最多等 1.5 秒；沒載完的字用系統字型補，避免按鈕卡太久 */
+  try{await Promise.race([new Promise(function(ok){setTimeout(ok,1500)}),Promise.all([['400 30px '+SANS,TXT],['700 40px '+SANS,TXT],['700 44px '+SERIF,CARD.game],['800 260px '+NUM,NUMT],['600 40px '+NUM,NUMT]].map(function(f){return document.fonts.load(f[0],f[1])}))])}catch(e){}
+  var logo=null;try{logo=await loadImg('/icons/logo-knitting-240.webp')}catch(e){}
+  var W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  var c=cv.getContext('2d'),CREAM='#FAF6EE',GOLD='#C9A25C',MUTE='#6b6b70';
+  c.fillStyle=CREAM;c.fillRect(0,0,W,H);
+  /* 頂端：遊戲名＋日期 */
+  c.fillStyle=INK;c.textBaseline='alphabetic';
+  c.font='700 44px '+SERIF;c.fillText(CARD.game,72,112);
+  c.font='600 30px '+NUM;c.fillStyle=MUTE;c.textAlign='right';c.fillText(dkey(r.d),W-72,110);c.textAlign='left';
+  c.font='500 34px '+SANS;c.fillStyle=MUTE;c.fillText(CARD.title,72,176);
+  /* 大字正確率 */
+  var pct=String(Math.round(r.acc*100));
+  c.fillStyle=INK;c.font='800 260px '+NUM;c.fillText(pct,64,430);
+  var pw=c.measureText(pct).width;c.font='700 110px '+NUM;c.fillText('%',64+pw+10,430);
+  c.font='700 40px '+SANS;c.fillStyle=COLORS[7];c.fillText(cardTag(r),72,508);
+  /* 三格數字 */
+  var mx=56,my=556,mw=W-112,mh=150;c.fillStyle='#fff';rr(c,mx,my,mw,mh,28);c.fill();
+  var cols=[[r.lv+'',CARD.unit,CARD.unlocked],[(r.med/1000).toFixed(2),CARD.rtUnit,CARD.rt],[Math.round(r.near*100)+'','%',CARD.near]];
+  cols.forEach(function(k,i){
+    var cx=mx+mw/6*(2*i+1);
+    c.textAlign='center';c.fillStyle=INK;c.font='700 58px '+NUM;
+    var a=k[0],b=k[1];c.font='700 58px '+NUM;var aw=c.measureText(a).width;c.font='600 28px '+SANS;var bw=c.measureText(b).width;
+    var sx=cx-(aw+8+bw)/2;c.textAlign='left';c.font='700 58px '+NUM;c.fillText(a,sx,my+82);c.font='600 28px '+SANS;c.fillStyle=MUTE;c.fillText(b,sx+aw+8,my+82);
+    c.textAlign='center';c.font='400 26px '+SANS;c.fillText(k[2],cx,my+124);
+    if(i){c.fillStyle='#e7e8ed';c.fillRect(mx+mw/3*i,my+30,2,mh-60)}
+  });
+  c.textAlign='left';
+  /* 各音正確率長條 */
+  var px=56,py=730,pw2=W-112,ph=470;c.fillStyle='#fff';rr(c,px,py,pw2,ph,28);c.fill();
+  c.fillStyle=MUTE;c.font='500 28px '+SANS;c.fillText(CARD.perNote,px+36,py+56);
+  var bx=px+36,bw2=(pw2-72-11*14)/12,by=py+92,bh=270;
+  r.per.forEach(function(p,pc){
+    var x=bx+pc*(bw2+14);c.fillStyle='#eef0f3';rr(c,x,by,bw2,bh,10);c.fill();
+    if(p>0){var h=Math.max(bh*p/100,20);c.fillStyle=COLORS[pc];rr(c,x,by+bh-h,bw2,h,10);c.fill()}
+    c.textAlign='center';c.fillStyle=INK;c.font='600 30px '+NUM;c.fillText(NAMES[pc],x+bw2/2,by+bh+44);
+    c.fillStyle=MUTE;c.font='400 22px '+SANS;c.fillText(p+'%',x+bw2/2,by+bh+76);c.textAlign='left';
+  });
+  /* 中央淡浮水印（截圖裁不掉） */
+  c.save();c.translate(W/2,(py+my)/2+200);c.rotate(-28*Math.PI/180);c.globalAlpha=0.08;c.fillStyle=INK;c.textAlign='center';
+  var wf=150;c.font='700 '+wf+'px '+SANS;var ww=c.measureText(CARD.wm).width;if(ww>760){wf=Math.floor(wf*760/ww);c.font='700 '+wf+'px '+SANS}c.fillText(CARD.wm,0,0);c.font='500 44px '+SANS;c.fillText('games.knittinghiyori.com',0,74);c.restore();
+  /* 底部金色品牌列 */
+  var barH=124;c.fillStyle=GOLD;c.fillRect(0,H-barH,W,barH);
+  var lx=56,ls=84,ly=H-barH+(barH-ls)/2;
+  if(logo){c.save();rr(c,lx,ly,ls,ls,16);c.clip();c.drawImage(logo,lx,ly,ls,ls);c.restore();c.strokeStyle='rgba(255,255,255,.9)';c.lineWidth=3;rr(c,lx,ly,ls,ls,16);c.stroke()}
+  c.fillStyle='#fff';c.textBaseline='middle';
+  var tx=lx+ls+22;c.font='700 38px '+SANS;c.fillText(CARD.brand,tx,H-barH/2-18);
+  c.font='500 26px '+SANS;c.fillText(CARD.url,tx,H-barH/2+24);
+  c.font='700 30px '+SANS;c.textAlign='right';c.fillText(CARD.cta,W-56,H-barH/2);c.textAlign='left';c.textBaseline='alphabetic';
+  return cv;
+}
+function cardFile(blob){try{return new File([blob],'absolute-pitch-'+dkey(lastRes.d)+'.jpg',{type:'image/jpeg'})}catch(e){return null}}
+async function makeCard(){
+  if(!lastRes)return;
+  var btn=$('cardBtn'),out=$('cardOut');btn.disabled=true;btn.textContent=CARD.making;
+  try{
+    var cv=await drawCard(lastRes);
+    var blob=await new Promise(function(ok){cv.toBlob(ok,'image/jpeg',0.92)});
+    if(cardUrl)URL.revokeObjectURL(cardUrl);cardUrl=URL.createObjectURL(blob);
+    var file=cardFile(blob),canShare=false;
+    try{canShare=!!(file?(navigator.canShare?navigator.canShare({files:[file]}):false):false)}catch(e){}
+    out.innerHTML='<img class="card-img" src="'+cardUrl+'" width="1080" height="1350" alt="'+F(CARD.alt,Math.round(lastRes.acc*100),lastRes.lv)+'">'+
+      '<div class="card-btns">'+(canShare?'<button type="button" class="btn" id="cardShare">'+CARD.share+'</button>':'')+
+      '<a class="btn line" id="cardDl" href="'+cardUrl+'" download="absolute-pitch-'+dkey(lastRes.d)+'.jpg" data-google-vignette="false">'+CARD.download+'</a>'+
+      '<button type="button" class="btn line" id="cardCopy">'+CARD.copy+'</button></div>'+
+      '<p class="small">'+CARD.hint+'</p>';
+    out.hidden=false;
+    $('cardDl').addEventListener('click',function(){ev('export',{method:'image',content_type:'result'})});
+    $('cardCopy').addEventListener('click',function(){
+      var b=$('cardCopy'),h=hg();if(h)h.share('copy_link','result');
+      try{navigator.clipboard.writeText(shareText()+' '+shareUrl()).then(function(){b.textContent=CARD.copied},function(){b.textContent=shareUrl()})}catch(e){b.textContent=shareUrl()}
+    });
+    if(canShare)$('cardShare').addEventListener('click',function(){
+      var h=hg();if(h)h.share('native','result');
+      navigator.share({files:[file],text:shareText()+' '+shareUrl()}).catch(function(er){if(er?er.name==='AbortError':false)ev('share_cancel',{method:'native',content_type:'result'})});
+    });
+  }catch(e){out.hidden=false;out.textContent=CARD.fail}
+  btn.disabled=false;btn.textContent=CARD.make;
+}
+
+/* ---------- 控制 ---------- */
+$('trainBtn').addEventListener('click',function(){start('train')});
+$('testBtn').addEventListener('click',function(){start('test')});
+$('reviewBtn').addEventListener('click',function(){start('review')});
+$('stopBtn').addEventListener('click',function(){stop(mode==='test'?T.testAbort:null)});
+$('noiseOpt').checked=S.noise;
+$('noiseOpt').addEventListener('change',function(e){S.noise=e.target.checked;save();ev('game_settings',{setting:S.noise?'noise_on':'noise_off'})});
+$('timbreOpt').value=S.timbre;
+$('timbreOpt').addEventListener('change',function(e){S.timbre=e.target.value;save();ev('game_settings',{setting:'timbre_'+S.timbre})});
+var armed=false;
+$('resetBtn').addEventListener('click',function(){
+  if(!armed){armed=true;$('resetMsg').textContent=T.resetArm;setTimeout(function(){armed=false;$('resetMsg').textContent=''},4000);return}
+  if(mode)roundClose('quit');
+  S=fresh();save();armed=false;$('resetMsg').textContent=T.resetDone;ev('ap_progress_reset',{});
+  idle(T.resetStatus);
+});
+if(reduce)$('ring').classList.remove('draw');
+$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+/* 語言切換 */
+document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'en'},true)}catch(e){}})});
+paintWheel();render();sizeScope();
+})();
+</script>
+
+<script src="/lib/hy-fav.js" defer></script>
+</body>
+</html>

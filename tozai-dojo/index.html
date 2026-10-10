@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="spec-version" content="core-v1.4/games-v1.8">
+<!-- 網站 logo icon（檔案在 /icons/） -->
+<link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -15,7 +22,7 @@
 </script>
 <!-- Google AdSense（只有手動廣告，不跑 Auto ads，不會有插頁式廣告） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
-<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})});</script>
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
 <style>
 .kh-ad{display:block;width:100%;max-width:728px;margin:48px auto;padding:0 16px;text-align:center;clear:both;box-sizing:border-box}
 .kh-ad--game{margin-top:150px}
@@ -31,23 +38,36 @@
 <meta property="og:description" content="聽發音、分東西、拚連擊：10 題分辨標準語與關西腔。">
 <meta property="og:url" content="https://games.knittinghiyori.com/tozai-dojo/">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="編織日和 小遊戲">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://games.knittinghiyori.com/tozai-dojo/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="編織日和・小遊戲｜東西腔道場：聽發音分辨日文關東腔與關西腔的小遊戲，每回 10 題，附遊戲網址">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="東西腔道場｜日文關東腔・關西腔小遊戲">
+<meta name="twitter:description" content="聽發音、分東西、拚連擊：10 題分辨標準語與關西腔。">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/tozai-dojo/og.png">
 <!-- GA4：放在 <head>，game_id 與 page_lang 依遊戲修改 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('set', { content_group: 'game', game_id: 'tozai_dojo', page_lang: 'zh-Hant' });
+  gtag('set', { content_group: 'game', game_id: 'tozai_dojo', page_lang: 'zh-Hant', page_title: '遊戲|東西腔道場|關西腔小遊戲' });
   gtag('config', 'G-ZQZHTYTRMQ');
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;700;900&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700">
 <style>
 :root{
   color-scheme:light;
   --paper:#ffffff; --ink:#111111; --muted:#555a63; --line:#e2e4e8; --panel:#f5f6f8;
-  --east:#1d57b8; --west:#d7372a; --east-soft:#eaf1fc; --west-soft:#fdecea;
+  --east:#1d57b8; --west:#c92f22; --east-soft:#eaf1fc; --west-soft:#fdecea;
   --gold:#f5b700; --gold-soft:#fff6d6;
   --ok:#14864f; --ok-soft:#e5f5ec; --bad:#d7372a; --bad-soft:#fdecea;
   --jp:"Noto Sans JP","Hiragino Sans","PingFang TC","Microsoft JhengHei",sans-serif;
@@ -58,7 +78,13 @@
 [hidden]{display:none!important}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
-.hub{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.hubcta{margin-top:24px;border:2px solid var(--ink);border-radius:14px;padding:18px 16px;background:var(--gold-soft);display:grid;gap:8px;justify-items:start}
+.hubcta h2{font-family:var(--display);font-size:20px;margin:0;font-weight:400}
+.hubcta p{margin:0;font-size:14px;color:var(--ink)}
+.hub{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 22px;border:2px solid var(--ink);border-radius:999px;background:var(--gold);color:var(--ink);font-weight:900;font-size:16px;text-decoration:none}
+.hub:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.hub:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+@media (max-width:480px){.hub{justify-self:stretch}}
 body{background:var(--paper);color:var(--ink);font-family:var(--jp);font-size:15px;line-height:1.6;padding-inline:16px;padding-block:20px 48px;margin:0}
 .wrap{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 button{font:inherit;color:inherit}
@@ -117,7 +143,7 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
 .spk{width:44px;height:44px;flex:none;border-radius:50%;border:2px solid var(--ink);background:var(--gold);cursor:pointer;display:grid;place-items:center;transition:transform .12s}
 .spk:hover{transform:scale(1.08)}
 .spk.big{width:84px;height:84px}
-.spk.sm{width:32px;height:32px;border-width:1.5px}
+.spk.sm{width:36px;height:36px;border-width:1.5px}
 .spk svg{width:55%;height:55%}
 .spk.playing{animation:pulse .7s ease-in-out infinite}
 @keyframes pulse{50%{transform:scale(1.12)}}
@@ -181,18 +207,27 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
 .share .row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .sb{display:inline-flex;align-items:center;justify-content:center;min-width:72px;font-size:13px;font-weight:700;padding:8px 14px;border-radius:999px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);text-decoration:none;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
 .sb:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
-.sb.line{background:#06c755;color:#fff}
-.sb.fb{background:#1877f2;color:#fff}
+.sb.line{background:#06c755;color:#111}
+.sb.fb{background:#1669db;color:#fff}
 .sb.x,.sb.threads{background:#111;color:#fff}
 .sb.native{background:var(--gold)}
 .share-foot{border-top:1px solid var(--line);padding-top:16px}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:9;width:100%;height:100%}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<style>
+/* 編織日和品牌列（所有遊戲頁共用寫法，同 absolute-pitch） */
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;box-sizing:border-box;padding:4px 0 8px;border-bottom:1px solid #e7e8ed}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#16161a;text-decoration:none;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:14.4px;font-weight:700;letter-spacing:.04em;line-height:1.2;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Game", "LearningResource"], "name": "東西腔道場", "url": "https://games.knittinghiyori.com/tozai-dojo/", "image": "https://games.knittinghiyori.com/tozai-dojo/og.png", "description": "聽發音、分東西：用 10 題小遊戲分辨日文標準語（關東）與關西腔，附聽力題、東西文化冷知識與可發音的關西腔單字表。", "inLanguage": "zh-Hant", "isAccessibleForFree": true, "learningResourceType": "Game", "teaches": ["日文關西腔", "日文標準語", "日文聽力"], "genre": "Educational", "publisher": {"@type": "Organization", "name": "編織日和", "url": "https://knittinghiyori.com/"}}</script>
 </head>
 <body>
 <canvas id="fx"></canvas>
 <div class="wrap">
+  <div class="kh-brand-row"><a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和・小遊戲</a></div>
   <header>
     <div class="hero" aria-hidden="true">
       <div class="side e"><b>東</b><span>KANTŌ・東京</span></div>
@@ -216,6 +251,13 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
     <div class="gl-wrap"><table class="gl"><thead><tr><th>関東・標準語</th><th>関西・大阪腔</th><th>中文</th></tr></thead><tbody id="gl-body"></tbody></table></div>
   </section>
 
+  <div class="share-foot" id="share-game"></div>
+  <section class="hubcta" aria-labelledby="hubH">
+    <h2 id="hubH">還想玩別的？</h2>
+    <p>日文、程式、推理解謎，主頁還有更多免費的互動小遊戲。</p>
+    <a class="hub" href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">探索更多互動遊戲 →</a>
+  </section>
+
   <!-- Google AdSense 手動廣告單元 -->
 <div class="kh-ad kh-ad--game" aria-label="贊助內容">
   <span class="kh-ad__label">贊助內容</span>
@@ -223,12 +265,10 @@ h1{font-family:var(--display);font-weight:400;font-size:24px;margin:6px 0 0}
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
-<div class="share-foot" id="share-game"></div>
-  <p class="foot"><a class="hub" href="/" data-cta="footer" data-cta-type="game">← 回到編織日和・遊戲主頁</a></p>
   <p class="foot">發音是預先合成、內建在頁面裡的音檔，以標準語的語調朗讀，所以關西腔的「用詞」聽得到，但關西特有的語調無法完整重現。iPhone 若開著靜音鍵會聽不到，請先關掉靜音。東京話與標準語很接近，這裡以「關東」代稱標準語；關西腔以大阪腔為主。</p>
 </div>
 
-<p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 
 
 <script>
@@ -372,7 +412,7 @@ function startScreen(){
     <button class="next" id="go" style="align-self:center;font-size:18px;padding:13px 36px">開始！</button>
     <div class="trip">
       <p>正在計畫大阪行？機票、住宿、景點一次比價</p>
-      <a href="https://trip.tpk.ro/8p6Svq9z" target="_blank" rel="sponsored noopener" data-cta="start_card" data-cta-type="affiliate">看大阪機票・住宿・景點・玩樂 →</a>
+      <a href="https://trip.tpk.ro/8p6Svq9z" target="_blank" rel="sponsored nofollow noopener" data-cta="start_card" data-cta-type="trip">看大阪機票・住宿・景點・玩樂 →</a>
       <small>Trip.com 聯盟連結，透過連結訂購本站會獲得少量分潤，不影響你的價格。</small>
     </div>
   </div>`;
@@ -445,7 +485,7 @@ function result(){
     ${shareBar('result',`我在「東西腔道場」拿到 ${score} 分，答對 ${correct} 題！關東腔、關西腔你分得出來嗎？`,'分享你的成績')}
     <div class="trip">
       <p>學會關西腔了，下一步去大阪實際講講看</p>
-      <a href="https://trip.tpk.ro/8p6Svq9z" target="_blank" rel="sponsored noopener" data-cta="result_card" data-cta-type="affiliate">看大阪機票・住宿・景點・玩樂 →</a>
+      <a href="https://trip.tpk.ro/8p6Svq9z" target="_blank" rel="sponsored nofollow noopener" data-cta="result_card" data-cta-type="trip">看大阪機票・住宿・景點・玩樂 →</a>
       <small>Trip.com 聯盟連結，透過連結訂購本站會獲得少量分潤，不影響你的價格。</small>
     </div>
   </div>`;
@@ -457,13 +497,13 @@ function result(){
 /* ---------- share ---------- */
 const SHARE_URL='https://games.knittinghiyori.com/tozai-dojo/';
 function shareBar(type,text,label){
-  const u=SHARE_URL+'?via=share';
+  const u=SHARE_URL+'?ref=share', AMP=String.fromCharCode(38);
   const e=encodeURIComponent, tu=e(u), tt=e(text);
   const links=[
-    ['line','LINE','https://social-plugins.line.me/lineit/share?url='+tu+'&text='+tt],
+    ['line','LINE','https://social-plugins.line.me/lineit/share?url='+tu+AMP+'text='+tt],
     ['facebook','Facebook','https://www.facebook.com/sharer/sharer.php?u='+tu],
     ['threads','Threads','https://www.threads.net/intent/post?text='+e(text+' '+u)],
-    ['x','X','https://x.com/intent/post?text='+tt+'&url='+tu]
+    ['x','X','https://x.com/intent/post?text='+tt+AMP+'url='+tu]
   ];
   const cls={line:'line',facebook:'fb',threads:'threads',x:'x'};
   return `<div class="share"><span class="lbl">${esc(label)}</span><div class="row">`+
@@ -493,7 +533,8 @@ document.addEventListener('click',e=>{
 });
 function fallbackCopy(t,done){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();if(ok)done();else toast('無法自動複製，請手動複製網址：'+SHARE_URL)}
 /* 從分享連結進來 → entry_point=shared（要在互動前呼叫） */
-if(/[?]via=share/.test(location.search))track(h=>h.start('shared'));
+/* hyGame 寫在這段程式後面，所以等整頁讀完再呼叫（原本太早呼叫，shared 一直沒記到） */
+if(/[?](ref|via)=share/.test(location.search))document.addEventListener('DOMContentLoaded',()=>track(h=>h.start('shared')));
 
 function renderGlossary(){$('#gl-body').innerHTML=PAIRS.map(p=>`<tr><td class="e"><div class="cell">${spk(p.s,'sm')}<span lang="ja">${esc(p.s)}</span></div></td><td class="w"><div class="cell">${spk(p.k,'sm')}<span lang="ja">${esc(p.k)}</span></div></td><td class="z">${esc(p.z)}<small>${esc(p.n)}</small></td></tr>`).join('')}
 function tab(w){const g=w==='game';$('#tab-game').setAttribute('aria-selected',g);$('#tab-list').setAttribute('aria-selected',!g);$('#game').hidden=!g;$('#list').hidden=g}
@@ -641,5 +682,6 @@ var HY_GAME_LANG = function(){ return 'zh'; };  /* 多語遊戲改成回傳目�
 })();
 /* ===== /GA4 統一追蹤 ===== */
 </script>
+<script src="/lib/hy-fav.js" defer></script>
 </body>
 </html>

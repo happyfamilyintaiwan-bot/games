@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="spec-version" content="core-v1.4/games-v1.8">
+<!-- 網站 logo icon（檔案在 /icons/） -->
+<link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=2">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -15,7 +22,7 @@
 </script>
 <!-- Google AdSense（只有手動廣告，不跑 Auto ads，不會有插頁式廣告） -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
-<script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})});</script>
+<script>/* 所有連結（含之後由程式產生的）加 vignette 標記，避免點連結跳插頁廣告 */(function(){function tag(r){r.querySelectorAll('a[href]').forEach(function(a){a.setAttribute('data-google-vignette','false')})}document.addEventListener('DOMContentLoaded',function(){tag(document);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.matches('a[href]'))n.setAttribute('data-google-vignette','false');tag(n)}})})}).observe(document.body,{childList:true,subtree:true})})})();</script>
 <style>
 .kh-ad{display:block;width:100%;max-width:728px;margin:48px auto;padding:0 16px;text-align:center;clear:both;box-sizing:border-box}
 .kh-ad--game{margin-top:150px}
@@ -31,7 +38,15 @@
 <meta property="og:title" content="SQL 偵探：霞光畫廊失竊案">
 <meta property="og:description" content="不會寫程式也能玩。寫 SQL 查詢、追線索，找出偷畫的犯人。">
 <meta property="og:url" content="https://games.knittinghiyori.com/sql-detective/">
-<meta name="twitter:card" content="summary">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://games.knittinghiyori.com/sql-detective/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="編織日和・小遊戲｜SQL 偵探：霞光畫廊失竊案，零基礎 SQL 入門遊戲，寫查詢找出偷畫的犯人，附遊戲網址">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL 偵探：霞光畫廊失竊案">
+<meta name="twitter:description" content="不會寫程式也能玩。寫 SQL 查詢、追線索，找出偷畫的犯人。">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/sql-detective/og.png">
 <!-- GA4：放在 <head>，game_id 與 page_lang 依遊戲修改 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZQZHTYTRMQ"></script>
 <script>
@@ -43,7 +58,11 @@
 </script>
 <title>SQL 偵探：霞光畫廊失竊案｜零基礎 SQL 入門遊戲</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Special+Elite&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite">
 <style>
 :root{
   color-scheme:light;
@@ -56,6 +75,7 @@
   --type:"Special Elite","Courier New",monospace;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;padding-inline:16px;padding-block:0 48px}
 .wrap{max-width:1180px;margin:0 auto}
 header.case{padding-block:28px 18px;display:grid;gap:14px}
@@ -63,11 +83,11 @@ header.case{padding-block:28px 18px;display:grid;gap:14px}
 h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0;text-wrap:balance}
 .lede{color:var(--muted);max-width:62ch;margin:0}
 .evidence{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.ev{font-family:var(--type);font-size:12px;border:1px dashed var(--line);background:transparent;color:var(--muted);padding:4px 10px;cursor:pointer;border-radius:2px}
+.ev{font-family:var(--type);font-size:12px;border:1px dashed var(--line);background:transparent;color:var(--muted);padding:8px 10px;min-height:36px;cursor:pointer;border-radius:2px}
 .ev.done{border-style:solid;border-color:var(--ok);color:var(--ok)}
 .ev.cur{border-style:solid;border-color:var(--ink);color:var(--ink);background:var(--surface)}
 .ev:disabled{cursor:not-allowed;opacity:.5}
-.ev:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
+.ev:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
 .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:20px;align-items:start}
 @media (max-width:860px){.grid{grid-template-columns:1fr}}
@@ -91,8 +111,8 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,5vw,44px);line-
 .aff .note{font-size:12px;color:var(--muted)}
 .aff a.go{justify-self:start;background:var(--tape);color:var(--tape-ink);font-weight:700;text-decoration:none;padding:10px 18px;border-radius:3px}
 .aff a.go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-details{border-top:1px solid var(--line);padding-top:10px}
-details summary{cursor:pointer;color:var(--muted);font-size:14px}
+details{border-top:1px solid var(--line);padding-top:2px}
+details summary{cursor:pointer;color:var(--muted);font-size:14px;padding:8px 0}
 details pre{font-family:var(--mono);font-size:13px;background:var(--code-bg);color:var(--code-ink);border:1px solid var(--code-line);padding:10px 12px;white-space:pre-wrap;margin:8px 0 0}
 .answer{display:flex;gap:8px;flex-wrap:wrap}
 .answer input{flex:1 1 180px;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:3px}
@@ -101,14 +121,14 @@ details pre{font-family:var(--mono);font-size:13px;background:var(--code-bg);col
 button{font:inherit;cursor:pointer;border-radius:3px}
 .btn{background:var(--ink);color:#FFFFFF;border:0;padding:9px 16px;font-weight:700}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
-.stamp{position:absolute;top:18px;right:18px;font-family:var(--type);color:var(--stamp);border:3px solid var(--stamp);padding:2px 10px;font-size:18px;letter-spacing:.12em;transform:rotate(8deg);opacity:.85}
+.stamp{position:absolute;top:18px;right:18px;font-family:var(--type);color:var(--stamp);border:3px solid var(--stamp);padding:2px 10px;font-size:18px;letter-spacing:.12em;transform:rotate(8deg);opacity:.92}
 @media (prefers-reduced-motion:no-preference){.stamp.pop{animation:pop .35s ease-out}}
-@keyframes pop{from{transform:rotate(8deg) scale(1.8);opacity:0}to{transform:rotate(8deg) scale(1);opacity:.85}}
+@keyframes pop{from{transform:rotate(8deg) scale(1.8);opacity:0}to{transform:rotate(8deg) scale(1);opacity:.92}}
 
 .console{background:var(--code-bg);color:var(--code-ink);border:1px solid var(--code-line);display:grid}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--code-line);font-family:var(--mono);font-size:12px;color:var(--code-muted);flex-wrap:wrap}
 .bar .acts{display:flex;gap:8px}
-.bar button{background:#FFFFFF;border:1px solid var(--code-line);color:var(--code-ink);padding:5px 12px;font-size:13px}
+.bar button{background:#FFFFFF;border:1px solid var(--code-line);color:var(--code-ink);padding:8px 14px;font-size:13px;min-height:40px}
 .bar button.run{background:var(--tape);color:var(--tape-ink);border-color:var(--tape);font-weight:700}
 textarea#sql{font-family:var(--mono);font-size:14px;line-height:1.6;background:transparent;color:var(--code-ink);border:0;padding:14px;min-height:170px;resize:vertical;width:100%;tab-size:2}
 .out{border-top:1px solid var(--code-line);background:var(--surface);color:var(--ink)}
@@ -125,7 +145,7 @@ td.num{font-family:var(--mono)}
 .schema h3{font-family:var(--serif);font-size:18px;margin:0}
 .tables{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .tcard{background:var(--surface);border:1px solid var(--line);padding:12px 14px;font-size:13px}
-.tcard button{background:none;border:0;padding:0;color:var(--ink);font-family:var(--mono);font-weight:600;font-size:14px;text-decoration:underline;text-decoration-color:var(--tape);text-underline-offset:3px}
+.tcard button{background:none;border:0;padding:7px 0;min-height:36px;color:var(--ink);font-family:var(--mono);font-weight:600;font-size:14px;text-decoration:underline;text-decoration-color:var(--tape);text-underline-offset:3px}
 .tcard ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:2px}
 .tcard li{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .tcard li span{color:var(--ink)}
@@ -140,7 +160,7 @@ td.num{font-family:var(--mono)}
 .plats{display:flex;flex-wrap:wrap;gap:10px}
 .plats a,.plats button{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--ink);background:#FFFFFF;color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;border-radius:3px}
 .plats a:hover,.plats button:hover{background:var(--tape)}
-.plats a:focus-visible{outline:2px solid var(--tape);outline-offset:2px}
+.plats a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .plats .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 #copyUrl{font-family:var(--mono);font-size:12px;color:var(--muted);word-break:break-all;user-select:all}
 .hubcta{margin-top:28px;background:var(--ink);color:#FFFFFF;padding:24px 22px;display:grid;gap:12px;border-radius:4px}
@@ -151,12 +171,24 @@ td.num{font-family:var(--mono)}
 .hubcta a:focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
 @media (max-width:480px){.hubcta a{justify-self:stretch;justify-content:center}}
 footer{margin-top:20px;color:var(--muted);font-size:13px}
+footer .about{margin:0 0 10px;font-size:14px;color:var(--ink)}
+footer .about a{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-color:var(--tape);text-decoration-thickness:2px;text-underline-offset:3px}
 </style>
 <style>html,body{margin:0}</style>
+<style>
+/* 編織日和品牌列（所有遊戲頁共用寫法，同 absolute-pitch） */
+.kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;box-sizing:border-box;padding:4px 0 8px;border-bottom:1px solid #e7e8ed}
+.kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:#16161a;text-decoration:none;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:14.4px;font-weight:700;letter-spacing:.04em;line-height:1.2;white-space:nowrap}
+.kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.kh-brand:hover{text-decoration:underline;text-underline-offset:4px}
+.kh-brand-row{margin-bottom:8px}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": ["Game", "LearningResource"], "name": "SQL 偵探：霞光畫廊失竊案", "url": "https://games.knittinghiyori.com/sql-detective/", "image": "https://games.knittinghiyori.com/sql-detective/og.png", "description": "零基礎也能玩的 SQL 入門遊戲：在瀏覽器裡寫查詢、追線索，找出偷走水墨畫的犯人。第 0 關只要改一個字，免安裝、手機也能玩。", "inLanguage": "zh-Hant", "isAccessibleForFree": true, "educationalLevel": "Beginner", "learningResourceType": "Game", "teaches": ["SQL 入門", "SELECT", "WHERE", "ORDER BY", "LIKE", "JOIN"], "genre": "Educational", "publisher": {"@type": "Organization", "name": "編織日和", "url": "https://knittinghiyori.com/"}}</script>
 </head>
 <body>
 
 <div class="wrap">
+  <div class="kh-brand-row"><a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和・小遊戲</a></div>
   <header class="case">
     <span class="tape">CASE No. 0912 · 機密</span>
     <h1>霞光畫廊失竊案</h1>
@@ -177,7 +209,7 @@ footer{margin-top:20px;color:var(--muted);font-size:13px}
           </div>
         </div>
         <label for="sql" class="sr" hidden>SQL 查詢</label>
-        <textarea id="sql" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+        <textarea id="sql" aria-label="SQL 查詢" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
         <div class="out">
           <div class="meta" id="meta">按「執行」看結果</div>
           <div class="tbl" id="result"></div>
@@ -209,7 +241,7 @@ footer{margin-top:20px;color:var(--muted);font-size:13px}
   <aside class="aff affbar" aria-label="推薦">
     <h3>喜歡推理解謎？換你走進真正的密室</h3>
     <p>找線索、串證據、推理出答案，跟寫 SQL 查案是同一種腦力。約朋友去玩一場實體密室逃脫，看誰先解開最後一道鎖。</p>
-    <a class="go" id="affLink" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored noopener" data-cta="below_game" data-cta-type="affiliate">看密室逃脫場次 →</a>
+    <a class="go" id="affLink" href="https://klook.tpk.ro/SbXQJbdb" target="_blank" rel="sponsored nofollow noopener" data-cta="below_game" data-cta-type="klook">看密室逃脫場次 →</a>
     <p class="note">此連結為 Klook 聯盟行銷連結。透過連結預訂，本站會獲得分潤，你支付的價格不變。</p>
   </aside>
 
@@ -227,6 +259,12 @@ footer{margin-top:20px;color:var(--muted);font-size:13px}
     <div id="copyUrl"></div>
   </section>
 
+<section class="hubcta" aria-labelledby="hubH">
+    <h2 id="hubH">還想玩別的？回遊戲主頁看看</h2>
+    <p>日文、程式、推理解謎，主頁還有更多免費的互動小遊戲。</p>
+    <a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">探索更多互動遊戲 →</a>
+  </section>
+
   <!-- Google AdSense 手動廣告單元 -->
 <div class="kh-ad kh-ad--game" aria-label="贊助內容">
   <span class="kh-ad__label">贊助內容</span>
@@ -234,16 +272,10 @@ footer{margin-top:20px;color:var(--muted);font-size:13px}
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
-<section class="hubcta" aria-labelledby="hubH">
-    <h2 id="hubH">還想玩別的？回遊戲主頁看看</h2>
-    <p>日文、程式、推理解謎，主頁還有更多免費的互動小遊戲。</p>
-    <a href="https://games.knittinghiyori.com/" data-cta="about_hub" data-cta-type="game">探索更多互動遊戲 →</a>
-  </section>
-
-  <footer>資料皆為虛構。SQL 在你的瀏覽器裡執行，引擎是真正的 SQLite（sql.js），學到的語法可以直接用在其他資料庫。</footer>
+  <footer><p class="about">每一關學什麼、玩法與常見問題：<a href="https://knittinghiyori.com/sql-beginner-game/" data-cta="about_article" data-cta-type="article">SQL 入門遊戲｜霞光畫廊失竊案 介紹文</a></p>資料皆為虛構。SQL 在你的瀏覽器裡執行，引擎是真正的 SQLite（sql.js），學到的語法可以直接用在其他資料庫。</footer>
 </div>
 
-<p class="kh-legal">本站使用 Cookie 以進行流量分析與顯示廣告。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
+<p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 
 
 <script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-asm.js"></script>
@@ -757,5 +789,6 @@ $("meta").textContent="SQL 引擎載入中…";
 if (window.initSqlJs) initSqlJs().then(m => { SQL = m; run(); }).catch(() => { $("meta").textContent="SQL 引擎載入失敗，請重新整理頁面。"; $("meta").className="meta err"; });
 else { $("meta").textContent="SQL 引擎載入失敗，請重新整理頁面。"; $("meta").className="meta err"; }
 </script>
+<script src="/lib/hy-fav.js" defer></script>
 </body>
 </html>
