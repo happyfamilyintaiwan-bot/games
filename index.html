@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="spec-version" content="core-v1.3/games-v1.6">
+<meta name="spec-version" content="core-v1.4/games-v1.8">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -34,7 +34,14 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:title" content="編織日和小遊戲">
 <meta property="og:description" content="日文單字、動詞變化、關西腔，SQL 與 SwiftUI 偵探解謎，還有絕對音感訓練⋯⋯打開瀏覽器就能玩的學習小遊戲。">
-<!-- <meta property="og:image" content="https://games.knittinghiyori.com/assets/og-hub.jpg"> -->
+<meta property="og:image" content="https://games.knittinghiyori.com/assets/og-hub.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="編織日和・小遊戲：免費的日文、程式、音感與生活習慣學習小遊戲，附網址 games.knittinghiyori.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="編織日和小遊戲">
+<meta name="twitter:description" content="日文單字、動詞變化、關西腔，SQL 與 SwiftUI 偵探解謎，還有絕對音感訓練⋯⋯打開瀏覽器就能玩的學習小遊戲。">
+<meta name="twitter:image" content="https://games.knittinghiyori.com/assets/og-hub.png">
 <meta name="theme-color" content="#ffffff">
 <!-- 網站 logo icon（檔案在 /icons/；遊戲頁貼同一段） -->
 <link rel="icon" href="/icons/favicon.ico?v=2" sizes="any">
@@ -71,8 +78,8 @@
 </script>
 <style>
 :root{
-  --ink:#2b2b2e; --mute:#7a7a80; --line:#ececef;
-  --sakura:#e8829f; --sakura-deep:#d94873; --sakura-soft:#fdf1f5;
+  --ink:#2b2b2e; --mute:#66666c; --line:#ececef;
+  --sakura:#e8829f; --sakura-deep:#c2305f; --sakura-soft:#fdf1f5;
   --matcha:#7fae8a; --matcha-soft:#eef6f0;
   --sora:#7fb3d5;   --sora-soft:#edf5fb;
   --yuzu:#f2b33d;
@@ -125,7 +132,7 @@ h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
 .chip:hover{border-color:var(--sakura)}
 .chip b{font-weight:500;font-size:12px;color:var(--mute)}
 .chip[aria-pressed="true"]{background:var(--sakura-deep);border-color:var(--sakura-deep);color:#fff}
-.chip[aria-pressed="true"] b{color:#fde3ea}
+.chip[aria-pressed="true"] b{color:#fff}
 .fstatus{font-size:13px;color:var(--mute);margin:0}
 .fstatus button{font:inherit;font-size:13px;background:none;border:0;color:var(--sakura-deep);cursor:pointer;padding:0 0 0 6px;text-decoration:underline;text-underline-offset:3px}
 .card[hidden],.chip[hidden],.frow[hidden]{display:none}
@@ -138,15 +145,15 @@ h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
 .card:hover{transform:translateY(-3px);border-color:#f3c3d2;box-shadow:0 14px 30px rgba(217,72,115,.10)}
 .thumb{height:140px;display:grid;place-items:center;background:var(--sakura-soft);position:relative}
 .thumb.sora{background:var(--sora-soft)}
-.thumb.sora .no{color:#3f7ea6}
+.thumb.sora .no{color:#2f6587}
 .thumb.matcha{background:var(--matcha-soft)}
-.thumb.matcha .no{color:#4f8560}
+.thumb.matcha .no{color:#3d6b4c}
 .thumb.yuzu{background:#fdf5e4}
-.thumb.yuzu .no{color:#b07a12}
+.thumb.yuzu .no{color:#7d5608}
 .thumb.fuji{background:#f3effb}
-.thumb.fuji .no{color:#7a5fc0}
+.thumb.fuji .no{color:#654aa8}
 .thumb.exit{background:#e8f5ee}
-.thumb.exit .no{color:#00925A}
+.thumb.exit .no{color:#006e42}
 .thumb.sleep{background:#FBECD2}
 .thumb.sleep .no{color:#1B2430}
 .thumb.morse{background:#EAF1F9}
@@ -161,8 +168,8 @@ h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:10px}
 .tags span{font-size:12px;border-radius:999px;padding:2px 10px}
 .t-sakura{background:var(--sakura-soft);color:var(--sakura-deep)}
-.t-matcha{background:var(--matcha-soft);color:#4f8560}
-.t-sora{background:var(--sora-soft);color:#3f7ea6}
+.t-matcha{background:var(--matcha-soft);color:#3d6b4c}
+.t-sora{background:var(--sora-soft);color:#2f6587}
 .play{margin-top:12px;font-size:14px;font-weight:500;color:var(--sakura-deep)}
 .card:hover .play{text-decoration:underline;text-underline-offset:4px}
 .card.soon{pointer-events:none;border-style:dashed}
@@ -186,18 +193,18 @@ h1 .mark{background:linear-gradient(transparent 62%,#fbdbe5 62%)}
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:#fff;font-size:14px;padding:9px 18px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;z-index:10}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-.blog{display:flex;align-items:center;gap:16px;margin-top:40px;padding:22px 24px;border-radius:24px;background:var(--sakura-deep);color:#fff;text-decoration:none;box-shadow:0 10px 26px rgba(217,72,115,.22);transition:.2s}
+.blog{display:flex;align-items:center;gap:16px;margin-top:40px;padding:22px 24px;border-radius:24px;background:var(--sakura-deep);color:#fff;text-decoration:none;box-shadow:0 10px 26px rgba(194,48,95,.22);transition:.2s}
 .blog:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(217,72,115,.3)}
 .blog__icon{flex:none;width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.18);display:grid;place-items:center}
 .blog__txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.blog__kicker{font-size:12px;letter-spacing:.15em;opacity:.85}
+.blog__kicker{font-size:12px;letter-spacing:.15em}
 .blog__title{font-family:var(--jp);font-size:19px;font-weight:700;line-height:1.4}
-.blog__sub{font-size:13px;opacity:.9}
+.blog__sub{font-size:13px}
 .blog__arrow{flex:none;font-size:22px;font-weight:700;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--sakura-deep);display:grid;place-items:center;transition:.2s}
 .blog:hover .blog__arrow{transform:translateX(4px)}
 @media (max-width:560px){.blog{padding:18px;gap:12px}.blog__icon{width:44px;height:44px}.blog__title{font-size:17px}}
 footer{margin-top:44px;padding-top:16px;border-top:1px dashed #e3d6db;font-size:13px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-footer a{color:var(--sakura-deep);text-decoration:none}
+footer a{color:var(--sakura-deep);text-decoration:none;display:inline-flex;align-items:center;min-height:40px}
 footer a:hover{text-decoration:underline}
 </style>
 <style>
@@ -388,7 +395,7 @@ footer a:hover{text-decoration:underline}
 </section>
 
 <!-- 回部落格大按鈕（GA4 cta_click：blog_banner／mainsite） -->
-<a class="blog" href="https://knittinghiyori.com/" data-cta="blog_banner" data-cta-type="mainsite">
+<a class="blog" href="https://knittinghiyori.com/" data-cta="blog_banner" data-cta-type="article">
   <span class="blog__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M8 8h8M8 12h6"/></svg></span>
   <span class="blog__txt">
     <span class="blog__kicker">KNITTING HIYORI BLOG</span>
@@ -400,7 +407,7 @@ footer a:hover{text-decoration:underline}
 
 <footer>
   <span>© 編織日和 Knitting Hiyori</span>
-  <a href="https://knittinghiyori.com/" data-cta="footer" data-cta-type="mainsite">← 回到部落格</a>
+  <a href="https://knittinghiyori.com/" data-cta="footer_main" data-cta-type="article">← 回到部落格</a>
 </footer>
 <p class="kh-legal">本站使用 Cookie 進行流量分析（Google Analytics）與顯示廣告（Google AdSense），部分連結為聯盟連結。<a href="https://knittinghiyori.com/privacy-policy/">隱私權政策</a></p>
 
