@@ -31,6 +31,8 @@ game_id：`hiyori_pet`｜事件前綴：`pet_`｜只有中文
 
 `round_start {option: frisbee}` → `round_end {result: complete, score＝接到幾個, item_count: 6, correct_count＝接到幾個}`。
 
+接飛盤一局 10 秒，沒有「放棄」按鈕；玩到一半離開頁面才會送 `round_end {result: quit}`，所以驗收時 `quit` 會排在離開前的點擊之後、`game_exit` 之前。
+
 ## GA4 事件
 
 | 事件 | 何時 | 參數 |
