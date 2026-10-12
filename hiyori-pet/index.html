@@ -197,6 +197,7 @@ a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underli
 .hp-invite{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;border-radius:16px;background:#fff;border:2px dashed #e8b9c7;font-size:14px;line-height:1.6;text-align:left}
 .hp-invite canvas{flex:none;width:64px;height:64px;image-rendering:pixelated;image-rendering:crisp-edges}
 .hp-walkbar{margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.hp-walkbar__q{flex-basis:100%;font-size:14px;font-weight:700;margin-bottom:2px}
 .hp-walkbar button,.hp-block button{font:inherit;font-size:14px;font-weight:700;padding:8px 14px;border:0;border-radius:12px;background:#d94873;color:#fff;cursor:pointer}
 .hp-walkbar button.is-quiet,.hp-block button.is-quiet{background:#efe3d3;color:#5b4636}
 .hp-block{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;box-sizing:border-box;background:rgba(47,51,82,.93);color:#fff;text-align:center}
@@ -216,7 +217,9 @@ a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underli
 .page-foot{max-width:420px;margin:28px auto 0;font-size:13px;color:#6b6b70;border-top:1px solid #e7e7ea;padding-top:12px}
 </style>
 </head>
-<body>
+<!-- google-anno-skip：Google 官方的標記，整頁不放「廣告意圖」連結（不然信件、狀態文字會被自動變成廣告連結）。
+     錨定與插頁廣告要另外在 AdSense 後台「網頁排除」加 games.knittinghiyori.com 才會關 -->
+<body class="google-anno-skip">
 <!-- 編織日和品牌列（每款遊戲必有，點了回遊戲主頁；cta_click：brand_hub／game） -->
 <div class="kh-brand-row"><a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">編織日和<span class="kh-brand-sub">・小遊戲</span></a></div>
 <h1 class="page-h1">日和毛孩：免費網頁電子寵物，養一隻像素貓狗</h1>
@@ -289,10 +292,11 @@ a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underli
     <p class="hp-move__msg" id="hp-visit-tip" aria-live="polite"></p>
   </div>
   <div class="hp-panel hp-walkset" id="hp-walk" hidden>
-    <p class="hp-panel__sum">上班坐太久，毛孩會提醒你起來走走。走完回來跟牠說，牠會很開心。</p>
+    <p class="hp-panel__sum">坐太久，毛孩會提醒你起來走走。走完回來跟牠說，牠會很開心。</p>
     <label><input type="checkbox" id="hp-walk-on"> 開啟走動提醒</label>
     <label>每 <select id="hp-walk-every"><option value="30">30</option><option value="45">45</option><option value="50">50</option><option value="60">60</option><option value="90">90</option></select> 分鐘提醒一次</label>
-    <label><input type="checkbox" id="hp-walk-work"> 只在平日 9:00～18:00 提醒</label>
+    <p class="hp-empty" style="margin-top:8px">每天第一次打開會先問你「今天要提醒嗎」，說好才開始；日和毛孩（分頁或小窗）開著的時候才會提醒。</p>
+    <div class="hp-walkset__row"><span id="hp-walk-today"></span><button type="button" class="hp-newegg is-quiet" id="hp-walk-today-btn"></button></div>
     <p class="hp-panel__title">讓提醒更明顯（選用）</p>
     <div class="hp-walkset__row"><button type="button" class="hp-newegg is-quiet" id="hp-walk-notify">開啟系統通知</button><span id="hp-walk-notify-state"></span></div>
     <div class="hp-walkset__row"><button type="button" class="hp-newegg is-quiet" id="hp-walk-idle">鎖螢幕自動算散步</button><span id="hp-walk-idle-state"></span></div>
@@ -1226,10 +1230,12 @@ var HP_PC = (function(){
   function newBook(){ return fillWalk({ v: 1, dex: {}, album: [], postcards: [], snacks: [], giftDay: 0 }); }
   /* 走動提醒的設定與紀錄放在收藏本裡：換一隻毛孩還在，搬家碼也會一起帶走 */
   function fillWalk(b){
-    var d = { on: true, every: 50, work: true, notify: false, idle: false, stage: '', sitAt: 0, seenAt: 0, noticeAt: 0, walkAt: 0,
-      snoozeUntil: 0, offDay: 0, total: 0, day: 0, today: 0, streak: 0 };
+    var d = { on: true, every: 50, work: false, notify: false, idle: false, stage: '', sitAt: 0, seenAt: 0, noticeAt: 0, walkAt: 0,
+      snoozeUntil: 0, offDay: 0, total: 0, day: 0, today: 0, streak: 0, askDay: 0, dayOn: false };
     b.walk = b.walk || {};
     for (var k in d) if (!(k in b.walk)) b.walk[k] = d[k];
+    /* 2026-10-12 改規則：不再限平日上班時間，改成每天先問一次。舊資料的 work 一律關掉 */
+    if (!b.walk.v2) { b.walk.work = false; b.walk.v2 = 1; }
     return b;
   }
   var book = load(BOOK_KEY);
@@ -1726,7 +1732,7 @@ var HP_PC = (function(){
       });
       var sign = d.createElement('div'); sign.className = 'sign'; sign.textContent = '走走？';
       var wrow = d.createElement('div'); wrow.className = 'w';
-      [['go', '我去走走', ''], ['later', '10 分鐘後', 'q'], ['back', '我回來了', '']].forEach(function(a){
+      [['go', '我去走走', ''], ['later', '10 分鐘後', 'q'], ['back', '我回來了', ''], ['yes', '好，提醒我', ''], ['no', '今天不用', 'q']].forEach(function(a){
         var x = d.createElement('button'); x.type = 'button'; x.textContent = a[1]; x.className = a[2]; x.setAttribute('data-walk', a[0]); wrow.appendChild(x);
       });
       wrow.addEventListener('click', function(e){ var x = e.target.closest('[data-walk]'); if (x) walkAction(x.getAttribute('data-walk')); });
@@ -1750,13 +1756,15 @@ var HP_PC = (function(){
     pipWin.document.body.classList.toggle('is-night', night);
     for (var i = 0; i < pipEls.btns.length; i++) pipEls.btns[i].disabled = lock;
     pipEls.gv.hidden = !guestNow();
-    var st = book.walk.stage, body = pipWin.document.body;
+    var st = walkStage(now()), body = pipWin.document.body;
+    if (st === 'ask') pipEls.tx.textContent = WALK_ASK;
     body.classList.toggle('is-walk', st !== '');
     body.classList.toggle('is-notice', st === 'notice');
     body.classList.toggle('is-block', st === 'block');
     for (var j = 0; j < pipEls.wbtns.length; j++) {
       var k = pipEls.wbtns[j].getAttribute('data-walk');
-      pipEls.wbtns[j].hidden = st === 'walking' ? k !== 'back' : k === 'back';
+      var grp = k === 'back' ? 'walking' : ((k === 'yes' || k === 'no') ? 'ask' : 'remind');
+      pipEls.wbtns[j].hidden = grp !== (st === 'walking' ? 'walking' : (st === 'ask' ? 'ask' : 'remind'));
     }
   }
   $('hp-pip-btn').addEventListener('click', function(){ if (pipWin) pipWin.close(); else openPip(); });
@@ -1800,6 +1808,23 @@ var HP_PC = (function(){
     if (wd === 0 || wd === 6) return false;
     return h >= WALK.from ? h < WALK.to : false;
   }
+  /* 每天先問一次「今天要提醒嗎」：一天從早上 5 點算起，熬夜過 12 點不會又被問 */
+  var WALK_ASK = '今天要提醒你起來走走嗎？';
+  function walkDay(t){ return dayKey(t - 5 * HOUR); }
+  function walkNeedAsk(t){ var w = book.walk; return (state ? !!state.hatchedAt : false) ? (w.on ? w.askDay !== walkDay(t) : false) : false; }
+  function walkOn(t){
+    var w = book.walk;
+    if (!state || !w.on) return false;
+    if (w.askDay !== walkDay(t) || !w.dayOn) return false;
+    return inWorkTime(w, t);
+  }
+  /* 畫面要用的階段：ask（今天還沒問）／notice／block／walking／空字串 */
+  function walkStage(t){
+    var w = book.walk;
+    if (!state) return '';
+    if (w.stage) return w.stage;
+    return walkNeedAsk(t) ? 'ask' : '';
+  }
   function prevWorkDay(t){ var wd = new Date(t).getDay(); return dayKey(t - (wd === 1 ? 3 : 1) * DAY); }
   function walkTick(t){
     var w = book.walk;
@@ -1808,7 +1833,7 @@ var HP_PC = (function(){
       w.seenAt = t;
       return;
     }
-    if (!state || !w.on || w.offDay === dayKey(t) || !inWorkTime(w, t)) {
+    if (!walkOn(t)) {
       if (w.stage) { w.stage = ''; saveBook(); }
       w.sitAt = t; w.seenAt = t;
       return;
@@ -1872,7 +1897,9 @@ var HP_PC = (function(){
     var w = book.walk, t = now();
     if (kind === 'go') { w.stage = 'walking'; w.walkAt = t; say('去吧！我在這裡等你回來', 4000, true); }
     else if (kind === 'later') { w.stage = ''; w.snoozeUntil = t + WALK.blockMin * MIN; say('好，10 分鐘後再叫你', 3000, true); track('pet_walk_snooze', { option: 'later' }); }
-    else if (kind === 'today') { w.stage = ''; w.offDay = dayKey(t); say('好，今天不吵你了', 3000, true); track('pet_walk_snooze', { option: 'today' }); }
+    else if (kind === 'today') { w.stage = ''; w.askDay = walkDay(t); w.dayOn = false; say('好，今天不吵你了', 3000, true); track('pet_walk_snooze', { option: 'today' }); }
+    else if (kind === 'yes') { w.askDay = walkDay(t); w.dayOn = true; w.stage = ''; w.sitAt = t; w.seenAt = t; w.snoozeUntil = 0; say('好！坐滿 ' + w.every + ' 分鐘我會叫你起來', 4000, true); track('pet_walk_ask', { option: 'yes' }); }
+    else if (kind === 'no') { w.askDay = walkDay(t); w.dayOn = false; w.stage = ''; say('好，今天不吵你。想開的話按下面的「走動提醒」', 5000, true); track('pet_walk_ask', { option: 'no' }); }
     else if (kind === 'back') {
       if (t - w.walkAt < WALK.minMin * MIN) {
         w.stage = ''; w.sitAt = t - (w.every - WALK.blockMin) * MIN;   /* 太快回來不算，10 分鐘後再提醒一次 */
@@ -1887,12 +1914,13 @@ var HP_PC = (function(){
   }
   var walkSig = '';
   function renderWalk(t){
-    var w = book.walk, st = state ? w.stage : '';
+    var w = book.walk, st = walkStage(t);
     var bar = $('hp-walkbar');
     if (st !== walkSig) {
       walkSig = st;
       bar.innerHTML = '';
-      var btns = st === 'walking' ? [['back', '我回來了', '']] : (st ? [['go', '我去走走', ''], ['later', '10 分鐘後', 'is-quiet'], ['today', '今天先不要', 'is-quiet']] : []);
+      var btns = st === 'walking' ? [['back', '我回來了', '']] : (st === 'ask' ? [['yes', '好，提醒我', ''], ['no', '今天不用', 'is-quiet']] : (st ? [['go', '我去走走', ''], ['later', '10 分鐘後', 'is-quiet'], ['today', '今天先不要', 'is-quiet']] : []));
+      if (st === 'ask') bar.appendChild(el('span', 'hp-walkbar__q', WALK_ASK));
       btns.forEach(function(a){ var b = el('button', a[2], a[1]); b.type = 'button'; b.setAttribute('data-walk', a[0]); bar.appendChild(b); });
       bar.hidden = !btns.length;
     }
@@ -1906,7 +1934,10 @@ var HP_PC = (function(){
     var w = book.walk;
     $('hp-walk-on').checked = w.on;
     $('hp-walk-every').value = String(w.every);
-    $('hp-walk-work').checked = w.work;
+    var tn = now(), asked = w.askDay === walkDay(tn);
+    $('hp-walk-today').textContent = !w.on ? '' : (!asked ? '今天：還沒決定' : (w.dayOn ? '今天：提醒中' : '今天：不提醒'));
+    $('hp-walk-today-btn').hidden = !w.on || !state;
+    $('hp-walk-today-btn').textContent = (asked ? w.dayOn : false) ? '今天先不要' : '今天開始提醒';
     var np = 'Notification' in window ? Notification.permission : 'none';
     $('hp-walk-notify').hidden = np === 'none' ? true : (w.notify ? np === 'granted' : false);
     $('hp-walk-notify-state').textContent = np === 'none' ? '這個瀏覽器不支援系統通知' : (np === 'denied' ? '通知被瀏覽器封鎖了，要到網址列左邊的設定打開' : (w.notify ? (np === 'granted' ? '系統通知已開啟' : '') : ''));
@@ -1929,7 +1960,7 @@ var HP_PC = (function(){
         var mins = Math.round((Date.now() - idleAwayAt) / MIN);
         idleAwayAt = 0;
         var w = book.walk, t = now();
-        if (mins < WALK.walkMin || !state || !w.on || !inWorkTime(w, t)) return;
+        if (mins < WALK.walkMin || !walkOn(t)) return;
         var gone = walkDone('idle', t);
         say('歡迎回來！你離開了 ' + mins + ' 分鐘，算你去走走了' + (gone ? '' : '，心情 +' + WALK.mood), 6000, true);
         render();
@@ -1950,7 +1981,11 @@ var HP_PC = (function(){
   });
   $('hp-walk-on').addEventListener('change', function(){ book.walk.on = this.checked; book.walk.stage = ''; book.walk.sitAt = now(); saveBook(); render(); renderWalkSet(); });
   $('hp-walk-every').addEventListener('change', function(){ book.walk.every = Number(this.value) || 50; saveBook(); renderWalkSet(); });
-  $('hp-walk-work').addEventListener('change', function(){ book.walk.work = this.checked; saveBook(); render(); renderWalkSet(); });
+  $('hp-walk-today-btn').addEventListener('click', function(){
+    var w = book.walk, on = w.askDay === walkDay(now()) ? w.dayOn : false;
+    walkAction(on ? 'today' : 'yes');
+    renderWalkSet();
+  });
   $('hp-walk-notify').addEventListener('click', function(){
     if (!('Notification' in window)) return;
     Notification.requestPermission().then(function(p){ book.walk.notify = p === 'granted'; saveBook(); renderWalkSet(); }).catch(function(){});
@@ -2201,7 +2236,7 @@ var HP_PC = (function(){
   /* ---- Kit 電子報：長到少年期問一次，按哪一個都不再問（下方另有一行常駐小連結） ---- */
   function renderKit(form){
     var ask = LINKS.kit ? (!book.kitAsked ? (form === 'teen' || isAdult(form)) : false) : false;
-    $('hp-kitbar').hidden = !(ask ? (!book.walk.stage ? !game : false) : false);
+    $('hp-kitbar').hidden = !(ask ? (!walkStage(now()) ? !game : false) : false);
   }
   function kitDone(){ book.kitAsked = true; saveBook(); $('hp-kitbar').hidden = true; }
   $('hp-kit-yes').addEventListener('click', function(){ kitDone(); });
@@ -2243,6 +2278,7 @@ var HP_PC = (function(){
       if (e.target.closest('[data-dbg="walk"]')) {
         var tw = now();
         book.walk.on = true; book.walk.stage = ''; book.walk.offDay = 0; book.walk.snoozeUntil = 0;
+        book.walk.askDay = walkDay(tw); book.walk.dayOn = true;
         book.walk.seenAt = tw; book.walk.sitAt = tw - book.walk.every * MIN;
         saveBook();
         render();
@@ -2275,7 +2311,7 @@ var HP_PC = (function(){
     window.hpCore = { simulate: simulate, adopt: adopt, formAt: formAt, decide: decide, mood: mood, act: act, played: played,
       fetchHome: fetchHome, upgrade: upgrade, dayKey: dayKey, startTrip: startTrip, deliver: deliver, dailyCats: dailyCats,
       letterText: letterText, giveGift: giveGift, markCareDay: markCareDay, streakNow: streakNow, retire: retire,
-      getBook: function(){ return book; }, makeVisitLink: makeVisitLink, readVisit: readVisit, acceptVisit: acceptVisit, guestNow: guestNow, walkTick: walkTick, walkAction: walkAction, walkDone: walkDone, inWorkTime: inWorkTime, prevWorkDay: prevWorkDay, WALK: WALK, isAsleep: isAsleep, makeMoveCode: makeMoveCode, readMoveCode: readMoveCode, openPip: openPip, getPip: function(){ return pipWin; }, CARE: CARE, PLAY: PLAY, RATE: RATE,
+      getBook: function(){ return book; }, makeVisitLink: makeVisitLink, readVisit: readVisit, acceptVisit: acceptVisit, guestNow: guestNow, walkTick: walkTick, walkAction: walkAction, walkStage: walkStage, walkOn: walkOn, walkDay: walkDay, walkDone: walkDone, inWorkTime: inWorkTime, prevWorkDay: prevWorkDay, WALK: WALK, isAsleep: isAsleep, makeMoveCode: makeMoveCode, readMoveCode: readMoveCode, openPip: openPip, getPip: function(){ return pipWin; }, CARE: CARE, PLAY: PLAY, RATE: RATE,
       getState: function(){ return state; }, getGame: function(){ return game; }, setState: function(s){ state = s; save(); render(); } };
   }
 

@@ -47,6 +47,7 @@ game_id：`hiyori_pet`｜事件前綴：`pet_`｜只有中文
 | `pet_move` | 搬家碼 | `option`：export／import |
 | `pet_walk_remind` | 走動提醒跳出 | `option`：notice／block |
 | `pet_walk_done` | 散步回來 | `option`：manual／idle |
+| `pet_walk_ask` | 回答每天第一次打開的「今天要提醒你起來走走嗎？」 | `option`：yes／no |
 | `pet_walk_snooze` | 稍後提醒 | `option`：later／today |
 | `pet_visit_share` | 傳出串門子連結 | `method`：native／copy_link（同時送 `share {content_type: invite}`） |
 | `pet_visit_open` | 打開朋友的串門子連結 | `has_pet` |
@@ -64,6 +65,16 @@ game_id：`hiyori_pet`｜事件前綴：`pet_`｜只有中文
 | `kit` | 少年期問一次（`newsletter_teen`）＋說明區一行小連結（`newsletter_below`） | `newsletter` |
 
 聯盟最多 2 個位置（games 規範 §5）。廣告整頁 1 格，在回主頁大按鈕下方；浮動小窗、擋路模式、遊戲區內都不放。
+
+## 走動提醒的規則（2026-10-12）
+
+不限時段，頁面或小窗開著才計時；預設每 50 分鐘。每天第一次打開（一天從早上 5 點算起、蛋孵出來之後）先問一次，回答「好」才開始提醒，「今天不用」就整天不提醒。`book.walk.askDay`＝問過的那一天、`dayOn`＝那天要不要提醒。
+
+## 自動廣告
+
+- `<body class="google-anno-skip">`：Google 官方標記，整頁不放「廣告意圖」連結（不然信件和狀態文字會被變成廣告連結）。
+- 所有連結有 `data-google-vignette="false"`（防插頁廣告）。
+- 錨定廣告和插頁廣告只能在 AdSense 後台「廣告 → 編輯網站 → 網頁排除」加入 `games.knittinghiyori.com`（選「這個區段下的所有網頁」）才會關，網頁這邊沒有官方的關法。
 
 ## 測試
 
