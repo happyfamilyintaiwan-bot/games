@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="spec-version" content="core-v1.4/games-v1.8.1">
+<meta name="spec-version" content="core-v1.5/games-v1.8.4">
 <!-- Travelpayouts Drive（放在 head 最前面） -->
 <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
   (function () {
@@ -246,6 +246,10 @@ a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underli
         <span>想知道圖鑑什麼時候出新朋友嗎？</span>
         <div class="hp-kitbar__btns"><a href="#" data-aff="kit" data-cta="newsletter_teen" data-cta-type="newsletter" target="_blank" rel="noopener" id="hp-kit-yes">好，訂閱電子報</a><button type="button" id="hp-kit-no">不用了</button></div>
       </div>
+      <div class="hp-kitbar" id="hp-fbbar" hidden>
+        <span>養大了！花 1 分鐘告訴我們你覺得怎麼樣？</span>
+        <div class="hp-kitbar__btns"><a href="#" data-aff="feedback" data-cta="feedback_adult" data-cta-type="other" target="_blank" rel="noopener" id="hp-fb-yes">好，填問卷</a><button type="button" id="hp-fb-no">不用了</button></div>
+      </div>
       <button type="button" class="hp-home" id="hp-home" hidden>找牠回來</button>
       <div class="hp-disc" id="hp-disc" hidden></div>
     </div>
@@ -359,6 +363,9 @@ a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underli
   <details><summary>怎麼讓毛孩待在電腦桌面上？</summary><p>用電腦版 Chrome 或 Edge 打開，按「放到桌面」，牠會變成一個浮在最上層的小窗。原本的分頁可以縮小，但不要關掉。</p></details>
   <details><summary>iPhone 上毛孩不見了怎麼辦？</summary><p>Safari 會清掉一陣子沒開的網站資料。把日和毛孩「加入主畫面」就不會被清；也建議偶爾產生一次搬家碼存起來。</p></details>
   <p style="margin-top:14px">想知道圖鑑什麼時候出新朋友？<a href="#" data-aff="kit" data-cta="newsletter_below" data-cta-type="newsletter" target="_blank" rel="noopener">訂閱編織日和電子報</a></p>
+  <!-- MVP：收回饋、導流到 App。網址沒填時整行連結會自動藏起來 -->
+  <p><a href="#" data-aff="feedback" data-cta="feedback_below" data-cta-type="other" target="_blank" rel="noopener">玩得怎麼樣？花 1 分鐘告訴我們你的想法 →</a></p>
+  <p><a href="#" data-aff="app_waitlist" data-cta="app_waitlist_below" data-cta-type="newsletter" target="_blank" rel="noopener">iPhone App 版製作中，想收到消息請訂閱電子報 →</a></p>
   <!-- 連到部落格的介紹文章（文章發布後打開，cta：about_article／article） -->
   <!-- <p><a href="https://knittinghiyori.com/" data-cta="about_article" data-cta-type="article">看完整玩法說明 →</a></p> -->
 </section>
@@ -402,7 +409,11 @@ window.PET_LINKS = {
   klook_pet_hotel: 'https://klook.tpk.ro/wIqx0vY8',
   portrait_simple: 'https://s.shopee.tw/AUuRXTcxjF',
   portrait_pencil: 'https://s.shopee.tw/20vtPvXU8g',
-  kit: 'https://knittinghiyori.kit.com/9a62213d22'
+  kit: 'https://knittinghiyori.kit.com/9a62213d22',
+  /* MVP 收回饋：3 題問卷（Google 表單）。長到成年問一次＋說明區常駐一行。2026-10-14 先不做，空著＝全部藏起來 */
+  feedback: '',
+  /* 導流到 App：說明區常駐一行。2026-10-14 Alison：用同一份編織日和電子報（點擊另外記 app_waitlist_below） */
+  app_waitlist: 'https://knittinghiyori.kit.com/9a62213d22'
 };
 </script>
 <script>
@@ -1408,6 +1419,7 @@ var HP_PC = (function(){
     renderPip($('hp-status').textContent, lock, NEED.indexOf(m.key) >= 0, isAsleep(t));
     renderWalk(t);
     renderKit(form);
+    renderFb(form);
     var unread = state.letters.filter(function(L){ return !L.read; }).length;
     $('hp-unread').hidden = !unread;
     $('hp-unread').textContent = unread;
@@ -2249,6 +2261,16 @@ var HP_PC = (function(){
   function kitDone(){ book.kitAsked = true; saveBook(); $('hp-kitbar').hidden = true; }
   $('hp-kit-yes').addEventListener('click', function(){ kitDone(); });
   $('hp-kit-no').addEventListener('click', function(){ kitDone(); say('好，想訂的時候下面也有連結', 3000, true); render(); });
+
+  /* ---- MVP 問卷：長到成年問一次（電子報問過之後才問，不會兩條一起出現），按哪一個都不再問 ---- */
+  function renderFb(form){
+    var ask = LINKS.feedback ? (!book.fbAsked ? (isAdult(form) ? (book.kitAsked ? true : !LINKS.kit) : false) : false) : false;
+    var free = !walkStage(now()) ? !game : false;
+    $('hp-fbbar').hidden = !(ask ? free : false);
+  }
+  function fbDone(){ book.fbAsked = true; saveBook(); $('hp-fbbar').hidden = true; }
+  $('hp-fb-yes').addEventListener('click', function(){ fbDone(); });
+  $('hp-fb-no').addEventListener('click', function(){ fbDone(); say('好，想說的時候下面也有連結', 3000, true); render(); });
 
   /* ---- 分享列（規範 games §2-3）：分享網址帶 ?ref=share ---- */
   var SHARE_URL = 'https://games.knittinghiyori.com/hiyori-pet/?ref=share';

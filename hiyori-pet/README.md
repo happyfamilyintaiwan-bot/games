@@ -2,7 +2,7 @@
 
 網址：https://games.knittinghiyori.com/hiyori-pet/
 game_id：`hiyori_pet`｜事件前綴：`pet_`｜只有中文
-規範：core-v1.4／games-v1.8.1（`<meta name="spec-version">`）
+規範：core-v1.5／games-v1.8.4（`<meta name="spec-version">`）
 
 網頁電子寵物：選曼基貓或邊境牧羊犬，從蛋開始照顧。純前端，沒有伺服器，資料只存在玩家的瀏覽器。
 
@@ -21,7 +21,7 @@ game_id：`hiyori_pet`｜事件前綴：`pet_`｜只有中文
 | key | 內容 |
 |---|---|
 | `hiyori-pet:save` | 目前這隻毛孩（`v: 3`；升級寫在 `upgrade()`） |
-| `hiyori-pet:book` | 收藏本：圖鑑、養過的毛孩、明信片、點心櫃、走動紀錄（`walk`）、來作客的毛孩（`visitor`）、是否問過電子報（`kitAsked`） |
+| `hiyori-pet:book` | 收藏本：圖鑑、養過的毛孩、明信片、點心櫃、走動紀錄（`walk`）、來作客的毛孩（`visitor`）、是否問過電子報（`kitAsked`）、是否問過問卷（`fbAsked`） |
 | `hiyori-pet:ios-tip` | iPhone「加入主畫面」小卡看過了 |
 | `hiyori-pet:save-debug`、`hiyori-pet:book-debug`、`hiyori-pet:debug-clock` | 測試模式專用，和正式存檔分開 |
 
@@ -63,6 +63,8 @@ game_id：`hiyori_pet`｜事件前綴：`pet_`｜只有中文
 | `klook_pet_hotel` | 明信片背面（旅行回來的獎勵畫面） | `trip_result`／`klook` |
 | `portrait_simple`、`portrait_pencil` | 遊戲下方聯盟區（蝦皮似顏繪，編織日和自己的賣場） | `below_game`／`shopee` |
 | `kit` | 少年期問一次（`newsletter_teen`）＋說明區一行小連結（`newsletter_below`） | `newsletter` |
+| `feedback` | MVP 問卷：長到成年問一次（`feedback_adult`，電子報問過才問）＋說明區一行（`feedback_below`）。2026-10-14 先不做，網址空著 | `other` |
+| `app_waitlist` | MVP 導流：說明區一行「iPhone App 版製作中，做好時通知我」（`app_waitlist_below`） | `newsletter` |
 
 聯盟最多 2 個位置（games 規範 §5）。
 
