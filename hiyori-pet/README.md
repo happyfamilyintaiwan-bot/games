@@ -62,9 +62,9 @@ game_id：`hiyori_pet`｜事件前綴：`pet_`｜只有中文
 |---|---|---|
 | `klook_pet_hotel` | 明信片背面（旅行回來的獎勵畫面） | `trip_result`／`klook` |
 | `portrait_simple`、`portrait_pencil` | 遊戲下方聯盟區（蝦皮似顏繪，編織日和自己的賣場） | `below_game`／`shopee` |
-| `kit` | 少年期問一次（`newsletter_teen`）＋說明區一行小連結（`newsletter_below`） | `newsletter` |
+| `kit` | 少年期問一次（`newsletter_teen`）。說明區那一行（`newsletter_below`）2026-10-14 拿掉 | `newsletter` |
 | `feedback` | MVP 問卷：長到成年問一次（`feedback_adult`，電子報問過才問）＋說明區一行（`feedback_below`）。2026-10-14 先不做，網址空著 | `other` |
-| `app_waitlist` | MVP 導流：說明區一行「iPhone App 版製作中，做好時通知我」（`app_waitlist_below`） | `newsletter` |
+| `app_waitlist` | MVP 導流：**遊戲正下方**一行「iPhone App 版製作中，想收到消息請訂閱電子報」（`app_waitlist_game`；2026-10-14 上線當天在說明區，叫 `app_waitlist_below`） | `newsletter` |
 
 聯盟最多 2 個位置（games 規範 §5）。
 

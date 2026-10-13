@@ -97,6 +97,9 @@ body{padding:8px 12px 32px;font-family:"Noto Sans TC","PingFang TC","Microsoft J
 .page-h1,.page-lead{max-width:420px}
 .page-h1,.page-about h2,#hiyori-pet button,.hp-name b,.hp-panel__title,.hp-block__title,.hp-below h2,.hp-below a.hp-btn,.hp-below button,.hp-hub{font-family:var(--hp-round)}
 .hp-below{max-width:420px;margin:28px auto 0;font-size:15px;color:#5b4636}
+.hp-appline{max-width:420px;margin:16px auto 0;padding:12px 16px;border-radius:14px;background:#fff4e6;text-align:center;font-size:15px;box-sizing:border-box}
+.hp-appline a{font-weight:700;color:#b8325c;text-underline-offset:3px}
+.hp-appline:has(a[hidden]){display:none}
 .hp-below h2{font-size:18px;margin:0 0 6px;border-left:4px solid var(--hp-accent);padding-left:10px;color:#1c1c1e}
 .hp-below__row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .hp-below a.hp-btn,.hp-below button{font-size:14px;font-weight:700;padding:10px 14px;border-radius:12px;border:2px solid var(--hp-accent);background:var(--hp-accent);color:#fff;text-decoration:none;cursor:pointer;line-height:1.3}
@@ -343,6 +346,10 @@ a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underli
   </div>
 </div>
 
+<!-- 導流到 App（2026-10-14 Alison：放遊戲正下方比較明顯；網址在 PET_LINKS.app_waitlist，空著就整行藏起來。
+     下面廣告的 margin-top 150px 從這一行算起，所以和這個連結的距離不變） -->
+<p class="hp-appline"><a href="#" data-aff="app_waitlist" data-cta="app_waitlist_game" data-cta-type="newsletter" target="_blank" rel="noopener">iPhone App 版製作中，想收到消息請<span style="white-space:nowrap">訂閱電子報 →</span></a></p>
+
 <!-- Google AdSense 手動廣告單元（第 1 格：遊戲下方。2026-10-13 Zoe 決定這款放 2 格；
      照 Google 的遊戲頁建議離遊戲區 150px 以上，不做浮在畫面上的廣告，避免誤點） -->
 <div class="kh-ad kh-ad--game" id="hp-ad-top" aria-label="贊助內容">
@@ -362,10 +369,8 @@ a.hp-card__trip{display:block;margin:0;text-align:center;text-decoration:underli
   <details><summary>換手機或電腦，毛孩怎麼帶走？</summary><p>按「搬家碼」產生一串文字，到新裝置貼上，毛孩、圖鑑、明信片和點心櫃都會一起搬過去。</p></details>
   <details><summary>怎麼讓毛孩待在電腦桌面上？</summary><p>用電腦版 Chrome 或 Edge 打開，按「放到桌面」，牠會變成一個浮在最上層的小窗。原本的分頁可以縮小，但不要關掉。</p></details>
   <details><summary>iPhone 上毛孩不見了怎麼辦？</summary><p>Safari 會清掉一陣子沒開的網站資料。把日和毛孩「加入主畫面」就不會被清；也建議偶爾產生一次搬家碼存起來。</p></details>
-  <p style="margin-top:14px">想知道圖鑑什麼時候出新朋友？<a href="#" data-aff="kit" data-cta="newsletter_below" data-cta-type="newsletter" target="_blank" rel="noopener">訂閱編織日和電子報</a></p>
-  <!-- MVP：收回饋、導流到 App。網址沒填時整行連結會自動藏起來 -->
+  <!-- MVP 問卷入口：網址空著時自動藏起來 -->
   <p><a href="#" data-aff="feedback" data-cta="feedback_below" data-cta-type="other" target="_blank" rel="noopener">玩得怎麼樣？花 1 分鐘告訴我們你的想法 →</a></p>
-  <p><a href="#" data-aff="app_waitlist" data-cta="app_waitlist_below" data-cta-type="newsletter" target="_blank" rel="noopener">iPhone App 版製作中，想收到消息請訂閱電子報 →</a></p>
   <!-- 連到部落格的介紹文章（文章發布後打開，cta：about_article／article） -->
   <!-- <p><a href="https://knittinghiyori.com/" data-cta="about_article" data-cta-type="article">看完整玩法說明 →</a></p> -->
 </section>
@@ -412,7 +417,7 @@ window.PET_LINKS = {
   kit: 'https://knittinghiyori.kit.com/9a62213d22',
   /* MVP 收回饋：3 題問卷（Google 表單）。長到成年問一次＋說明區常駐一行。2026-10-14 先不做，空著＝全部藏起來 */
   feedback: '',
-  /* 導流到 App：說明區常駐一行。2026-10-14 Alison：用同一份編織日和電子報（點擊另外記 app_waitlist_below） */
+  /* 導流到 App：遊戲正下方一行。2026-10-14 Alison：用同一份編織日和電子報（點擊另外記 app_waitlist_game） */
   app_waitlist: 'https://knittinghiyori.kit.com/9a62213d22'
 };
 </script>
