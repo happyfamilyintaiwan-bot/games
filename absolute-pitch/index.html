@@ -190,6 +190,16 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .banner .big{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--num);font-weight:800;font-size:1.4rem}
 .banner p{font-size:.93rem;color:var(--ink-2)}
 .banner p b{color:var(--ink);display:block;font-size:1rem}
+/* 導流到 App（2026-10-14 Alison）：遊戲正下方一行＋一次性小卡，都連到編織日和電子報 */
+.ap-appline{margin:14px 0 0;padding:12px 16px;border-radius:14px;background:var(--well);text-align:center;font-size:.95rem}
+.ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
+.appcard{border:1.5px solid var(--ink);border-radius:18px;padding:14px 16px;display:grid;gap:10px}
+.appcard p{font-size:.93rem;color:var(--ink-2)}
+.appcard p b{color:var(--ink);display:block;font-size:1rem}
+.appcard-btns{display:flex;flex-wrap:wrap;gap:8px}
+.appcard-btns a,.appcard-btns button{font:inherit;font-size:.93rem;font-weight:700;min-height:44px;padding:10px 18px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.appcard-btns a{background:var(--ink);color:#fff;border:0}
+.appcard-btns button{background:none;color:var(--ink);border:1.5px solid var(--rule)}
 
 .result{background:var(--paper);border-radius:22px;padding:20px 18px;display:grid;gap:14px}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
@@ -467,7 +477,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
  }
 ]
 </script>
-<meta name="spec-version" content="core-v1.4/games-v1.8">
+<meta name="spec-version" content="core-v1.5/games-v1.8.4">
 </head>
 <body>
 
@@ -542,8 +552,15 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
 
       <div class="banner" id="banner" hidden></div>
       <div class="result" id="result" hidden></div>
+      <!-- 導流到 App：解鎖第 4 個音或連續 7 天時跳一次（只跳一次，記在存檔 appCard；cta_id 依觸發原因 app_card_unlock4／app_card_streak7） -->
+      <div class="appcard" id="appCard" hidden>
+        <p><b>想每天被提醒練習嗎？</b>iPhone App 版製作中：每天提醒你練習，換手機紀錄也不會不見。想收到上架消息，請訂閱電子報。</p>
+        <div class="appcard-btns"><a id="appCardLink" href="https://knittinghiyori.kit.com/9a62213d22" target="_blank" rel="noopener" data-cta="app_card_unlock4" data-cta-type="newsletter">訂閱電子報 →</a><button type="button" id="appCardClose">知道了</button></div>
+      </div>
     </div>
   </section>
+
+  <p class="ap-appline"><a href="https://knittinghiyori.kit.com/9a62213d22" target="_blank" rel="noopener" data-cta="app_waitlist_game" data-cta-type="newsletter">iPhone App 版製作中，想收到消息請<span style="white-space:nowrap">訂閱電子報 →</span></a></p>
 
   <aside class="gear" aria-label="練習用耳機">
     <p class="gear-k">練習小建議</p>
@@ -1146,8 +1163,19 @@ function streak(){
   while(S.days[dkey(d)]){n++;d.setDate(d.getDate()-1)}
   return n;
 }
+/* 導流到 App 小卡：解鎖第 4 個音（level 從 1 起算，4＝已解鎖 4 個音）或連續 7 天，先到先算，一輩子只跳一次 */
+var APP_CARD_LEVEL=4,APP_CARD_STREAK=7;
+function maybeAppCard(st){
+  if(S.appCard)return;
+  var why=S.level>=APP_CARD_LEVEL?'unlock4':(st>=APP_CARD_STREAK?'streak7':'');
+  if(!why)return;
+  S.appCard=dkey();save();
+  $('appCardLink').setAttribute('data-cta','app_card_'+why);
+  $('appCard').hidden=false;
+}
 function render(){
   var today=S.days[dkey()]||0,st=streak();
+  maybeAppCard(st);
   $('sStreak').textContent=st;$('sToday').textContent=today;$('sTodayBar').style.width=Math.min(100,today/GOAL*100)+'%';
   $('sLevel').textContent=S.level;$('sTotal').textContent=S.total.toLocaleString();
   $('pips').innerHTML=ORDER.map(function(pc,i){return '<i title="'+NAMES[pc]+'"'+(i<S.level?' style="background:'+COLORS[pc]+'"':'')+'></i>'}).join('');
@@ -1323,6 +1351,7 @@ async function makeCard(){
 $('trainBtn').addEventListener('click',function(){start('train')});
 $('testBtn').addEventListener('click',function(){start('test')});
 $('reviewBtn').addEventListener('click',function(){start('review')});
+$('appCardClose').addEventListener('click',function(){$('appCard').hidden=true});
 $('stopBtn').addEventListener('click',function(){stop(mode==='test'?T.testAbort:null)});
 $('noiseOpt').checked=S.noise;
 $('noiseOpt').addEventListener('change',function(e){S.noise=e.target.checked;save();ev('game_settings',{setting:S.noise?'noise_on':'noise_off'})});
