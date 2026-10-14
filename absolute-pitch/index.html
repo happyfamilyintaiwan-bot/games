@@ -190,6 +190,10 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .banner .big{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--num);font-weight:800;font-size:1.4rem}
 .banner p{font-size:.93rem;color:var(--ink-2)}
 .banner p b{color:var(--ink);display:block;font-size:1rem}
+.ap-move{margin-top:16px;padding:14px 16px;border:1px solid var(--rule);border-radius:16px;display:grid;gap:10px;justify-items:start}
+.ap-move p{font-size:.93rem;color:var(--ink-2)}
+.ap-move p b{color:var(--ink);display:block}
+.ap-move textarea{width:100%;font:12px/1.4 ui-monospace,monospace;padding:8px;border:1px solid var(--rule);border-radius:10px;background:var(--well)}
 /* 導流到 App（2026-10-14 Alison）：遊戲正下方一行＋一次性小卡，都連到編織日和電子報 */
 .ap-appline{margin:14px 0 0;padding:12px 16px;border-radius:14px;background:var(--well);text-align:center;font-size:.95rem}
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
@@ -554,7 +558,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="result" id="result" hidden></div>
       <!-- 導流到 App：解鎖第 4 個音或連續 7 天時跳一次（只跳一次，記在存檔 appCard；cta_id 依觸發原因 app_card_unlock4／app_card_streak7） -->
       <div class="appcard" id="appCard" hidden>
-        <p><b>想每天被提醒練習嗎？</b>iPhone App 版製作中：每天提醒你練習，換手機紀錄也不會不見。想收到上架消息，請訂閱電子報。</p>
+        <p><b>想每天被提醒練習嗎？</b>iPhone App 版製作中：每天提醒你練習，紀錄也不會不見（iPhone 的 Safari 可能會清掉太久沒打開的網站紀錄，App 不會）。想收到上架消息，請訂閱電子報。</p>
         <div class="appcard-btns"><a id="appCardLink" href="https://knittinghiyori.kit.com/9a62213d22" target="_blank" rel="noopener" data-cta="app_card_unlock4" data-cta-type="newsletter">訂閱電子報 →</a><button type="button" id="appCardClose">知道了</button></div>
       </div>
     </div>
@@ -586,6 +590,13 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
     <div class="sec-head">
       <h2 id="recH">你的練習紀錄</h2>
       <p>研究中的進步要幾週才看得出來。每天回來練 10 分鐘，這裡會替你記著；答錯的音也會自動收進錯題庫。紀錄只存在這台裝置的瀏覽器。</p>
+      <!-- 搬到 App（2026-10-14 Alison）：複製搬家代碼，貼到 App「設定 → 從網頁版搬進來」。App 上架前藏起來，上架當天把程式裡的 APP_LIVE 改成 true -->
+      <div class="ap-move" id="apMove" hidden>
+        <p><b>換到 iPhone App 練？</b>複製搬家代碼，貼到 App 的「設定 → 從網頁版搬進來」，解鎖的音和紀錄都能接著練。</p>
+        <button type="button" class="btn line" id="apMoveBtn">複製搬家代碼</button>
+        <textarea id="apMoveCode" readonly rows="3" hidden aria-label="搬家代碼"></textarea>
+        <p class="cap" id="apMoveMsg" aria-live="polite"></p>
+      </div>
     </div>
     <div class="sec-body">
       <div id="bank">
@@ -1352,6 +1363,18 @@ $('trainBtn').addEventListener('click',function(){start('train')});
 $('testBtn').addEventListener('click',function(){start('test')});
 $('reviewBtn').addEventListener('click',function(){start('review')});
 $('appCardClose').addEventListener('click',function(){$('appCard').hidden=true});
+/* 搬到 App：存檔轉成搬家代碼（AP1: 加 base64），App 那邊解回來。APP_LIVE 上架當天改 true */
+var APP_LIVE=false;
+if(APP_LIVE)$('apMove').hidden=false;
+$('apMoveBtn').addEventListener('click',function(){
+  var raw='';try{raw=localStorage.getItem(KEY)||''}catch(e){}
+  if(!raw){$('apMoveMsg').textContent='還沒有紀錄。先練幾題再搬。';return}
+  var code='AP1:'+btoa(unescape(encodeURIComponent(raw)));
+  var box=$('apMoveCode');box.value=code;
+  var shown=function(){box.hidden=false;box.focus();box.select();$('apMoveMsg').textContent='請長按上面的代碼，選「拷貝」。'};
+  try{navigator.clipboard.writeText(code).then(function(){$('apMoveMsg').textContent='已複製搬家代碼。打開 App，到「設定 → 從網頁版搬進來」貼上。'},shown)}catch(e){shown()}
+  ev('export',{method:'app_code',content_type:'game'});
+});
 $('stopBtn').addEventListener('click',function(){stop(mode==='test'?T.testAbort:null)});
 $('noiseOpt').checked=S.noise;
 $('noiseOpt').addEventListener('change',function(e){S.noise=e.target.checked;save();ev('game_settings',{setting:S.noise?'noise_on':'noise_off'})});
