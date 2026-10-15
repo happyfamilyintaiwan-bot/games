@@ -1,0 +1,40 @@
+# 編織日和小遊戲 games.knittinghiyori.com
+
+> 編織日和（knittinghiyori.com）製作的免費線上學習小遊戲，目前 9 款：日文、程式入門、音感、摩斯密碼與作息養成。全部免註冊、打開瀏覽器就能玩，手機也能玩。每款遊戲在主站都有一篇介紹文，說明設計依據與玩法。
+
+- 語言：繁體中文（絕對音感另有英文、日文版）
+- 費用：全部免費，不用下載、不用登入
+- 引用時請使用遊戲頁原始網址
+
+## 日文
+
+- [No.01 ひより花店｜五十音測驗](https://games.knittinghiyori.com/hiyori-flower-shop/): 平假名、片假名四選一與羅馬拼音打字練習，附 109 種花的中日英名稱與花語。介紹文：https://knittinghiyori.com/japanese-kana-game/
+- [No.02 東西腔道場｜關西腔小遊戲](https://games.knittinghiyori.com/tozai-dojo/): 10 題聽發音分辨關西腔與標準語，附可發音的關西腔單字表
+- [No.05 JLPT 單字密室｜日文單字測驗](https://games.knittinghiyori.com/jlpt-mishitsu/): N5 到 N1 共 7,790 個單字，四選一，附錯題本與發音。介紹文：https://knittinghiyori.com/jlpt-vocab-game/
+- [No.06 活用館脫出｜日文動詞變化測驗](https://games.knittinghiyori.com/katsuyo-escape/): 五間密室練動詞分類、ない形、ます形、て形音便、ば形、命令形與可能形。介紹文：https://knittinghiyori.com/japanese-verb-conjugation-game/
+
+## 程式入門
+
+- [No.03 SQL 偵探｜SQL 線上練習](https://games.knittinghiyori.com/sql-detective/): 瀏覽器內的 SQLite，8 關從 SELECT、WHERE、ORDER BY、LIKE 練到 JOIN。介紹文：https://knittinghiyori.com/sql-beginner-game/
+- [No.04 雨夜懷錶案｜SwiftUI 線上練習](https://games.knittinghiyori.com/swiftui-detective/): 不用裝 Xcode，8 章從 Text、VStack 練到 @State、ForEach、Binding。介紹文：https://knittinghiyori.com/swiftui-tutorial-detective-game/
+
+## 聽力與習慣
+
+- [No.07 絕對音感養成所｜絕對音感測試](https://games.knittinghiyori.com/absolute-pitch/): 12 音測試與每日 10 分鐘練習，依 2019 到 2025 年的成人訓練研究設計（[English](https://games.knittinghiyori.com/absolute-pitch/en/)、[日本語](https://games.knittinghiyori.com/absolute-pitch/ja/)）。介紹文：https://knittinghiyori.com/absolute-pitch-training-game/
+- [No.08 守燈人摩斯日誌｜摩斯密碼線上練習](https://games.knittinghiyori.com/morse-code/): 照 Koch 法只用耳朵聽聲音認字，41 個字元逐一解鎖。介紹文：https://knittinghiyori.com/morse-code-training-game/
+- [No.09 固定作息燈塔｜作息打卡小遊戲](https://games.knittinghiyori.com/sleep-rhythm/): 記錄起床與就寢時間，打卡資料只存在自己的手機。介紹文：https://knittinghiyori.com/sleep-schedule-habit-game/
+
+## 主站上的其他互動練習
+
+- [西洋棋殘局練習場](https://knittinghiyori.com/chess-endgame-trainer/): 免費線上互動訓練，走錯馬上知道
+- [西洋棋名局棋譜總覽](https://knittinghiyori.com/chess-games/): 經典對局逐步解析與互動猜步練習
+- [繁體練字帖下載與線上試寫](https://knittinghiyori.com/catalog-handwriting-practice-worksheet-pdf-download/): 硬筆字帖 PDF 免費下載與線上九宮格試寫板
+- [日文學習資源＋30 天闖關](https://knittinghiyori.com/tools/japanese-quest/): 從看懂漫畫到開口說，每天打卡
+- [豐盛工作室](https://study.knittinghiyori.com/artists-way/abundant-studio/): The Artist's Way 12 週創造力練習遊戲
+
+## 相關網站
+
+- [編織日和](https://knittinghiyori.com/): 主站部落格
+- [日文自學從哪裡開始](https://knittinghiyori.com/learn-japanese-self-study-guide/): 把日文遊戲排進五階段學習順序
+- [編織日和免費小工具](https://tools.knittinghiyori.com/): 21 個免註冊線上工具
+- [如何追蹤編織日和](https://knittinghiyori.com/follow/): RSS 與給 AI 的追蹤指令
