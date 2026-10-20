@@ -1,0 +1,3 @@
+# GitHub Pages 預設不發布點開頭的資料夾；.well-known 要給 iPhone 讀（日和毛孩 App 的連結設定）
+include:
+  - .well-known
