@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["2S543TB96D.hiyori.pet"],
+        "appIDs": ["2S543TB96D.com.knittinghiyori.hiyoripet"],
         "components": [
           { "/": "/hiyori-pet/*", "#": "visit=*", "comment": "日和毛孩串門子連結：裝了 App 就開 App，沒裝照常開網頁版" }
         ]
