@@ -482,6 +482,8 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
 ]
 </script>
 <meta name="spec-version" content="core-v1.5/games-v1.8.4">
+<!-- iPhone Safari 頂端的 App 下載橫幅（Apple Smart App Banner，2026-10-24 App 上架） -->
+<meta name="apple-itunes-app" content="app-id=6822936709">
 </head>
 <body>
 
@@ -556,15 +558,15 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
 
       <div class="banner" id="banner" hidden></div>
       <div class="result" id="result" hidden></div>
-      <!-- 導流到 App：解鎖第 4 個音或連續 7 天時跳一次（只跳一次，記在存檔 appCard；cta_id 依觸發原因 app_card_unlock4／app_card_streak7） -->
+      <!-- 導流到 App：解鎖第 4 個音或連續 7 天時跳一次（只跳一次，記在存檔 appCard；cta_id 依觸發原因 app_card_unlock4／app_card_streak7）。2026-10-24 App 上架，改成下載連結 -->
       <div class="appcard" id="appCard" hidden>
-        <p><b>想每天被提醒練習嗎？</b>iPhone App 版製作中：每天提醒你練習，紀錄也不會不見（iPhone 的 Safari 可能會清掉太久沒打開的網站紀錄，App 不會）。想收到上架消息，請訂閱電子報。</p>
-        <div class="appcard-btns"><a id="appCardLink" href="https://knittinghiyori.kit.com/9a62213d22" target="_blank" rel="noopener" data-cta="app_card_unlock4" data-cta-type="newsletter">訂閱電子報 →</a><button type="button" id="appCardClose">知道了</button></div>
+        <p><b>iPhone App 上架了！</b>每天提醒你練習，紀錄也不會不見（iPhone 的 Safari 可能會清掉太久沒打開的網站紀錄，App 不會）。還有 12 音之路、解鎖慶祝，離線也能練。在這裡練的進度可以用下方「你的練習紀錄」的搬家代碼帶過去。</p>
+        <div class="appcard-btns"><a id="appCardLink" href="https://apps.apple.com/tw/app/id6822936709" target="_blank" rel="noopener" data-cta="app_card_unlock4" data-cta-type="other">免費下載 App →</a><button type="button" id="appCardClose">知道了</button></div>
       </div>
     </div>
   </section>
 
-  <p class="ap-appline"><a href="https://knittinghiyori.kit.com/9a62213d22" target="_blank" rel="noopener" data-cta="app_waitlist_game" data-cta-type="newsletter">iPhone App 版製作中，想收到消息請<span style="white-space:nowrap">訂閱電子報 →</span></a></p>
+  <p class="ap-appline"><a href="https://apps.apple.com/tw/app/id6822936709" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other">iPhone App 上架了！每天提醒你練、紀錄不會不見，<span style="white-space:nowrap">免費下載 →</span></a></p>
 
   <aside class="gear" aria-label="練習用耳機">
     <p class="gear-k">練習小建議</p>
@@ -590,9 +592,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
     <div class="sec-head">
       <h2 id="recH">你的練習紀錄</h2>
       <p>研究中的進步要幾週才看得出來。每天回來練 10 分鐘，這裡會替你記著；答錯的音也會自動收進錯題庫。紀錄只存在這台裝置的瀏覽器。</p>
-      <!-- 搬到 App（2026-10-14 Alison）：複製搬家代碼，貼到 App「設定 → 從網頁版搬進來」。App 上架前藏起來，上架當天把程式裡的 APP_LIVE 改成 true -->
+      <!-- 搬到 App（2026-10-14 Alison）：複製搬家代碼，貼到 App「設定 → 從網頁版搬進來」。2026-10-24 App 上架，APP_LIVE 已改 true -->
       <div class="ap-move" id="apMove" hidden>
-        <p><b>換到 iPhone App 練？</b>複製搬家代碼，貼到 App 的「設定 → 從網頁版搬進來」，解鎖的音和紀錄都能接著練。</p>
+        <p><b>換到 iPhone App 練？</b>先<a href="https://apps.apple.com/tw/app/id6822936709" target="_blank" rel="noopener" data-cta="app_download_move" data-cta-type="other">下載 App</a>，再複製搬家代碼，貼到 App 的「設定 → 從網頁版搬進來」，解鎖的音和紀錄都能接著練。</p>
         <button type="button" class="btn line" id="apMoveBtn">複製搬家代碼</button>
         <textarea id="apMoveCode" readonly rows="3" hidden aria-label="搬家代碼"></textarea>
         <p class="cap" id="apMoveMsg" aria-live="polite"></p>
@@ -1364,7 +1366,7 @@ $('testBtn').addEventListener('click',function(){start('test')});
 $('reviewBtn').addEventListener('click',function(){start('review')});
 $('appCardClose').addEventListener('click',function(){$('appCard').hidden=true});
 /* 搬到 App：存檔轉成搬家代碼（AP1: 加 base64），App 那邊解回來。APP_LIVE 上架當天改 true */
-var APP_LIVE=false;
+var APP_LIVE=true;
 if(APP_LIVE)$('apMove').hidden=false;
 $('apMoveBtn').addEventListener('click',function(){
   var raw='';try{raw=localStorage.getItem(KEY)||''}catch(e){}
