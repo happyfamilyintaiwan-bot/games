@@ -236,6 +236,9 @@ footer a:hover{text-decoration:underline}
   </div>
 </header>
 
+<!-- 繼續上次的遊戲（/lib/hy-next.js 讀這個瀏覽器玩過的遊戲；沒玩過就不顯示；cta_id continue_game） -->
+<section data-hy-continue hidden></section>
+
 <div class="divider" id="games"><h2>遊戲一覽 <small>ゲーム</small></h2></div>
 
 <div class="filters" aria-label="篩選遊戲">
@@ -745,5 +748,6 @@ var HY_FILTERS = {
 })();
 </script>
 <script src="/lib/hy-fav.js" defer></script>
+<script src="/lib/hy-next.js" defer></script>
 </body>
 </html>
