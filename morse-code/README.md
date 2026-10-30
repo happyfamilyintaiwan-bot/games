@@ -1,6 +1,6 @@
 # 守燈人摩斯日誌（morse-code）
 
-- 網址：games.knittinghiyori.com/morse-code/（目前只有中文）
+- 網址：games.knittinghiyori.com/morse-code/（中文）、games.knittinghiyori.com/morse-code/en/（英文，2026-10-30 Zoe 新增，英文名 Lighthouse Morse）
 - game_id：`morse_code`｜前綴：`morse_`｜page_title：`遊戲|守燈人摩斯日誌|摩斯密碼聽力訓練`
 - 規範：core-v1.1／games-v1.2（Zoe 依序貼上 10/04 絕對音感包、10/09 摩斯包之後）
 - 製作：Alison，2026-10-07
@@ -12,7 +12,8 @@
 | `index.html` | 頁面（靜態文字、CSS、hyGame 追蹤碼、聯盟連結設定 `MORSE_LINKS`） |
 | `game.js` | 畫面與流程 |
 | `morse.js` | 內容包：字元表、LCWO Koch 順序（41 字元）、Web Audio 發聲、Farnsworth 計算 |
-| `lang-zh.js` | 介面文字與老守燈人日誌；英日版加 `lang-en.js`／`lang-ja.js` |
+| `lang-zh.js`／`lang-en.js` | 介面文字與老守燈人日誌（鍵名相同；game.js 裡不再寫死中文） |
+| `en/index.html` | 英文頁（靜態文字翻譯；英文頁不放耳機蝦皮聯盟、中文介紹文連結、hy-next 推薦卡） |
 | `og.png` | 分享圖 1200×630 |
 | `/lib/hy-trainer/hy-trainer.js` | 共用引擎（放在 repo 根目錄 `/lib/`，不在本資料夾） |
 
