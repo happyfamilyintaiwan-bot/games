@@ -53,7 +53,7 @@
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Lighthouse Morse", "url": "https://games.knittinghiyori.com/morse-code/en/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "inLanguage": "en", "isAccessibleForFree": true, "description": "A free Morse code trainer that teaches 41 characters by ear with the Koch method.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "publisher": {"@type": "Organization", "name": "Knitting Hiyori", "url": "https://knittinghiyori.com/"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the fastest way to learn Morse code?", "acceptedAnswer": {"@type": "Answer", "text": "The most widely recommended way is the Koch method: play characters at full speed from the start, learn only 2 characters, and add the next one once you reach about 90% accuracy, all by ear without a chart. This game follows that method. Practicing 10 to 30 minutes a day works better than an occasional long session."}}, {"@type": "Question", "name": "Why not memorize a Morse code chart?", "acceptedAnswer": {"@type": "Answer", "text": "People who learn from a chart usually count the dots and dashes in their head and then look the letter up. Koch’s 1936 study found this works at slow speeds but stalls at around 10 words per minute. Learning each character as one whole sound is what lets you keep up at real speeds."}}, {"@type": "Question", "name": "What is the Koch method?", "acceptedAnswer": {"@type": "Answer", "text": "The Koch method is a Morse training approach proposed by the German psychologist Ludwig Koch in 1936. You start with two very different sounding characters such as K and M, practice near full speed, and add the next character at about 90% accuracy. Online courses such as LCWO use it today, and this game takes its 41-character order from LCWO."}}, {"@type": "Question", "name": "What is Farnsworth spacing?", "acceptedAnswer": {"@type": "Answer", "text": "Farnsworth spacing keeps each character at full speed but stretches the silence between characters, giving beginners time to respond. This game defaults to a character speed of 20 WPM and an effective speed of 12 WPM, both adjustable in settings. The faster the character speed, the closer you are to real copying."}}, {"@type": "Question", "name": "How long should I practice each day?", "acceptedAnswer": {"@type": "Answer", "text": "Koch’s research found about half an hour of continuous practice most effective, ideally once in the morning and once in the afternoon, and spaced practice is remembered better than one long session. The game sets a daily goal of 10 minutes, about 3 or 4 shifts."}}, {"@type": "Question", "name": "Where is my progress saved?", "acceptedAnswer": {"@type": "Answer", "text": "Your progress stays in this browser on this device and is never uploaded. If you switch phones or clear your browser data, you start again from the first lamp. You can also erase it yourself at the bottom of the logbook."}}]}]}
 </script>
-<meta name="spec-version" content="core-v1.4/games-v1.8">
+<meta name="spec-version" content="core-v1.8/games-v1.10">
 <style>
 /* 版面概念：黎明的燈塔海岸。白底黑字；顏色只屬於三件事：
    紅（訊號、燈塔紅條、主要按鈕）、琥珀（點亮的燈）、天藍（入門頁的「噠」）。
@@ -86,7 +86,11 @@ p{margin:0}
 
 /* 品牌列 */
 .top{padding-top:10px}
-.lang-link{margin-left:auto;font-size:.85rem;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center}
+.langs{display:flex;align-items:center;gap:2px;font-size:.85rem;flex-shrink:0;white-space:nowrap}
+.langs a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:var(--ink-2);text-decoration:none;border-radius:999px}
+.langs a:hover{color:var(--ink);background:var(--well)}
+.langs a[aria-current="page"]{color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+@media(max-width:400px){.kh-brand-sub{display:none}}
 .kh-brand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
 .kh-brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--ink);text-decoration:none;font-family:var(--sans);font-size:.9rem;font-weight:700;letter-spacing:.04em;white-space:nowrap}
 .kh-brand img{width:40px;height:40px;border-radius:8px;flex:none}
@@ -376,8 +380,8 @@ p{margin:0}
 <div class="wrap">
   <header class="top">
     <div class="kh-brand-row">
-      <a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt="">Knitting Hiyori Games</a>
-      <a class="lang-link" href="https://games.knittinghiyori.com/morse-code/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a>
+      <a class="kh-brand" href="https://games.knittinghiyori.com/" data-cta="brand_hub" data-cta-type="game"><img src="/icons/logo-knitting-120.webp" width="40" height="40" alt=""><span>編織日和<span class="kh-brand-sub"> · Games</span></span></a>
+      <nav class="langs" aria-label="Language"><a href="https://games.knittinghiyori.com/morse-code/" hreflang="zh-Hant" lang="zh-Hant-TW" data-lang-link="zh">中文</a><a href="https://games.knittinghiyori.com/morse-code/en/" hreflang="en" lang="en" data-lang-link="en" aria-current="page">EN</a></nav>
       <span class="today-pill" id="todayPill" hidden>Today <b id="todayMin">0</b> min</span>
     </div>
   </header>
@@ -868,6 +872,7 @@ var HY_GAME_LANG = function(){ return 'en'; };  /* 多語遊戲改成回傳目�
 /* 聯盟連結集中在這裡（games §5）。填入 Travelpayouts／Klook 後台產生的連結；空字串＝按鈕不顯示。網址不可含和號。 */
 window.MORSE_LINKS = { eluanbi: 'https://klook.tpk.ro/6eB8W3S8', fuguijiao: 'https://klook.tpk.ro/AFEYvT5T' };
 </script>
+<script>document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'en'},true)}catch(e){}})});</script>
 <script src="/lib/hy-trainer/hy-trainer.js"></script>
 <script src="../morse.js"></script>
 <script src="../lang-en.js"></script>
