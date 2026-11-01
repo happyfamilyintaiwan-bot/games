@@ -20,7 +20,7 @@
 
 ## 聽力與習慣
 
-- [No.07 絕對音感養成所｜絕對音感測試](https://games.knittinghiyori.com/absolute-pitch/): 12 音測試與每日 10 分鐘練習，依 2019 到 2025 年的成人訓練研究設計（[English](https://games.knittinghiyori.com/absolute-pitch/en/)、[日本語](https://games.knittinghiyori.com/absolute-pitch/ja/)）。介紹文：https://knittinghiyori.com/absolute-pitch-training-game/
+- [No.07 絕對音感養成所｜絕對音感測試](https://games.knittinghiyori.com/absolute-pitch/): 12 音測試與每日 10 分鐘練習，依 2019 到 2025 年的成人訓練研究設計（[English](https://games.knittinghiyori.com/absolute-pitch/en/)、[日本語](https://games.knittinghiyori.com/absolute-pitch/ja/)、[Español](https://games.knittinghiyori.com/absolute-pitch/es/)）。介紹文：https://knittinghiyori.com/absolute-pitch-training-game/
 - [No.08 守燈人摩斯日誌｜摩斯密碼線上練習](https://games.knittinghiyori.com/morse-code/): 照 Koch 法只用耳朵聽聲音認字，41 個字元逐一解鎖。介紹文：https://knittinghiyori.com/morse-code-training-game/
 - [No.09 固定作息燈塔｜作息打卡小遊戲](https://games.knittinghiyori.com/sleep-rhythm/): 記錄起床與就寢時間，打卡資料只存在自己的手機。介紹文：https://knittinghiyori.com/sleep-schedule-habit-game/
 
