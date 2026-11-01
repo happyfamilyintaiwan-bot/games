@@ -127,7 +127,7 @@
   function todayMin() { return Math.floor(tr.today().ms / 60000); }
   function welcome() {
     var back = tr.hasProgress();
-    $('cLabel').textContent = '值班台';
+    $('cLabel').textContent = T.labelDesk;
     $('wHow').hidden = back;
     $('wMini').hidden = !back;
     $('mLit').textContent = tr.unlockedCount();
@@ -172,7 +172,7 @@
   function startS1() {
     ev('tutorial_begin', {});
     heard = {};
-    $('cLabel').textContent = '日誌第一頁';
+    $('cLabel').textContent = T.labelS1;
     $('s1aNext').disabled = true;
     $('ddDit').classList.remove('heard'); $('ddDah').classList.remove('heard');
     show('s1a', true);
@@ -193,7 +193,7 @@
     cardHeard = {};
     var box = $('s1Cards');
     box.innerHTML = S1_LETTERS.map(function (ch) {
-      return '<button type="button" class="card" data-ch="' + ch + '" aria-label="字母 ' + ch + '"><b>' + ch + '</b><span class="pat">' + patHTML(ch) + '</span></button>';
+      return '<button type="button" class="card" data-ch="' + ch + '" aria-label="' + F(T.letterAria, ch) + '"><b>' + ch + '</b><span class="pat">' + patHTML(ch) + '</span></button>';
     }).join('');
     box.querySelectorAll('.card').forEach(function (c) {
       c.addEventListener('click', function () {
@@ -221,7 +221,7 @@
     q1 = { step: step, seq: seq, i: 0, ok: 0, busy: false };
     var steps = $('s1qSteps').children;
     for (var k = 0; k < 3; k++) steps[k].classList.toggle('on', k < step);
-    $('s1qK').textContent = '第一頁 ' + step + '／3';
+    $('s1qK').textContent = F(T.s1Step, step);
     $('s1qT').textContent = step === 2 ? T.s1bT : T.s1cT;
     $('s1qD').textContent = step === 2 ? T.s1bQuizD : T.s1cD;
     var keys = $('s1Keys');
@@ -324,9 +324,9 @@
     var g = $('introGlyph');
     g.textContent = introFor.join('');
     g.classList.toggle('pair', introFor.length > 1);
-    $('introT').textContent = first ? T.newLampK + '：K 與 M' : T.newLampK + '：' + introFor[0];
+    $('introT').textContent = F(T.newLampT, first ? T.newLampKM : introFor[0]);
     $('introD').textContent = first ? T.newLampFirst : T.newLampD;
-    $('cLabel').textContent = '值班台';
+    $('cLabel').textContent = T.labelDesk;
     show('intro', true);
     bringConsole();
     introPlay();
@@ -365,7 +365,7 @@
     };
     tr.roundBegin();
     var h = hg(); if (h) h.roundStart({ option: group ? 'group' : 'koch', level: level() });
-    $('cLabel').textContent = '值班中';
+    $('cLabel').textContent = T.labelOn;
     $('slots').hidden = !group;
     buildKeys();
     buildTicks();
@@ -507,7 +507,7 @@
     var res = tr.roundEnd();
     var h = hg();
     if (h) h.roundEnd({ result: 'complete', item_count: res.n, correct_count: res.c, score: pct(res.acc) });
-    $('cLabel').textContent = '交班';
+    $('cLabel').textContent = T.labelEnd;
     $('rBig').innerHTML = F(T.resultT, '<span class="type">' + res.c, res.n + '</span>');
     $('rRow').innerHTML = '<span>' + F(T.resultAcc, '<b>' + pct(res.acc) + '</b>') + '</span>' +
       (res.rtMed ? '<span>' + F(T.resultRt, '<b>' + (res.rtMed / 1000).toFixed(1) + '</b>') + '</span>' : '');
