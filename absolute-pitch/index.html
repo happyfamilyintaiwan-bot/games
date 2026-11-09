@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Travelpayouts Drive（games；head 第一個 script） -->
 <script data-cfasync="false">(function(){var s=document.createElement("script");s.async=1;s.setAttribute("data-cmp-ab","2");s.src="https://emrld.ltd/NTc4NjIz.js?t=578623";document.head.appendChild(s);})();</script>
-<title>絕對音感測試｜免費線上 12 音測試＋每日練習｜絕對音感養成所</title>
-<meta name="description" content="免費絕對音感測試：線上聽音選音名，用 12 音測試看你能認出幾個音。想進步可以每天練 10 分鐘，從一個音開始逐音解鎖，題間噪音遮蔽、多八度多音色，附個人錯題庫與練習紀錄。手機戴耳機就能測。">
+<title>絕對音感測試｜免費線上測試，聽音認出 12 個音名｜絕對音感養成所</title>
+<meta name="description" content="絕對音感測試免費線上玩，不用下載：戴耳機聽音、點出音名，12 個音各測 3 次，馬上看正確率和研究標準 90% 差多少。測完想進步，每天練 10 分鐘，從一個音開始逐音解鎖。">
 <link rel="canonical" href="https://games.knittinghiyori.com/absolute-pitch/">
 <link rel="alternate" hreflang="zh-Hant" href="https://games.knittinghiyori.com/absolute-pitch/">
 <link rel="alternate" hreflang="en" href="https://games.knittinghiyori.com/absolute-pitch/en/">
@@ -212,6 +212,10 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 
 .result{background:var(--paper);border-radius:22px;padding:20px 18px;display:grid;gap:14px}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
+.verdict-k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3)}
+.verdict-yes{font-size:1.6rem}
+.res-next{display:flex;flex-wrap:wrap;gap:10px}
+#test{scroll-margin-top:90px}
 .result .meters{border-top:0;padding-top:0}
 .bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:124px;gap:14px 6px;padding-top:8px}
 @media(max-width:560px){.bars{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:104px}}
@@ -435,26 +439,26 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
    },
    {
     "@type": "Question",
-    "name": "成人可以練出絕對音感嗎？",
+    "name": "絕對音感線上測試怎麼做？",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "部分成人可以。Van Hedger 等人（2019）與 Wong 等人（2020、2025）的訓練研究中，都有成人在 12 到 40 小時不等的訓練後，達到和天生絕對音感者相同的測驗標準；但多數人只學會部分音名，練滿 12 音的大約七人中一人。"
+     "text": "不用下載，打開這一頁就能測，手機和電腦都可以。戴上耳機按「絕對音感測試」：12 個音各出 3 次，共 36 題，八度和音色都會換，沒有對錯提示，題與題之間有噪音，憑第一直覺點音名就好。測完會看到 12 音正確率、反應時間和每個音的正確率。"
     }
    },
    {
     "@type": "Question",
-    "name": "練絕對音感要多久？",
+    "name": "測驗正確率多少算有絕對音感？",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "研究的訓練量從 12 到 40 小時不等；2019、2025 年的研究都是連續約 8 週，2025 年那組平均做了 15,327 題。這個遊戲把它拆成每天 100 題、約 10 分鐘。"
+     "text": "研究中的標準大約是 12 音正確率 90% 以上、2 秒內作答；亂猜的正確率約 8%。如果「誤差在半音內」的比例高、正確率低，代表已經抓到大致音區，差在精準度。"
     }
    },
    {
     "@type": "Question",
-    "name": "怎麼知道自己有沒有練成？",
+    "name": "測出來沒有絕對音感，還能練嗎？",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "用「驗收測驗」：12 個音各出 3 次、沒有對錯提示、題間有噪音。研究中的標準大約是 12 音正確率 90% 以上、2 秒內作答；亂猜的正確率約 8%。"
+     "text": "可以試試。2019 到 2025 年的成人訓練研究中，多數人都明顯進步，練滿 12 個音的大約七人中一人。這個遊戲照研究的做法，每天 100 題、約 10 分鐘，從一個音開始逐音解鎖。研究細節整理在「絕對音感可以練嗎？成人訓練方法與研究整理」一文。"
     }
    },
    {
@@ -542,9 +546,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <div class="next" id="mNext"><b>G</b>下一個解鎖</div>
       </div>
 
-      <div class="controls">
+      <div class="controls" id="test">
         <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">開始訓練</span><small>每天練，一個一個解鎖音</small></button>
-        <button class="btn line btn2" id="testBtn" type="button"><span>驗收測驗</span><small>每週一次，測 12 個音</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>絕對音感測試</span><small id="testSub">每週一次，測 12 個音</small></button>
         <button class="btn line" id="reviewBtn" type="button" hidden>複習錯題</button>
         <button class="btn line" id="stopBtn" type="button" hidden>暫停</button>
       </div>
@@ -689,9 +693,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <dl class="faq">
         <div><dt>什麼是絕對音感？</dt><dd>絕對音感（absolute pitch，又稱完美音感）是不靠任何參考音，聽到一個音就能說出音名的能力，例如一聽就知道是 F♯。常見的估計是一般人中約萬分之一，音樂系學生中比例較高。</dd></div>
         <div><dt>絕對音感和相對音感差在哪？</dt><dd>相對音感要先知道一個參考音，再推算其他音的距離；絕對音感不需要參考音，直接認出音名。多數受過音樂訓練的人有相對音感，絕對音感則少見得多。</dd></div>
-        <div><dt>成人可以練出絕對音感嗎？</dt><dd>部分成人可以。Van Hedger 等人（2019）與 Wong 等人（2020、2025）的訓練研究中，都有成人在 12 到 40 小時不等的訓練後，達到和天生絕對音感者相同的測驗標準；但多數人只學會部分音名，練滿 12 音的大約七人中一人。</dd></div>
-        <div><dt>練絕對音感要多久？</dt><dd>研究的訓練量從 12 到 40 小時不等；2019、2025 年的研究都是連續約 8 週，2025 年那組平均做了 15,327 題。這個遊戲把它拆成每天 100 題、約 10 分鐘。</dd></div>
-        <div><dt>怎麼知道自己有沒有練成？</dt><dd>用「驗收測驗」：12 個音各出 3 次、沒有對錯提示、題間有噪音。研究中的標準大約是 12 音正確率 90% 以上、2 秒內作答；亂猜的正確率約 8%。</dd></div>
+        <div><dt>絕對音感線上測試怎麼做？</dt><dd>不用下載，打開這一頁就能測，手機和電腦都可以。戴上耳機按「絕對音感測試」：12 個音各出 3 次，共 36 題，八度和音色都會換，沒有對錯提示，題與題之間有噪音，憑第一直覺點音名就好。測完會看到 12 音正確率、反應時間和每個音的正確率。</dd></div>
+        <div><dt>測驗正確率多少算有絕對音感？</dt><dd>研究中的標準大約是 12 音正確率 90% 以上、2 秒內作答；亂猜的正確率約 8%。如果「誤差在半音內」的比例高、正確率低，代表已經抓到大致音區，差在精準度。</dd></div>
+        <div><dt>測出來沒有絕對音感，還能練嗎？</dt><dd>可以試試。2019 到 2025 年的成人訓練研究中，多數人都明顯進步，練滿 12 個音的大約七人中一人。這個遊戲照研究的做法，每天 100 題、約 10 分鐘，從一個音開始逐音解鎖。研究細節整理在<a href="https://knittinghiyori.com/absolute-pitch-training-game/" data-cta="faq_article" data-cta-type="article">絕對音感可以練嗎？成人訓練方法與研究整理</a>。</dd></div>
         <div><dt>錯題庫有什麼用？</dt><dd>每個人容易混淆的音不一樣。遊戲會記下你最常把哪個音聽成哪個音，「錯題複習」會集中出這些音，答錯時先播你按的音、再播正解，讓你對比著聽。答對幾次後，那組錯誤就會從錯題庫移除。</dd></div>
         </dl>
     </div>
@@ -866,7 +870,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "音名 ", "other": "其他", "bankEmptyHas": "目前沒有待改正的錯題。答錯的音會自動收進這裡，最常混淆的組合排在最上面。", "bankEmptyNew": "答錯的音會自動收進這裡。練過一陣子後，最常混淆的組合會排在最上面。", "fixedN": "已改正 {0} 組。", "pair": "{0}<span class=\"as\">常被聽成</span>{1}", "worst": "整體最常答錯的音：", "sep": "、", "reviewBtn20": "複習錯題（20 題）", "bankFoot": "待改正 {0} 組{1}。答對一次，次數減 1。", "bankFootFixed": "，已改正 {0} 組", "noise": "噪音遮蔽中", "qTest": "第 <b class=\"num\">{0}</b> / 36 題", "qReview": "錯題複習　第 <b class=\"num\">{0}</b> / {1} 題", "qTrain": "這是哪個音？", "hit": "<b>答對</b>　{0}，<span class=\"num\">{1}</span> Hz，<span class=\"num\">{2}</span> 秒", "contrast": "{0}先聽你按的 {1}，再聽正解 {2}<b>{3}</b>", "miss": "<b>答錯</b>　正解是 {0}{1}，再聽一次", "missOther": "，還沒解鎖，屬於「其他」", "unlockTitle": "解鎖新音名：{0}", "unlockText": "接下來它不再是「其他」。先多聽幾次它出現的樣子。", "allTitle": "12 個音全部達標", "allText": "去做一次驗收測驗，看看是不是研究中的 AP 水準。", "modeTrain": "訓練模式", "subTrain": "聽到音之後點它的名字。還沒解鎖的音，一律按「其他」。", "modeTest": "驗收測驗", "subTest": "12 個音隨機出現，八度和音色都會換，沒有對錯提示。憑第一直覺作答。", "modeReview": "錯題複習", "subReview": "集中練你最常混淆的音。答錯時先播你按的音，再播正解，對比著聽。", "start": "開始訓練", "cont": "繼續訓練", "paused": "已暫停，今天的進度已存好", "v90": "達到研究中的絕對音感水準。過幾週再測一次，確認能保持。", "v50": "音名記憶正在成形，明顯高於亂猜。照每日目標繼續練。", "v20": "已經抓得住一部分音名。多數人都會經過這個階段，關鍵是持續練。", "v0": "目前接近亂猜的機率。這是正常的起點，研究參與者也是從這裡開始。", "rAcc": "12 音正確率", "rRt": "秒，反應中位數", "rNear": "誤差在半音內", "barsAria": "各音名正確率", "rNote": "誤差在半音內的比例高、正確率低，代表已抓到大致音區，差在精準度。下次驗收：{0}。", "shareResult": "分享這次驗收：12 音正確率 {0}%。", "testDone": "驗收完成，結果在下方", "revTitle": "錯題複習完成", "revBody": "這輪答對 {0} / {1} 題{2}。{3}", "revFixed": "，改正了 {0} 組", "revLeft": "錯題庫還有 {0} 組，明天再來複習一輪。", "revClear": "錯題庫清空了，回到一般訓練吧。", "revDone": "複習完成", "nFirst": "第一次來？從 <strong>C</strong> 這一個音開始。也可以先做一次驗收，留下起點成績。", "nRemain": "今天還差 <strong>{0} 題</strong>完成每日目標{1}。", "nStreak": "，保住 {0} 天的連續紀錄", "nDone": "今天的目標完成了。<strong>明天回來</strong>，連續紀錄就會變成 {0} 天。", "nTest": "本週的驗收已開放。", "nBank": "錯題庫有 <strong>{0} 組</strong>待改正。", "mAccN": "近 {0} 題正確率", "mAcc0": "近 20 題正確率", "mRt": "秒，反應中位數", "mRt0": "反應時間中位數", "mNext": "下一個解鎖", "mAll": "<b>全部</b>已解鎖", "heatTip": "{0}：{1} 題", "trackTip": "{0} 題", "chartEmpty": "還沒有驗收紀錄。先測一次當作起點，之後每週回來比較。", "chartAria": "驗收正確率變化", "shareGame": "我在絕對音感養成所練音感，已解鎖 {0} / 12 個音名。成人也能練絕對音感嗎？來試試", "shareRes": "我的絕對音感驗收：12 音正確率 {0}%。成人也能練絕對音感嗎？來試試", "copied": "已複製", "testAbort": "驗收已中止，這次不記錄成績", "resetArm": "再按一次確認清除，無法復原", "resetDone": "已清除", "resetStatus": "紀錄已清除，從 C 重新開始", "trainSub": "每天練，一個一個解鎖音", "testSub": "每週一次，測 12 個音", "fbAns": "正解"},LANG='zh',LOC='zh-TW',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/';
+var T={"noteAria": "音名 ", "other": "其他", "bankEmptyHas": "目前沒有待改正的錯題。答錯的音會自動收進這裡，最常混淆的組合排在最上面。", "bankEmptyNew": "答錯的音會自動收進這裡。練過一陣子後，最常混淆的組合會排在最上面。", "fixedN": "已改正 {0} 組。", "pair": "{0}<span class=\"as\">常被聽成</span>{1}", "worst": "整體最常答錯的音：", "sep": "、", "reviewBtn20": "複習錯題（20 題）", "bankFoot": "待改正 {0} 組{1}。答對一次，次數減 1。", "bankFootFixed": "，已改正 {0} 組", "noise": "噪音遮蔽中", "qTest": "第 <b class=\"num\">{0}</b> / 36 題", "qReview": "錯題複習　第 <b class=\"num\">{0}</b> / {1} 題", "qTrain": "這是哪個音？", "hit": "<b>答對</b>　{0}，<span class=\"num\">{1}</span> Hz，<span class=\"num\">{2}</span> 秒", "contrast": "{0}先聽你按的 {1}，再聽正解 {2}<b>{3}</b>", "miss": "<b>答錯</b>　正解是 {0}{1}，再聽一次", "missOther": "，還沒解鎖，屬於「其他」", "unlockTitle": "解鎖新音名：{0}", "unlockText": "接下來它不再是「其他」。先多聽幾次它出現的樣子。", "allTitle": "12 個音全部達標", "allText": "去做一次絕對音感測試，看看是不是研究中的 AP 水準。", "modeTrain": "訓練模式", "subTrain": "聽到音之後點它的名字。還沒解鎖的音，一律按「其他」。", "modeTest": "絕對音感測試", "subTest": "12 個音隨機出現，八度和音色都會換，沒有對錯提示。憑第一直覺作答。", "modeReview": "錯題複習", "subReview": "集中練你最常混淆的音。答錯時先播你按的音，再播正解，對比著聽。", "start": "開始訓練", "cont": "繼續訓練", "paused": "已暫停，今天的進度已存好", "v90": "達到研究中的絕對音感水準。過幾週再測一次，確認能保持。", "v50": "音名記憶正在成形，明顯高於亂猜。照每日目標繼續練。", "v20": "已經抓得住一部分音名。多數人都會經過這個階段，關鍵是持續練。", "v0": "目前接近亂猜的機率。這是正常的起點，研究參與者也是從這裡開始。", "rAcc": "12 音正確率", "rRt": "秒，反應中位數", "rNear": "誤差在半音內", "barsAria": "各音名正確率", "rNote": "誤差在半音內的比例高、正確率低，代表已抓到大致音區，差在精準度。建議下次測驗：{0}。", "shareResult": "分享這次驗收：12 音正確率 {0}%。", "testDone": "測驗完成，結果在下方", "revTitle": "錯題複習完成", "revBody": "這輪答對 {0} / {1} 題{2}。{3}", "revFixed": "，改正了 {0} 組", "revLeft": "錯題庫還有 {0} 組，明天再來複習一輪。", "revClear": "錯題庫清空了，回到一般訓練吧。", "revDone": "複習完成", "nFirst": "第一次來？先做一次<strong>絕對音感測試</strong>（36 題，約 3 分鐘），看看自己現在在哪裡；測完想練，再從 <strong>C</strong> 開始訓練。", "nRemain": "今天還差 <strong>{0} 題</strong>完成每日目標{1}。", "nStreak": "，保住 {0} 天的連續紀錄", "nDone": "今天的目標完成了。<strong>明天回來</strong>，連續紀錄就會變成 {0} 天。", "nTest": "本週的驗收已開放。", "nBank": "錯題庫有 <strong>{0} 組</strong>待改正。", "mAccN": "近 {0} 題正確率", "mAcc0": "近 20 題正確率", "mRt": "秒，反應中位數", "mRt0": "反應時間中位數", "mNext": "下一個解鎖", "mAll": "<b>全部</b>已解鎖", "heatTip": "{0}：{1} 題", "trackTip": "{0} 題", "chartEmpty": "還沒有驗收紀錄。先測一次當作起點，之後每週回來比較。", "chartAria": "驗收正確率變化", "shareGame": "我在絕對音感養成所練音感，已解鎖 {0} / 12 個音名。成人也能練絕對音感嗎？來試試", "shareRes": "我的絕對音感測試結果：{1}（12 音正確率 {0}%）。你有絕對音感嗎？來測測看", "copied": "已複製", "testAbort": "測驗已中止，這次不記錄成績", "resetArm": "再按一次確認清除，無法復原", "resetDone": "已清除", "resetStatus": "紀錄已清除，從 C 重新開始", "trainSub": "每天練，一個一個解鎖音", "testSub": "每週一次，測 12 個音", "fbAns": "正解", "ansYes": "你很可能有絕對音感", "ansPart": "有部分絕對音感的跡象", "ansSome": "目前還沒有絕對音感，但已經抓得住一些音", "ansNo": "目前沒有絕對音感（和大多數人一樣）", "ansK": "絕對音感測試結果", "ansBench": "亂猜的正確率約 8%；研究的標準是 12 音正確率 90% 以上、2 秒內作答。一次測驗只是參考，過幾天再測一次會更準。", "ansTrain": "想練練看？從 C 開始訓練", "ansTrainCont": "繼續訓練", "testFirstSub": "36 題，約 3 分鐘，先看看自己在哪裡", "nAfterTest": "測完了！想練的話，從 <strong>C</strong> 這一個音開始訓練，每天 10 分鐘，一個一個解鎖。"},LANG='zh',LOC='zh-TW',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/';
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -1140,13 +1144,25 @@ function start(m){
   nextTrial();
 }
 function stop(msg){if(mode)roundClose('quit');idle(msg)}
+/* 第一次來（還沒練過、也沒測過）：「絕對音感測試」放第一個、當主按鈕並發光；之後「繼續訓練」當主按鈕 */
+function paintMainBtn(){
+  var fresh=!S.total&&!S.tests.length,tb=$('testBtn'),rb=$('trainBtn');
+  tb.classList.toggle('line',!fresh);tb.classList.toggle('first',fresh);
+  rb.classList.toggle('line',fresh);rb.classList.toggle('first',false);
+  $('testSub').textContent=fresh?T.testFirstSub:T.testSub;
+  if(fresh?tb.nextElementSibling!==rb:rb.nextElementSibling!==tb)rb.parentNode.insertBefore(fresh?tb:rb,fresh?rb:tb);
+}
 function idle(msg){
   mode=null;waiting=false;clearTimeout(timer);paintWheel();
   $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
-  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+  $('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
   $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
   status(msg||T.paused);render();
 }
+/* 測驗結果直接回答：0 很可能有、1 有部分跡象、2 抓得住一些音、3 目前沒有（門檻和成績卡 cardTag 一樣） */
+function trained(){return S.level>1||S.recent.length>0} /* 測驗的題數也算進 total，所以用「有沒有練過」判斷 */
+function verdictIdx(acc,med){return acc>=0.9?(med<=2000?0:1):acc>=0.5?1:acc>=0.2?2:3}
+function verdictText(i){return [T.ansYes,T.ansPart,T.ansSome,T.ansNo][i]}
 function finishTest(){
   var n=testLog.length,c=testLog.filter(function(r){return r.ok}).length,acc=c/n;
   var near=testLog.filter(function(r){var d=Math.abs(r.ans-r.pc)%12;return Math.min(d,12-d)<=1}).length/n;
@@ -1159,13 +1175,16 @@ function finishTest(){
   else if(acc>=0.2)v=T.v20;
   else v=T.v0;
   var per=NAMES.map(function(nm,pc){var rs=testLog.filter(function(r){return r.pc===pc});return Math.round(rs.filter(function(r){return r.ok}).length/rs.length*100)});
-  $('result').innerHTML='<p class="verdict">'+v+'</p>'+
+  var vi=verdictIdx(acc,med);
+  $('result').innerHTML='<p class="verdict-k">'+T.ansK+'</p><p class="verdict'+(vi===0?' verdict-yes':'')+'">'+verdictText(vi)+'</p><p class="small">'+v+'</p>'+
     '<div class="meters"><div><b>'+(acc*100).toFixed(0)+'%</b>'+T.rAcc+'</div><div><b>'+(med/1000).toFixed(2)+'</b>'+T.rRt+'</div><div><b>'+(near*100).toFixed(0)+'%</b>'+T.rNear+'</div></div>'+
     '<div class="bars" role="img" aria-label="'+T.barsAria+'">'+per.map(function(p,pc){return '<div><span class="col"><i style="height:'+Math.max(p,2)+'%;background:'+COLORS[pc]+'"></i></span><span>'+NAMES[pc]+'</span><em>'+p+'%</em></div>'}).join('')+'</div>'+
-    '<p class="small">'+F(T.rNote,nextTestDate())+'</p>'+
+    '<p class="small">'+T.ansBench+' '+F(T.rNote,nextTestDate())+'</p>'+
+    '<div class="res-next"><button type="button" class="btn" id="resTrainBtn">'+(trained()?T.ansTrainCont:T.ansTrain)+'</button></div>'+
     '<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
   lastRes={acc:acc,med:med,near:near,per:per,lv:S.level,d:new Date()};
   $('cardBtn').addEventListener('click',makeCard);
+  $('resTrainBtn').addEventListener('click',function(){start('train')});
   $('result').hidden=false;
   lastShareType='result';$('shareLabel').textContent=F(T.shareResult,(acc*100).toFixed(0));
   idle(T.testDone);
@@ -1252,7 +1271,8 @@ function render(){
   var last=S.tests[S.tests.length-1],since=null;
   if(last)since=Math.round((new Date(dkey())-new Date(last.d))/864e5);
   var msg;
-  if(S.total===0)msg=T.nFirst;
+  if(!trained()&&S.tests.length)msg=T.nAfterTest;
+  else if(S.total===0)msg=T.nFirst;
   else if(today<GOAL)msg=F(T.nRemain,GOAL-today,st?F(T.nStreak,st):'');
   else msg=F(T.nDone,st+1);
   if(S.total>0?(since===null||since>=7):false)msg+=T.nTest;
@@ -1309,7 +1329,7 @@ function drawChart(){
 /* ---------- 分享 ---------- */
 function shareUrl(){return PAGE_URL+'?ref=share'}
 function shareText(){
-  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc)}
+  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc,verdictText(verdictIdx(t.acc/100,t.rt)))}
   return F(T.shareGame,S.level)
 }
 document.querySelectorAll('[data-share]').forEach(function(b){
@@ -1328,7 +1348,7 @@ document.querySelectorAll('[data-share]').forEach(function(b){
 });
 
 /* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
-var CARD={"make": "做成績卡圖片", "making": "產生中…", "share": "分享圖片", "download": "下載圖片", "hint": "分享圖片後，按「複製連結」貼進貼文或訊息，朋友就能直接點進來玩。手機也可以長按圖片存到相簿。", "fail": "圖片產生失敗，請重新整理後再試一次。", "title": "我的 12 音驗收", "unlocked": "已解鎖", "unit": "/ 12 音", "rt": "反應中位數", "rtUnit": "秒", "near": "誤差半音內", "perNote": "各音正確率", "game": "絕對音感養成所", "brand": "編織日和", "wm": "編織日和", "url": "games.knittinghiyori.com/absolute-pitch", "cta": "免費玩 →", "alt": "絕對音感養成所驗收成績卡：12 音正確率 {0}%，已解鎖 {1} / 12 個音名，附各音正確率與遊戲網址。", "tags": ["達到研究中的絕對音感水準", "音名記憶正在成形", "已經抓得住一部分音名", "起點：研究參與者也從這裡開始"], "copy": "複製連結", "copied": "已複製 ✓"};
+var CARD={"make": "做成績卡圖片", "making": "產生中…", "share": "分享圖片", "download": "下載圖片", "hint": "分享圖片後，按「複製連結」貼進貼文或訊息，朋友就能直接點進來玩。手機也可以長按圖片存到相簿。", "fail": "圖片產生失敗，請重新整理後再試一次。", "title": "我的 12 音驗收", "unlocked": "已解鎖", "unit": "/ 12 音", "rt": "反應中位數", "rtUnit": "秒", "near": "誤差半音內", "perNote": "各音正確率", "game": "絕對音感養成所", "brand": "編織日和", "wm": "編織日和", "url": "games.knittinghiyori.com/absolute-pitch", "cta": "免費玩 →", "alt": "絕對音感養成所驗收成績卡：12 音正確率 {0}%，已解鎖 {1} / 12 個音名，附各音正確率與遊戲網址。", "tags": ["很可能有絕對音感", "有部分絕對音感的跡象", "已經抓得住一些音名", "起點：和大多數人一樣"], "copy": "複製連結", "copied": "已複製 ✓"};
 var lastRes=null,cardUrl=null;
 function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
 function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
@@ -1450,7 +1470,7 @@ $('resetBtn').addEventListener('click',function(){
   idle(T.resetStatus);
 });
 if(reduce)$('ring').classList.remove('draw');
-$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+$('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
 /* 語言切換 */
 document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'zh-Hant'},true)}catch(e){}})});
 paintWheel();render();sizeScope();
