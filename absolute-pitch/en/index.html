@@ -193,6 +193,20 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .banner p b{color:var(--ink);display:block;font-size:1rem}
 
 .result{background:var(--paper);border-radius:22px;padding:20px 18px;display:grid;gap:14px}
+.ap-move{margin-top:16px;padding:14px 16px;border:1px solid var(--rule);border-radius:16px;display:grid;gap:10px;justify-items:start}
+.ap-move p{font-size:.93rem;color:var(--ink-2)}
+.ap-move p b{color:var(--ink);display:block}
+.ap-move textarea{width:100%;font:12px/1.4 ui-monospace,monospace;padding:8px;border:1px solid var(--rule);border-radius:10px;background:var(--well)}
+/* 導流到 App（2026-10-14 Alison）：遊戲正下方一行＋一次性小卡，都連到編織日和電子報 */
+.appcard{border:1.5px solid var(--ink);border-radius:18px;padding:14px 16px;display:grid;gap:10px}
+.appcard p{font-size:.93rem;color:var(--ink-2)}
+.appcard p b{color:var(--ink);display:block;font-size:1rem}
+.appcard-btns{display:flex;flex-wrap:wrap;gap:8px}
+.appcard-btns a,.appcard-btns button{font:inherit;font-size:.93rem;font-weight:700;min-height:44px;padding:10px 18px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.appcard-btns a{background:var(--ink);color:#fff;border:0}
+.appcard-btns button{background:none;color:var(--ink);border:1.5px solid var(--rule)}
+.appcard .ap-price{color:var(--ink);font-size:.9rem;background:var(--paper);border-radius:12px;padding:8px 12px}
+.appcard .ap-price b{display:inline;font-size:inherit}
 .ap-appline{margin:14px 0 0;padding:12px 16px;border-radius:14px;background:var(--well);text-align:center;font-size:.95rem}
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 .ap-appline .ap-appline__more{display:inline-block;margin-top:6px;font-weight:400;font-size:.88rem;min-height:24px}
@@ -540,10 +554,15 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
 
       <div class="banner" id="banner" hidden></div>
       <div class="result" id="result" hidden></div>
+      <!-- App node cards (2026-11-09 Alison, same rules as the zh page; cta_id app_card_<node>) -->
+      <div class="appcard" id="appCard" hidden>
+        <p id="appCardText"></p>
+        <div class="appcard-btns"><a id="appCardLink" href="https://apps.apple.com/us/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_card_unlock4" data-cta-type="other">Get it free on the App Store →</a><button type="button" id="appCardMove" hidden>See how to transfer</button><button type="button" id="appCardClose">Got it</button></div>
+      </div>
     </div>
   </section>
 
-  <p class="ap-appline"><a href="https://apps.apple.com/us/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other">The iPhone app is out: daily reminders, progress that won’t disappear. <span style="white-space:nowrap">Download free →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/en/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">About the app</a></p>
+  <p class="ap-appline"><a href="https://apps.apple.com/us/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">The iPhone app is out: daily reminders, progress that won’t disappear. <span style="white-space:nowrap">Download free →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/en/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">About the app</a></p>
 
   <div class="share" aria-label="Share">
     <p id="shareLabel">Train with a friend and see who unlocks all 12 notes first.</p>
@@ -561,6 +580,13 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
     <div class="sec-head">
       <h2 id="recH">Your practice log</h2>
       <p>In the studies, progress took weeks to show. Come back for 10 minutes a day and this page keeps track; notes you miss go straight into your mistake log. Your data stays in this browser on this device.</p>
+      <!-- Move to the app (2026-11-09 Alison): same AP1 transfer code as the zh page -->
+      <div class="ap-move" id="apMove">
+        <p><b>Switching to the iPhone app?</b> First <a href="https://apps.apple.com/us/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_move" data-cta-type="other">download the app</a>, then copy your transfer code and paste it in the app under “App settings → Move from the web version”. Your unlocked notes and log carry over (up to 6 notes free).</p>
+        <button type="button" class="btn line" id="apMoveBtn">Copy transfer code</button>
+        <textarea id="apMoveCode" readonly rows="3" hidden aria-label="Transfer code"></textarea>
+        <p class="cap" id="apMoveMsg" aria-live="polite"></p>
+      </div>
     </div>
     <div class="sec-body">
       <div id="bank">
@@ -1138,8 +1164,65 @@ function streak(){
   while(S.days[dkey(d)]){n++;d.setDate(d.getDate()-1)}
   return n;
 }
+/* ---------- 導流到 App：節點小卡（2026-11-09 Alison） ----------
+   網頁版功能全部照舊免費；只在「剛好有成就感」或「紀錄有風險」的時候提一次 App 的好處。
+   規則：每個節點一輩子一次；一天最多一張；練習中不跳（等暫停或練完）；按「知道了」累計 2 次、或點過下載，就不再跳卡片（遊戲下方那一行一直都在）。
+   Android 先不跳（App 只有 iPhone／iPad／Mac 版）。早鳥價 2026-11-23 晚上 12 點（台灣時間）前顯示，之後自動換成不寫金額的版本。 */
+var EARLY_END=Date.parse('2026-11-24T00:00:00+08:00');
+function earlyBird(){return Date.now()<EARLY_END}
+var IS_ANDROID=/Android/i.test(navigator.userAgent||'');
+var APP_NODES=[
+  {id:"comeback",title:"Welcome back!",body:"Safari on iPhone can clear data from sites you haven’t opened in a while, so your progress here could disappear. The app keeps your log on your phone and in iCloud backups. Bring it over now with the transfer code below — up to 6 notes carry over free.",move:true},
+  {id:"test1",title:"Test complete!",body:"The studies tested once a week for 8 weeks. The app reminds you to practice every day and charts every test, so you can see your progress."},
+  {id:"unlock4",title:"You unlocked note {0}!",body:"Carry this progress into the app with the transfer code below — up to 6 notes free. The app works offline and plays sound even in silent mode.",move:true},
+  {id:"daily100",title:"100 questions today!",body:"The hardest part is remembering to come back. The app reminds you at a time you choose, with a daily goal ring and unlock celebrations."},
+  {id:"streak3",title:"{1} days in a row!",body:"The studies trained for 8 straight weeks. The app reminds you every day, and the browser can’t wipe your log."}
+];
+function appPrice(){
+  return earlyBird()?"<b>Launch price until Nov 23</b>: unlock all 12 notes with a one-time purchase. First 3 notes free. No subscription, no ads."
+                    :"First 3 notes free; unlock all 12 with a one-time purchase (price shown in the App Store). No subscription, no ads.";
+}
+function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
+  var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
+  if(!ks.length)return 0;
+  return Math.round((new Date(t)-new Date(ks[ks.length-1]))/864e5);
+}
+var COMEBACK=lastGap()>=4; /* 打開頁面時判斷一次：隔 4 天以上回來 */
+function nodeReady(id,st){
+  var last=S.tests[S.tests.length-1];
+  if(id==='comeback')return COMEBACK&&S.total>=20;
+  if(id==='test1')return last?(last.d===dkey()):false;
+  if(id==='unlock4')return S.level>=4;
+  if(id==='daily100')return (S.days[dkey()]||0)>=GOAL;
+  if(id==='streak3')return st>=3;
+  return false;
+}
+function maybeAppCard(st){
+  if(mode||IS_ANDROID||!$('appCard').hidden)return;
+  var N=S.appNudge||(S.appNudge={seen:{},last:'',dismiss:0,clicked:false});
+  if(S.appCard&&!N.seen.unlock4)N.seen.unlock4=S.appCard; /* 舊版小卡看過的人，不再重複 unlock4 */
+  if(N.clicked||N.dismiss>=2||N.last===dkey())return;
+  for(var i=0;i<APP_NODES.length;i++){
+    var n=APP_NODES[i];
+    if(N.seen[n.id]||!nodeReady(n.id,st))continue;
+    N.seen[n.id]=dkey();N.last=dkey();S.appCard=S.appCard||dkey();save();
+    $('appCardText').innerHTML='<b>'+F(n.title,S.level,st)+'</b>'+n.body;
+    var pr=document.createElement('p');pr.className='ap-price';pr.innerHTML=appPrice();$('appCardText').appendChild(pr);
+    $('appCardLink').setAttribute('data-cta','app_card_'+n.id);
+    $('appCardMove').hidden=!n.move;
+    $('appCard').hidden=false;
+    return;
+  }
+}
+function appLine(){
+  var a=$('apLineLink');if(!a)return;
+  if(IS_ANDROID){a.innerHTML="iPhone, iPad and Mac apps are out (Android coming soon)";a.removeAttribute('href');return}
+  a.innerHTML=earlyBird()?"The app is out! First 3 notes free, <b>launch price</b> until Nov 23 <span style=\"white-space:nowrap\">→</span>"
+                         :"The app is out: daily reminders, progress that won’t disappear. First 3 notes free <span style=\"white-space:nowrap\">→</span>";
+}
 function render(){
   var today=S.days[dkey()]||0,st=streak();
+  maybeAppCard(st);
   $('sStreak').textContent=st;$('sToday').textContent=today;$('sTodayBar').style.width=Math.min(100,today/GOAL*100)+'%';
   $('sLevel').textContent=S.level;$('sTotal').textContent=S.total.toLocaleString();
   $('pips').innerHTML=ORDER.map(function(pc,i){return '<i title="'+NAMES[pc]+'"'+(i<S.level?' style="background:'+COLORS[pc]+'"':'')+'></i>'}).join('');
@@ -1315,6 +1398,21 @@ async function makeCard(){
 $('trainBtn').addEventListener('click',function(){start('train')});
 $('testBtn').addEventListener('click',function(){start('test')});
 $('reviewBtn').addEventListener('click',function(){start('review')});
+$('appCardClose').addEventListener('click',function(){$('appCard').hidden=true;var N=S.appNudge;if(N){N.dismiss=(N.dismiss||0)+1;save()}});
+$('appCardLink').addEventListener('click',function(){var N=S.appNudge;if(N){N.clicked=true;save()}$('appCard').hidden=true});
+$('appCardMove').addEventListener('click',function(){var m=$('apMove');if(m){m.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})}});
+appLine();
+/* Move to the app: same AP1 transfer code as the zh page */
+var MOVE_MSG={"none": "No progress yet. Practice a few questions first.", "long": "Long-press the code above and choose Copy.", "copied": "Transfer code copied. Open the app and paste it under “App settings → Move from the web version”."};
+$('apMoveBtn').addEventListener('click',function(){
+  var raw='';try{raw=localStorage.getItem(KEY)||''}catch(e){}
+  if(!raw){$('apMoveMsg').textContent=MOVE_MSG.none;return}
+  var code='AP1:'+btoa(unescape(encodeURIComponent(raw)));
+  var box=$('apMoveCode');box.value=code;
+  var shown=function(){box.hidden=false;box.focus();box.select();$('apMoveMsg').textContent=MOVE_MSG.long};
+  try{navigator.clipboard.writeText(code).then(function(){$('apMoveMsg').textContent=MOVE_MSG.copied},shown)}catch(e){shown()}
+  ev('export',{method:'app_code',content_type:'game'});
+});
 $('stopBtn').addEventListener('click',function(){stop(mode==='test'?T.testAbort:null)});
 $('noiseOpt').checked=S.noise;
 $('noiseOpt').addEventListener('change',function(e){S.noise=e.target.checked;save();ev('game_settings',{setting:S.noise?'noise_on':'noise_off'})});

@@ -207,6 +207,8 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .appcard-btns a,.appcard-btns button{font:inherit;font-size:.93rem;font-weight:700;min-height:44px;padding:10px 18px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
 .appcard-btns a{background:var(--ink);color:#fff;border:0}
 .appcard-btns button{background:none;color:var(--ink);border:1.5px solid var(--rule)}
+.appcard .ap-price{color:var(--ink);font-size:.9rem;background:var(--paper);border-radius:12px;padding:8px 12px}
+.appcard .ap-price b{display:inline;font-size:inherit}
 
 .result{background:var(--paper);border-radius:22px;padding:20px 18px;display:grid;gap:14px}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
@@ -562,15 +564,16 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
 
       <div class="banner" id="banner" hidden></div>
       <div class="result" id="result" hidden></div>
-      <!-- 導流到 App：解鎖第 4 個音或連續 7 天時跳一次（只跳一次，記在存檔 appCard；cta_id 依觸發原因 app_card_unlock4／app_card_streak7）。2026-10-24 App 上架，改成下載連結 -->
+      <!-- 導流到 App 節點小卡（2026-11-09 Alison）：回訪、驗收完成、解鎖第 4 音、第一次練滿 100 題、連續 3 天，各跳一次；一天最多一張、練習中不跳；按「知道了」兩次就不再跳。
+           文字由下方 APP_NODES 依節點填入；cta_id＝app_card_<節點>。早鳥價文字 2026-11-24 起自動換掉 -->
       <div class="appcard" id="appCard" hidden>
-        <p><b>iPhone App 上架了！</b>每天提醒你練習，紀錄也不會不見（iPhone 的 Safari 可能會清掉太久沒打開的網站紀錄，App 不會）。還有 12 音之路、解鎖慶祝，離線也能練。在這裡練的進度可以用下方「你的練習紀錄」的搬家代碼帶過去。</p>
-        <div class="appcard-btns"><a id="appCardLink" href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_card_unlock4" data-cta-type="other">免費下載 App →</a><button type="button" id="appCardClose">知道了</button></div>
+        <p id="appCardText"><b>iPhone App 上架了！</b>每天提醒你練習，紀錄也不會不見（iPhone 的 Safari 可能會清掉太久沒打開的網站紀錄，App 不會）。還有 12 音之路、解鎖慶祝，離線也能練。在這裡練的進度可以用下方「你的練習紀錄」的搬家代碼帶過去。</p>
+        <div class="appcard-btns"><a id="appCardLink" href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_card_unlock4" data-cta-type="other">到 App Store 免費下載 →</a><button type="button" id="appCardMove" hidden>看搬家方式</button><button type="button" id="appCardClose">知道了</button></div>
       </div>
     </div>
   </section>
 
-  <p class="ap-appline"><a href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other">iPhone App 上架了！每天提醒你練、紀錄不會不見，<span style="white-space:nowrap">免費下載 →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">看 App 介紹</a></p>
+  <p class="ap-appline"><a href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">iPhone App 上架了！每天提醒你練、紀錄不會不見，<span style="white-space:nowrap">免費下載 →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">看 App 介紹</a></p>
 
   <!-- 下一款玩什麼（/lib/hy-next.js 依主頁卡片自動產生；cta_id next_game） -->
   <section data-hy-next hidden></section>
@@ -1184,15 +1187,61 @@ function streak(){
   while(S.days[dkey(d)]){n++;d.setDate(d.getDate()-1)}
   return n;
 }
-/* 導流到 App 小卡：解鎖第 4 個音（level 從 1 起算，4＝已解鎖 4 個音）或連續 7 天，先到先算，一輩子只跳一次 */
-var APP_CARD_LEVEL=4,APP_CARD_STREAK=7;
+/* ---------- 導流到 App：節點小卡（2026-11-09 Alison） ----------
+   網頁版功能全部照舊免費；只在「剛好有成就感」或「紀錄有風險」的時候提一次 App 的好處。
+   規則：每個節點一輩子一次；一天最多一張；練習中不跳（等暫停或練完）；按「知道了」累計 2 次、或點過下載，就不再跳卡片（遊戲下方那一行一直都在）。
+   Android 先不跳（App 只有 iPhone／iPad／Mac 版）。早鳥價 2026-11-23 晚上 12 點（台灣時間）前顯示，之後自動換成不寫金額的版本。 */
+var EARLY_END=Date.parse('2026-11-24T00:00:00+08:00');
+function earlyBird(){return Date.now()<EARLY_END}
+var IS_ANDROID=/Android/i.test(navigator.userAgent||'');
+var APP_NODES=[
+  {id:'comeback',title:'歡迎回來！',body:'iPhone 的 Safari 會清掉一陣子沒打開的網站資料，這裡的練習紀錄可能不見。App 的紀錄存在手機裡、跟著 iCloud 備份；趁現在用下方的搬家代碼帶過去，最多 6 個音可以免費接著練。',move:true},
+  {id:'test1',title:'驗收完成！',body:'研究建議每週驗收一次、連續 8 週。App 會每天提醒你回來練，驗收成績一樣畫成曲線，看得到自己的進步。'},
+  {id:'unlock4',title:'解鎖第 {0} 個音了！',body:'這裡的進度可以用下方的搬家代碼帶進 App，最多 6 個音免費接著練。App 沒網路也能練，iPhone 靜音模式也有聲音。',move:true},
+  {id:'daily100',title:'今天練滿 100 題了！',body:'每天練到，最難的是記得回來。App 會在你選的時間提醒你，連續紀錄不中斷，還有每日目標圈和解鎖慶祝。'},
+  {id:'streak3',title:'連續 {1} 天了！',body:'研究的做法是連續練 8 週。App 每天定時提醒你，紀錄也不會被瀏覽器清掉，陪你走完 8 週。'}
+];
+function appPrice(){
+  return earlyBird()?'<b>早鳥價 NT$190</b> 一次買斷，解鎖全部 12 個音（到 11/23，11/24 起 NT$290）。前 3 個音免費，沒有訂閱、沒有廣告。'
+                    :'前 3 個音免費；一次買斷解鎖全部 12 個音（價格以 App Store 為準），沒有訂閱、沒有廣告。';
+}
+function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
+  var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
+  if(!ks.length)return 0;
+  return Math.round((new Date(t)-new Date(ks[ks.length-1]))/864e5);
+}
+var COMEBACK=lastGap()>=4; /* 打開頁面時判斷一次：隔 4 天以上回來 */
+function nodeReady(id,st){
+  var last=S.tests[S.tests.length-1];
+  if(id==='comeback')return COMEBACK&&S.total>=20;
+  if(id==='test1')return last?(last.d===dkey()):false;
+  if(id==='unlock4')return S.level>=4;
+  if(id==='daily100')return (S.days[dkey()]||0)>=GOAL;
+  if(id==='streak3')return st>=3;
+  return false;
+}
 function maybeAppCard(st){
-  if(S.appCard)return;
-  var why=S.level>=APP_CARD_LEVEL?'unlock4':(st>=APP_CARD_STREAK?'streak7':'');
-  if(!why)return;
-  S.appCard=dkey();save();
-  $('appCardLink').setAttribute('data-cta','app_card_'+why);
-  $('appCard').hidden=false;
+  if(mode||IS_ANDROID||!$('appCard').hidden)return;
+  var N=S.appNudge||(S.appNudge={seen:{},last:'',dismiss:0,clicked:false});
+  if(S.appCard&&!N.seen.unlock4)N.seen.unlock4=S.appCard; /* 舊版小卡看過的人，不再重複 unlock4 */
+  if(N.clicked||N.dismiss>=2||N.last===dkey())return;
+  for(var i=0;i<APP_NODES.length;i++){
+    var n=APP_NODES[i];
+    if(N.seen[n.id]||!nodeReady(n.id,st))continue;
+    N.seen[n.id]=dkey();N.last=dkey();S.appCard=S.appCard||dkey();save();
+    $('appCardText').innerHTML='<b>'+F(n.title,S.level,st)+'</b>'+n.body;
+    var pr=document.createElement('p');pr.className='ap-price';pr.innerHTML=appPrice();$('appCardText').appendChild(pr);
+    $('appCardLink').setAttribute('data-cta','app_card_'+n.id);
+    $('appCardMove').hidden=!n.move;
+    $('appCard').hidden=false;
+    return;
+  }
+}
+function appLine(){
+  var a=$('apLineLink');if(!a)return;
+  if(IS_ANDROID){a.innerHTML='iPhone、iPad、Mac 版 App 已上架（Android 版準備中）';a.removeAttribute('href');return}
+  a.innerHTML=earlyBird()?'App 上架了！前 3 個音免費，<b>早鳥 NT$190</b> 解鎖全部（到 11/23）<span style="white-space:nowrap">→</span>'
+                         :'App 上架了！每天提醒你練、紀錄不會不見，前 3 個音免費 <span style="white-space:nowrap">→</span>';
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();
@@ -1372,7 +1421,10 @@ async function makeCard(){
 $('trainBtn').addEventListener('click',function(){start('train')});
 $('testBtn').addEventListener('click',function(){start('test')});
 $('reviewBtn').addEventListener('click',function(){start('review')});
-$('appCardClose').addEventListener('click',function(){$('appCard').hidden=true});
+$('appCardClose').addEventListener('click',function(){$('appCard').hidden=true;var N=S.appNudge;if(N){N.dismiss=(N.dismiss||0)+1;save()}});
+$('appCardLink').addEventListener('click',function(){var N=S.appNudge;if(N){N.clicked=true;save()}$('appCard').hidden=true});
+$('appCardMove').addEventListener('click',function(){var m=$('apMove');if(m){m.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})}});
+appLine();
 /* 搬到 App：存檔轉成搬家代碼（AP1: 加 base64），App 那邊解回來。APP_LIVE 上架當天改 true */
 var APP_LIVE=true;
 if(APP_LIVE)$('apMove').hidden=false;
