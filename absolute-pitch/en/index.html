@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Travelpayouts Drive（games；head 第一個 script） -->
 <script data-cfasync="false">(function(){var s=document.createElement("script");s.async=1;s.setAttribute("data-cmp-ab","2");s.src="https://emrld.ltd/NTc4NjIz.js?t=578623";document.head.appendChild(s);})();</script>
-<title>Absolute Pitch Training Lab | Can Adults Learn Perfect Pitch? Free Ear Training Game</title>
-<meta name="description" content="Can adults learn absolute pitch? A free ear training game built on 2019–2025 adult training studies: unlock one note at a time, noise between notes, three octaves and sounds, a 12-note test and your own mistake log.">
+<title>Perfect Pitch Test: Free Online Test &amp; Training Game | Absolute Pitch Training Lab</title>
+<meta name="description" content="Free perfect pitch test online, no download: hear a note and name it, 12 notes × 3, then see how close you are to the 90% research benchmark. Want to improve? Train free online for 10 minutes a day, one note at a time.">
 <link rel="canonical" href="https://games.knittinghiyori.com/absolute-pitch/en/">
 <link rel="alternate" hreflang="zh-Hant" href="https://games.knittinghiyori.com/absolute-pitch/">
 <link rel="alternate" hreflang="en" href="https://games.knittinghiyori.com/absolute-pitch/en/">
@@ -211,6 +211,10 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 .ap-appline .ap-appline__more{display:inline-block;margin-top:6px;font-weight:400;font-size:.88rem;min-height:24px}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
+.verdict-k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3)}
+.verdict-yes{font-size:1.6rem}
+.res-next{display:flex;flex-wrap:wrap;gap:10px}
+#test{scroll-margin-top:90px}
 .result .meters{border-top:0;padding-top:0}
 .bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:124px;gap:14px 6px;padding-top:8px}
 @media(max-width:560px){.bars{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:104px}}
@@ -427,26 +431,26 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
    },
    {
     "@type": "Question",
-    "name": "Can adults learn absolute pitch?",
+    "name": "How does this free online perfect pitch test work?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "Some can. In training studies by Van Hedger et al. (2019) and Wong et al. (2020, 2025), some adults reached the same test standard as people born with absolute pitch after 12 to 40 hours of training. Most learned only some of the notes, and about one in seven learned all 12."
+     "text": "No download needed: it runs on this page, on a phone or a computer. Put on headphones and tap “Perfect pitch test”. Each of the 12 notes plays 3 times (36 in all) in different octaves and sounds, with no feedback and noise between notes, so go with your first instinct. You get your 12-note accuracy, reaction time and accuracy per note."
     }
    },
    {
     "@type": "Question",
-    "name": "How long does it take to learn absolute pitch?",
+    "name": "What score means you have perfect pitch?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "Training ranged from 12 to 40 hours across the studies. The 2019 and 2025 studies ran about 8 weeks, and the 2025 participants answered 15,327 trials on average. This game splits that into 100 trials a day, about 10 minutes."
+     "text": "The standard in the studies is about 90% accuracy across the 12 notes, answering within 2 seconds; guessing gets about 8%. If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision."
     }
    },
    {
     "@type": "Question",
-    "name": "How do I know if I have learned it?",
+    "name": "No perfect pitch? Can you still learn it?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "Use the test: each of the 12 notes plays 3 times, with no feedback and noise between notes. The standard in the studies is roughly 90% accuracy across 12 notes, answering within 2 seconds; guessing gets about 8%."
+     "text": "You can try. In adult training studies from 2019 to 2025, most people improved clearly and about 1 in 7 reached all 12 notes. This game follows their method: 100 notes a day, about 10 minutes, one new note at a time. More in Can adults learn perfect pitch? Training methods and research."
     }
    },
    {
@@ -532,9 +536,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <div class="next" id="mNext"><b>G</b>Next unlock</div>
       </div>
 
-      <div class="controls">
+      <div class="controls" id="test">
         <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">Start training</span><small>Daily practice, one note at a time</small></button>
-        <button class="btn line btn2" id="testBtn" type="button"><span>Take the test</span><small>Once a week, all 12 notes</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>Perfect pitch test</span><small id="testSub">Once a week, all 12 notes</small></button>
         <button class="btn line" id="reviewBtn" type="button" hidden>Review mistakes</button>
         <button class="btn line" id="stopBtn" type="button" hidden>Pause</button>
       </div>
@@ -666,9 +670,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <dl class="faq">
         <div><dt>What is absolute pitch?</dt><dd>Absolute pitch, also called perfect pitch, is the ability to name a note without any reference note, for example knowing a sound is F♯ the moment you hear it. A common estimate is about 1 in 10,000 people, with higher rates among music students.</dd></div>
         <div><dt>How is absolute pitch different from relative pitch?</dt><dd>Relative pitch needs a known reference note and works out other notes from the distance; absolute pitch names the note directly, with no reference. Most trained musicians have relative pitch, while absolute pitch is much rarer.</dd></div>
-        <div><dt>Can adults learn absolute pitch?</dt><dd>Some can. In training studies by Van Hedger et al. (2019) and Wong et al. (2020, 2025), some adults reached the same test standard as people born with absolute pitch after 12 to 40 hours of training. Most learned only some of the notes, and about one in seven learned all 12.</dd></div>
-        <div><dt>How long does it take to learn absolute pitch?</dt><dd>Training ranged from 12 to 40 hours across the studies. The 2019 and 2025 studies ran about 8 weeks, and the 2025 participants answered 15,327 trials on average. This game splits that into 100 trials a day, about 10 minutes.</dd></div>
-        <div><dt>How do I know if I have learned it?</dt><dd>Use the test: each of the 12 notes plays 3 times, with no feedback and noise between notes. The standard in the studies is roughly 90% accuracy across 12 notes, answering within 2 seconds; guessing gets about 8%.</dd></div>
+        <div><dt>How does this free online perfect pitch test work?</dt><dd>No download needed: it runs on this page, on a phone or a computer. Put on headphones and tap “Perfect pitch test”. Each of the 12 notes plays 3 times (36 in all) in different octaves and sounds, with no feedback and noise between notes, so go with your first instinct. You get your 12-note accuracy, reaction time and accuracy per note.</dd></div>
+        <div><dt>What score means you have perfect pitch?</dt><dd>The standard in the studies is about 90% accuracy across the 12 notes, answering within 2 seconds; guessing gets about 8%. If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision.</dd></div>
+        <div><dt>No perfect pitch? Can you still learn it?</dt><dd>You can try. In adult training studies from 2019 to 2025, most people improved clearly and about 1 in 7 reached all 12 notes. This game follows their method: 100 notes a day, about 10 minutes, one new note at a time. More in <a href="https://knittinghiyori.com/absolute-pitch-training-game-en/" data-cta="about_article" data-cta-type="article">Can adults learn perfect pitch? Training methods and research</a>.</dd></div>
         <div><dt>What is the mistake log for?</dt><dd>Everyone confuses different notes. The game records which note you most often hear as which, and Review mistakes focuses on those notes. When you miss, it plays the note you chose and then the right one so you can compare them. After you get a pair right a few times, it leaves the log.</dd></div>
         </dl>
     </div>
@@ -843,7 +847,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "Note ", "other": "Other", "bankEmptyHas": "Nothing to fix right now. Notes you miss land here, with the pairs you mix up most at the top.", "bankEmptyNew": "Notes you miss land here automatically. After some practice, the pairs you mix up most will show at the top.", "fixedN": "{0} pairs fixed so far.", "pair": "{0}<span class=\"as\">heard as</span>{1}", "worst": "Notes you miss most overall: ", "sep": ", ", "reviewBtn20": "Review mistakes (20)", "bankFoot": "{0} pairs to fix{1}. Each correct answer takes one off the count.", "bankFootFixed": ", {0} fixed", "noise": "Noise break", "qTest": "Question <b class=\"num\">{0}</b> of 36", "qReview": "Review: question <b class=\"num\">{0}</b> of {1}", "qTrain": "Which note is this?", "hit": "<b>Correct</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}First your pick, {1}, then the answer, {2}<b>{3}</b>", "miss": "<b>Not quite</b> · It was {0}{1}. Listen again", "missOther": ", not unlocked yet, so “Other”", "unlockTitle": "New note unlocked: {0}", "unlockText": "From now on it is no longer “Other”. Listen for how it sounds over the next few rounds.", "allTitle": "All 12 notes passed", "allText": "Take the test to see whether you reach the level used in the studies.", "modeTrain": "Training", "subTrain": "Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.", "modeTest": "Test", "subTest": "All 12 notes in random order, with different octaves and sounds and no feedback. Go with your first instinct.", "modeReview": "Review", "subReview": "Focus on the notes you mix up most. When you miss, you hear your pick and then the answer, back to back.", "start": "Start training", "cont": "Continue training", "paused": "Paused. Today’s progress is saved", "v90": "You reached the absolute pitch level used in the studies. Test again in a few weeks to check it holds.", "v50": "Your note memory is taking shape, well above chance. Keep going with the daily goal.", "v20": "You can already catch some notes. Most people pass through this stage; keep practicing.", "v0": "This is close to chance. That is a normal starting point; the study participants started here too.", "rAcc": "12-note accuracy", "rRt": "s median response", "rNear": "within a semitone", "barsAria": "Accuracy by note", "rNote": "If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision. Next test: {0}.", "shareResult": "Share this test: {0}% on 12 notes.", "testDone": "Test finished. Results below", "revTitle": "Review finished", "revBody": "You got {0} of {1} right{2}. {3}", "revFixed": " and fixed {0} pairs", "revLeft": "{0} pairs left in your log. Come back tomorrow for another round.", "revClear": "Your log is clear. Back to regular training.", "revDone": "Review finished", "nFirst": "First time here? Start with a single note, <strong>C</strong>. You can also take the test first to record a starting score.", "nRemain": "<strong>{0} more</strong> to reach today’s goal{1}.", "nStreak": " and keep your {0}-day streak", "nDone": "Today’s goal is done. <strong>Come back tomorrow</strong> to make it a {0}-day streak.", "nTest": " This week’s test is ready.", "nBank": " <strong>{0} pairs</strong> in your mistake log.", "mAccN": "Last {0} accuracy", "mAcc0": "Last 20 accuracy", "mRt": "s median response", "mRt0": "Median response time", "mNext": "Next unlock", "mAll": "<b>All</b> unlocked", "heatTip": "{0}: {1}", "trackTip": "{0} answered", "chartEmpty": "No test scores yet. Take one now as your starting point and compare each week.", "chartAria": "Test accuracy over time", "shareGame": "I am training absolute pitch and have unlocked {0} of 12 notes. Can adults learn perfect pitch? Try it:", "shareRes": "My absolute pitch test: {0}% on 12 notes. Can adults learn perfect pitch? Try it:", "copied": "Copied", "testAbort": "Test stopped. This attempt is not recorded", "resetArm": "Press again to clear. This cannot be undone", "resetDone": "Cleared", "resetStatus": "Data cleared. Starting again from C", "trainSub": "Daily practice, one note at a time", "testSub": "Once a week, all 12 notes", "fbAns": "Answer"},LANG='en',LOC='en-US',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/en/';
+var T={"noteAria": "Note ", "other": "Other", "bankEmptyHas": "Nothing to fix right now. Notes you miss land here, with the pairs you mix up most at the top.", "bankEmptyNew": "Notes you miss land here automatically. After some practice, the pairs you mix up most will show at the top.", "fixedN": "{0} pairs fixed so far.", "pair": "{0}<span class=\"as\">heard as</span>{1}", "worst": "Notes you miss most overall: ", "sep": ", ", "reviewBtn20": "Review mistakes (20)", "bankFoot": "{0} pairs to fix{1}. Each correct answer takes one off the count.", "bankFootFixed": ", {0} fixed", "noise": "Noise break", "qTest": "Question <b class=\"num\">{0}</b> of 36", "qReview": "Review: question <b class=\"num\">{0}</b> of {1}", "qTrain": "Which note is this?", "hit": "<b>Correct</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}First your pick, {1}, then the answer, {2}<b>{3}</b>", "miss": "<b>Not quite</b> · It was {0}{1}. Listen again", "missOther": ", not unlocked yet, so “Other”", "unlockTitle": "New note unlocked: {0}", "unlockText": "From now on it is no longer “Other”. Listen for how it sounds over the next few rounds.", "allTitle": "All 12 notes passed", "allText": "Take the perfect pitch test to see whether you reach the level used in the studies.", "modeTrain": "Training", "subTrain": "Tap the name of the note you hear. For notes you have not unlocked yet, tap “Other”.", "modeTest": "Perfect pitch test", "subTest": "All 12 notes in random order, with different octaves and sounds and no feedback. Go with your first instinct.", "modeReview": "Review", "subReview": "Focus on the notes you mix up most. When you miss, you hear your pick and then the answer, back to back.", "start": "Start training", "cont": "Continue training", "paused": "Paused. Today’s progress is saved", "v90": "You reached the absolute pitch level used in the studies. Test again in a few weeks to check it holds.", "v50": "Your note memory is taking shape, well above chance. Keep going with the daily goal.", "v20": "You can already catch some notes. Most people pass through this stage; keep practicing.", "v0": "This is close to chance. That is a normal starting point; the study participants started here too.", "rAcc": "12-note accuracy", "rRt": "s median response", "rNear": "within a semitone", "barsAria": "Accuracy by note", "rNote": "If “within a semitone” is high but accuracy is low, you have found the rough region and need more precision. Next test: {0}.", "shareResult": "Share this test: {0}% on 12 notes.", "testDone": "Test finished. Results below", "revTitle": "Review finished", "revBody": "You got {0} of {1} right{2}. {3}", "revFixed": " and fixed {0} pairs", "revLeft": "{0} pairs left in your log. Come back tomorrow for another round.", "revClear": "Your log is clear. Back to regular training.", "revDone": "Review finished", "nFirst": "First time here? Take the <strong>perfect pitch test</strong> first (36 notes, about 3 minutes) to see where you stand, then start training from <strong>C</strong>.", "nRemain": "<strong>{0} more</strong> to reach today’s goal{1}.", "nStreak": " and keep your {0}-day streak", "nDone": "Today’s goal is done. <strong>Come back tomorrow</strong> to make it a {0}-day streak.", "nTest": " This week’s test is ready.", "nBank": " <strong>{0} pairs</strong> in your mistake log.", "mAccN": "Last {0} accuracy", "mAcc0": "Last 20 accuracy", "mRt": "s median response", "mRt0": "Median response time", "mNext": "Next unlock", "mAll": "<b>All</b> unlocked", "heatTip": "{0}: {1}", "trackTip": "{0} answered", "chartEmpty": "No test scores yet. Take one now as your starting point and compare each week.", "chartAria": "Test accuracy over time", "shareGame": "I am training absolute pitch and have unlocked {0} of 12 notes. Can adults learn perfect pitch? Try it:", "shareRes": "My perfect pitch test result: {1} ({0}% on 12 notes). Do you have perfect pitch? Take the test:", "copied": "Copied", "testAbort": "Test stopped. This attempt is not recorded", "resetArm": "Press again to clear. This cannot be undone", "resetDone": "Cleared", "resetStatus": "Data cleared. Starting again from C", "trainSub": "Daily practice, one note at a time", "testSub": "Once a week, all 12 notes", "fbAns": "Answer", "nAfterTest": "Test done! To start practicing, begin with a single note, <strong>C</strong>: 10 minutes a day, one note at a time.", "ansYes": "You very likely have perfect pitch", "ansPart": "Some signs of perfect pitch", "ansSome": "No perfect pitch yet, but you already catch some notes", "ansNo": "No perfect pitch for now (like most people)", "ansK": "Perfect pitch test result", "ansBench": "Guessing scores about 8%; the research standard is 90% across 12 notes, answered within 2 seconds. One test is only a snapshot, so test again in a few days for a better read.", "ansTrain": "Want to try? Start training with C", "ansTrainCont": "Continue training", "testFirstSub": "36 notes, about 3 min: see where you stand"},LANG='en',LOC='en-US',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/en/';
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -1117,13 +1121,24 @@ function start(m){
   nextTrial();
 }
 function stop(msg){if(mode)roundClose('quit');idle(msg)}
+/* first visit (never trained or tested): the test is the main, glowing button */
+function paintMainBtn(){
+  var fresh=!S.total&&!S.tests.length,tb=$('testBtn'),rb=$('trainBtn');
+  tb.classList.toggle('line',!fresh);tb.classList.toggle('first',fresh);
+  rb.classList.toggle('line',fresh);rb.classList.toggle('first',false);
+  $('testSub').textContent=fresh?T.testFirstSub:T.testSub;
+  if(fresh?tb.nextElementSibling!==rb:rb.nextElementSibling!==tb)rb.parentNode.insertBefore(fresh?tb:rb,fresh?rb:tb);
+}
 function idle(msg){
   mode=null;waiting=false;clearTimeout(timer);paintWheel();
   $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
-  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+  $('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
   $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
   status(msg||T.paused);render();
 }
+function trained(){return S.level>1||S.recent.length>0} /* test answers also count in total */
+function verdictIdx(acc,med){return acc>=0.9?(med<=2000?0:1):acc>=0.5?1:acc>=0.2?2:3}
+function verdictText(i){return [T.ansYes,T.ansPart,T.ansSome,T.ansNo][i]}
 function finishTest(){
   var n=testLog.length,c=testLog.filter(function(r){return r.ok}).length,acc=c/n;
   var near=testLog.filter(function(r){var d=Math.abs(r.ans-r.pc)%12;return Math.min(d,12-d)<=1}).length/n;
@@ -1136,13 +1151,16 @@ function finishTest(){
   else if(acc>=0.2)v=T.v20;
   else v=T.v0;
   var per=NAMES.map(function(nm,pc){var rs=testLog.filter(function(r){return r.pc===pc});return Math.round(rs.filter(function(r){return r.ok}).length/rs.length*100)});
-  $('result').innerHTML='<p class="verdict">'+v+'</p>'+
+  var vi=verdictIdx(acc,med);
+  $('result').innerHTML='<p class="verdict-k">'+T.ansK+'</p><p class="verdict'+(vi===0?' verdict-yes':'')+'">'+verdictText(vi)+'</p><p class="small">'+v+'</p>'+
     '<div class="meters"><div><b>'+(acc*100).toFixed(0)+'%</b>'+T.rAcc+'</div><div><b>'+(med/1000).toFixed(2)+'</b>'+T.rRt+'</div><div><b>'+(near*100).toFixed(0)+'%</b>'+T.rNear+'</div></div>'+
     '<div class="bars" role="img" aria-label="'+T.barsAria+'">'+per.map(function(p,pc){return '<div><span class="col"><i style="height:'+Math.max(p,2)+'%;background:'+COLORS[pc]+'"></i></span><span>'+NAMES[pc]+'</span><em>'+p+'%</em></div>'}).join('')+'</div>'+
-    '<p class="small">'+F(T.rNote,nextTestDate())+'</p>'+
+    '<p class="small">'+T.ansBench+' '+F(T.rNote,nextTestDate())+'</p>'+
+    '<div class="res-next"><button type="button" class="btn" id="resTrainBtn">'+(trained()?T.ansTrainCont:T.ansTrain)+'</button></div>'+
     '<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
   lastRes={acc:acc,med:med,near:near,per:per,lv:S.level,d:new Date()};
   $('cardBtn').addEventListener('click',makeCard);
+  $('resTrainBtn').addEventListener('click',function(){start('train')});
   $('result').hidden=false;
   lastShareType='result';$('shareLabel').textContent=F(T.shareResult,(acc*100).toFixed(0));
   idle(T.testDone);
@@ -1229,7 +1247,8 @@ function render(){
   var last=S.tests[S.tests.length-1],since=null;
   if(last)since=Math.round((new Date(dkey())-new Date(last.d))/864e5);
   var msg;
-  if(S.total===0)msg=T.nFirst;
+  if(!trained()&&S.tests.length)msg=T.nAfterTest;
+  else if(S.total===0)msg=T.nFirst;
   else if(today<GOAL)msg=F(T.nRemain,GOAL-today,st?F(T.nStreak,st):'');
   else msg=F(T.nDone,st+1);
   if(S.total>0?(since===null||since>=7):false)msg+=T.nTest;
@@ -1286,7 +1305,7 @@ function drawChart(){
 /* ---------- 分享 ---------- */
 function shareUrl(){return PAGE_URL+'?ref=share'}
 function shareText(){
-  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc)}
+  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc,verdictText(verdictIdx(t.acc/100,t.rt)))}
   return F(T.shareGame,S.level)
 }
 document.querySelectorAll('[data-share]').forEach(function(b){
@@ -1305,7 +1324,7 @@ document.querySelectorAll('[data-share]').forEach(function(b){
 });
 
 /* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
-var CARD={"make": "Make a result card", "making": "Making…", "share": "Share image", "download": "Download image", "hint": "After sharing the image, tap Copy link and paste it into your post or message so friends can tap through. On a phone you can also long-press the image to save it.", "fail": "Could not make the image. Please reload and try again.", "title": "My 12-note test", "unlocked": "Unlocked", "unit": "/ 12 notes", "rt": "Median response", "rtUnit": "s", "near": "Within a semitone", "perNote": "Accuracy by note", "game": "Absolute Pitch Training Lab", "brand": "Knitting Hiyori", "wm": "Knitting Hiyori", "url": "games.knittinghiyori.com/absolute-pitch/en", "cta": "Play free →", "alt": "Absolute Pitch Training Lab result card: {0}% on the 12-note test, {1} of 12 notes unlocked, with accuracy by note and the game link.", "tags": ["Reached the level used in the studies", "Note memory is taking shape", "Already catching some notes", "Starting point, like the study participants"], "copy": "Copy link", "copied": "Copied ✓"};
+var CARD={"make": "Make a result card", "making": "Making…", "share": "Share image", "download": "Download image", "hint": "After sharing the image, tap Copy link and paste it into your post or message so friends can tap through. On a phone you can also long-press the image to save it.", "fail": "Could not make the image. Please reload and try again.", "title": "My 12-note test", "unlocked": "Unlocked", "unit": "/ 12 notes", "rt": "Median response", "rtUnit": "s", "near": "Within a semitone", "perNote": "Accuracy by note", "game": "Absolute Pitch Training Lab", "brand": "Knitting Hiyori", "wm": "Knitting Hiyori", "url": "games.knittinghiyori.com/absolute-pitch/en", "cta": "Play free →", "alt": "Absolute Pitch Training Lab result card: {0}% on the 12-note test, {1} of 12 notes unlocked, with accuracy by note and the game link.", "tags": ["You very likely have perfect pitch", "Some signs of perfect pitch", "Already catching some notes", "Starting point, like most people"], "copy": "Copy link", "copied": "Copied ✓"};
 var lastRes=null,cardUrl=null;
 function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
 function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
@@ -1426,7 +1445,7 @@ $('resetBtn').addEventListener('click',function(){
   idle(T.resetStatus);
 });
 if(reduce)$('ring').classList.remove('draw');
-$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+$('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
 /* 語言切換 */
 document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'en'},true)}catch(e){}})});
 paintWheel();render();sizeScope();
