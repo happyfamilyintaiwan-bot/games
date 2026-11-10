@@ -214,6 +214,8 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .verdict-k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3)}
 .verdict-yes{font-size:1.6rem}
 .res-next{display:flex;flex-wrap:wrap;gap:10px}
+.res-app{margin:12px 0 0;padding:10px 14px;border-radius:12px;background:var(--well);font-size:.92rem;text-align:center}
+.res-app a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 #test{scroll-margin-top:90px}
 .result .meters{border-top:0;padding-top:0}
 .bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:124px;gap:14px 6px;padding-top:8px}
@@ -1157,7 +1159,7 @@ function finishTest(){
     '<div class="bars" role="img" aria-label="'+T.barsAria+'">'+per.map(function(p,pc){return '<div><span class="col"><i style="height:'+Math.max(p,2)+'%;background:'+COLORS[pc]+'"></i></span><span>'+NAMES[pc]+'</span><em>'+p+'%</em></div>'}).join('')+'</div>'+
     '<p class="small">'+T.ansBench+' '+F(T.rNote,nextTestDate())+'</p>'+
     '<div class="res-next"><button type="button" class="btn" id="resTrainBtn">'+(trained()?T.ansTrainCont:T.ansTrain)+'</button></div>'+
-    '<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
+    resAppLine(vi)+'<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
   lastRes={acc:acc,med:med,near:near,per:per,lv:S.level,d:new Date()};
   $('cardBtn').addEventListener('click',makeCard);
   $('resTrainBtn').addEventListener('click',function(){start('train')});
@@ -1231,6 +1233,14 @@ function maybeAppCard(st){
     $('appCard').hidden=false;
     return;
   }
+}
+/* 結果畫面的 App 一行（2026-11-10 Alison）：一直都在，不受小卡次數限制；文字依測試結果換。cta_id=app_download_result */
+var RES_APP=["The app charts your weekly tests, so you can see if your ear stays this sharp", "Some notes are already solid. The app reminds you daily to fill in the rest, one note at a time", "Perfect pitch starts with one note. The app reminds you to practice 10 minutes a day; the first 3 notes are free"];
+function resAppLine(vi){
+  var a=$('apLineLink');
+  if(IS_ANDROID)return '';
+  var h=a&&a.getAttribute('href');if(!h)return '';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (launch price until Nov 23)":"")+' →</a></p>';
 }
 function appLine(){
   var a=$('apLineLink');if(!a)return;
