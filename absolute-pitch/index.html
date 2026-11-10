@@ -1211,7 +1211,7 @@ function streak(){
 /* ---------- 導流到 App：節點小卡（2026-11-09 Alison） ----------
    網頁版功能全部照舊免費；只在「剛好有成就感」或「紀錄有風險」的時候提一次 App 的好處。
    規則：每個節點一輩子一次；一天最多一張；練習中不跳（等暫停或練完）；按「知道了」累計 2 次、或點過下載，就不再跳卡片（遊戲下方那一行一直都在）。
-   Android 先不跳（App 只有 iPhone／iPad／Mac 版）。早鳥價 2026-11-23 晚上 12 點（台灣時間）前顯示，之後自動換成「特價 NT$290（原價 NT$590）」（2026-11-10 Alison）。Android 那一行連到 App 介紹頁的 Android 測試報名。 */
+   Android 先不跳（App 只有 iPhone／iPad／Mac 版）。早鳥價 2026-11-23 晚上 12 點（台灣時間）前顯示，之後自動換成「NT$590」（2026-11-10 Alison：11/24 起原價賣一週，之後再決定要不要打折）。Android 那一行連到 App 介紹頁的 Android 測試報名。 */
 var EARLY_END=Date.parse('2026-11-24T00:00:00+08:00');
 function earlyBird(){return Date.now()<EARLY_END}
 var IS_ANDROID=/Android/i.test(navigator.userAgent||'');
@@ -1223,8 +1223,8 @@ var APP_NODES=[
   {id:'streak3',title:'連續 {1} 天了！',body:'研究的做法是連續練 8 週。App 每天定時提醒你，紀錄也不會被瀏覽器清掉，陪你走完 8 週。'}
 ];
 function appPrice(){
-  return earlyBird()?'<b>早鳥價 NT$190</b> 一次買斷，解鎖全部 12 個音（到 11/23，11/24 起 NT$290）。前 3 個音免費，沒有訂閱、沒有廣告。'
-                    :'<b>特價 NT$290</b>（原價 NT$590）一次買斷，解鎖全部 12 個音。前 3 個音免費，沒有訂閱、沒有廣告。';
+  return earlyBird()?'<b>早鳥價 NT$190</b> 一次買斷，解鎖全部 12 個音（到 11/23，11/24 起 NT$590）。前 3 個音免費，沒有訂閱、沒有廣告。'
+                    :'<b>NT$590</b> 一次買斷，解鎖全部 12 個音（價格以 App Store 為準）。前 3 個音免費，沒有訂閱、沒有廣告。';
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1264,13 +1264,13 @@ function resAppLine(vi){
   var a=$('apLineLink');
   if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">Android 版準備中，<b>留 Email 搶先測試</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（早鳥 NT$190，到 11/23）":"（特價 NT$290，原價 NT$590）")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（早鳥 NT$190，到 11/23）":"")+' →</a></p>';
 }
 function appLine(){
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML='iPhone、iPad、Mac 版 App 已上架；Android 版準備中，<b>留 Email 搶先測試</b> →';a.href='https://knittinghiyori.com/apps/absolute-pitch/#android';a.setAttribute('data-cta','app_intro');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?'App 上架了！前 3 個音免費，<b>早鳥 NT$190</b> 解鎖全部（到 11/23）<span style="white-space:nowrap">→</span>'
-                         :'App 上架了！前 3 個音免費，<b>特價 NT$290</b>（原價 NT$590）解鎖全部 <span style="white-space:nowrap">→</span>';
+                         :'App 上架了！前 3 個音免費，一次買斷解鎖全部 12 個音 <span style="white-space:nowrap">→</span>';
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();
