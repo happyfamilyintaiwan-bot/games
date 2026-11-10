@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Travelpayouts Drive（games；head 第一個 script） -->
 <script data-cfasync="false">(function(){var s=document.createElement("script");s.async=1;s.setAttribute("data-cmp-ab","2");s.src="https://emrld.ltd/NTc4NjIz.js?t=578623";document.head.appendChild(s);})();</script>
-<title>Oído Absoluto: Entrenador | ¿Un adulto puede aprender oído absoluto? Juego gratis de entrenamiento auditivo</title>
-<meta name="description" content="¿Un adulto puede aprender oído absoluto? Juego gratis de entrenamiento auditivo basado en estudios con adultos de 2019 a 2025: una nota nueva a la vez, ruido entre notas, tres octavas y varios timbres, prueba de 12 notas y tu propio registro de errores.">
+<title>Test de oído absoluto: prueba gratis en línea de las 12 notas | Oído Absoluto: Entrenador</title>
+<meta name="description" content="Test de oído absoluto gratis y en línea, sin descargar nada: escucha una nota y elige su nombre. 12 notas × 3 y compara tu resultado con el estándar de los estudios (90%). Luego entrena gratis 10 minutos al día, una nota a la vez.">
 <link rel="canonical" href="https://games.knittinghiyori.com/absolute-pitch/es/">
 <link rel="alternate" hreflang="zh-Hant" href="https://games.knittinghiyori.com/absolute-pitch/">
 <link rel="alternate" hreflang="en" href="https://games.knittinghiyori.com/absolute-pitch/en/">
@@ -211,6 +211,10 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 .ap-appline .ap-appline__more{display:inline-block;margin-top:6px;font-weight:400;font-size:.88rem;min-height:24px}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
+.verdict-k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3)}
+.verdict-yes{font-size:1.6rem}
+.res-next{display:flex;flex-wrap:wrap;gap:10px}
+#test{scroll-margin-top:90px}
 .result .meters{border-top:0;padding-top:0}
 .bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:124px;gap:14px 6px;padding-top:8px}
 @media(max-width:560px){.bars{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:104px}}
@@ -427,26 +431,26 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
    },
    {
     "@type": "Question",
-    "name": "¿Un adulto puede aprender oído absoluto?",
+    "name": "¿Cómo funciona este test de oído absoluto gratis en línea?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "Algunos sí. En los estudios de entrenamiento de Van Hedger et al. (2019) y Wong et al. (2020, 2025), algunos adultos alcanzaron el mismo nivel de prueba que quienes nacieron con oído absoluto tras entre 12 y 40 horas de entrenamiento. La mayoría aprendió solo algunas notas, y cerca de uno de cada siete aprendió las 12."
+     "text": "No hay que descargar nada: funciona en esta página, en el celular o en la computadora. Ponte audífonos y toca “Test de oído absoluto”. Cada una de las 12 notas suena 3 veces (36 en total), en distintas octavas y timbres, sin decirte si acertaste y con ruido entre notas: responde por instinto. Al final ves tu porcentaje de aciertos, tu tiempo de reacción y los aciertos por nota."
     }
    },
    {
     "@type": "Question",
-    "name": "¿Cuánto tiempo se necesita?",
+    "name": "¿Qué porcentaje indica que tienes oído absoluto?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "Los estudios usaron entre 12 y 40 horas en total. Los de 2019 y 2025 duraron unas 8 semanas, y en el de 2025 cada participante respondió 15 327 preguntas en promedio. Este juego lo divide en 100 preguntas al día, unos 10 minutos."
+     "text": "El estándar de los estudios es acertar alrededor del 90% de las 12 notas, respondiendo en menos de 2 segundos; al azar se acierta cerca del 8%. Si “a un semitono o menos” es alto pero los aciertos son bajos, ya encontraste la zona y te falta precisión."
     }
    },
    {
     "@type": "Question",
-    "name": "¿Cómo sé si ya lo aprendí?",
+    "name": "¿Y si no tengo oído absoluto? ¿Se puede entrenar?",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "Haz la prueba: cada una de las 12 notas suena 3 veces, sin indicar aciertos y con ruido entre notas. El nivel de los estudios es de un 90% de aciertos en las 12 notas, respondiendo en unos 2 segundos; al azar se acierta cerca del 8%."
+     "text": "Vale la pena intentarlo. En los estudios con adultos de 2019 a 2025, la mayoría mejoró claramente y cerca de 1 de cada 7 llegó a las 12 notas. Este juego sigue su método: 100 notas al día, unos 10 minutos, una nota nueva a la vez. Más detalles en Oído absoluto: qué es, oído relativo y si se puede entrenar."
     }
    },
    {
@@ -532,9 +536,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <div class="next" id="mNext"><b>G</b>Próxima nota</div>
       </div>
 
-      <div class="controls">
+      <div class="controls" id="test">
         <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">Empezar a entrenar</span><small>Práctica diaria, una nota a la vez</small></button>
-        <button class="btn line btn2" id="testBtn" type="button"><span>Hacer la prueba</span><small>Una vez por semana, las 12 notas</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>Test de oído absoluto</span><small id="testSub">Una vez por semana, las 12 notas</small></button>
         <button class="btn line" id="reviewBtn" type="button" hidden>Repasar errores</button>
         <button class="btn line" id="stopBtn" type="button" hidden>Pausa</button>
       </div>
@@ -666,9 +670,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <dl class="faq">
         <div><dt>¿Qué es el oído absoluto?</dt><dd>El oído absoluto es la capacidad de nombrar una nota sin ninguna nota de referencia, por ejemplo saber que un sonido es F♯ en cuanto lo escuchas. Una estimación frecuente es de 1 de cada 10 000 personas, con proporciones más altas entre estudiantes de música.</dd></div>
         <div><dt>¿En qué se diferencia del oído relativo?</dt><dd>El oído relativo necesita una nota de referencia conocida y calcula las demás por la distancia; el oído absoluto nombra la nota directamente, sin referencia. La mayoría de los músicos con formación tiene oído relativo; el absoluto es mucho más raro.</dd></div>
-        <div><dt>¿Un adulto puede aprender oído absoluto?</dt><dd>Algunos sí. En los estudios de entrenamiento de Van Hedger et al. (2019) y Wong et al. (2020, 2025), algunos adultos alcanzaron el mismo nivel de prueba que quienes nacieron con oído absoluto tras entre 12 y 40 horas de entrenamiento. La mayoría aprendió solo algunas notas, y cerca de uno de cada siete aprendió las 12.</dd></div>
-        <div><dt>¿Cuánto tiempo se necesita?</dt><dd>Los estudios usaron entre 12 y 40 horas en total. Los de 2019 y 2025 duraron unas 8 semanas, y en el de 2025 cada participante respondió 15 327 preguntas en promedio. Este juego lo divide en 100 preguntas al día, unos 10 minutos.</dd></div>
-        <div><dt>¿Cómo sé si ya lo aprendí?</dt><dd>Haz la prueba: cada una de las 12 notas suena 3 veces, sin indicar aciertos y con ruido entre notas. El nivel de los estudios es de un 90% de aciertos en las 12 notas, respondiendo en unos 2 segundos; al azar se acierta cerca del 8%.</dd></div>
+        <div><dt>¿Cómo funciona este test de oído absoluto gratis en línea?</dt><dd>No hay que descargar nada: funciona en esta página, en el celular o en la computadora. Ponte audífonos y toca “Test de oído absoluto”. Cada una de las 12 notas suena 3 veces (36 en total), en distintas octavas y timbres, sin decirte si acertaste y con ruido entre notas: responde por instinto. Al final ves tu porcentaje de aciertos, tu tiempo de reacción y los aciertos por nota.</dd></div>
+        <div><dt>¿Qué porcentaje indica que tienes oído absoluto?</dt><dd>El estándar de los estudios es acertar alrededor del 90% de las 12 notas, respondiendo en menos de 2 segundos; al azar se acierta cerca del 8%. Si “a un semitono o menos” es alto pero los aciertos son bajos, ya encontraste la zona y te falta precisión.</dd></div>
+        <div><dt>¿Y si no tengo oído absoluto? ¿Se puede entrenar?</dt><dd>Vale la pena intentarlo. En los estudios con adultos de 2019 a 2025, la mayoría mejoró claramente y cerca de 1 de cada 7 llegó a las 12 notas. Este juego sigue su método: 100 notas al día, unos 10 minutos, una nota nueva a la vez. Más detalles en <a href="https://knittinghiyori.com/absolute-pitch-training-game-es/" data-cta="about_article" data-cta-type="article">Oído absoluto: qué es, oído relativo y si se puede entrenar</a>.</dd></div>
         <div><dt>¿Para qué sirve el registro de errores?</dt><dd>Cada persona confunde notas distintas. El juego registra qué nota sueles oír como cuál, y Repasar errores se concentra en esas notas. Cuando fallas, suena la nota que elegiste y luego la correcta para que las compares. Cuando aciertas un par varias veces, sale del registro.</dd></div>
         </dl>
     </div>
@@ -843,7 +847,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "Nota ", "other": "Otra", "bankEmptyHas": "Nada que corregir por ahora. Las notas que fallas llegan aquí, con los pares que más confundes arriba.", "bankEmptyNew": "Las notas que fallas llegan aquí automáticamente. Después de practicar un poco, arriba verás los pares que más confundes.", "fixedN": "{0} pares corregidos hasta ahora.", "pair": "{0}<span class=\"as\">oída como</span>{1}", "worst": "Las notas que más fallas en total: ", "sep": ", ", "reviewBtn20": "Repasar errores (20)", "bankFoot": "{0} pares por corregir{1}. Cada acierto resta uno.", "bankFootFixed": ", {0} corregidos", "noise": "Pausa de ruido", "qTest": "Pregunta <b class=\"num\">{0}</b> de 36", "qReview": "Repaso: pregunta <b class=\"num\">{0}</b> de {1}", "qTrain": "¿Qué nota es?", "hit": "<b>Correcto</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}Primero tu elección, {1}, luego la respuesta, {2}<b>{3}</b>", "miss": "<b>Casi</b> · Era {0}{1}. Escucha otra vez", "missOther": ", aún no desbloqueada, así que “Otra”", "unlockTitle": "Nueva nota desbloqueada: {0}", "unlockText": "Desde ahora ya no es “Otra”. Fíjate en cómo suena durante las próximas rondas.", "allTitle": "Superaste las 12 notas", "allText": "Haz la prueba para ver si alcanzas el nivel de los estudios.", "modeTrain": "Entrenamiento", "subTrain": "Toca el nombre de la nota que oyes. Si es una nota que aún no desbloqueaste, toca “Otra”.", "modeTest": "Prueba", "subTest": "Las 12 notas en orden aleatorio, con distintas octavas y sonidos, sin indicar aciertos. Responde con tu primera impresión.", "modeReview": "Repaso", "subReview": "Céntrate en las notas que más confundes. Cuando fallas, oyes tu elección y luego la respuesta, una tras otra.", "start": "Empezar a entrenar", "cont": "Seguir entrenando", "paused": "En pausa. Tu progreso de hoy está guardado", "v90": "Alcanzaste el nivel de oído absoluto de los estudios. Repite la prueba en unas semanas para ver si se mantiene.", "v50": "Tu memoria de notas está tomando forma, muy por encima del azar. Sigue con la meta diaria.", "v20": "Ya reconoces algunas notas. Casi todos pasan por esta etapa; sigue practicando.", "v0": "Esto está cerca del azar. Es un punto de partida normal; los participantes de los estudios también empezaron aquí.", "rAcc": "aciertos en 12 notas", "rRt": "s de respuesta mediana", "rNear": "a un semitono o menos", "barsAria": "Aciertos por nota", "rNote": "Si “a un semitono o menos” es alto pero los aciertos son bajos, ya encontraste la zona y te falta precisión. Próxima prueba: {0}.", "shareResult": "Comparte esta prueba: {0}% en 12 notas.", "testDone": "Prueba terminada. Resultados abajo", "revTitle": "Repaso terminado", "revBody": "Acertaste {0} de {1}{2}. {3}", "revFixed": " y corregiste {0} pares", "revLeft": "Quedan {0} pares en tu registro. Vuelve mañana para otra ronda.", "revClear": "Tu registro está vacío. Vuelve al entrenamiento normal.", "revDone": "Repaso terminado", "nFirst": "¿Primera vez? Empieza con una sola nota, <strong>C</strong>. También puedes hacer la prueba primero para guardar tu punto de partida.", "nRemain": "<strong>Faltan {0}</strong> para la meta de hoy{1}.", "nStreak": " y mantener tu racha de {0} días", "nDone": "Meta de hoy cumplida. <strong>Vuelve mañana</strong> para llegar a {0} días seguidos.", "nTest": " La prueba de esta semana está lista.", "nBank": " <strong>{0} pares</strong> en tu registro de errores.", "mAccN": "Aciertos en las últimas {0}", "mAcc0": "Aciertos en las últimas 20", "mRt": "s de respuesta mediana", "mRt0": "Tiempo mediano de respuesta", "mNext": "Próxima nota", "mAll": "<b>Todas</b> desbloqueadas", "heatTip": "{0}: {1}", "trackTip": "{0} respondidas", "chartEmpty": "Aún no hay resultados. Haz una prueba ahora como punto de partida y compárala cada semana.", "chartAria": "Aciertos en la prueba a lo largo del tiempo", "shareGame": "Estoy entrenando oído absoluto y ya desbloqueé {0} de 12 notas. ¿Un adulto puede aprender oído absoluto? Pruébalo:", "shareRes": "Mi prueba de oído absoluto: {0}% en 12 notas. ¿Un adulto puede aprender oído absoluto? Pruébalo:", "copied": "Copiado", "testAbort": "Prueba detenida. Este intento no se guarda", "resetArm": "Pulsa otra vez para borrar. No se puede deshacer", "resetDone": "Borrado", "resetStatus": "Datos borrados. Empiezas otra vez desde C", "trainSub": "Práctica diaria, una nota a la vez", "testSub": "Una vez por semana, las 12 notas", "fbAns": "Respuesta"};
+var T={"noteAria": "Nota ", "other": "Otra", "bankEmptyHas": "Nada que corregir por ahora. Las notas que fallas llegan aquí, con los pares que más confundes arriba.", "bankEmptyNew": "Las notas que fallas llegan aquí automáticamente. Después de practicar un poco, arriba verás los pares que más confundes.", "fixedN": "{0} pares corregidos hasta ahora.", "pair": "{0}<span class=\"as\">oída como</span>{1}", "worst": "Las notas que más fallas en total: ", "sep": ", ", "reviewBtn20": "Repasar errores (20)", "bankFoot": "{0} pares por corregir{1}. Cada acierto resta uno.", "bankFootFixed": ", {0} corregidos", "noise": "Pausa de ruido", "qTest": "Pregunta <b class=\"num\">{0}</b> de 36", "qReview": "Repaso: pregunta <b class=\"num\">{0}</b> de {1}", "qTrain": "¿Qué nota es?", "hit": "<b>Correcto</b> · {0}, <span class=\"num\">{1}</span> Hz, <span class=\"num\">{2}</span> s", "contrast": "{0}Primero tu elección, {1}, luego la respuesta, {2}<b>{3}</b>", "miss": "<b>Casi</b> · Era {0}{1}. Escucha otra vez", "missOther": ", aún no desbloqueada, así que “Otra”", "unlockTitle": "Nueva nota desbloqueada: {0}", "unlockText": "Desde ahora ya no es “Otra”. Fíjate en cómo suena durante las próximas rondas.", "allTitle": "Superaste las 12 notas", "allText": "Haz el test de oído absoluto para ver si alcanzas el nivel de los estudios.", "modeTrain": "Entrenamiento", "subTrain": "Toca el nombre de la nota que oyes. Si es una nota que aún no desbloqueaste, toca “Otra”.", "modeTest": "Test de oído absoluto", "subTest": "Las 12 notas en orden aleatorio, con distintas octavas y sonidos, sin indicar aciertos. Responde con tu primera impresión.", "modeReview": "Repaso", "subReview": "Céntrate en las notas que más confundes. Cuando fallas, oyes tu elección y luego la respuesta, una tras otra.", "start": "Empezar a entrenar", "cont": "Seguir entrenando", "paused": "En pausa. Tu progreso de hoy está guardado", "v90": "Alcanzaste el nivel de oído absoluto de los estudios. Repite la prueba en unas semanas para ver si se mantiene.", "v50": "Tu memoria de notas está tomando forma, muy por encima del azar. Sigue con la meta diaria.", "v20": "Ya reconoces algunas notas. Casi todos pasan por esta etapa; sigue practicando.", "v0": "Esto está cerca del azar. Es un punto de partida normal; los participantes de los estudios también empezaron aquí.", "rAcc": "aciertos en 12 notas", "rRt": "s de respuesta mediana", "rNear": "a un semitono o menos", "barsAria": "Aciertos por nota", "rNote": "Si “a un semitono o menos” es alto pero los aciertos son bajos, ya encontraste la zona y te falta precisión. Próxima prueba: {0}.", "shareResult": "Comparte esta prueba: {0}% en 12 notas.", "testDone": "Prueba terminada. Resultados abajo", "revTitle": "Repaso terminado", "revBody": "Acertaste {0} de {1}{2}. {3}", "revFixed": " y corregiste {0} pares", "revLeft": "Quedan {0} pares en tu registro. Vuelve mañana para otra ronda.", "revClear": "Tu registro está vacío. Vuelve al entrenamiento normal.", "revDone": "Repaso terminado", "nFirst": "¿Primera vez? Haz primero el <strong>test de oído absoluto</strong> (36 notas, unos 3 minutos) para ver dónde estás; después empieza a entrenar con <strong>C</strong>.", "nRemain": "<strong>Faltan {0}</strong> para la meta de hoy{1}.", "nStreak": " y mantener tu racha de {0} días", "nDone": "Meta de hoy cumplida. <strong>Vuelve mañana</strong> para llegar a {0} días seguidos.", "nTest": " La prueba de esta semana está lista.", "nBank": " <strong>{0} pares</strong> en tu registro de errores.", "mAccN": "Aciertos en las últimas {0}", "mAcc0": "Aciertos en las últimas 20", "mRt": "s de respuesta mediana", "mRt0": "Tiempo mediano de respuesta", "mNext": "Próxima nota", "mAll": "<b>Todas</b> desbloqueadas", "heatTip": "{0}: {1}", "trackTip": "{0} respondidas", "chartEmpty": "Aún no hay resultados. Haz una prueba ahora como punto de partida y compárala cada semana.", "chartAria": "Aciertos en la prueba a lo largo del tiempo", "shareGame": "Estoy entrenando oído absoluto y ya desbloqueé {0} de 12 notas. ¿Un adulto puede aprender oído absoluto? Pruébalo:", "shareRes": "Mi resultado en el test de oído absoluto: {1} ({0}% en 12 notas). ¿Tienes oído absoluto? Haz el test:", "copied": "Copiado", "testAbort": "Prueba detenida. Este intento no se guarda", "resetArm": "Pulsa otra vez para borrar. No se puede deshacer", "resetDone": "Borrado", "resetStatus": "Datos borrados. Empiezas otra vez desde C", "trainSub": "Práctica diaria, una nota a la vez", "testSub": "Una vez por semana, las 12 notas", "fbAns": "Respuesta", "nAfterTest": "¡Test terminado! Para practicar, empieza con una sola nota, <strong>C</strong>: 10 minutos al día, una nota a la vez.", "ansYes": "Es muy probable que tengas oído absoluto", "ansPart": "Hay señales de oído absoluto", "ansSome": "Todavía no tienes oído absoluto, pero ya reconoces algunas notas", "ansNo": "Por ahora no tienes oído absoluto (como la mayoría)", "ansK": "Resultado del test de oído absoluto", "ansBench": "Al azar se acierta cerca del 8%; el estándar de los estudios es 90% en las 12 notas, respondiendo en menos de 2 segundos. Un solo test es orientativo: repítelo en unos días para un resultado más fiable.", "ansTrain": "¿Quieres probar? Empieza a entrenar con C", "ansTrainCont": "Seguir entrenando", "testFirstSub": "36 notas, unos 3 min: mira dónde estás"};
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -1117,13 +1121,24 @@ function start(m){
   nextTrial();
 }
 function stop(msg){if(mode)roundClose('quit');idle(msg)}
+/* first visit (never trained or tested): the test is the main, glowing button */
+function paintMainBtn(){
+  var fresh=!S.total&&!S.tests.length,tb=$('testBtn'),rb=$('trainBtn');
+  tb.classList.toggle('line',!fresh);tb.classList.toggle('first',fresh);
+  rb.classList.toggle('line',fresh);rb.classList.toggle('first',false);
+  $('testSub').textContent=fresh?T.testFirstSub:T.testSub;
+  if(fresh?tb.nextElementSibling!==rb:rb.nextElementSibling!==tb)rb.parentNode.insertBefore(fresh?tb:rb,fresh?rb:tb);
+}
 function idle(msg){
   mode=null;waiting=false;clearTimeout(timer);paintWheel();
   $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
-  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+  $('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
   $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
   status(msg||T.paused);render();
 }
+function trained(){return S.level>1||S.recent.length>0} /* test answers also count in total */
+function verdictIdx(acc,med){return acc>=0.9?(med<=2000?0:1):acc>=0.5?1:acc>=0.2?2:3}
+function verdictText(i){return [T.ansYes,T.ansPart,T.ansSome,T.ansNo][i]}
 function finishTest(){
   var n=testLog.length,c=testLog.filter(function(r){return r.ok}).length,acc=c/n;
   var near=testLog.filter(function(r){var d=Math.abs(r.ans-r.pc)%12;return Math.min(d,12-d)<=1}).length/n;
@@ -1136,13 +1151,16 @@ function finishTest(){
   else if(acc>=0.2)v=T.v20;
   else v=T.v0;
   var per=NAMES.map(function(nm,pc){var rs=testLog.filter(function(r){return r.pc===pc});return Math.round(rs.filter(function(r){return r.ok}).length/rs.length*100)});
-  $('result').innerHTML='<p class="verdict">'+v+'</p>'+
+  var vi=verdictIdx(acc,med);
+  $('result').innerHTML='<p class="verdict-k">'+T.ansK+'</p><p class="verdict'+(vi===0?' verdict-yes':'')+'">'+verdictText(vi)+'</p><p class="small">'+v+'</p>'+
     '<div class="meters"><div><b>'+(acc*100).toFixed(0)+'%</b>'+T.rAcc+'</div><div><b>'+(med/1000).toFixed(2)+'</b>'+T.rRt+'</div><div><b>'+(near*100).toFixed(0)+'%</b>'+T.rNear+'</div></div>'+
     '<div class="bars" role="img" aria-label="'+T.barsAria+'">'+per.map(function(p,pc){return '<div><span class="col"><i style="height:'+Math.max(p,2)+'%;background:'+COLORS[pc]+'"></i></span><span>'+NAMES[pc]+'</span><em>'+p+'%</em></div>'}).join('')+'</div>'+
-    '<p class="small">'+F(T.rNote,nextTestDate())+'</p>'+
+    '<p class="small">'+T.ansBench+' '+F(T.rNote,nextTestDate())+'</p>'+
+    '<div class="res-next"><button type="button" class="btn" id="resTrainBtn">'+(trained()?T.ansTrainCont:T.ansTrain)+'</button></div>'+
     '<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
   lastRes={acc:acc,med:med,near:near,per:per,lv:S.level,d:new Date()};
   $('cardBtn').addEventListener('click',makeCard);
+  $('resTrainBtn').addEventListener('click',function(){start('train')});
   $('result').hidden=false;
   lastShareType='result';$('shareLabel').textContent=F(T.shareResult,(acc*100).toFixed(0));
   idle(T.testDone);
@@ -1229,7 +1247,8 @@ function render(){
   var last=S.tests[S.tests.length-1],since=null;
   if(last)since=Math.round((new Date(dkey())-new Date(last.d))/864e5);
   var msg;
-  if(S.total===0)msg=T.nFirst;
+  if(!trained()&&S.tests.length)msg=T.nAfterTest;
+  else if(S.total===0)msg=T.nFirst;
   else if(today<GOAL)msg=F(T.nRemain,GOAL-today,st?F(T.nStreak,st):'');
   else msg=F(T.nDone,st+1);
   if(S.total>0?(since===null||since>=7):false)msg+=T.nTest;
@@ -1286,7 +1305,7 @@ function drawChart(){
 /* ---------- 分享 ---------- */
 function shareUrl(){return PAGE_URL+'?ref=share'}
 function shareText(){
-  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc)}
+  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc,verdictText(verdictIdx(t.acc/100,t.rt)))}
   return F(T.shareGame,S.level)
 }
 document.querySelectorAll('[data-share]').forEach(function(b){
@@ -1305,7 +1324,7 @@ document.querySelectorAll('[data-share]').forEach(function(b){
 });
 
 /* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
-var CARD={"make": "Crear tarjeta de resultados", "making": "Creando…", "share": "Compartir imagen", "download": "Descargar imagen", "hint": "Después de compartir la imagen, toca Copiar enlace y pégalo en tu publicación o mensaje para que tus amistades puedan entrar. En el teléfono también puedes mantener pulsada la imagen para guardarla.", "fail": "No se pudo crear la imagen. Recarga la página e inténtalo de nuevo.", "title": "Mi prueba de 12 notas", "unlocked": "Desbloqueadas", "unit": "/ 12 notas", "rt": "Respuesta mediana", "rtUnit": "s", "near": "A un semitono o menos", "perNote": "Aciertos por nota", "game": "Oído Absoluto: Entrenador", "brand": "Knitting Hiyori", "wm": "Knitting Hiyori", "url": "games.knittinghiyori.com/absolute-pitch/es", "cta": "Juega gratis →", "alt": "Oído Absoluto: Entrenador: tarjeta de resultados con {0}% en la prueba de 12 notas, {1} de 12 notas desbloqueadas, aciertos por nota y el enlace al juego.", "tags": ["Alcanzó el nivel de los estudios", "La memoria de notas está tomando forma", "Ya reconoce algunas notas", "Punto de partida, como en los estudios"], "copy": "Copiar enlace", "copied": "Copiado ✓"};
+var CARD={"make": "Crear tarjeta de resultados", "making": "Creando…", "share": "Compartir imagen", "download": "Descargar imagen", "hint": "Después de compartir la imagen, toca Copiar enlace y pégalo en tu publicación o mensaje para que tus amistades puedan entrar. En el teléfono también puedes mantener pulsada la imagen para guardarla.", "fail": "No se pudo crear la imagen. Recarga la página e inténtalo de nuevo.", "title": "Mi prueba de 12 notas", "unlocked": "Desbloqueadas", "unit": "/ 12 notas", "rt": "Respuesta mediana", "rtUnit": "s", "near": "A un semitono o menos", "perNote": "Aciertos por nota", "game": "Oído Absoluto: Entrenador", "brand": "Knitting Hiyori", "wm": "Knitting Hiyori", "url": "games.knittinghiyori.com/absolute-pitch/es", "cta": "Juega gratis →", "alt": "Oído Absoluto: Entrenador: tarjeta de resultados con {0}% en la prueba de 12 notas, {1} de 12 notas desbloqueadas, aciertos por nota y el enlace al juego.", "tags": ["Muy probable oído absoluto", "Señales de oído absoluto", "Ya reconoce algunas notas", "Punto de partida, como la mayoría"], "copy": "Copiar enlace", "copied": "Copiado ✓"};
 var lastRes=null,cardUrl=null;
 function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
 function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
@@ -1426,7 +1445,7 @@ $('resetBtn').addEventListener('click',function(){
   idle(T.resetStatus);
 });
 if(reduce)$('ring').classList.remove('draw');
-$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+$('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
 /* 語言切換 */
 document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'es'},true)}catch(e){}})});
 paintWheel();render();sizeScope();

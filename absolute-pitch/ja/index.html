@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Travelpayouts Drive（games；head 第一個 script） -->
 <script data-cfasync="false">(function(){var s=document.createElement("script");s.async=1;s.setAttribute("data-cmp-ab","2");s.src="https://emrld.ltd/NTc4NjIz.js?t=578623";document.head.appendChild(s);})();</script>
-<title>絶対音感養成所｜大人でも身につく？絶対音感トレーニングゲーム（12音テスト付き）</title>
-<meta name="description" content="大人でも絶対音感は身につく？2019〜2025年の成人向けトレーニング研究をもとにした無料のブラウザゲーム。1音ずつ解放、問題間のノイズ、3オクターブと複数の音色、12音の判定テストと自分専用の苦手リスト付き。">
+<title>絶対音感テスト｜無料オンラインで12音を聞き分けチェック｜絶対音感養成所</title>
+<meta name="description" content="絶対音感テストを無料・登録なしでオンライン受験。イヤホンで音を聞いて音名を選ぶだけ、12音×3回の正答率を研究の基準（90%）と比べられます。続けて毎日10分、1音ずつ解放するトレーニングもできます。">
 <link rel="canonical" href="https://games.knittinghiyori.com/absolute-pitch/ja/">
 <link rel="alternate" hreflang="zh-Hant" href="https://games.knittinghiyori.com/absolute-pitch/">
 <link rel="alternate" hreflang="en" href="https://games.knittinghiyori.com/absolute-pitch/en/">
@@ -212,6 +212,10 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 .ap-appline .ap-appline__more{display:inline-block;margin-top:6px;font-weight:400;font-size:.88rem;min-height:24px}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
+.verdict-k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3)}
+.verdict-yes{font-size:1.6rem}
+.res-next{display:flex;flex-wrap:wrap;gap:10px}
+#test{scroll-margin-top:90px}
 .result .meters{border-top:0;padding-top:0}
 .bars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:124px;gap:14px 6px;padding-top:8px}
 @media(max-width:560px){.bars{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:104px}}
@@ -428,26 +432,26 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
    },
    {
     "@type": "Question",
-    "name": "大人でも絶対音感は身につく？",
+    "name": "無料の絶対音感テストはどうやるの？",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "一部の人は身につきます。Van Hedger ら（2019）、Wong ら（2020、2025）の訓練研究では、12〜40時間の訓練で、生まれつきの人と同じテスト基準に達した大人がいます。ただし多くの人は一部の音名のみで、12音すべてを習得したのはおよそ7人に1人です。"
+     "text": "ダウンロード不要で、このページでそのまま受けられます（スマホでもパソコンでもOK）。イヤホンをつけて「絶対音感テスト」を押すと、12音がそれぞれ3回ずつ（全36問）、オクターブと音色を変えて出題されます。正誤は表示されず、問題の間にはノイズが入るので、直感で答えてください。終わると12音の正答率、反応時間、音ごとの正答率がわかります。"
     }
    },
    {
     "@type": "Question",
-    "name": "絶対音感の練習にはどれくらいかかる？",
+    "name": "正答率何％なら絶対音感があるといえる？",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "研究の訓練量は12〜40時間とさまざまです。2019年と2025年の研究は約8週間で、2025年の参加者は平均15,327問に答えました。このゲームではそれを1日100問、約10分に分けています。"
+     "text": "研究での基準は、12音で正答率90%以上・2秒以内の回答です。当てずっぽうなら約8%。「半音以内」の割合が高いのに正答率が低い場合は、だいたいの音域はつかめていて、あとは精度の問題です。"
     }
    },
    {
     "@type": "Question",
-    "name": "身についたかどうかはどうやってわかる？",
+    "name": "絶対音感がなかったら、今からでも身につく？",
     "acceptedAnswer": {
      "@type": "Answer",
-     "text": "「判定テスト」を使います。12音を3回ずつ、正誤の表示なし、問題間にノイズありで出題します。研究での基準はおおむね12音で正答率90%以上、2秒以内の回答です。当てずっぽうだと約8%です。"
+     "text": "試す価値はあります。2019〜2025年の大人向けトレーニング研究では、多くの人がはっきり上達し、12音すべてに届いたのは約7人に1人でした。このゲームは研究と同じ方法で、毎日100問・約10分、1音ずつ解放していきます。くわしくは絶対音感は大人でも身につく？何歳まで・生まれつきかを研究で解説へ。"
     }
    },
    {
@@ -541,9 +545,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <div class="next" id="mNext"><b>G</b>次に解放</div>
       </div>
 
-      <div class="controls">
+      <div class="controls" id="test">
         <button class="btn btn2" id="trainBtn" type="button"><span id="trainLbl">トレーニング開始</span><small>毎日の練習、1音ずつ解放</small></button>
-        <button class="btn line btn2" id="testBtn" type="button"><span>判定テスト</span><small>週1回、12音をテスト</small></button>
+        <button class="btn line btn2" id="testBtn" type="button"><span>絶対音感テスト</span><small id="testSub">週1回、12音をテスト</small></button>
         <button class="btn line" id="reviewBtn" type="button" hidden>苦手を復習</button>
         <button class="btn line" id="stopBtn" type="button" hidden>一時停止</button>
       </div>
@@ -675,9 +679,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <dl class="faq">
         <div><dt>絶対音感とは？</dt><dd>絶対音感（absolute pitch、完全音感とも）は、基準となる音がなくても、聞いた音の音名がわかる能力です。たとえば聞いた瞬間にF♯（ファ♯）だとわかります。一般の人では約1万人に1人とよく言われ、音楽専攻の学生ではより高い割合です。</dd></div>
         <div><dt>絶対音感と相対音感の違いは？</dt><dd>相対音感は、基準となる音を知ったうえで、ほかの音との距離から音名を判断します。絶対音感は基準音なしで直接音名がわかります。音楽の訓練を受けた人の多くは相対音感を持っていますが、絶対音感はずっと少数です。</dd></div>
-        <div><dt>大人でも絶対音感は身につく？</dt><dd>一部の人は身につきます。Van Hedger ら（2019）、Wong ら（2020、2025）の訓練研究では、12〜40時間の訓練で、生まれつきの人と同じテスト基準に達した大人がいます。ただし多くの人は一部の音名のみで、12音すべてを習得したのはおよそ7人に1人です。</dd></div>
-        <div><dt>絶対音感の練習にはどれくらいかかる？</dt><dd>研究の訓練量は12〜40時間とさまざまです。2019年と2025年の研究は約8週間で、2025年の参加者は平均15,327問に答えました。このゲームではそれを1日100問、約10分に分けています。</dd></div>
-        <div><dt>身についたかどうかはどうやってわかる？</dt><dd>「判定テスト」を使います。12音を3回ずつ、正誤の表示なし、問題間にノイズありで出題します。研究での基準はおおむね12音で正答率90%以上、2秒以内の回答です。当てずっぽうだと約8%です。</dd></div>
+        <div><dt>無料の絶対音感テストはどうやるの？</dt><dd>ダウンロード不要で、このページでそのまま受けられます（スマホでもパソコンでもOK）。イヤホンをつけて「絶対音感テスト」を押すと、12音がそれぞれ3回ずつ（全36問）、オクターブと音色を変えて出題されます。正誤は表示されず、問題の間にはノイズが入るので、直感で答えてください。終わると12音の正答率、反応時間、音ごとの正答率がわかります。</dd></div>
+        <div><dt>正答率何％なら絶対音感があるといえる？</dt><dd>研究での基準は、12音で正答率90%以上・2秒以内の回答です。当てずっぽうなら約8%。「半音以内」の割合が高いのに正答率が低い場合は、だいたいの音域はつかめていて、あとは精度の問題です。</dd></div>
+        <div><dt>絶対音感がなかったら、今からでも身につく？</dt><dd>試す価値はあります。2019〜2025年の大人向けトレーニング研究では、多くの人がはっきり上達し、12音すべてに届いたのは約7人に1人でした。このゲームは研究と同じ方法で、毎日100問・約10分、1音ずつ解放していきます。くわしくは<a href="https://knittinghiyori.com/absolute-pitch-training-game-ja/" data-cta="about_article" data-cta-type="article">絶対音感は大人でも身につく？何歳まで・生まれつきかを研究で解説</a>へ。</dd></div>
         <div><dt>音名がドレミではなくC・D・Eなのはなぜ？</dt><dd>研究や国際的な表記に合わせて英語音名を使っています。C＝ド、D＝レ、E＝ミ、F＝ファ、G＝ソ、A＝ラ、B＝シ、♯はシャープです。</dd></div>
         <div><dt>苦手リストは何のため？</dt><dd>聞き間違えやすい音は人によって違います。ゲームは「どの音をどの音と間違えたか」を記録し、「苦手を復習」でその音を集中して出題します。間違えたときは、押した音のあとに正解の音を鳴らすので、聞き比べられます。何度か正解すると、その組み合わせはリストから外れます。</dd></div>
         </dl>
@@ -853,7 +857,7 @@ var COLORS=['#C34F4B','#BB5D00','#A27000','#798300','#33903C','#009575','#0091A4
 var ORDER=[0,7,4,9,2,5,11,6,1,8,3,10]; /* 解鎖順序：先白鍵，相鄰音盡量分開 */
 var KEY='ap-dojo-v1', GOAL=100, BLOCK=20, RT_MAX=2500, MILES=[100,1000,5000,15327];
 var MILESTONE_EVENTS=[1,10,50,100,500,1000,5000,15327];
-var T={"noteAria": "音名 ", "other": "その他", "bankEmptyHas": "今は直す苦手はありません。間違えた音は自動でここに入り、よく混同する組み合わせが上に並びます。", "bankEmptyNew": "間違えた音は自動でここに入ります。しばらく練習すると、よく混同する組み合わせが上に並びます。", "fixedN": "これまでに{0}組を克服しました。", "pair": "{0}<span class=\"as\">を</span>{1}<span class=\"as\">と聞き間違え</span>", "worst": "全体で間違えやすい音：", "sep": "、", "reviewBtn20": "苦手を復習（20問）", "bankFoot": "残り{0}組{1}。1回正解するごとに回数が1減ります。", "bankFootFixed": "、克服{0}組", "noise": "ノイズ中", "qTest": "<b class=\"num\">{0}</b> / 36 問目", "qReview": "苦手の復習　<b class=\"num\">{0}</b> / {1} 問目", "qTrain": "この音は？", "hit": "<b>正解</b>　{0}、<span class=\"num\">{1}</span> Hz、<span class=\"num\">{2}</span> 秒", "contrast": "{0}まず押した音 {1}、次に正解の {2}<b>{3}</b>", "miss": "<b>不正解</b>　正解は {0}{1}。もう一度聞いてみましょう", "missOther": "（まだ解放前なので「その他」）", "unlockTitle": "新しい音名を解放：{0}", "unlockText": "これからは「その他」ではありません。しばらくはこの音の響きをよく聞いてみましょう。", "allTitle": "12音すべて合格", "allText": "判定テストで、研究の基準に届いているか確かめましょう。", "modeTrain": "トレーニング", "subTrain": "聞こえた音の名前をタップ。まだ解放していない音は「その他」を押します。", "modeTest": "判定テスト", "subTest": "12音がランダムに出題され、オクターブも音色も変わり、正誤は表示されません。直感で答えてください。", "modeReview": "苦手の復習", "subReview": "よく混同する音を集中して練習します。間違えると、押した音と正解を続けて鳴らすので聞き比べられます。", "start": "トレーニング開始", "cont": "トレーニングを続ける", "paused": "一時停止しました。今日の記録は保存されています", "v90": "研究での絶対音感の基準に達しました。数週間後にもう一度テストして、維持できているか確かめましょう。", "v50": "音名の記憶ができつつあり、当てずっぽうを大きく上回っています。毎日の目標を続けましょう。", "v20": "一部の音名はもうつかめています。多くの人が通る段階なので、続けることが大切です。", "v0": "今は当てずっぽうに近い結果です。これは普通のスタート地点で、研究の参加者もここから始めました。", "rAcc": "12音の正答率", "rRt": "秒（反応の中央値）", "rNear": "半音以内の誤差", "barsAria": "音名ごとの正答率", "rNote": "「半音以内」の割合が高く正答率が低い場合は、だいたいの音域はつかめていて、あとは精度です。次のテスト：{0}。", "shareResult": "このテスト結果をシェア：12音の正答率 {0}%。", "testDone": "テスト完了。結果は下にあります", "revTitle": "復習完了", "revBody": "{1}問中{0}問正解{2}。{3}", "revFixed": "、{0}組を克服", "revLeft": "苦手リストに残り{0}組。明日もう一度復習しましょう。", "revClear": "苦手リストが空になりました。通常のトレーニングに戻りましょう。", "revDone": "復習完了", "nFirst": "初めての方は、<strong>C（ド）</strong>の1音から始めましょう。最初にテストを受けて、スタート時の成績を残すこともできます。", "nRemain": "今日の目標まであと<strong>{0}問</strong>です{1}。", "nStreak": "。{0}日連続をキープしましょう", "nDone": "今日の目標を達成しました。<strong>明日も来れば</strong>{0}日連続になります。", "nTest": "今週のテストを受けられます。", "nBank": "苦手リストに<strong>{0}組</strong>あります。", "mAccN": "直近{0}問の正答率", "mAcc0": "直近20問の正答率", "mRt": "秒（反応の中央値）", "mRt0": "反応時間の中央値", "mNext": "次に解放", "mAll": "<b>全音</b>解放済み", "heatTip": "{0}：{1}問", "trackTip": "{0}問", "chartEmpty": "まだテスト結果がありません。まず1回受けてスタート地点にし、毎週比べてみましょう。", "chartAria": "テスト正答率の推移", "shareGame": "絶対音感養成所で練習中、12音中{0}音を解放しました。大人でも絶対音感は身につく？試してみて", "shareRes": "絶対音感テストの結果：12音で正答率{0}%。大人でも絶対音感は身につく？試してみて", "copied": "コピーしました", "testAbort": "テストを中止しました。今回の成績は記録されません", "resetArm": "もう一度押すと消去します。元に戻せません", "resetDone": "消去しました", "resetStatus": "記録を消去しました。Cからやり直します", "trainSub": "毎日の練習、1音ずつ解放", "testSub": "週1回、12音をテスト", "fbAns": "正解"},LANG='ja',LOC='ja-JP',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/ja/';
+var T={"noteAria": "音名 ", "other": "その他", "bankEmptyHas": "今は直す苦手はありません。間違えた音は自動でここに入り、よく混同する組み合わせが上に並びます。", "bankEmptyNew": "間違えた音は自動でここに入ります。しばらく練習すると、よく混同する組み合わせが上に並びます。", "fixedN": "これまでに{0}組を克服しました。", "pair": "{0}<span class=\"as\">を</span>{1}<span class=\"as\">と聞き間違え</span>", "worst": "全体で間違えやすい音：", "sep": "、", "reviewBtn20": "苦手を復習（20問）", "bankFoot": "残り{0}組{1}。1回正解するごとに回数が1減ります。", "bankFootFixed": "、克服{0}組", "noise": "ノイズ中", "qTest": "<b class=\"num\">{0}</b> / 36 問目", "qReview": "苦手の復習　<b class=\"num\">{0}</b> / {1} 問目", "qTrain": "この音は？", "hit": "<b>正解</b>　{0}、<span class=\"num\">{1}</span> Hz、<span class=\"num\">{2}</span> 秒", "contrast": "{0}まず押した音 {1}、次に正解の {2}<b>{3}</b>", "miss": "<b>不正解</b>　正解は {0}{1}。もう一度聞いてみましょう", "missOther": "（まだ解放前なので「その他」）", "unlockTitle": "新しい音名を解放：{0}", "unlockText": "これからは「その他」ではありません。しばらくはこの音の響きをよく聞いてみましょう。", "allTitle": "12音すべて合格", "allText": "絶対音感テストで、研究の基準に届いているか確かめましょう。", "modeTrain": "トレーニング", "subTrain": "聞こえた音の名前をタップ。まだ解放していない音は「その他」を押します。", "modeTest": "絶対音感テスト", "subTest": "12音がランダムに出題され、オクターブも音色も変わり、正誤は表示されません。直感で答えてください。", "modeReview": "苦手の復習", "subReview": "よく混同する音を集中して練習します。間違えると、押した音と正解を続けて鳴らすので聞き比べられます。", "start": "トレーニング開始", "cont": "トレーニングを続ける", "paused": "一時停止しました。今日の記録は保存されています", "v90": "研究での絶対音感の基準に達しました。数週間後にもう一度テストして、維持できているか確かめましょう。", "v50": "音名の記憶ができつつあり、当てずっぽうを大きく上回っています。毎日の目標を続けましょう。", "v20": "一部の音名はもうつかめています。多くの人が通る段階なので、続けることが大切です。", "v0": "今は当てずっぽうに近い結果です。これは普通のスタート地点で、研究の参加者もここから始めました。", "rAcc": "12音の正答率", "rRt": "秒（反応の中央値）", "rNear": "半音以内の誤差", "barsAria": "音名ごとの正答率", "rNote": "「半音以内」の割合が高く正答率が低い場合は、だいたいの音域はつかめていて、あとは精度です。次のテスト：{0}。", "shareResult": "このテスト結果をシェア：12音の正答率 {0}%。", "testDone": "テスト完了。結果は下にあります", "revTitle": "復習完了", "revBody": "{1}問中{0}問正解{2}。{3}", "revFixed": "、{0}組を克服", "revLeft": "苦手リストに残り{0}組。明日もう一度復習しましょう。", "revClear": "苦手リストが空になりました。通常のトレーニングに戻りましょう。", "revDone": "復習完了", "nFirst": "初めての方は、まず<strong>絶対音感テスト</strong>（36問・約3分）で今の自分を確かめましょう。そのあと<strong>C（ド）</strong>からトレーニングを始められます。", "nRemain": "今日の目標まであと<strong>{0}問</strong>です{1}。", "nStreak": "。{0}日連続をキープしましょう", "nDone": "今日の目標を達成しました。<strong>明日も来れば</strong>{0}日連続になります。", "nTest": "今週のテストを受けられます。", "nBank": "苦手リストに<strong>{0}組</strong>あります。", "mAccN": "直近{0}問の正答率", "mAcc0": "直近20問の正答率", "mRt": "秒（反応の中央値）", "mRt0": "反応時間の中央値", "mNext": "次に解放", "mAll": "<b>全音</b>解放済み", "heatTip": "{0}：{1}問", "trackTip": "{0}問", "chartEmpty": "まだテスト結果がありません。まず1回受けてスタート地点にし、毎週比べてみましょう。", "chartAria": "テスト正答率の推移", "shareGame": "絶対音感養成所で練習中、12音中{0}音を解放しました。大人でも絶対音感は身につく？試してみて", "shareRes": "絶対音感テストの結果：{1}（12音で正答率{0}%）。あなたは絶対音感ある？テストしてみて", "copied": "コピーしました", "testAbort": "テストを中止しました。今回の成績は記録されません", "resetArm": "もう一度押すと消去します。元に戻せません", "resetDone": "消去しました", "resetStatus": "記録を消去しました。Cからやり直します", "trainSub": "毎日の練習、1音ずつ解放", "testSub": "週1回、12音をテスト", "fbAns": "正解", "nAfterTest": "テスト完了！練習するなら<strong>C（ド）</strong>の1音から。毎日10分、1音ずつ解放していきます。", "ansYes": "絶対音感がある可能性が高いです", "ansPart": "絶対音感の兆しがあります", "ansSome": "まだ絶対音感はありませんが、いくつかの音はつかめています", "ansNo": "今は絶対音感はありません（多くの人と同じです）", "ansK": "絶対音感テストの結果", "ansBench": "当てずっぽうの正答率は約8%、研究の基準は12音で正答率90%以上・2秒以内です。1回のテストは目安なので、数日後にもう一度受けるとより正確です。", "ansTrain": "練習してみる？C（ド）からトレーニング", "ansTrainCont": "トレーニングを続ける", "testFirstSub": "36問・約3分、まず今の自分をチェック"},LANG='ja',LOC='ja-JP',PAGE_URL='https://games.knittinghiyori.com/absolute-pitch/ja/';
 function F(s){var a=arguments;return String(s).replace(/\{(\d)\}/g,function(m,i){return a[+i+1]})}
 var INK='#16161a', IDLE='#c9ccd5';
 
@@ -1127,13 +1131,24 @@ function start(m){
   nextTrial();
 }
 function stop(msg){if(mode)roundClose('quit');idle(msg)}
+/* first visit (never trained or tested): the test is the main, glowing button */
+function paintMainBtn(){
+  var fresh=!S.total&&!S.tests.length,tb=$('testBtn'),rb=$('trainBtn');
+  tb.classList.toggle('line',!fresh);tb.classList.toggle('first',fresh);
+  rb.classList.toggle('line',fresh);rb.classList.toggle('first',false);
+  $('testSub').textContent=fresh?T.testFirstSub:T.testSub;
+  if(fresh?tb.nextElementSibling!==rb:rb.nextElementSibling!==tb)rb.parentNode.insertBefore(fresh?tb:rb,fresh?rb:tb);
+}
 function idle(msg){
   mode=null;waiting=false;clearTimeout(timer);paintWheel();
   $('trainBtn').hidden=false;$('testBtn').hidden=false;$('reviewBtn').hidden=!bank().length;$('stopBtn').hidden=true;$('noiseOpt').disabled=false;
-  $('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+  $('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
   $('modeLabel').textContent=T.modeTrain;$('roomSub').textContent=T.subTrain;$('meters').hidden=false;
   status(msg||T.paused);render();
 }
+function trained(){return S.level>1||S.recent.length>0} /* test answers also count in total */
+function verdictIdx(acc,med){return acc>=0.9?(med<=2000?0:1):acc>=0.5?1:acc>=0.2?2:3}
+function verdictText(i){return [T.ansYes,T.ansPart,T.ansSome,T.ansNo][i]}
 function finishTest(){
   var n=testLog.length,c=testLog.filter(function(r){return r.ok}).length,acc=c/n;
   var near=testLog.filter(function(r){var d=Math.abs(r.ans-r.pc)%12;return Math.min(d,12-d)<=1}).length/n;
@@ -1146,13 +1161,16 @@ function finishTest(){
   else if(acc>=0.2)v=T.v20;
   else v=T.v0;
   var per=NAMES.map(function(nm,pc){var rs=testLog.filter(function(r){return r.pc===pc});return Math.round(rs.filter(function(r){return r.ok}).length/rs.length*100)});
-  $('result').innerHTML='<p class="verdict">'+v+'</p>'+
+  var vi=verdictIdx(acc,med);
+  $('result').innerHTML='<p class="verdict-k">'+T.ansK+'</p><p class="verdict'+(vi===0?' verdict-yes':'')+'">'+verdictText(vi)+'</p><p class="small">'+v+'</p>'+
     '<div class="meters"><div><b>'+(acc*100).toFixed(0)+'%</b>'+T.rAcc+'</div><div><b>'+(med/1000).toFixed(2)+'</b>'+T.rRt+'</div><div><b>'+(near*100).toFixed(0)+'%</b>'+T.rNear+'</div></div>'+
     '<div class="bars" role="img" aria-label="'+T.barsAria+'">'+per.map(function(p,pc){return '<div><span class="col"><i style="height:'+Math.max(p,2)+'%;background:'+COLORS[pc]+'"></i></span><span>'+NAMES[pc]+'</span><em>'+p+'%</em></div>'}).join('')+'</div>'+
-    '<p class="small">'+F(T.rNote,nextTestDate())+'</p>'+
+    '<p class="small">'+T.ansBench+' '+F(T.rNote,nextTestDate())+'</p>'+
+    '<div class="res-next"><button type="button" class="btn" id="resTrainBtn">'+(trained()?T.ansTrainCont:T.ansTrain)+'</button></div>'+
     '<div class="card-act"><button type="button" class="btn line" id="cardBtn">'+CARD.make+'</button></div><div class="card-out" id="cardOut" hidden></div>';
   lastRes={acc:acc,med:med,near:near,per:per,lv:S.level,d:new Date()};
   $('cardBtn').addEventListener('click',makeCard);
+  $('resTrainBtn').addEventListener('click',function(){start('train')});
   $('result').hidden=false;
   lastShareType='result';$('shareLabel').textContent=F(T.shareResult,(acc*100).toFixed(0));
   idle(T.testDone);
@@ -1239,7 +1257,8 @@ function render(){
   var last=S.tests[S.tests.length-1],since=null;
   if(last)since=Math.round((new Date(dkey())-new Date(last.d))/864e5);
   var msg;
-  if(S.total===0)msg=T.nFirst;
+  if(!trained()&&S.tests.length)msg=T.nAfterTest;
+  else if(S.total===0)msg=T.nFirst;
   else if(today<GOAL)msg=F(T.nRemain,GOAL-today,st?F(T.nStreak,st):'');
   else msg=F(T.nDone,st+1);
   if(S.total>0?(since===null||since>=7):false)msg+=T.nTest;
@@ -1296,7 +1315,7 @@ function drawChart(){
 /* ---------- 分享 ---------- */
 function shareUrl(){return PAGE_URL+'?ref=share'}
 function shareText(){
-  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc)}
+  if(lastShareType==='result'){var t=S.tests[S.tests.length-1];return F(T.shareRes,t.acc,verdictText(verdictIdx(t.acc/100,t.rt)))}
   return F(T.shareGame,S.level)
 }
 document.querySelectorAll('[data-share]').forEach(function(b){
@@ -1315,7 +1334,7 @@ document.querySelectorAll('[data-share]').forEach(function(b){
 });
 
 /* ---------- 成績卡圖片（驗收結束後產生；浮水印＋底部品牌列，規範 games §6） ---------- */
-var CARD={"make": "結果カードを作る", "making": "作成中…", "share": "画像をシェア", "download": "画像を保存", "hint": "画像をシェアしたら「リンクをコピー」を押して投稿やメッセージに貼ると、友だちがそのままタップして遊べます。スマホでは画像を長押しして保存もできます。", "fail": "画像を作れませんでした。再読み込みしてもう一度お試しください。", "title": "12音テストの結果", "unlocked": "解放済み", "unit": "/ 12音", "rt": "反応の中央値", "rtUnit": "秒", "near": "半音以内の誤差", "perNote": "音ごとの正答率", "game": "絶対音感養成所", "brand": "編織日和", "wm": "編織日和", "url": "games.knittinghiyori.com/absolute-pitch/ja", "cta": "無料で遊ぶ →", "alt": "絶対音感養成所のテスト結果カード：12音の正答率{0}%、12音中{1}音を解放、音ごとの正答率とゲームのURL付き。", "tags": ["研究の絶対音感の基準に到達", "音名の記憶ができつつある", "一部の音名はもうつかめている", "スタート地点：研究の参加者もここから"], "copy": "リンクをコピー", "copied": "コピーしました ✓"};
+var CARD={"make": "結果カードを作る", "making": "作成中…", "share": "画像をシェア", "download": "画像を保存", "hint": "画像をシェアしたら「リンクをコピー」を押して投稿やメッセージに貼ると、友だちがそのままタップして遊べます。スマホでは画像を長押しして保存もできます。", "fail": "画像を作れませんでした。再読み込みしてもう一度お試しください。", "title": "12音テストの結果", "unlocked": "解放済み", "unit": "/ 12音", "rt": "反応の中央値", "rtUnit": "秒", "near": "半音以内の誤差", "perNote": "音ごとの正答率", "game": "絶対音感養成所", "brand": "編織日和", "wm": "編織日和", "url": "games.knittinghiyori.com/absolute-pitch/ja", "cta": "無料で遊ぶ →", "alt": "絶対音感養成所のテスト結果カード：12音の正答率{0}%、12音中{1}音を解放、音ごとの正答率とゲームのURL付き。", "tags": ["絶対音感がある可能性が高い", "絶対音感の兆しあり", "一部の音はもうつかめている", "スタート地点：多くの人と同じ"], "copy": "リンクをコピー", "copied": "コピーしました ✓"};
 var lastRes=null,cardUrl=null;
 function cardTag(r){return r.acc>=0.9?(r.med<=2000?CARD.tags[0]:CARD.tags[1]):r.acc>=0.5?CARD.tags[1]:r.acc>=0.2?CARD.tags[2]:CARD.tags[3]}
 function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
@@ -1436,7 +1455,7 @@ $('resetBtn').addEventListener('click',function(){
   idle(T.resetStatus);
 });
 if(reduce)$('ring').classList.remove('draw');
-$('trainLbl').textContent=S.total>0?T.cont:T.start;$('trainBtn').classList.toggle('first',!S.total);
+$('trainLbl').textContent=trained()?T.cont:T.start;paintMainBtn();
 /* 語言切換 */
 document.querySelectorAll('[data-lang-link]').forEach(function(a){a.addEventListener('click',function(){try{if(window.hyGame)window.hyGame.event('lang_switch',{source:'header',from_lang:'ja'},true)}catch(e){}})});
 paintWheel();render();sizeScope();
