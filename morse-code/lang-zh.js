@@ -56,6 +56,7 @@ window.MORSE_T = {
   pickPrompt: '聽到了嗎？選出字母',
   groupPrompt: '一次三個字，依序選',
   right: '對',
+  sep: '，',
   wrongIs: '是 {0}',
   wrongGroup: '正解是 {0}',
   roundOf: '{0}／{1}',
