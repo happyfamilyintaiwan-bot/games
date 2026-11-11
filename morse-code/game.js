@@ -20,7 +20,8 @@
   var reduce = false;
   try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
   var DEBUG = /[?\x26]hy_debug=1/.test(location.search);
-  var PAGE_URL = 'https://games.knittinghiyori.com/morse-code/';
+  /* 分享網址跟著這一頁的語言（canonical）；找不到就用中文頁 */
+  var PAGE_URL = (function () { try { var c = document.querySelector('link[rel=canonical]'); if (c) { var h = c.getAttribute('href'); if (/^https:\/\/games\.knittinghiyori\.com\/morse-code\//.test(h)) return h; } } catch (e) {} return 'https://games.knittinghiyori.com/morse-code/'; })();
 
   /* ---------- 引擎與聲音 ---------- */
   var tr = HyTrainer.create({
@@ -448,7 +449,7 @@
     tick(R.i, ok ? 'ok' : 'no');
     if (ok) {
       if (b) b.classList.add('ok');
-      setStatus(T.right + '，<b>' + k + '</b>', 'ok');
+      setStatus(T.right + (T.sep || '，') + '<b>' + k + '</b>', 'ok');
       R.i++;
       wait(420).then(next);
     } else {
@@ -477,7 +478,7 @@
     paintSlots(true);
     tick(R.i, nOk === 3 ? 'ok' : 'no');
     R.i++;
-    if (nOk === 3) { setStatus(T.right + '，<b>' + R.cur.join('') + '</b>', 'ok'); wait(650).then(next); }
+    if (nOk === 3) { setStatus(T.right + (T.sep || '，') + '<b>' + R.cur.join('') + '</b>', 'ok'); wait(650).then(next); }
     else {
       setStatus(F(T.wrongGroup, '<b>' + R.cur.join('') + '</b>'), 'no');
       var c = R.cur.join('');

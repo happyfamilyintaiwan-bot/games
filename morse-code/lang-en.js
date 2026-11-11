@@ -56,6 +56,7 @@ window.MORSE_T = {
   pickPrompt: 'Did you hear it? Pick the character',
   groupPrompt: 'Three at a time. Pick them in order',
   right: 'Right',
+  sep: ', ',
   wrongIs: 'It was {0}',
   wrongGroup: 'The answer was {0}',
   roundOf: '{0} / {1}',
