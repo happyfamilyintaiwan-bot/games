@@ -438,6 +438,7 @@
   function answer(k) {
     if (!R) return;
     if (R.busy) return;
+    if (!R.cur) return;   /* 一班剛開始、題目還沒出來時按到鍵：不算（以前會記成「null 常聽成 R」） */
     if (current !== 'play') return;
     var rt = R.endAt ? Date.now() - R.endAt : 0;
     if (R.group) { groupInput(k); return; }
