@@ -1210,7 +1210,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?"<b>11/23までリリース記念価格</b>：買い切りで全12音を解放。最初の3音は無料、サブスクなし・広告なし。"
-                    :"最初の3音は無料。買い切りで全12音を解放（価格はApp Storeでご確認ください）。サブスクなし・広告なし。";
+                    :"<b>フル版を7日間無料でお試し</b>。その後は月額か買い切りを選べます（価格はApp Storeでご確認ください）。最初の3音はずっと無料、広告なし。";
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1250,13 +1250,13 @@ function resAppLine(vi){
   var a=$('apLineLink');
   if(IS_ANDROID)return '';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（11/23までリリース記念価格）":"")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（11/23までリリース記念価格）":"（フル版は7日間無料でお試し可）")+' →</a></p>';
 }
 function appLine(){
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML="iPhone・iPad・Mac版アプリ配信中（Android版は準備中）";a.removeAttribute('href');return}
   a.innerHTML=earlyBird()?"アプリ配信中！最初の3音は無料、<b>11/23までリリース記念価格</b> <span style=\"white-space:nowrap\">→</span>"
-                         :"アプリ配信中：毎日お知らせ、記録が消えない。最初の3音は無料 <span style=\"white-space:nowrap\">→</span>";
+                         :"アプリ配信中：毎日お知らせ、記録が消えない。<b>フル版を7日間無料でお試し</b> <span style=\"white-space:nowrap\">→</span>";
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();

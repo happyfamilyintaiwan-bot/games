@@ -1200,7 +1200,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?"<b>Precio de lanzamiento hasta el 23 de noviembre</b>: desbloquea las 12 notas con un solo pago. Las 3 primeras notas son gratis. Sin suscripción ni anuncios."
-                    :"Las 3 primeras notas son gratis; desbloquea las 12 con un solo pago (precio en el App Store). Sin suscripción ni anuncios.";
+                    :"<b>Prueba la versión completa gratis 7 días</b>; luego elige plan mensual o pago único (precios en el App Store). Las 3 primeras notas siempre gratis. Sin anuncios.";
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1240,13 +1240,13 @@ function resAppLine(vi){
   var a=$('apLineLink');
   if(IS_ANDROID)return '';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (precio de lanzamiento hasta el 23 de noviembre)":"")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (precio de lanzamiento hasta el 23 de noviembre)":" (prueba la versión completa gratis 7 días)")+' →</a></p>';
 }
 function appLine(){
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML="Apps para iPhone, iPad y Mac disponibles (Android, próximamente)";a.removeAttribute('href');return}
   a.innerHTML=earlyBird()?"¡Ya está la app! 3 primeras notas gratis, <b>precio de lanzamiento</b> hasta el 23 de nov. <span style=\"white-space:nowrap\">→</span>"
-                         :"Ya está la app: recordatorios diarios y un progreso que no se pierde. 3 primeras notas gratis <span style=\"white-space:nowrap\">→</span>";
+                         :"Ya está la app: recordatorios diarios y un progreso que no se pierde. <b>Prueba la versión completa gratis 7 días</b> <span style=\"white-space:nowrap\">→</span>";
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();
