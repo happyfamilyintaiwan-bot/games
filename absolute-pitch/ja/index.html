@@ -1228,8 +1228,17 @@ function nodeReady(id,st){
   return false;
 }
 function maybeAppCard(st){
-  if(mode||IS_ANDROID||!$('appCard').hidden)return;
+  if(mode||!$('appCard').hidden)return;
   var N=S.appNudge||(S.appNudge={seen:{},last:'',dismiss:0,clicked:false});
+  if(IS_ANDROID){ /* 2026-11-22 Alison：Android 封閉測試開放中，Android 玩家跳一次小卡（cta_id android_test） */
+    if(N.seen.android)return;
+    N.seen.android=dkey();N.last=dkey();save();
+    $('appCardText').innerHTML='<b>Android版ができました！</b>テスト期間中はフル版（12音すべて）を無料で使えます。毎日のリマインダー、オフライン練習、ブラウザに消されない記録。テスターをあと数名募集中で、参加は3分です。14日間続けて参加した方には、正式公開後にフル版の引き換えコードをお送りします。';
+    var L=$('appCardLink');L.href='https://knittinghiyori.com/ja/apps/absolute-pitch/#android';L.textContent='参加方法を見る →';L.setAttribute('data-cta','android_test');L.setAttribute('data-cta-type','article');
+    $('appCardMove').hidden=true;
+    $('appCard').hidden=false;
+    return;
+  }
   if(S.appCard&&!N.seen.unlock4)N.seen.unlock4=S.appCard; /* 舊版小卡看過的人，不再重複 unlock4 */
   if(N.clicked||N.dismiss>=2||N.last===dkey())return;
   for(var i=0;i<APP_NODES.length;i++){
@@ -1248,13 +1257,13 @@ function maybeAppCard(st){
 var RES_APP=["アプリなら毎週のテスト結果をグラフで記録。この精度が続くか確かめられます", "いくつかの音はもう安定しています。アプリが毎日リマインドして、残りの音を一つずつ", "絶対音感は1音から練習できます。アプリが毎日10分のリマインド、最初の3音は無料"];
 function resAppLine(vi){
   var a=$('apLineLink');
-  if(IS_ANDROID)return '';
+  if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/ja/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 Android版テスト参加者募集中！<b>フル版が無料</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
   return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（11/23までリリース記念価格）":"")+' →</a></p>';
 }
 function appLine(){
   var a=$('apLineLink');if(!a)return;
-  if(IS_ANDROID){a.innerHTML="iPhone・iPad・Mac版アプリ配信中（Android版は準備中）";a.removeAttribute('href');return}
+  if(IS_ANDROID){a.innerHTML='🎵 Android版テスト参加者募集中！<b>フル版が無料</b> →';a.href='https://knittinghiyori.com/ja/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"アプリ配信中！最初の3音は無料、<b>11/23までリリース記念価格</b> <span style=\"white-space:nowrap\">→</span>"
                          :"アプリ配信中：毎日お知らせ、記録が消えない。最初の3音は無料 <span style=\"white-space:nowrap\">→</span>";
 }
