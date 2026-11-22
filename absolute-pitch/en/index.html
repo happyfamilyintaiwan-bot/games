@@ -1218,8 +1218,17 @@ function nodeReady(id,st){
   return false;
 }
 function maybeAppCard(st){
-  if(mode||IS_ANDROID||!$('appCard').hidden)return;
+  if(mode||!$('appCard').hidden)return;
   var N=S.appNudge||(S.appNudge={seen:{},last:'',dismiss:0,clicked:false});
+  if(IS_ANDROID){ /* 2026-11-22 Alison：Android 封閉測試開放中，Android 玩家跳一次小卡（cta_id android_test） */
+    if(N.seen.android)return;
+    N.seen.android=dkey();N.last=dkey();save();
+    $('appCardText').innerHTML='<b>The Android app is here!</b>Testers get the full version (all 12 notes) free: daily reminders, offline practice, and progress your browser can’t erase. We still need a few more testers, and joining takes 3 minutes. Stay for 14 days and we’ll send you a code to unlock the full version after launch.';
+    var L=$('appCardLink');L.href='https://knittinghiyori.com/en/apps/absolute-pitch/#android';L.textContent='How to join →';L.setAttribute('data-cta','android_test');L.setAttribute('data-cta-type','article');
+    $('appCardMove').hidden=true;
+    $('appCard').hidden=false;
+    return;
+  }
   if(S.appCard&&!N.seen.unlock4)N.seen.unlock4=S.appCard; /* 舊版小卡看過的人，不再重複 unlock4 */
   if(N.clicked||N.dismiss>=2||N.last===dkey())return;
   for(var i=0;i<APP_NODES.length;i++){
@@ -1238,13 +1247,13 @@ function maybeAppCard(st){
 var RES_APP=["The app charts your weekly tests, so you can see if your ear stays this sharp", "Some notes are already solid. The app reminds you daily to fill in the rest, one note at a time", "Perfect pitch starts with one note. The app reminds you to practice 10 minutes a day; the first 3 notes are free"];
 function resAppLine(vi){
   var a=$('apLineLink');
-  if(IS_ANDROID)return '';
+  if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/en/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 Android beta is open! <b>Get the full version free</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
   return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (launch price until Nov 23)":"")+' →</a></p>';
 }
 function appLine(){
   var a=$('apLineLink');if(!a)return;
-  if(IS_ANDROID){a.innerHTML="iPhone, iPad and Mac apps are out (Android coming soon)";a.removeAttribute('href');return}
+  if(IS_ANDROID){a.innerHTML='🎵 Android beta is open! <b>Get the full version free</b> →';a.href='https://knittinghiyori.com/en/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"The app is out! First 3 notes free, <b>launch price</b> until Nov 23 <span style=\"white-space:nowrap\">→</span>"
                          :"The app is out: daily reminders, progress that won’t disappear. First 3 notes free <span style=\"white-space:nowrap\">→</span>";
 }
