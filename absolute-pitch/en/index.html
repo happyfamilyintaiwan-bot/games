@@ -685,12 +685,12 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="tablebox cmp">
         <table>
           <thead><tr><th scope="col">Feature</th><th scope="col">Web</th><th scope="col">App (free)</th><th scope="col">App (full version)</th></tr></thead>
-          <tbody><tr><td>Price</td><td>Free</td><td>Free download</td><td>One-time purchase</td></tr><tr><td>Notes you can train</td><td>All 12</td><td>First 3 (C, G, E)</td><td>All 12</td></tr><tr><td>12-note perfect pitch test</td><td>✓</td><td>✓ Unlimited</td><td>✓ Unlimited</td></tr><tr><td>Mistake review</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Daily reminder</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12-note road and daily goal ring</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Works offline, plays in Silent mode</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Progress saved on your device (iCloud backup)</td><td>Browser only; may be cleared</td><td>✓</td><td>✓</td></tr><tr><td>Ads</td><td>Yes</td><td>None</td><td>None</td></tr><tr><td>Bring your web progress</td><td>—</td><td>Up to 6 notes</td><td>All of it</td></tr><tr><td>Devices</td><td>Any browser</td><td>iPhone, iPad, Mac</td><td>iPhone, iPad, Mac</td></tr></tbody>
+          <tbody><tr><td>Price</td><td>Free</td><td>Free download</td><td>Monthly plan (7-day free trial for new subscribers) or one-time purchase</td></tr><tr><td>Free trial</td><td>—</td><td>Not needed</td><td>Monthly plan only: 7 days, then monthly billing starts unless you cancel. One trial per Apple ID. No trial for the one-time purchase</td></tr><tr><td>Notes you can train</td><td>All 12</td><td>First 3 (C, G, E)</td><td>All 12</td></tr><tr><td>12-note perfect pitch test</td><td>✓</td><td>✓ Unlimited</td><td>✓ Unlimited</td></tr><tr><td>Mistake review</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Daily reminder</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12-note road and daily goal ring</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Works offline, plays in Silent mode</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Progress saved on your device (iCloud backup)</td><td>Browser only; may be cleared</td><td>✓</td><td>✓</td></tr><tr><td>Ads</td><td>Yes</td><td>None</td><td>None</td></tr><tr><td>Bring your web progress</td><td>—</td><td>Up to 6 notes</td><td>All of it</td></tr><tr><td>Devices</td><td>Any browser</td><td>iPhone, iPad, Mac</td><td>iPhone, iPad, Mac</td></tr></tbody>
         </table>
       </div>
       <div class="cmp-go">
-        <p><b>How to start:</b> download the free app and practice the first 3 notes for 7 days. Try the daily reminders and the 12-note road. If you like it, unlock all 12 notes with a one-time purchase.</p>
-        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/us/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">Get the free app and try it for 7 days →</a>
+        <p><b>How to start:</b> download the free app and practice the first 3 notes. Try the daily reminders and the 12-note road. To unlock all 12 notes, choose a <b>monthly plan</b> that starts with a 7-day free trial (start it from the purchase screen in the app; monthly billing begins unless you cancel at least 24 hours before the trial ends; one trial per Apple ID), or a <b>one-time purchase</b> (yours to keep, no trial).</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/us/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">Get the free app →</a>
         <p class="cmp-note">The Android version is coming soon.</p>
       </div>
     </div>
@@ -1233,7 +1233,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?"<b>Launch price until Nov 23</b>: unlock all 12 notes with a one-time purchase. First 3 notes free. No subscription, no ads."
-                    :"<b>Try the full version free for 7 days</b>, then subscribe monthly or buy once (prices in the App Store). First 3 notes always free. No ads.";
+                    :"<b>First 3 notes always free.</b> Full version: a monthly plan with a 7-day free trial (billing starts unless you cancel), or a one-time purchase (no trial). Prices in the App Store. No ads.";
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1282,14 +1282,14 @@ function resAppLine(vi){
   var a=$('apLineLink');
   if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/en/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 Android beta is open! <b>Get the full version free</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (launch price until Nov 23)":" (try the full version free for 7 days)")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (launch price until Nov 23)":" (monthly plan starts with a 7-day free trial)")+' →</a></p>';
 }
 function appLine(){
   var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML='🎵 Android beta is open! <b>Get the full version free</b> →';a.href='https://knittinghiyori.com/en/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"The app is out! First 3 notes free, <b>launch price</b> until Nov 23 <span style=\"white-space:nowrap\">→</span>"
-                         :"The app is out: daily reminders, progress that won’t disappear. <b>Try the full version free for 7 days</b> <span style=\"white-space:nowrap\">→</span>";
+                         :"The app is out: daily reminders, progress that won’t disappear. <b>Monthly plan: 7-day free trial</b> <span style=\"white-space:nowrap\">→</span>";
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();

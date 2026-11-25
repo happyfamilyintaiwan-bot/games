@@ -685,12 +685,12 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="tablebox cmp">
         <table>
           <thead><tr><th scope="col">Función</th><th scope="col">Web</th><th scope="col">App (gratis)</th><th scope="col">App (versión completa)</th></tr></thead>
-          <tbody><tr><td>Precio</td><td>Gratis</td><td>Descarga gratis</td><td>Un solo pago</td></tr><tr><td>Notas que puedes entrenar</td><td>Las 12</td><td>Las 3 primeras (C, G, E)</td><td>Las 12</td></tr><tr><td>Test de oído absoluto de 12 notas</td><td>✓</td><td>✓ Ilimitado</td><td>✓ Ilimitado</td></tr><tr><td>Repaso de errores</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Recordatorio diario</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Camino de las 12 notas y anillo de meta diaria</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Sin conexión y con sonido en modo silencio</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Progreso guardado en tu dispositivo (copia en iCloud)</td><td>Solo en el navegador; puede borrarse</td><td>✓</td><td>✓</td></tr><tr><td>Anuncios</td><td>Sí</td><td>No</td><td>No</td></tr><tr><td>Pasar tu progreso web</td><td>—</td><td>Hasta 6 notas</td><td>Todo</td></tr><tr><td>Dispositivos</td><td>Cualquier navegador</td><td>iPhone, iPad, Mac</td><td>iPhone, iPad, Mac</td></tr></tbody>
+          <tbody><tr><td>Precio</td><td>Gratis</td><td>Descarga gratis</td><td>Plan mensual (prueba gratis de 7 días para nuevos suscriptores) o un solo pago</td></tr><tr><td>Prueba gratis</td><td>—</td><td>No hace falta</td><td>Solo el plan mensual: 7 días; después se cobra cada mes si no cancelas. Una prueba por Apple ID. El pago único no tiene prueba</td></tr><tr><td>Notas que puedes entrenar</td><td>Las 12</td><td>Las 3 primeras (C, G, E)</td><td>Las 12</td></tr><tr><td>Test de oído absoluto de 12 notas</td><td>✓</td><td>✓ Ilimitado</td><td>✓ Ilimitado</td></tr><tr><td>Repaso de errores</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Recordatorio diario</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Camino de las 12 notas y anillo de meta diaria</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Sin conexión y con sonido en modo silencio</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Progreso guardado en tu dispositivo (copia en iCloud)</td><td>Solo en el navegador; puede borrarse</td><td>✓</td><td>✓</td></tr><tr><td>Anuncios</td><td>Sí</td><td>No</td><td>No</td></tr><tr><td>Pasar tu progreso web</td><td>—</td><td>Hasta 6 notas</td><td>Todo</td></tr><tr><td>Dispositivos</td><td>Cualquier navegador</td><td>iPhone, iPad, Mac</td><td>iPhone, iPad, Mac</td></tr></tbody>
         </table>
       </div>
       <div class="cmp-go">
-        <p><b>Cómo empezar:</b> descarga la app gratis y practica las 3 primeras notas durante 7 días. Prueba los recordatorios y el camino de las 12 notas; si te gusta, desbloquea las 12 notas con un solo pago.</p>
-        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">Descarga la app gratis y pruébala 7 días →</a>
+        <p><b>Cómo empezar:</b> descarga la app gratis y practica las 3 primeras notas. Prueba los recordatorios y el camino de las 12 notas. Para desbloquear las 12 notas, elige un <b>plan mensual</b> que empieza con 7 días gratis (se activa desde la pantalla de compra de la app; si no cancelas al menos 24 horas antes de que termine la prueba, empieza el cobro mensual; una prueba por Apple ID) o un <b>pago único</b> (para siempre, sin prueba).</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">Descarga la app gratis →</a>
         <p class="cmp-note">La versión para Android llegará pronto.</p>
       </div>
     </div>
@@ -1233,7 +1233,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?"<b>Precio de lanzamiento hasta el 23 de noviembre</b>: desbloquea las 12 notas con un solo pago. Las 3 primeras notas son gratis. Sin suscripción ni anuncios."
-                    :"<b>Prueba la versión completa gratis 7 días</b>; luego elige plan mensual o pago único (precios en el App Store). Las 3 primeras notas siempre gratis. Sin anuncios.";
+                    :"<b>Las 3 primeras notas siempre gratis.</b> Versión completa: plan mensual con 7 días de prueba gratis (se cobra si no cancelas) o un solo pago (sin prueba). Precios en el App Store. Sin anuncios.";
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1282,14 +1282,14 @@ function resAppLine(vi){
   var a=$('apLineLink');
   if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/es/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 ¡Beta de Android abierta! <b>Versión completa gratis</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (precio de lanzamiento hasta el 23 de noviembre)":" (prueba la versión completa gratis 7 días)")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (precio de lanzamiento hasta el 23 de noviembre)":" (el plan mensual empieza con 7 días gratis)")+' →</a></p>';
 }
 function appLine(){
   var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML='🎵 ¡Beta de Android abierta! <b>Versión completa gratis</b> →';a.href='https://knittinghiyori.com/es/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"¡Ya está la app! 3 primeras notas gratis, <b>precio de lanzamiento</b> hasta el 23 de nov. <span style=\"white-space:nowrap\">→</span>"
-                         :"Ya está la app: recordatorios diarios y un progreso que no se pierde. <b>Prueba la versión completa gratis 7 días</b> <span style=\"white-space:nowrap\">→</span>";
+                         :"Ya está la app: recordatorios diarios y un progreso que no se pierde. <b>Plan mensual: 7 días gratis</b> <span style=\"white-space:nowrap\">→</span>";
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();
