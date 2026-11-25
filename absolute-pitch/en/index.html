@@ -283,6 +283,17 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .answer{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.55rem);line-height:1.65;font-weight:400}
 .answer b{font-weight:900}
 .tablebox{overflow-x:auto}
+/* 網頁版、App 免費、App 完整版比較（2026-11-25 Alison） */
+.cmp table{min-width:0;font-size:.88rem}
+.cmp th,.cmp td{padding-right:10px}
+.cmp td:first-child{white-space:normal;min-width:7.5em}
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center}
+.cmp th:last-child,.cmp td:last-child{background:var(--well);font-weight:700}
+.cmp-go{margin-top:20px;padding:16px 18px;border-radius:16px;background:var(--well);display:grid;gap:12px;justify-items:start}
+.cmp-go p{margin:0;color:var(--ink-2);font-size:.95rem}
+.cmp-go .btn{text-decoration:none}
+.cmp-note{font-size:.8rem;color:var(--ink-3)}
+
 table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem}
 th{font-weight:500;color:var(--ink-3);text-align:left;font-size:.8rem;padding:0 12px 10px 0;border-bottom:1.5px solid var(--ink)}
 td{padding:14px 12px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -660,6 +671,27 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <a href="https://doi.org/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
         <a href="https://doi.org/10.3758/s13414-019-01869-3" target="_blank" rel="noopener" data-cta="source_wong2020app" data-cta-type="other">Wong et al. (2020). Is it impossible to acquire absolute pitch in adulthood? APP.</a>
         <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Neuroscience News coverage.</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 網頁版、App 免費、App 完整版比較（2026-11-25 Alison）：引導先下載免費版練 7 天，喜歡再買斷。App 版由 build_www.py 隱藏。價格改了要一起改 -->
+  <section class="sec ap-compare" aria-labelledby="cmpH" id="compare">
+    <div class="sec-head">
+      <h2 id="cmpH">Web version or app: what’s the difference?</h2>
+      <p>The web version stays free with all 12 notes. The app adds daily reminders and offline practice, and your browser can’t wipe your progress.</p>
+    </div>
+    <div class="sec-body">
+      <div class="tablebox cmp">
+        <table>
+          <thead><tr><th scope="col">Feature</th><th scope="col">Web</th><th scope="col">App (free)</th><th scope="col">App (full version)</th></tr></thead>
+          <tbody><tr><td>Price</td><td>Free</td><td>Free download</td><td>One-time purchase</td></tr><tr><td>Notes you can train</td><td>All 12</td><td>First 3 (C, G, E)</td><td>All 12</td></tr><tr><td>12-note perfect pitch test</td><td>✓</td><td>✓ Unlimited</td><td>✓ Unlimited</td></tr><tr><td>Mistake review</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Daily reminder</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12-note road and daily goal ring</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Works offline, plays in Silent mode</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Progress saved on your device (iCloud backup)</td><td>Browser only; may be cleared</td><td>✓</td><td>✓</td></tr><tr><td>Ads</td><td>Yes</td><td>None</td><td>None</td></tr><tr><td>Bring your web progress</td><td>—</td><td>Up to 6 notes</td><td>All of it</td></tr><tr><td>Devices</td><td>Any browser</td><td>iPhone, iPad, Mac</td><td>iPhone, iPad, Mac</td></tr></tbody>
+        </table>
+      </div>
+      <div class="cmp-go">
+        <p><b>How to start:</b> download the free app and practice the first 3 notes for 7 days. Try the daily reminders and the 12-note road. If you like it, unlock all 12 notes with a one-time purchase.</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/us/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">Get the free app and try it for 7 days →</a>
+        <p class="cmp-note">The Android version is coming soon.</p>
       </div>
     </div>
   </section>
@@ -1253,6 +1285,7 @@ function resAppLine(vi){
   return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (launch price until Nov 23)":" (try the full version free for 7 days)")+' →</a></p>';
 }
 function appLine(){
+  var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML='🎵 Android beta is open! <b>Get the full version free</b> →';a.href='https://knittinghiyori.com/en/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"The app is out! First 3 notes free, <b>launch price</b> until Nov 23 <span style=\"white-space:nowrap\">→</span>"

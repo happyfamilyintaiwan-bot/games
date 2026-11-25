@@ -284,6 +284,17 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .answer{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.55rem);line-height:1.65;font-weight:400}
 .answer b{font-weight:900}
 .tablebox{overflow-x:auto}
+/* 網頁版、App 免費、App 完整版比較（2026-11-25 Alison） */
+.cmp table{min-width:0;font-size:.88rem}
+.cmp th,.cmp td{padding-right:10px}
+.cmp td:first-child{white-space:normal;min-width:7.5em}
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center}
+.cmp th:last-child,.cmp td:last-child{background:var(--well);font-weight:700}
+.cmp-go{margin-top:20px;padding:16px 18px;border-radius:16px;background:var(--well);display:grid;gap:12px;justify-items:start}
+.cmp-go p{margin:0;color:var(--ink-2);font-size:.95rem}
+.cmp-go .btn{text-decoration:none}
+.cmp-note{font-size:.8rem;color:var(--ink-3)}
+
 table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem}
 th{font-weight:500;color:var(--ink-3);text-align:left;font-size:.8rem;padding:0 12px 10px 0;border-bottom:1.5px solid var(--ink)}
 td{padding:14px 12px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -669,6 +680,27 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <a href="https://doi.org/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
         <a href="https://doi.org/10.3758/s13414-019-01869-3" target="_blank" rel="noopener" data-cta="source_wong2020app" data-cta-type="other">Wong et al. (2020). Is it impossible to acquire absolute pitch in adulthood? APP.</a>
         <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Neuroscience News の記事。</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 網頁版、App 免費、App 完整版比較（2026-11-25 Alison）：引導先下載免費版練 7 天，喜歡再買斷。App 版由 build_www.py 隱藏。價格改了要一起改 -->
+  <section class="sec ap-compare" aria-labelledby="cmpH" id="compare">
+    <div class="sec-head">
+      <h2 id="cmpH">Web版とアプリ、何が違う？</h2>
+      <p>Web版はずっと無料で、12音すべて練習できます。アプリには毎日のお知らせとオフライン練習があり、記録がブラウザに消される心配もありません。</p>
+    </div>
+    <div class="sec-body">
+      <div class="tablebox cmp">
+        <table>
+          <thead><tr><th scope="col">機能</th><th scope="col">Web版</th><th scope="col">アプリ（無料）</th><th scope="col">アプリ（フル版）</th></tr></thead>
+          <tbody><tr><td>価格</td><td>無料</td><td>無料ダウンロード</td><td>買い切り</td></tr><tr><td>練習できる音</td><td>12音すべて</td><td>最初の3音（C・G・E）</td><td>12音すべて</td></tr><tr><td>12音の絶対音感テスト</td><td>✓</td><td>✓ 回数無制限</td><td>✓ 回数無制限</td></tr><tr><td>間違えた音の復習</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>毎日のお知らせ</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12音への道・今日の目標リング</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>オフライン練習・消音モードでも音が出る</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>記録を端末に保存（iCloudバックアップ）</td><td>ブラウザのみ（消えることがあります）</td><td>✓</td><td>✓</td></tr><tr><td>広告</td><td>あり</td><td>なし</td><td>なし</td></tr><tr><td>Web版の記録を引き継ぐ</td><td>—</td><td>最大6音</td><td>すべて</td></tr><tr><td>対応端末</td><td>ブラウザ</td><td>iPhone・iPad・Mac</td><td>iPhone・iPad・Mac</td></tr></tbody>
+        </table>
+      </div>
+      <div class="cmp-go">
+        <p><b>はじめ方：</b>まず無料アプリをダウンロードして、最初の3音で7日間練習してみてください。毎日のお知らせや12音への道を試して、気に入ったら買い切りで12音すべてを解放できます。</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/jp/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">無料アプリで7日間試す →</a>
+        <p class="cmp-note">Android版は準備中です。</p>
       </div>
     </div>
   </section>
@@ -1263,6 +1295,7 @@ function resAppLine(vi){
   return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（11/23までリリース記念価格）":"（フル版は7日間無料でお試し可）")+' →</a></p>';
 }
 function appLine(){
+  var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML='🎵 Android版テスト参加者募集中！<b>フル版が無料</b> →';a.href='https://knittinghiyori.com/ja/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"アプリ配信中！最初の3音は無料、<b>11/23までリリース記念価格</b> <span style=\"white-space:nowrap\">→</span>"
