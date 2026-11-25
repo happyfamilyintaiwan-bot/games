@@ -708,12 +708,12 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <div class="tablebox cmp">
         <table>
           <thead><tr><th scope="col">功能</th><th scope="col">網頁版</th><th scope="col">App 免費版</th><th scope="col">App 完整版</th></tr></thead>
-          <tbody><tr><td>價格</td><td>免費</td><td>免費下載</td><td>NT$590 一次買斷</td></tr><tr><td>可以練的音</td><td>全部 12 個</td><td>前 3 個（C、G、E）</td><td>全部 12 個</td></tr><tr><td>12 音絕對音感測試</td><td>✓</td><td>✓ 不限次數</td><td>✓ 不限次數</td></tr><tr><td>錯題複習</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>每天定時提醒</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12 音之路、每日目標圈</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>沒網路也能練、靜音模式也有聲音</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>紀錄存在手機、跟著 iCloud 備份</td><td>只存在瀏覽器，可能被清掉</td><td>✓</td><td>✓</td></tr><tr><td>廣告</td><td>有</td><td>沒有</td><td>沒有</td></tr><tr><td>網頁進度搬進 App</td><td>—</td><td>最多 6 個音</td><td>全部保留</td></tr><tr><td>裝置</td><td>任何瀏覽器</td><td>iPhone、iPad、Mac</td><td>iPhone、iPad、Mac</td></tr></tbody>
+          <tbody><tr><td>價格</td><td>免費</td><td>免費下載</td><td>月付 NT$150（第一次可免費試用 7 天）或一次買斷 NT$590</td></tr><tr><td>免費試用</td><td>—</td><td>不需要</td><td>只有月付：第一次 7 天，沒取消就會開始每月扣款；每個 Apple ID 只能一次。一次買斷沒有試用</td></tr><tr><td>可以練的音</td><td>全部 12 個</td><td>前 3 個（C、G、E）</td><td>全部 12 個</td></tr><tr><td>12 音絕對音感測試</td><td>✓</td><td>✓ 不限次數</td><td>✓ 不限次數</td></tr><tr><td>錯題複習</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>每天定時提醒</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12 音之路、每日目標圈</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>沒網路也能練、靜音模式也有聲音</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>紀錄存在手機、跟著 iCloud 備份</td><td>只存在瀏覽器，可能被清掉</td><td>✓</td><td>✓</td></tr><tr><td>廣告</td><td>有</td><td>沒有</td><td>沒有</td></tr><tr><td>網頁進度搬進 App</td><td>—</td><td>最多 6 個音</td><td>全部保留</td></tr><tr><td>裝置</td><td>任何瀏覽器</td><td>iPhone、iPad、Mac</td><td>iPhone、iPad、Mac</td></tr></tbody>
         </table>
       </div>
       <div class="cmp-go">
-        <p><b>怎麼開始：</b>先下載免費版，用前 3 個音練 7 天，試試每天提醒和 12 音之路；喜歡再一次買斷完整版，解鎖全部 12 個音。</p>
-        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">下載免費版，先練 7 天 →</a>
+        <p><b>怎麼開始：</b>先下載免費版，用前 3 個音練練看，試試每天提醒和 12 音之路。想練全部 12 個音有兩種方式：<b>月付</b>第一次可以免費試用 7 天（在 App 的購買畫面開始；7 天內沒取消，就會開始每月扣 NT$150；每個 Apple ID 只能試用一次），或<b>一次買斷</b> NT$590（永久使用，沒有試用）。</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">免費下載 App →</a>
         <p class="cmp-note">Android 版準備中。</p>
       </div>
     </div>
@@ -1258,7 +1258,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?'<b>早鳥價 NT$190</b> 一次買斷，解鎖全部 12 個音（到 11/23，11/24 起 NT$590）。前 3 個音免費，沒有訂閱、沒有廣告。'
-                    :'<b>完整版先免費試用 7 天</b>，之後月付 NT$150 或一次買斷 NT$590（價格以 App Store 為準）。前 3 個音一直免費，沒有廣告。';
+                    :'<b>前 3 個音一直免費</b>。完整版：月付 NT$150（第一次可免費試用 7 天，沒取消會自動扣款），或一次買斷 NT$590（沒有試用）。價格以 App Store 為準，沒有廣告。';
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1307,14 +1307,14 @@ function resAppLine(vi){
   var a=$('apLineLink');
   if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 Android 測試版開放中！<b>免費用完整版</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（早鳥 NT$190，到 11/23）":"（完整版可免費試用 7 天）")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（早鳥 NT$190，到 11/23）":"（月付可先免費試用 7 天）")+' →</a></p>';
 }
 function appLine(){
   var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
   if(IS_ANDROID){a.innerHTML='🎵 Android 測試版開放中！<b>免費用完整版</b> →';a.href='https://knittinghiyori.com/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?'App 上架了！前 3 個音免費，<b>早鳥 NT$190</b> 解鎖全部（到 11/23）<span style="white-space:nowrap">→</span>'
-                         :'App 上架了！前 3 個音免費，<b>完整版先免費試用 7 天</b> <span style="white-space:nowrap">→</span>';
+                         :'App 上架了！前 3 個音免費，<b>月付可先免費試用 7 天</b> <span style="white-space:nowrap">→</span>';
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();
