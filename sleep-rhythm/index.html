@@ -348,6 +348,22 @@ details p{margin:0 0 14px;color:#33465a}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+/* 網頁版和 App 比較、手記引導（2026-11-26 Zoe）：SLEEP_APP_URL 沒填時整區隱藏（.kh-app-card） */
+.kh-app-card[hidden]{display:none!important}
+.tablebox{overflow-x:auto}
+.cmp table{border-collapse:collapse;width:100%;font-size:15px}
+.cmp th{font-weight:500;color:var(--sea);text-align:left;font-size:13px;padding:0 10px 10px 0;border-bottom:1.5px solid var(--ink)}
+.cmp td{padding:12px 10px 12px 0;border-bottom:1px solid #d9e0e6;vertical-align:top}
+.cmp td:first-child{font-weight:700;min-width:7em}
+.cmp th:nth-child(2),.cmp td:nth-child(2){white-space:nowrap}
+.cmp th:last-child,.cmp td:last-child{background:var(--lamp-soft);padding-left:10px}
+.cmp-go{margin-top:18px;padding:16px 18px;border-radius:16px;background:var(--lamp-soft);display:grid;gap:12px;justify-items:start}
+.cmp-go p{margin:0}
+.cmp-go .btn{text-decoration:none;display:inline-flex;align-items:center}
+.cmp-note{font-size:13px;color:var(--sea)}
+.act .appnudge{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:var(--lamp-soft);font-size:14px}
+.act .appnudge b{display:block;margin-bottom:4px}
+.act .appnudge a{display:inline-block;margin-top:8px;font-weight:700;color:var(--harbor)}
 </style>
 </head>
 <body>
@@ -511,6 +527,33 @@ details p{margin:0 0 14px;color:#33465a}
       <a class="readmore" href="https://knittinghiyori.com/sleep-schedule-habit-game/" data-cta="about_article" data-cta-type="article" data-google-vignette="false">看完整研究與玩法說明 →</a>
     </section>
 
+    <!-- 網頁版和 App 比較（2026-11-26 Zoe）：價格改了要一起改；SLEEP_APP_URL 沒填時整區隱藏 -->
+    <section class="sec kh-app-card" id="compare" aria-labelledby="cmpH" hidden>
+      <h2 id="cmpH">網頁版和 App 有什麼不同？</h2>
+      <p>網頁版一直免費，打卡、手記、燈塔聯盟都能玩。App 多了到點提醒、主畫面小工具和 Apple Watch，紀錄也不會被瀏覽器清掉。</p>
+      <div class="tablebox cmp">
+        <table>
+          <thead><tr><th scope="col">功能</th><th scope="col">網頁版</th><th scope="col">App</th></tr></thead>
+          <tbody>
+            <tr><td>價格</td><td>免費</td><td>免費下載，<b>前 7 天全部功能免費</b>；之後一次買斷，沒有訂閱</td></tr>
+            <tr><td>完整版價格</td><td>—</td><td><span data-until="2027-01-31">上架首月特價 <b>NT$90</b>（到 2027 年 1 月 31 日）<br>2 月 1 日起 NT$290</span><span data-from="2027-02-01" hidden><b>NT$290</b></span></td></tr>
+            <tr><td>每天打卡、補登</td><td>✓</td><td>✓</td></tr>
+            <tr><td>港口、燈靈、33 頁守燈人手記</td><td>✓</td><td>✓</td></tr>
+            <tr><td>燈塔聯盟（和網頁版朋友互通）</td><td>✓</td><td>✓</td></tr>
+            <tr><td>起床、熄燈前提醒</td><td>—</td><td>✓ 通知上直接點燈、熄燈</td></tr>
+            <tr><td>主畫面與鎖定畫面小工具</td><td>—</td><td>✓ 不開 App 也能打卡</td></tr>
+            <tr><td>Apple Watch</td><td>—</td><td>✓ 手錶打卡、震動提醒、錶面小圖示</td></tr>
+            <tr><td>紀錄不怕瀏覽器被清掉</td><td>—</td><td>✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cmp-go">
+        <p><b>怎麼選：</b>想先試試看，網頁版就夠了。想讓燈塔每天到點提醒你、在手錶上一按就打卡，就下載 App：<b>前 7 天全部免費</b>，覺得有幫助再一次買斷。<span data-until="2027-01-31"><b>上架首月特價 NT$90，到 1 月 31 日。</b></span></p>
+        <a class="btn" href="#" data-app-link data-cta="app_compare" data-cta-type="other" target="_blank" rel="noopener">到 App Store 免費下載 →</a>
+        <p class="cmp-note">價格以 App Store 顯示為準；其他國家依當地貨幣換算。網頁版的紀錄不能搬到 App。Android 版尚未推出。</p>
+      </div>
+    </section>
+
     <section class="sec" id="faq">
       <h2>常見問題</h2>
       <details><summary>為什麼是「固定時間」，而不是「早睡早起」？</summary><p>研究追蹤的是作息規律程度：每天在同一個時間睡、同一個時間起。早晚是另一回事，所以這個遊戲讓你自己設定目標時間，只計算你和目標差多少。</p></details>
@@ -520,6 +563,7 @@ details p{margin:0 0 14px;color:#33465a}
       <details><summary>同步率怎麼算？</summary><p>每次打卡和目標相差 30 分鐘內得滿分，差 2 小時以上得零分，中間依比例計分。同步率是最近 7 天每天分數的平均。</p></details>
       <details><summary>常回來會有什麼驚喜？</summary><p>每累積一定次數的準時打卡，燈靈會長大一階，港口也會多出一樣新東西，一共 5 樣。前 21 天每天會翻開一頁守燈人手記，之後每 10 天一頁；朋友燈塔越多，還會解鎖燈號、遠方的燈、聯盟旗和煙火。</p></details>
       <details><summary>為什麼要選城市？</summary><p>用來算你所在地今天的日出與日落時間，畫在燈環外圈。城市只存在你這台裝置，不會上傳。</p></details>
+      <details class="kh-app-card" hidden><summary>有手機 App 嗎？</summary><p>有。作息燈塔 iPhone App 多了到點提醒、主畫面小工具和 Apple Watch 打卡，前 7 天全部功能免費，之後一次買斷。網頁版會一直免費。 <a href="#compare" data-cta="app_download_faq" data-cta-type="other">看網頁版和 App 的差別 →</a></p></details>
       <details><summary>這可以取代醫師建議嗎？</summary><p>不行。這是幫你養成習慣的遊戲，不是醫療工具。如果長期失眠、白天嗜睡或打鼾嚴重，請諮詢醫師或睡眠專科。</p></details>
     </section>
 
@@ -590,6 +634,8 @@ details p{margin:0 0 14px;color:#33465a}
 
 <script>
 /* 聯盟連結設定：網址不可含和號；空字串時按鈕與揭露文字都不顯示 */
+/* App Store 網址（上架日填入，帶 ct=webpage-sleep）；空字串時比較表、FAQ 的 App 題、手記引導都不顯示 */
+window.SLEEP_APP_URL='';
 window.SLEEP_LINKS={eluanbi:'https://klook.tpk.ro/6eB8W3S8',fuguijiao:'https://klook.tpk.ro/AFEYvT5T'};
 window.HY_GAME_ID='sleep_rhythm';
 window.HY_GAME_ROOT='#app';
@@ -908,7 +954,7 @@ function renderAct(p){
     if(p.o){pick.textContent='你的回覆：'+fillName(p.o[a][0]);rp.textContent=fillName(p.o[a][1]);}
     else if(p.nm){pick.textContent='你取的名字：'+(p.nm==='spirit'?spiritName():(S.ally||''));rp.textContent=fillName(p.r);}
     else{pick.textContent='你打出的燈號：'+SIG[a];rp.textContent=S.friends.length?'朋友打開連結後，就會在海圖上看到你的燈號。':'朋友打開連結後，就會看到你的燈號。';}
-    box.appendChild(pick);box.appendChild(rp);return;
+    box.appendChild(pick);box.appendChild(rp);appNudge(p,box);return;
   }
   if(p.nm){
     var row=document.createElement('div');row.className='paste';
@@ -925,6 +971,36 @@ function renderAct(p){
   }
   box.appendChild(wrap);
   if(p.sig){var n=document.createElement('p');n.className='note';n.style.margin='8px 0 0';n.textContent='選了就會分享一個連結，朋友打開後會看到你的燈號和燈塔進度。';box.appendChild(n);}
+}
+/* 手記答題後的 App 引導（2026-11-26 Zoe）：只在 5 頁、回答完才出現；SLEEP_APP_URL 沒填時不出現 */
+var APP_NUDGE={
+  d03:['週末也不用自己記','作息燈塔 App 每天到點提醒你點燈，週末也一樣，通知上按一下就打卡。'],
+  d05:['熄燈前 30 分鐘，App 會提醒你','作息燈塔 App 在熄燈前 30 分鐘提醒你收工，通知上直接按「熄燈」就好。'],
+  d07:['讓燈塔跟著你走','作息燈塔 App 有主畫面小工具和 Apple Watch，不用打開網頁也能打卡。'],
+  d14:['手錶輕輕震一下','作息燈塔 App 的 Apple Watch 版會在起床、熄燈時間震動提醒，手腕一按就打卡。'],
+  d21:['打底完成，接著一路守到第 100 天','作息燈塔 App 的紀錄不怕瀏覽器被清掉，手記和港口會一路陪你。前 7 天全部免費。']
+};
+function appNudge(p,box){
+  if(!window.SLEEP_APP_URL){return;}
+  var n=APP_NUDGE[p.id];if(!n){return;}
+  var d=document.createElement('div');d.className='appnudge';
+  var b=document.createElement('b');b.textContent=n[0];d.appendChild(b);
+  d.appendChild(document.createTextNode(n[1]));
+  var a=document.createElement('a');a.href='#compare';a.textContent='看網頁版和 App 的差別 →';
+  /* 只用下面這一筆 track（帶頁碼 option）；不加 data-cta，避免全頁點擊追蹤再記一次 */
+  a.addEventListener('click',function(){track('cta_click',{cta_id:'app_diary',cta_type:'other',option:p.id});var dlg=document.getElementById('dlgDiary');try{dlg.close();}catch(e){dlg.removeAttribute('open');}});
+  d.appendChild(a);box.appendChild(d);
+}
+/* App 連結與價格文字：SLEEP_APP_URL 填了才顯示 App 區；data-until／data-from 依日期切換 */
+function initApp(){
+  var url=window.SLEEP_APP_URL,i;
+  var cards=document.querySelectorAll('.kh-app-card');
+  for(i=0;i<cards.length;i++){cards[i].hidden=!url;}
+  if(!url){return;}
+  var links=document.querySelectorAll('[data-app-link]');
+  for(i=0;i<links.length;i++){links[i].href=url;}
+  var t=today(),el=document.querySelectorAll('[data-until],[data-from]');
+  for(i=0;i<el.length;i++){var u=el[i].getAttribute('data-until'),f=el[i].getAttribute('data-from');el[i].hidden=(u&&t>u)||(f&&t<f)?true:false;}
 }
 var openPage=null;
 function openDiary(id){
@@ -1524,6 +1600,7 @@ bind('btnReset','click',function(){
 })();
 /* 聯盟連結 */
 (function(){
+  try{initApp();}catch(e){}
   try{
     var L2=window.SLEEP_LINKS||{},as=document.querySelectorAll('[data-aff]'),any=false;
     for(var i=0;i<as.length;i++){var u=L2[as[i].getAttribute('data-aff')];if(u){as[i].href=u;any=true;}else{as[i].closest('.trip').style.display='none';}}
