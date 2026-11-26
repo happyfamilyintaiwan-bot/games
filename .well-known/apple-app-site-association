@@ -6,6 +6,12 @@
         "components": [
           { "/": "/hiyori-pet/*", "#": "visit=*", "comment": "日和毛孩串門子連結：裝了 App 就開 App，沒裝照常開網頁版" }
         ]
+      },
+      {
+        "appIDs": ["2S543TB96D.com.knittinghiyori.sleeprhythm"],
+        "components": [
+          { "/": "/sleep-rhythm/*", "#": "f=*", "comment": "作息燈塔邀請朋友連結：裝了 App 就開 App 加朋友，沒裝照常開網頁版" }
+        ]
       }
     ]
   }
