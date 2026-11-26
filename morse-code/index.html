@@ -64,7 +64,7 @@
 {"@type":"Question","name":"什麼是 Koch 法？","acceptedAnswer":{"@type":"Answer","text":"Koch 法是德國心理學家 Ludwig Koch 在 1936 年提出的摩斯碼訓練方式：從 K、M 這種聲音差異大的兩個字開始，用接近正式的速度練，正確率約 90% 才加入下一個字元。今天 LCWO 等線上課程都採用這個方法，本遊戲的 41 個字元順序也取自 LCWO。"}},
 {"@type":"Question","name":"練習器的速度可以調嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。在「聲音與速度設定」裡調字元速度（每分鐘 12～35 字）、有效速度（每分鐘 5～35 字）、音高和音量。預設是字元速度 20、有效速度 12：字本身維持正式速度，只把字和字之間的空白拉長。"}},
 {"@type":"Question","name":"我的練習紀錄存在哪裡？","acceptedAnswer":{"@type":"Answer","text":"紀錄只存在這台裝置的瀏覽器裡，不會上傳。換手機或清除瀏覽器資料後，會從第一盞燈重新開始；在日誌最下方也可以自己清除紀錄。"}},
-{"@type":"Question","name":"有手機 App 嗎？","acceptedAnswer":{"@type":"Answer","text":"有。守燈人摩斯日誌 iPhone、iPad App 預計 2026 年 11 月 25 日上架：離線也能練、每天提醒值班、可以用震動感受摩斯碼。網頁版會一直免費。"}}
+{"@type":"Question","name":"有手機 App 嗎？","acceptedAnswer":{"@type":"Answer","text":"有。守燈人摩斯日誌 iPhone、iPad App 已在 App Store 上架：離線也能練、每天提醒值班、可以用震動感受摩斯碼，前 10 盞燈免費。網頁版會一直免費。完整版早鳥價 NT$190（到 2026 年 12 月 30 日），12 月 31 日起原價 NT$590。"}}
 ]}]}
 </script>
 <meta name="spec-version" content="core-v1.9.1/games-v1.11.1">
@@ -387,6 +387,17 @@ p{margin:0}
 .kh-ad:has(ins[data-ad-status="unfilled"]){display:none}
 .kh-legal{display:block;max-width:640px;font-size:12px;line-height:1.8;color:var(--ink-3);text-align:center;margin:16px auto 24px;padding:0 16px}
 .kh-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+/* 網頁版、App 比較（2026-11-26）：App 版由 build_www.py 隱藏（.kh-app-card） */
+.tablebox{overflow-x:auto}
+.cmp table{border-collapse:collapse;width:100%;font-size:.9rem}
+.cmp th{font-weight:500;color:var(--ink-3);text-align:left;font-size:.8rem;padding:0 10px 10px 0;border-bottom:1.5px solid var(--ink)}
+.cmp td{padding:12px 10px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.cmp td:first-child{font-weight:700;min-width:7em}
+.cmp th:last-child,.cmp td:last-child{background:var(--well);padding-left:10px}
+.cmp-go{margin-top:20px;padding:16px 18px;border-radius:16px;background:var(--well);display:grid;gap:12px;justify-items:start}
+.cmp-go p{margin:0;color:var(--ink-2);font-size:.95rem}
+.cmp-go .btn{text-decoration:none}
+.cmp-note{font-size:.8rem;color:var(--ink-3)}
 </style>
 </head>
 <body>
@@ -648,11 +659,32 @@ p{margin:0}
         <a class="btn line" href="https://s.shopee.tw/1LgH1Ug79D" target="_blank" rel="sponsored nofollow noopener" data-cta="gear_card" data-cta-type="shopee" style="justify-self:start">看 AirPods 5（蝦皮）→</a>
       </article>
       <p class="disc-txt">本區含蝦皮聯盟行銷連結。透過連結購買，本站會獲得分潤，你支付的價格不變。</p>
-      <article class="light kh-app-soon">
-        <h3>📱 iPhone App 11 月 25 日上架</h3>
-        <p>守燈人摩斯日誌 App：離線也能練、每天提醒值班、可以用震動感受摩斯碼。網頁版會一直免費。</p>
-        <a class="btn line" href="https://knittinghiyori.com/subscribe/" data-cta="app_notify" data-cta-type="newsletter" style="justify-self:start">上架時通知我（訂閱電子報）→</a>
+      <article class="light kh-app-card">
+        <h3>📱 iPhone、iPad App 上架了</h3>
+        <p>守燈人摩斯日誌 App：離線也能練、每天提醒值班、可以用震動感受摩斯碼。前 10 盞燈免費，網頁版也會一直免費。</p>
+        <a class="btn line" href="https://apps.apple.com/app/apple-store/id6829480462?pt=129119700&amp;ct=webpage-morse&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" style="justify-self:start">到 App Store 免費下載 →</a>
       </article>
+    </div>
+  </section>
+
+  <!-- 網頁版和 App 比較（2026-11-26 Alison）：價格改了要一起改；App 版由 build_www.py 隱藏（.kh-app-card） -->
+  <section class="sec kh-app-card" aria-labelledby="cmpH" id="compare">
+    <div class="sec-head">
+      <h2 id="cmpH">網頁版和 App 有什麼不同？</h2>
+      <p>網頁版一直免費、41 盞燈全開。App 多了離線練習、每天提醒和震動摩斯，紀錄也不會被瀏覽器清掉。</p>
+    </div>
+    <div class="sec-body">
+      <div class="tablebox cmp">
+        <table>
+          <thead><tr><th scope="col">功能</th><th scope="col">網頁版</th><th scope="col">App</th></tr></thead>
+          <tbody><tr><td>價格</td><td>免費</td><td>免費下載，前 10 盞燈免費；完整版一次買斷</td></tr><tr><td>完整版價格</td><td>—</td><td>早鳥價 <b>NT$190</b>（到 2026 年 12 月 30 日）<br>12 月 31 日起原價 <b>NT$590</b></td></tr><tr><td>可以練的字</td><td>全部 41 個</td><td>免費 10 個，完整版 41 個</td></tr><tr><td>老守燈人日誌</td><td>✓</td><td>免費版到第 10 盞，完整版全部</td></tr><tr><td>沒網路也能練</td><td>—</td><td>✓</td></tr><tr><td>每天定時提醒</td><td>—</td><td>✓</td></tr><tr><td>震動摩斯（用觸覺感受嘀噠）</td><td>—</td><td>✓（iPhone）</td></tr><tr><td>靜音模式也有聲音</td><td>—</td><td>✓</td></tr><tr><td>紀錄存在哪</td><td>只存在瀏覽器，可能被清掉</td><td>存在手機，跟著 iCloud 備份</td></tr><tr><td>廣告</td><td>有</td><td>沒有</td></tr><tr><td>裝置</td><td>任何瀏覽器（含 Android、電腦）</td><td>iPhone、iPad</td></tr></tbody>
+        </table>
+      </div>
+      <div class="cmp-go">
+        <p><b>怎麼選：</b>想先試試看，網頁版就能練完全部 41 個字。想每天在手機上值班、離線也能練，就下載 App：前 10 盞燈免費，喜歡再一次買斷完整版。<b>早鳥價 NT$190 到 12 月 30 日</b>，12 月 31 日起恢復原價 NT$590。沒有訂閱。</p>
+        <a class="btn" href="https://apps.apple.com/app/apple-store/id6829480462?pt=129119700&amp;ct=webpage-morse&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">到 App Store 免費下載 →</a>
+        <p class="cmp-note">價格以 App Store 顯示為準；其他國家依當地貨幣換算。Android 版尚未推出。</p>
+      </div>
     </div>
   </section>
 
@@ -702,7 +734,7 @@ p{margin:0}
         <div><dt>什麼是 Koch 法？</dt><dd>Koch 法是德國心理學家 Ludwig Koch 在 1936 年提出的摩斯碼訓練方式：從 K、M 這種聲音差異大的兩個字開始，用接近正式的速度練，正確率約 90% 才加入下一個字元。今天 LCWO 等線上課程都採用這個方法，本遊戲的 41 個字元順序也取自 LCWO。</dd></div>
         <div><dt>練習器的速度可以調嗎？</dt><dd>可以。在「聲音與速度設定」裡調字元速度（每分鐘 12～35 字）、有效速度（每分鐘 5～35 字）、音高和音量。預設是字元速度 20、有效速度 12：字本身維持正式速度，只把字和字之間的空白拉長。</dd></div>
         <div><dt>我的練習紀錄存在哪裡？</dt><dd>紀錄只存在這台裝置的瀏覽器裡，不會上傳。換手機或清除瀏覽器資料後，會從第一盞燈重新開始；在日誌最下方也可以自己清除紀錄。</dd></div>
-        <div class="kh-app-soon"><dt>有手機 App 嗎？</dt><dd>有。守燈人摩斯日誌 iPhone、iPad App 預計 2026 年 11 月 25 日上架：離線也能練、每天提醒值班、可以用震動感受摩斯碼。網頁版會一直免費。</dd></div>
+        <div class="kh-app-card"><dt>有手機 App 嗎？</dt><dd>有。守燈人摩斯日誌 iPhone、iPad App 已在 App Store 上架：離線也能練、每天提醒值班、可以用震動感受摩斯碼，前 10 盞燈免費。網頁版會一直免費。完整版早鳥價 NT$190（到 2026 年 12 月 30 日），12 月 31 日起原價 NT$590。 <a href="https://apps.apple.com/app/apple-store/id6829480462?pt=129119700&amp;ct=webpage-morse&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_faq" data-cta-type="other">到 App Store 下載 →</a></dd></div>
       </dl>
     </div>
   </section>
