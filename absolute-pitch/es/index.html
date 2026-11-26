@@ -210,6 +210,7 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .ap-appline{margin:14px 0 0;padding:12px 16px;border-radius:14px;background:var(--well);text-align:center;font-size:.95rem}
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 .ap-appline .ap-appline__more{display:inline-block;margin-top:6px;font-weight:400;font-size:.88rem;min-height:24px}
+.ap-appline__sep{margin:0 6px;color:var(--ink-3)}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
 .verdict-k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3)}
 .verdict-yes{font-size:1.6rem}
@@ -283,6 +284,17 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .answer{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.55rem);line-height:1.65;font-weight:400}
 .answer b{font-weight:900}
 .tablebox{overflow-x:auto}
+/* 網頁版、App 免費、App 完整版比較（2026-11-25 Alison） */
+.cmp table{min-width:0;font-size:.88rem}
+.cmp th,.cmp td{padding-right:10px}
+.cmp td:first-child{white-space:normal;min-width:7.5em}
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center}
+.cmp th:last-child,.cmp td:last-child{background:var(--well);font-weight:700}
+.cmp-go{margin-top:20px;padding:16px 18px;border-radius:16px;background:var(--well);display:grid;gap:12px;justify-items:start}
+.cmp-go p{margin:0;color:var(--ink-2);font-size:.95rem}
+.cmp-go .btn{text-decoration:none}
+.cmp-note{font-size:.8rem;color:var(--ink-3)}
+
 table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem}
 th{font-weight:500;color:var(--ink-3);text-align:left;font-size:.8rem;padding:0 12px 10px 0;border-bottom:1.5px solid var(--ink)}
 td{padding:14px 12px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -568,7 +580,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
     </div>
   </section>
 
-  <p class="ap-appline"><a href="https://apps.apple.com/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">Ya está la app para iPhone: recordatorio diario y un progreso que no se borra. <span style="white-space:nowrap">Descarga gratis →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/es/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">Conoce la app</a></p>
+  <p class="ap-appline"><a href="https://apps.apple.com/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">Ya está la app para iPhone: recordatorio diario y un progreso que no se borra. <span style="white-space:nowrap">Descarga gratis →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/es/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">Conoce la app</a><span class="ap-appline__sep" aria-hidden="true">・</span><a class="ap-appline__more" href="#compare">Compara web y app</a></p>
 
   <div class="share" aria-label="Compartir">
     <p id="shareLabel">Entrena con una amistad y mira quién desbloquea primero las 12 notas.</p>
@@ -581,6 +593,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <button type="button" data-share="copy_link" id="copyBtn">Copiar enlace</button>
     </div>
   </div>
+
+  <!-- 下一款（2026-11-26 Alison）：英日西版只有絕對音感和摩斯密碼，兩款互相推薦（都用耳朵學、都照研究設計）。hy-next.js 只有中文，這裡寫死；cta_id next_game -->
+  <section class="xnext" aria-labelledby="xNextH"><style>.xnext{max-width:960px;margin:28px auto;padding:0 16px;box-sizing:border-box}.xnext h2{font-size:18px;line-height:1.4;margin:0 0 4px;font-weight:700}.xnext h2 small{display:block;font-size:12px;font-weight:500;color:var(--ink-3,#5f5f66);letter-spacing:.12em}.xnext>p{margin:0 0 12px;font-size:14px;color:var(--ink-2,#4b4d57)}.xnext a{display:grid;gap:4px;max-width:420px;padding:14px 16px;border:1.5px solid #e2e2e6;border-radius:14px;background:#fff;color:#16161a;text-decoration:none}.xnext a:hover{border-color:#16161a}.xnext a:focus-visible{outline:3px solid #16161a;outline-offset:2px}.xnext a b{font-size:15px;line-height:1.45}.xnext a span{font-size:13px;line-height:1.6;color:#5f5f66}.xnext a em{font-style:normal;font-size:13px;font-weight:700}</style><h2 id="xNextH"><small>NEXT</small>Prueba también</h2><p>Otro juego gratis para aprender de oído, diseñado a partir de la investigación.</p><a href="/morse-code/es/" data-cta="next_game" data-cta-type="game"><b>Faro Morse: aprende código Morse de oído</b><span>Basado en el estudio de Koch de 1936: empiezas con dos letras y sumas una cada vez que llegas al 90 % de aciertos.</span><em>Jugar →</em></a></section>
 
   <section class="sec" aria-labelledby="recH">
     <div class="sec-head">
@@ -644,11 +659,12 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <li>No hace falta hablar una lengua tonal: en el estudio de 2020 (b), personas que no la hablan también lo lograron.</li>
         </ul>
       <div>
-        <h3>Seis cosas que este juego toma de los estudios</h3>
+        <h3>Siete cosas que este juego toma de los estudios</h3>
         <ul class="methods">
           <li><b>Una nota más cada vez</b><span>Empiezas con una sola nota y respondes “Otra” para todo lo demás. Una nota nueva se desbloquea solo con 90% de aciertos en 20 preguntas y una respuesta lo bastante rápida.</span></li>
           <li><b>Nombres de notas, no teclas</b><span>Cada nota aparece en tres octavas al azar, así tu oído se fija en el “color” de la nota y no en su altura.</span></li>
           <li><b>Rompe el oído relativo</b><span>Un segundo de ruido entre notas evita que calcules la respuesta a partir de la nota anterior.</span></li>
+          <li><b>Cada nota suena una vez</b><span>No se puede repetir: la reconoces en el momento en que la oyes. Las pruebas estándar de oído absoluto usadas en los estudios tampoco permiten repetir. Solo al fallar oyes tu respuesta y la nota correcta para compararlas.</span></li>
           <li><b>Preciso y rápido</b><span>El oído absoluto es reconocer al instante, no calcular, así que el tiempo de respuesta también cuenta.</span></li>
           <li><b>Cambia el sonido</b><span>Si solo entrenas con piano, otros instrumentos te costarán. Los sonidos mixtos ayudan a que la habilidad se transfiera.</span></li>
           <li><b>Un poco cada día, durante semanas</b><span>Los estudios de 2019 y 2025 duraron unas 8 semanas, con unas 2,5 a 4 horas por semana. De diez a veinte minutos al día rinden más que tres horas una vez por semana.</span></li>
@@ -659,6 +675,27 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <a href="https://doi.org/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
         <a href="https://doi.org/10.3758/s13414-019-01869-3" target="_blank" rel="noopener" data-cta="source_wong2020app" data-cta-type="other">Wong et al. (2020). Is it impossible to acquire absolute pitch in adulthood? APP.</a>
         <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Nota de Neuroscience News (en inglés).</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 網頁版、App 免費、App 完整版比較（2026-11-25 Alison）：引導先下載免費版練 7 天，喜歡再買斷。App 版由 build_www.py 隱藏。價格改了要一起改 -->
+  <section class="sec ap-compare" aria-labelledby="cmpH" id="compare">
+    <div class="sec-head">
+      <h2 id="cmpH">¿Web o app? Las diferencias</h2>
+      <p>La versión web sigue siendo gratis y tiene las 12 notas. La app añade recordatorios diarios y práctica sin conexión, y el navegador no puede borrar tu progreso.</p>
+    </div>
+    <div class="sec-body">
+      <div class="tablebox cmp">
+        <table>
+          <thead><tr><th scope="col">Función</th><th scope="col">Web</th><th scope="col">App (gratis)</th><th scope="col">App (versión completa)</th></tr></thead>
+          <tbody><tr><td>Precio</td><td>Gratis</td><td>Descarga gratis</td><td>Plan mensual (prueba gratis de 7 días para nuevos suscriptores) o un solo pago</td></tr><tr><td>Prueba gratis</td><td>—</td><td>No hace falta</td><td>Solo el plan mensual: 7 días; después se cobra cada mes si no cancelas. Una prueba por Apple ID. El pago único no tiene prueba</td></tr><tr><td>Notas que puedes entrenar</td><td>Las 12</td><td>Las 3 primeras (C, G, E)</td><td>Las 12</td></tr><tr><td>Test de oído absoluto de 12 notas</td><td>✓</td><td>✓ Ilimitado</td><td>✓ Ilimitado</td></tr><tr><td>Repaso de errores</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>Recordatorio diario</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Camino de las 12 notas y anillo de meta diaria</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Sin conexión y con sonido en modo silencio</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>Progreso guardado en tu dispositivo (copia en iCloud)</td><td>Solo en el navegador; puede borrarse</td><td>✓</td><td>✓</td></tr><tr><td>Anuncios</td><td>Sí</td><td>No</td><td>No</td></tr><tr><td>Pasar tu progreso web</td><td>—</td><td>Hasta 6 notas</td><td>Todo</td></tr><tr><td>Dispositivos</td><td>Cualquier navegador</td><td>iPhone, iPad, Mac</td><td>iPhone, iPad, Mac</td></tr></tbody>
+        </table>
+      </div>
+      <div class="cmp-go">
+        <p><b>Cómo empezar:</b> descarga la app gratis y practica las 3 primeras notas. Prueba los recordatorios y el camino de las 12 notas. Para desbloquear las 12 notas, elige un <b>plan mensual</b> que empieza con 7 días gratis (se activa desde la pantalla de compra de la app; si no cancelas al menos 24 horas antes de que termine la prueba, empieza el cobro mensual; una prueba por Apple ID) o un <b>pago único</b> (para siempre, sin prueba).</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">Descarga la app gratis →</a>
+        <p class="cmp-note">La versión para Android llegará pronto.</p>
       </div>
     </div>
   </section>
@@ -1200,7 +1237,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?"<b>Precio de lanzamiento hasta el 23 de noviembre</b>: desbloquea las 12 notas con un solo pago. Las 3 primeras notas son gratis. Sin suscripción ni anuncios."
-                    :"Las 3 primeras notas son gratis; desbloquea las 12 con un solo pago (precio en el App Store). Sin suscripción ni anuncios.";
+                    :"<b>Las 3 primeras notas siempre gratis.</b> Versión completa: plan mensual con 7 días de prueba gratis (se cobra si no cancelas) o un solo pago (sin prueba). Precios en el App Store. Sin anuncios.";
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1218,8 +1255,17 @@ function nodeReady(id,st){
   return false;
 }
 function maybeAppCard(st){
-  if(mode||IS_ANDROID||!$('appCard').hidden)return;
+  if(mode||!$('appCard').hidden)return;
   var N=S.appNudge||(S.appNudge={seen:{},last:'',dismiss:0,clicked:false});
+  if(IS_ANDROID){ /* 2026-11-22 Alison：Android 封閉測試開放中，Android 玩家跳一次小卡（cta_id android_test） */
+    if(N.seen.android)return;
+    N.seen.android=dkey();N.last=dkey();save();
+    $('appCardText').innerHTML='<b>¡Llega la app para Android!</b>Durante la prueba, la versión completa (las 12 notas) es gratis: recordatorio diario, práctica sin conexión y un progreso que el navegador no borra. Aún faltan algunos testers y unirte toma 3 minutos. Si sigues 14 días, al lanzarla te enviamos un código para desbloquear la versión completa.';
+    var L=$('appCardLink');L.href='https://knittinghiyori.com/es/apps/absolute-pitch/#android';L.textContent='Cómo unirte →';L.setAttribute('data-cta','android_test');L.setAttribute('data-cta-type','article');
+    $('appCardMove').hidden=true;
+    $('appCard').hidden=false;
+    return;
+  }
   if(S.appCard&&!N.seen.unlock4)N.seen.unlock4=S.appCard; /* 舊版小卡看過的人，不再重複 unlock4 */
   if(N.clicked||N.dismiss>=2||N.last===dkey())return;
   for(var i=0;i<APP_NODES.length;i++){
@@ -1238,15 +1284,16 @@ function maybeAppCard(st){
 var RES_APP=["La app grafica tus tests semanales para ver si tu oído se mantiene así de fino", "Algunas notas ya están firmes. La app te recuerda practicar cada día para completar las demás, una a una", "El oído absoluto empieza con una nota. La app te recuerda practicar 10 minutos al día; las 3 primeras notas son gratis"];
 function resAppLine(vi){
   var a=$('apLineLink');
-  if(IS_ANDROID)return '';
+  if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/es/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 ¡Beta de Android abierta! <b>Versión completa gratis</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (precio de lanzamiento hasta el 23 de noviembre)":"")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?" (precio de lanzamiento hasta el 23 de noviembre)":" (el plan mensual empieza con 7 días gratis)")+' →</a></p>';
 }
 function appLine(){
+  var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
-  if(IS_ANDROID){a.innerHTML="Apps para iPhone, iPad y Mac disponibles (Android, próximamente)";a.removeAttribute('href');return}
+  if(IS_ANDROID){a.innerHTML='🎵 ¡Beta de Android abierta! <b>Versión completa gratis</b> →';a.href='https://knittinghiyori.com/es/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"¡Ya está la app! 3 primeras notas gratis, <b>precio de lanzamiento</b> hasta el 23 de nov. <span style=\"white-space:nowrap\">→</span>"
-                         :"Ya está la app: recordatorios diarios y un progreso que no se pierde. 3 primeras notas gratis <span style=\"white-space:nowrap\">→</span>";
+                         :"Ya está la app: recordatorios diarios y un progreso que no se pierde. <b>Plan mensual: 7 días gratis</b> <span style=\"white-space:nowrap\">→</span>";
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();

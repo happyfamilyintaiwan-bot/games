@@ -200,6 +200,7 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .ap-appline{margin:14px 0 0;padding:12px 16px;border-radius:14px;background:var(--well);text-align:center;font-size:.95rem}
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 .ap-appline .ap-appline__more{display:inline-block;margin-top:6px;font-weight:400;font-size:.88rem;color:var(--ink);min-height:24px}
+.ap-appline__sep{margin:0 6px;color:var(--ink-3)}
 .appcard{border:1.5px solid var(--ink);border-radius:18px;padding:14px 16px;display:grid;gap:10px}
 .appcard p{font-size:.93rem;color:var(--ink-2)}
 .appcard p b{color:var(--ink);display:block;font-size:1rem}
@@ -291,6 +292,17 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .answer{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.55rem);line-height:1.65;font-weight:400}
 .answer b{font-weight:900}
 .tablebox{overflow-x:auto}
+/* 網頁版、App 免費、App 完整版比較（2026-11-25 Alison） */
+.cmp table{min-width:0;font-size:.88rem}
+.cmp th,.cmp td{padding-right:10px}
+.cmp td:first-child{white-space:normal;min-width:7.5em}
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center}
+.cmp th:last-child,.cmp td:last-child{background:var(--well);font-weight:700}
+.cmp-go{margin-top:20px;padding:16px 18px;border-radius:16px;background:var(--well);display:grid;gap:12px;justify-items:start}
+.cmp-go p{margin:0;color:var(--ink-2);font-size:.95rem}
+.cmp-go .btn{text-decoration:none}
+.cmp-note{font-size:.8rem;color:var(--ink-3)}
+
 table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem}
 th{font-weight:500;color:var(--ink-3);text-align:left;font-size:.8rem;padding:0 12px 10px 0;border-bottom:1.5px solid var(--ink)}
 td{padding:14px 12px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -579,7 +591,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
     </div>
   </section>
 
-  <p class="ap-appline"><a href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">iPhone App 上架了！每天提醒你練、紀錄不會不見，<span style="white-space:nowrap">免費下載 →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">看 App 介紹</a></p>
+  <p class="ap-appline"><a href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">iPhone App 上架了！每天提醒你練、紀錄不會不見，<span style="white-space:nowrap">免費下載 →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">看 App 介紹</a><span class="ap-appline__sep" aria-hidden="true">・</span><a class="ap-appline__more" href="#compare">比較網頁版和 App</a></p>
 
   <!-- 下一款玩什麼（/lib/hy-next.js 依主頁卡片自動產生；cta_id next_game） -->
   <section data-hy-next hidden></section>
@@ -666,11 +678,12 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <li>不一定要有聲調語言背景：2020（b）的受試者都不說聲調語言，一樣有人練成。</li>
         </ul>
       <div>
-        <h3>這個遊戲照研究做的 6 件事</h3>
+        <h3>這個遊戲照研究做的 7 件事</h3>
         <ul class="methods">
           <li><b>一次只多一個音</b><span>先只認一個音，其他都答「其他」。近 20 題 90% 正確、反應夠快，才解鎖下一個。</span></li>
           <li><b>練音名，不練琴鍵</b><span>同一個音名在三個八度隨機出現，逼耳朵抓音的色彩，而不是高低。</span></li>
           <li><b>切斷相對音感</b><span>題與題之間放一秒噪音，避免拿上一題的音來推算這一題。</span></li>
+          <li><b>每個音只聽一次</b><span>不能重聽，要在聽到的當下認出來。研究用的標準絕對音感測驗也規定不能重複聽。答錯時才會播你按的音和正確的音，讓你比較差在哪。</span></li>
           <li><b>又準又快才算數</b><span>絕對音感是一聽就知道，不是慢慢推算，所以反應時間也要過關。</span></li>
           <li><b>換音色</b><span>只聽鋼琴，換成別的樂器就容易失準。混合音色有助能力轉移。</span></li>
           <li><b>每天一點，連續數週</b><span>2019、2025 年的研究都是連續約 8 週，平均每週約 2.5 到 4 小時。每天 10 到 20 分鐘，勝過週末一次 3 小時。</span></li>
@@ -682,6 +695,27 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <a href="https://doi.org/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
         <a href="https://doi.org/10.3758/s13414-019-01869-3" target="_blank" rel="noopener" data-cta="source_wong2020app" data-cta-type="other">Wong et al. (2020). Is it impossible to acquire absolute pitch in adulthood? APP.</a>
         <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Neuroscience News 報導。</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 網頁版、App 免費、App 完整版比較（2026-11-25 Alison）：引導先下載免費版練 7 天，喜歡再買斷。App 版由 build_www.py 隱藏。價格改了要一起改 -->
+  <section class="sec ap-compare" aria-labelledby="cmpH" id="compare">
+    <div class="sec-head">
+      <h2 id="cmpH">網頁版和 App 有什麼不同？</h2>
+      <p>網頁版一直免費、12 個音全開。App 多了每天提醒、離線練習，紀錄也不會被瀏覽器清掉。</p>
+    </div>
+    <div class="sec-body">
+      <div class="tablebox cmp">
+        <table>
+          <thead><tr><th scope="col">功能</th><th scope="col">網頁版</th><th scope="col">App 免費版</th><th scope="col">App 完整版</th></tr></thead>
+          <tbody><tr><td>價格</td><td>免費</td><td>免費下載</td><td>月付 NT$150（第一次可免費試用 7 天）或一次買斷 NT$590</td></tr><tr><td>免費試用</td><td>—</td><td>不需要</td><td>只有月付：第一次 7 天，沒取消就會開始每月扣款；每個 Apple ID 只能一次。一次買斷沒有試用</td></tr><tr><td>可以練的音</td><td>全部 12 個</td><td>前 3 個（C、G、E）</td><td>全部 12 個</td></tr><tr><td>12 音絕對音感測試</td><td>✓</td><td>✓ 不限次數</td><td>✓ 不限次數</td></tr><tr><td>錯題複習</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>每天定時提醒</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12 音之路、每日目標圈</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>沒網路也能練、靜音模式也有聲音</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>紀錄存在手機、跟著 iCloud 備份</td><td>只存在瀏覽器，可能被清掉</td><td>✓</td><td>✓</td></tr><tr><td>廣告</td><td>有</td><td>沒有</td><td>沒有</td></tr><tr><td>網頁進度搬進 App</td><td>—</td><td>最多 6 個音</td><td>全部保留</td></tr><tr><td>裝置</td><td>任何瀏覽器</td><td>iPhone、iPad、Mac</td><td>iPhone、iPad、Mac</td></tr></tbody>
+        </table>
+      </div>
+      <div class="cmp-go">
+        <p><b>怎麼開始：</b>先下載免費版，用前 3 個音練練看，試試每天提醒和 12 音之路。想練全部 12 個音有兩種方式：<b>月付</b>第一次可以免費試用 7 天（在 App 的購買畫面開始；7 天內沒取消，就會開始每月扣 NT$150；每個 Apple ID 只能試用一次），或<b>一次買斷</b> NT$590（永久使用，沒有試用）。</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/tw/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">免費下載 App →</a>
+        <p class="cmp-note">Android 版準備中。</p>
       </div>
     </div>
   </section>
@@ -1211,7 +1245,8 @@ function streak(){
 /* ---------- 導流到 App：節點小卡（2026-11-09 Alison） ----------
    網頁版功能全部照舊免費；只在「剛好有成就感」或「紀錄有風險」的時候提一次 App 的好處。
    規則：每個節點一輩子一次；一天最多一張；練習中不跳（等暫停或練完）；按「知道了」累計 2 次、或點過下載，就不再跳卡片（遊戲下方那一行一直都在）。
-   Android 先不跳（App 只有 iPhone／iPad／Mac 版）。早鳥價 2026-11-23 晚上 12 點（台灣時間）前顯示，之後自動換成「NT$590」（2026-11-10 Alison：11/24 起原價賣一週，之後再決定要不要打折）。Android 那一行連到 App 介紹頁的 Android 測試報名。 */
+   Android 先不跳（App 只有 iPhone／iPad／Mac 版）。早鳥價 2026-11-23 晚上 12 點（台灣時間）前顯示，之後自動換成「NT$590」（2026-11-10 Alison：11/24 起原價賣一週，之後再決定要不要打折）。Android 那一行連到 App 介紹頁的 Android 測試報名。
+   2026-11-22 Alison：Android 封閉測試開放中 → Android 兩行改「測試版開放中，免費用完整版」（cta_id android_test）；Android 玩家另外跳一次小卡（一輩子一次，節點 android）。 */
 var EARLY_END=Date.parse('2026-11-24T00:00:00+08:00');
 function earlyBird(){return Date.now()<EARLY_END}
 var IS_ANDROID=/Android/i.test(navigator.userAgent||'');
@@ -1224,7 +1259,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?'<b>早鳥價 NT$190</b> 一次買斷，解鎖全部 12 個音（到 11/23，11/24 起 NT$590）。前 3 個音免費，沒有訂閱、沒有廣告。'
-                    :'<b>NT$590</b> 一次買斷，解鎖全部 12 個音（價格以 App Store 為準）。前 3 個音免費，沒有訂閱、沒有廣告。';
+                    :'<b>前 3 個音一直免費</b>。完整版：月付 NT$150（第一次可免費試用 7 天，沒取消會自動扣款），或一次買斷 NT$590（沒有試用）。價格以 App Store 為準，沒有廣告。';
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1242,8 +1277,17 @@ function nodeReady(id,st){
   return false;
 }
 function maybeAppCard(st){
-  if(mode||IS_ANDROID||!$('appCard').hidden)return;
+  if(mode||!$('appCard').hidden)return;
   var N=S.appNudge||(S.appNudge={seen:{},last:'',dismiss:0,clicked:false});
+  if(IS_ANDROID){
+    if(N.seen.android)return;
+    N.seen.android=dkey();N.last=dkey();save();
+    $('appCardText').innerHTML='<b>Android 版來了！</b>測試期間免費用完整版的 12 個音：每天提醒、離線也能練，紀錄不會被瀏覽器清掉。現在還差幾位測試者，3 分鐘就能加入；連續測滿 14 天，正式上架後再送你兌換碼。';
+    var L=$('appCardLink');L.href='https://knittinghiyori.com/apps/absolute-pitch/#android';L.textContent='看怎麼加入 →';L.setAttribute('data-cta','android_test');L.setAttribute('data-cta-type','article');
+    $('appCardMove').hidden=true;
+    $('appCard').hidden=false;
+    return;
+  }
   if(S.appCard&&!N.seen.unlock4)N.seen.unlock4=S.appCard; /* 舊版小卡看過的人，不再重複 unlock4 */
   if(N.clicked||N.dismiss>=2||N.last===dkey())return;
   for(var i=0;i<APP_NODES.length;i++){
@@ -1262,15 +1306,16 @@ function maybeAppCard(st){
 var RES_APP=["App 有每週驗收曲線，看你的耳朵能不能一直這麼準", "已經有幾個音很穩了。App 每天提醒你練，把剩下的音一個一個補齊", "絕對音感可以從一個音開始練。App 每天提醒你 10 分鐘，前 3 個音免費"];
 function resAppLine(vi){
   var a=$('apLineLink');
-  if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">Android 版準備中，<b>留 Email 搶先測試</b> →</a></p>';
+  if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 Android 測試版開放中！<b>免費用完整版</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（早鳥 NT$190，到 11/23）":"")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（早鳥 NT$190，到 11/23）":"（月付可先免費試用 7 天）")+' →</a></p>';
 }
 function appLine(){
+  var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
-  if(IS_ANDROID){a.innerHTML='iPhone、iPad、Mac 版 App 已上架；Android 版準備中，<b>留 Email 搶先測試</b> →';a.href='https://knittinghiyori.com/apps/absolute-pitch/#android';a.setAttribute('data-cta','app_intro');a.setAttribute('data-cta-type','article');return}
+  if(IS_ANDROID){a.innerHTML='🎵 Android 測試版開放中！<b>免費用完整版</b> →';a.href='https://knittinghiyori.com/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?'App 上架了！前 3 個音免費，<b>早鳥 NT$190</b> 解鎖全部（到 11/23）<span style="white-space:nowrap">→</span>'
-                         :'App 上架了！前 3 個音免費，一次買斷解鎖全部 12 個音 <span style="white-space:nowrap">→</span>';
+                         :'App 上架了！前 3 個音免費，<b>月付可先免費試用 7 天</b> <span style="white-space:nowrap">→</span>';
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();

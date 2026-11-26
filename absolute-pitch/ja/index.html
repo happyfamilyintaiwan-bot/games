@@ -211,6 +211,7 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .ap-appline{margin:14px 0 0;padding:12px 16px;border-radius:14px;background:var(--well);text-align:center;font-size:.95rem}
 .ap-appline a{font-weight:700;color:var(--ink);text-underline-offset:3px}
 .ap-appline .ap-appline__more{display:inline-block;margin-top:6px;font-weight:400;font-size:.88rem;min-height:24px}
+.ap-appline__sep{margin:0 6px;color:var(--ink-3)}
 .verdict{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.45}
 .verdict-k{font-size:.8rem;font-weight:700;letter-spacing:.08em;color:var(--ink-3)}
 .verdict-yes{font-size:1.6rem}
@@ -284,6 +285,17 @@ select{font:inherit;font-size:16px;min-height:44px;padding:3px 8px;border:1px so
 .answer{font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.55rem);line-height:1.65;font-weight:400}
 .answer b{font-weight:900}
 .tablebox{overflow-x:auto}
+/* 網頁版、App 免費、App 完整版比較（2026-11-25 Alison） */
+.cmp table{min-width:0;font-size:.88rem}
+.cmp th,.cmp td{padding-right:10px}
+.cmp td:first-child{white-space:normal;min-width:7.5em}
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center}
+.cmp th:last-child,.cmp td:last-child{background:var(--well);font-weight:700}
+.cmp-go{margin-top:20px;padding:16px 18px;border-radius:16px;background:var(--well);display:grid;gap:12px;justify-items:start}
+.cmp-go p{margin:0;color:var(--ink-2);font-size:.95rem}
+.cmp-go .btn{text-decoration:none}
+.cmp-note{font-size:.8rem;color:var(--ink-3)}
+
 table{border-collapse:collapse;width:100%;min-width:600px;font-size:.9rem}
 th{font-weight:500;color:var(--ink-3);text-align:left;font-size:.8rem;padding:0 12px 10px 0;border-bottom:1.5px solid var(--ink)}
 td{padding:14px 12px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -577,7 +589,7 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
     </div>
   </section>
 
-  <p class="ap-appline"><a href="https://apps.apple.com/jp/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">iPhone アプリが出ました。毎日のリマインダー、消えない記録。<span style="white-space:nowrap">無料ダウンロード →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/ja/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">アプリの紹介</a></p>
+  <p class="ap-appline"><a href="https://apps.apple.com/jp/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_download_game" data-cta-type="other" id="apLineLink">iPhone アプリが出ました。毎日のリマインダー、消えない記録。<span style="white-space:nowrap">無料ダウンロード →</span></a><br><a class="ap-appline__more" href="https://knittinghiyori.com/ja/apps/absolute-pitch/" target="_blank" rel="noopener" data-cta="app_intro" data-cta-type="article">アプリの紹介</a><span class="ap-appline__sep" aria-hidden="true">・</span><a class="ap-appline__more" href="#compare">Web版とアプリを比べる</a></p>
 
   <div class="share" aria-label="シェア">
     <p id="shareLabel">友だちと一緒に練習して、どちらが先に12音を解放できるか競いましょう。</p>
@@ -590,6 +602,9 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
       <button type="button" data-share="copy_link" id="copyBtn">リンクをコピー</button>
     </div>
   </div>
+
+  <!-- 下一款（2026-11-26 Alison）：英日西版只有絕對音感和摩斯密碼，兩款互相推薦（都用耳朵學、都照研究設計）。hy-next.js 只有中文，這裡寫死；cta_id next_game -->
+  <section class="xnext" aria-labelledby="xNextH"><style>.xnext{max-width:960px;margin:28px auto;padding:0 16px;box-sizing:border-box}.xnext h2{font-size:18px;line-height:1.4;margin:0 0 4px;font-weight:700}.xnext h2 small{display:block;font-size:12px;font-weight:500;color:var(--ink-3,#5f5f66);letter-spacing:.12em}.xnext>p{margin:0 0 12px;font-size:14px;color:var(--ink-2,#4b4d57)}.xnext a{display:grid;gap:4px;max-width:420px;padding:14px 16px;border:1.5px solid #e2e2e6;border-radius:14px;background:#fff;color:#16161a;text-decoration:none}.xnext a:hover{border-color:#16161a}.xnext a:focus-visible{outline:3px solid #16161a;outline-offset:2px}.xnext a b{font-size:15px;line-height:1.45}.xnext a span{font-size:13px;line-height:1.6;color:#5f5f66}.xnext a em{font-style:normal;font-size:13px;font-weight:700}</style><h2 id="xNextH"><small>NEXT</small>次はこちらもどうぞ</h2><p>同じく耳で学ぶ、研究をもとに作った無料ゲームです。</p><a href="/morse-code/ja/" data-cta="next_game" data-cta-type="game"><b>灯台守のモールス日誌：耳でモールス信号を読み取る</b><span>1936年のKochの研究にもとづき、2文字から始めて正答率90%で1文字ずつ増やします。</span><em>遊ぶ →</em></a></section>
 
   <section class="sec" aria-labelledby="recH">
     <div class="sec-head">
@@ -653,11 +668,12 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <li>声調言語の背景は必須ではありません。2020（b）の参加者は声調言語を話しませんが、習得した人がいます。</li>
         </ul>
       <div>
-        <h3>このゲームが研究から取り入れた6つのこと</h3>
+        <h3>このゲームが研究から取り入れた7つのこと</h3>
         <ul class="methods">
           <li><b>1音ずつ増やす</b><span>最初は1音だけ覚え、それ以外は「その他」と答えます。直近20問で正答率90%以上、反応も十分に速くなってから次の音を解放します。</span></li>
           <li><b>鍵盤ではなく音名で覚える</b><span>同じ音名が3つのオクターブでランダムに出るので、高さではなく音の「色」で覚えられます。</span></li>
           <li><b>相対音感を断つ</b><span>問題の間に1秒のノイズを入れ、前の音から計算できないようにします。</span></li>
+          <li><b>聞けるのは1回だけ</b><span>聞き直しはできません。聞いたその瞬間に答えます。研究で使われた標準的な絶対音感テストも、聞き直しは禁止です。間違えたときだけ、選んだ音と正解の音を聞き比べられます。</span></li>
           <li><b>正確で、速く</b><span>絶対音感とは聞いた瞬間にわかること。そのため反応時間にも合格ラインがあります。</span></li>
           <li><b>音色を変える</b><span>ピアノだけで練習すると、他の楽器で外しやすくなります。音色を混ぜると力が移りやすくなります。</span></li>
           <li><b>毎日少しずつ、数週間</b><span>2019年と2025年の研究は約8週間、週あたり約2.5〜4時間でした。週末に3時間より、毎日10〜20分のほうが効果的です。</span></li>
@@ -668,6 +684,27 @@ td.n{font-family:var(--num);font-variant-numeric:tabular-nums;white-space:nowrap
         <a href="https://doi.org/10.1177/1747021820935776" target="_blank" rel="noopener" data-cta="source_wong2020qjep" data-cta-type="other">Wong et al. (2020). Absolute pitch learning in adults speaking non-tonal languages. QJEP.</a>
         <a href="https://doi.org/10.3758/s13414-019-01869-3" target="_blank" rel="noopener" data-cta="source_wong2020app" data-cta-type="other">Wong et al. (2020). Is it impossible to acquire absolute pitch in adulthood? APP.</a>
         <a href="https://neurosciencenews.com/perfect-pitch-auditory-learning-28417/" target="_blank" rel="noopener" data-cta="source_wong2025" data-cta-type="other">Wong et al. (2025). Learning fast and accurate absolute pitch judgment in adulthood. Neuroscience News の記事。</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 網頁版、App 免費、App 完整版比較（2026-11-25 Alison）：引導先下載免費版練 7 天，喜歡再買斷。App 版由 build_www.py 隱藏。價格改了要一起改 -->
+  <section class="sec ap-compare" aria-labelledby="cmpH" id="compare">
+    <div class="sec-head">
+      <h2 id="cmpH">Web版とアプリ、何が違う？</h2>
+      <p>Web版はずっと無料で、12音すべて練習できます。アプリには毎日のお知らせとオフライン練習があり、記録がブラウザに消される心配もありません。</p>
+    </div>
+    <div class="sec-body">
+      <div class="tablebox cmp">
+        <table>
+          <thead><tr><th scope="col">機能</th><th scope="col">Web版</th><th scope="col">アプリ（無料）</th><th scope="col">アプリ（フル版）</th></tr></thead>
+          <tbody><tr><td>価格</td><td>無料</td><td>無料ダウンロード</td><td>月額プラン（初回 7 日間無料）か買い切り</td></tr><tr><td>無料トライアル</td><td>—</td><td>不要</td><td>月額プランのみ：初回 7 日間。解約しないとその後は毎月課金。Apple ID ごとに 1 回だけ。買い切りにはトライアルなし</td></tr><tr><td>練習できる音</td><td>12音すべて</td><td>最初の3音（C・G・E）</td><td>12音すべて</td></tr><tr><td>12音の絶対音感テスト</td><td>✓</td><td>✓ 回数無制限</td><td>✓ 回数無制限</td></tr><tr><td>間違えた音の復習</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>毎日のお知らせ</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>12音への道・今日の目標リング</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>オフライン練習・消音モードでも音が出る</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>記録を端末に保存（iCloudバックアップ）</td><td>ブラウザのみ（消えることがあります）</td><td>✓</td><td>✓</td></tr><tr><td>広告</td><td>あり</td><td>なし</td><td>なし</td></tr><tr><td>Web版の記録を引き継ぐ</td><td>—</td><td>最大6音</td><td>すべて</td></tr><tr><td>対応端末</td><td>ブラウザ</td><td>iPhone・iPad・Mac</td><td>iPhone・iPad・Mac</td></tr></tbody>
+        </table>
+      </div>
+      <div class="cmp-go">
+        <p><b>はじめ方：</b>まず無料アプリをダウンロードして、最初の3音で練習してみてください。毎日のお知らせや12音への道も試せます。12音すべてを練習するには2つの方法があります。<b>月額プラン</b>は初回7日間無料（アプリの購入画面から開始。トライアル終了の24時間前までに解約しないと毎月課金が始まります。Apple IDごとに1回だけ）、または<b>買い切り</b>（ずっと使えます。トライアルなし）。</p>
+        <a class="btn" id="apCmpBtn" href="https://apps.apple.com/jp/app/apple-store/id6822936709?pt=129119700&amp;ct=webpage-pitch&amp;mt=8" target="_blank" rel="noopener" data-cta="app_compare" data-cta-type="other">無料でアプリをダウンロード →</a>
+        <p class="cmp-note">Android版は準備中です。</p>
       </div>
     </div>
   </section>
@@ -1210,7 +1247,7 @@ var APP_NODES=[
 ];
 function appPrice(){
   return earlyBird()?"<b>11/23までリリース記念価格</b>：買い切りで全12音を解放。最初の3音は無料、サブスクなし・広告なし。"
-                    :"最初の3音は無料。買い切りで全12音を解放（価格はApp Storeでご確認ください）。サブスクなし・広告なし。";
+                    :"<b>最初の3音はずっと無料</b>。フル版は月額プラン（初回7日間無料、解約しないと自動課金）か買い切り（トライアルなし）。価格はApp Storeでご確認ください。広告なし。";
 }
 function lastGap(){ /* 今天以前最後一次練習，距今幾天 */
   var t=dkey(),ks=Object.keys(S.days).filter(function(k){return k<t&&S.days[k]>0}).sort();
@@ -1228,8 +1265,17 @@ function nodeReady(id,st){
   return false;
 }
 function maybeAppCard(st){
-  if(mode||IS_ANDROID||!$('appCard').hidden)return;
+  if(mode||!$('appCard').hidden)return;
   var N=S.appNudge||(S.appNudge={seen:{},last:'',dismiss:0,clicked:false});
+  if(IS_ANDROID){ /* 2026-11-22 Alison：Android 封閉測試開放中，Android 玩家跳一次小卡（cta_id android_test） */
+    if(N.seen.android)return;
+    N.seen.android=dkey();N.last=dkey();save();
+    $('appCardText').innerHTML='<b>Android版ができました！</b>テスト期間中はフル版（12音すべて）を無料で使えます。毎日のリマインダー、オフライン練習、ブラウザに消されない記録。テスターをあと数名募集中で、参加は3分です。14日間続けて参加した方には、正式公開後にフル版の引き換えコードをお送りします。';
+    var L=$('appCardLink');L.href='https://knittinghiyori.com/ja/apps/absolute-pitch/#android';L.textContent='参加方法を見る →';L.setAttribute('data-cta','android_test');L.setAttribute('data-cta-type','article');
+    $('appCardMove').hidden=true;
+    $('appCard').hidden=false;
+    return;
+  }
   if(S.appCard&&!N.seen.unlock4)N.seen.unlock4=S.appCard; /* 舊版小卡看過的人，不再重複 unlock4 */
   if(N.clicked||N.dismiss>=2||N.last===dkey())return;
   for(var i=0;i<APP_NODES.length;i++){
@@ -1248,15 +1294,16 @@ function maybeAppCard(st){
 var RES_APP=["アプリなら毎週のテスト結果をグラフで記録。この精度が続くか確かめられます", "いくつかの音はもう安定しています。アプリが毎日リマインドして、残りの音を一つずつ", "絶対音感は1音から練習できます。アプリが毎日10分のリマインド、最初の3音は無料"];
 function resAppLine(vi){
   var a=$('apLineLink');
-  if(IS_ANDROID)return '';
+  if(IS_ANDROID)return '<p class="res-app"><a href="https://knittinghiyori.com/ja/apps/absolute-pitch/#android" target="_blank" rel="noopener" data-cta="android_test" data-cta-type="article">🎵 Android版テスト参加者募集中！<b>フル版が無料</b> →</a></p>';
   var h=a&&a.getAttribute('href');if(!h)return '';
-  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（11/23までリリース記念価格）":"")+' →</a></p>';
+  return '<p class="res-app"><a href="'+h+'" target="_blank" rel="noopener" data-cta="app_download_result" data-cta-type="other">'+RES_APP[Math.min(vi,2)]+(earlyBird()?"（11/23までリリース記念価格）":"（月額プランは初回7日間無料）")+' →</a></p>';
 }
 function appLine(){
+  var cb=$('apCmpBtn');if(cb&&IS_ANDROID)cb.hidden=true; /* 比較表的下載鈕：Android 不顯示 */
   var a=$('apLineLink');if(!a)return;
-  if(IS_ANDROID){a.innerHTML="iPhone・iPad・Mac版アプリ配信中（Android版は準備中）";a.removeAttribute('href');return}
+  if(IS_ANDROID){a.innerHTML='🎵 Android版テスト参加者募集中！<b>フル版が無料</b> →';a.href='https://knittinghiyori.com/ja/apps/absolute-pitch/#android';a.setAttribute('data-cta','android_test');a.setAttribute('data-cta-type','article');return}
   a.innerHTML=earlyBird()?"アプリ配信中！最初の3音は無料、<b>11/23までリリース記念価格</b> <span style=\"white-space:nowrap\">→</span>"
-                         :"アプリ配信中：毎日お知らせ、記録が消えない。最初の3音は無料 <span style=\"white-space:nowrap\">→</span>";
+                         :"アプリ配信中：毎日お知らせ、記録が消えない。<b>月額プランは初回7日間無料</b> <span style=\"white-space:nowrap\">→</span>";
 }
 function render(){
   var today=S.days[dkey()]||0,st=streak();
